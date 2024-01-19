@@ -20,11 +20,11 @@ from girder.models.item import Item
 from girder.models.user import User
 from girder.models.token import Token
 from girder.models.setting import Setting
-from girder.plugins.jobs.models.job import Job
-from girder.plugins.worker import CustomJobStatus
+from girder_jobs.models.job import Job
+from girder_worker import CustomJobStatus
 from gwvolman.tasks import publish
 
-from girder.plugins.jobs.constants import JobStatus
+from girder_jobs.constants import JobStatus
 
 from ..schema.tale import taleModel as taleSchema
 from ..models.tale import Tale as taleModel
@@ -37,7 +37,7 @@ from ..lib.exporters.bag import BagTaleExporter
 from ..lib.exporters.native import NativeTaleExporter
 from ..utils import notify_event, init_progress
 
-from girder.plugins.worker import getCeleryApp
+from girder_worker import getCeleryApp
 
 from ..constants import ImageStatus, TaleStatus, PluginSettings, \
     DEFAULT_IMAGE_ICON, DEFAULT_ILLUSTRATION
@@ -344,7 +344,7 @@ class Tale(Resource):
                     type="wholetale.import_binder",
                     public=False,
                     _async=True,
-                    module="girder.plugins.wholetale.tasks.import_binder",
+                    module="girder_wholetale.tasks.import_binder",
                     args=(lookupKwargs,),
                     kwargs={
                         "taleId": tale["_id"],
@@ -683,7 +683,7 @@ class Tale(Resource):
         job = Job().createLocalJob(
             title='Copy "{title}" workspace'.format(**tale), user=user,
             type='wholetale.copy_workspace', public=False, _async=True,
-            module='girder.plugins.wholetale.tasks.copy_workspace',
+            module='girder_wholetale.tasks.copy_workspace',
             args=(tale, new_tale, versionId, shallow),
         )
         Job().scheduleJob(job)

@@ -13,7 +13,7 @@ from girder.constants import AccessType, SortDir, TokenScope
 from girder.exceptions import ValidationException, RestException
 from girder.models.item import Item
 from girder.models.user import User
-from girder.plugins.jobs.models.job import Job
+from girder_jobs.models.job import Job
 
 from ..constants import CATALOG_NAME
 from ..lib import IMPORT_PROVIDERS
@@ -317,7 +317,7 @@ class Dataset(Resource):
         job = Job().createLocalJob(
             title='Registering Data', user=user,
             type='wholetale.register_data', public=False, _async=False,
-            module='girder.plugins.wholetale.tasks.register_dataset',
+            module='girder_wholetale.tasks.register_dataset',
             args=(data_maps, parent, parentType, user),
             kwargs={'base_url': base_url},
             otherFields={'wt_notification_id': str(notification['_id'])},

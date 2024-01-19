@@ -8,14 +8,14 @@ import requests
 from girder.models.item import Item
 from girder.models.folder import Folder
 
-from plugins.wholetale.server.lib.file_map import FileMap
+from ..file_map import FileMap
 from ..import_providers import ImportProvider
 from ..entity import Entity
 from ..data_map import DataMap
 from ..import_item import ImportItem
 from ...utils import deep_get
 
-from girder.plugins.globus_handler.clients import Clients
+from girder_globus_handler.clients import Clients
 
 
 TRANSFER_URL_PREFIX_REGEX = re.compile('^https://app.globus.org/file-manager')

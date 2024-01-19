@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from girder.models.user import User
-from girder.plugins.jobs.constants import JobStatus
-from girder.plugins.jobs.models.job import Job
+from girder_jobs.constants import JobStatus
+from girder_jobs.models.job import Job
 
 from ..lib import register_dataMap
 from ..lib.data_map import DataMap

@@ -26,12 +26,12 @@ from girder.models.notification import Notification, ProgressState
 from girder.models.setting import Setting
 from girder.models.user import User
 from girder.models.file import File
-from girder.plugins.jobs.constants import JobStatus
-from girder.plugins.jobs.models.job import Job as JobModel
-from girder.plugins.worker.utils import jobInfoSpec
-from girder.plugins.worker import CustomJobStatus
-from girder.plugins.oauth.rest import OAuth as OAuthResource
-from girder.plugins.worker import getCeleryApp
+from girder_jobs.constants import JobStatus
+from girder_jobs.models.job import Job as JobModel
+from girder_worker import getCeleryApp
+from girder_worker.utils import jobInfoSpec
+from girder_worker.status import CustomJobStatus
+from girder_oauth.rest import OAuth as OAuthResource
 from girder.utility import setting_utilities
 from girder.utility.model_importer import ModelImporter
 
@@ -663,7 +663,7 @@ def attachJobInfoSpec(event):
 
 
 def load(info):
-    from girder.plugins.oauth.providers.globus import Globus
+    from girder_oauth.providers.globus import Globus
 
     # Remove unnecessary scope https://github.com/whole-tale/girder_wholetale/issues/534
     Globus._AUTH_SCOPES.remove("urn:globus:auth:scope:auth.globus.org:view_identities")
@@ -674,8 +674,8 @@ def load(info):
     tale = Tale()
     info['apiRoot'].tale = tale
 
-    from girder.plugins.wholetale.models.tale import Tale as TaleModel
-    from girder.plugins.wholetale.models.tale import _currentTaleFormat
+    from .models.tale import Tale as TaleModel
+    from .models.tale import _currentTaleFormat
     q = {
         '$or': [
             {'format': {'$exists': False}},

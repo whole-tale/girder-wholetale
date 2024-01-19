@@ -14,24 +14,22 @@ from girder.models.model_base import AccessControlledModel
 from girder.models.setting import Setting
 from girder.models.token import Token
 from girder.models.user import User
-from girder.plugins.jobs.constants import REST_CREATE_JOB_TOKEN_SCOPE, JobStatus
-from girder.plugins.wholetale.models.image import Image
-from girder.plugins.wholetale.models.tale import Tale
-from girder.plugins.worker import getCeleryApp
 from girder.utility import JsonEncoder
-from gwvolman.constants import (
-    BUILD_TALE_IMAGE_STEP_TOTAL,
+from girder_worker import getCeleryApp
+from girder_jobs.constants import JobStatus, REST_CREATE_JOB_TOKEN_SCOPE
+from gwvolman.tasks import (
+    create_volume,
+    launch_container,
+    update_container,
+    shutdown_container,
+    remove_volume,
+    build_tale_image,
+)
+from gwvolman.tasks_base import BUILD_TALE_IMAGE_STEP_TOTAL
+from gwvolman.tasks_docker import (
     CREATE_VOLUME_STEP_TOTAL,
     LAUNCH_CONTAINER_STEP_TOTAL,
     UPDATE_CONTAINER_STEP_TOTAL,
-)
-from gwvolman.tasks import (
-    build_tale_image,
-    create_volume,
-    launch_container,
-    remove_volume,
-    shutdown_container,
-    update_container,
 )
 
 from ..constants import InstanceStatus, PluginSettings
@@ -39,38 +37,43 @@ from ..lib.metrics import metricsLogger
 from ..schema.misc import containerInfoSchema
 from ..utils import init_progress, notify_event
 
+from .tale import Tale
+from .image import Image
+
 TASK_TIMEOUT = 15.0
 BUILD_TIMEOUT = 360.0
 DEFAULT_IDLE_TIMEOUT = 1440.0
 
 
 class Instance(AccessControlledModel):
-
     def initialize(self):
-        self.name = 'instance'
+        self.name = "instance"
         compoundSearchIndex = (
-            ('taleId', SortDir.ASCENDING),
-            ('creatorId', SortDir.DESCENDING),
-            ('name', SortDir.ASCENDING)
+            ("taleId", SortDir.ASCENDING),
+            ("creatorId", SortDir.DESCENDING),
+            ("name", SortDir.ASCENDING),
         )
         self.ensureIndices([(compoundSearchIndex, {})])
 
         self.exposeFields(
             level=AccessType.READ,
-            fields={'_id', 'created', 'creatorId', 'iframe', 'name', 'taleId'})
+            fields={"_id", "created", "creatorId", "iframe", "name", "taleId"},
+        )
         self.exposeFields(
             level=AccessType.WRITE,
-            fields={'containerInfo', 'lastActivity', 'status', 'url', 'sessionId'})
+            fields={"containerInfo", "lastActivity", "status", "url", "sessionId"},
+        )
 
     def validate(self, instance):
-        if not InstanceStatus.isValid(instance['status']):
+        if not InstanceStatus.isValid(instance["status"]):
             raise ValidationException(
-                'Invalid instance status %s.' % instance['status'],
-                field='status')
+                "Invalid instance status %s." % instance["status"], field="status"
+            )
         return instance
 
-    def list(self, user=None, tale=None, limit=0, offset=0,
-             sort=None, currentUser=None):
+    def list(
+        self, user=None, tale=None, limit=0, offset=0, sort=None, currentUser=None
+    ):
         """
         List a page of jobs for a given user.
 
@@ -83,13 +86,17 @@ class Instance(AccessControlledModel):
         """
         cursor_def = {}
         if user is not None:
-            cursor_def['creatorId'] = user['_id']
+            cursor_def["creatorId"] = user["_id"]
         if tale is not None:
-            cursor_def['taleId'] = tale['_id']
+            cursor_def["taleId"] = tale["_id"]
         cursor = self.find(cursor_def, sort=sort)
         for r in self.filterResultsByPermission(
-                cursor=cursor, user=currentUser, level=AccessType.READ,
-                limit=limit, offset=offset):
+            cursor=cursor,
+            user=currentUser,
+            level=AccessType.READ,
+            limit=limit,
+            offset=offset,
+        ):
             yield r
 
     def updateAndRestartInstance(self, instance, user, tale):
@@ -102,26 +109,25 @@ class Instance(AccessControlledModel):
         """
         token = Token().createToken(user=user, days=0.5)
 
-        digest = tale['imageInfo']['digest']
+        digest = tale["imageInfo"]["digest"]
 
         resource = {
-            'type': 'wt_update_instance',
-            'instance_id': instance['_id'],
-            'tale_title': tale['title']
+            "type": "wt_update_instance",
+            "instance_id": instance["_id"],
+            "tale_title": tale["title"],
         }
         total = UPDATE_CONTAINER_STEP_TOTAL
 
         notification = init_progress(
-            resource, user, 'Updating instance',
-            'Initializing', total)
+            resource, user, "Updating instance", "Initializing", total
+        )
 
         update_container.signature(
-            args=[str(instance['_id'])], queue="manager",
-            girder_job_other_fields={
-                'wt_notification_id': str(notification['_id'])
-            },
-            girder_client_token=str(token['_id']),
-            kwargs={'digest': digest}
+            args=[str(instance["_id"])],
+            queue="manager",
+            girder_job_other_fields={"wt_notification_id": str(notification["_id"])},
+            girder_client_token=str(token["_id"]),
+            kwargs={"digest": digest},
         ).apply_async()
 
     def updateInstance(self, instance):
@@ -133,7 +139,7 @@ class Instance(AccessControlledModel):
         :returns: The instance document that was edited.
         """
 
-        instance['updated'] = datetime.datetime.utcnow()
+        instance["updated"] = datetime.datetime.utcnow()
         return self.save(instance)
 
     def deleteInstance(self, instance, user):
@@ -145,18 +151,24 @@ class Instance(AccessControlledModel):
         token = Token().createToken(user=user, days=0.5)
 
         task1 = shutdown_container.apply_async(
-            args=[str(instance["_id"])], girder_client_token=str(token['_id']),
-            queue="manager", time_limit=TASK_TIMEOUT,
+            args=[str(instance["_id"])],
+            girder_client_token=str(token["_id"]),
+            queue="manager",
+            time_limit=TASK_TIMEOUT,
         )
-        notify_event([instance['creatorId']], 'wt_instance_deleting',
-                     {'taleId': instance['taleId'], 'instanceId': instance['_id']})
+        notify_event(
+            [instance["creatorId"]],
+            "wt_instance_deleting",
+            {"taleId": instance["taleId"], "instanceId": instance["_id"]},
+        )
 
         try:
-            queue = instance['containerInfo'].get('nodeId', 'celery')
+            queue = instance["containerInfo"].get("nodeId", "celery")
             task2 = remove_volume.apply_async(
-                args=[str(instance['_id'])],
-                girder_client_token=str(token['_id']),
-                queue=queue, time_limit=TASK_TIMEOUT
+                args=[str(instance["_id"])],
+                girder_client_token=str(token["_id"]),
+                queue=queue,
+                time_limit=TASK_TIMEOUT,
             )
         except KeyError:
             pass
@@ -170,8 +182,11 @@ class Instance(AccessControlledModel):
             pass
         self.remove(instance)
 
-        notify_event([instance["creatorId"]], "wt_instance_deleted",
-                     {'taleId': instance['taleId'], 'instanceId': instance['_id']})
+        notify_event(
+            [instance["creatorId"]],
+            "wt_instance_deleted",
+            {"taleId": instance["taleId"], "instanceId": instance["_id"]},
+        )
 
         metricsLogger.info(
             "instance.remove",
@@ -187,17 +202,17 @@ class Instance(AccessControlledModel):
 
     def createInstance(self, tale, user, /, *, name=None, save=True, spawn=True):
         if not name:
-            name = tale.get('title', '')
+            name = tale.get("title", "")
 
         now = datetime.datetime.utcnow()
         instance = {
-            'created': now,
-            'creatorId': user['_id'],
-            'iframe': tale.get('iframe', False),
-            'lastActivity': now,
-            'name': name,
-            'status': InstanceStatus.LAUNCHING,
-            'taleId': tale['_id']
+            "created": now,
+            "creatorId": user["_id"],
+            "iframe": tale.get("iframe", False),
+            "lastActivity": now,
+            "name": name,
+            "status": InstanceStatus.LAUNCHING,
+            "taleId": tale["_id"],
         }
 
         self.setUserAccess(instance, user=user, level=AccessType.ADMIN)
@@ -209,58 +224,64 @@ class Instance(AccessControlledModel):
             token = Token().createToken(
                 user=user,
                 days=0.5,
-                scope=(TokenScope.USER_AUTH, REST_CREATE_JOB_TOKEN_SCOPE)
+                scope=(TokenScope.USER_AUTH, REST_CREATE_JOB_TOKEN_SCOPE),
             )
 
             resource = {
-                'type': 'wt_create_instance',
-                'tale_id': tale['_id'],
-                'instance_id': instance['_id'],
-                'tale_title': tale['title']
+                "type": "wt_create_instance",
+                "tale_id": tale["_id"],
+                "instance_id": instance["_id"],
+                "tale_title": tale["title"],
             }
 
-            total = BUILD_TALE_IMAGE_STEP_TOTAL + CREATE_VOLUME_STEP_TOTAL + \
-                LAUNCH_CONTAINER_STEP_TOTAL
+            total = (
+                BUILD_TALE_IMAGE_STEP_TOTAL
+                + CREATE_VOLUME_STEP_TOTAL
+                + LAUNCH_CONTAINER_STEP_TOTAL
+            )
 
             notification = init_progress(
-                resource, user, 'Creating instance',
-                'Initializing', total)
+                resource, user, "Creating instance", "Initializing", total
+            )
 
             user = json.loads(json.dumps(user, cls=JsonEncoder))
 
             buildTask = build_tale_image.signature(
-                args=[str(tale['_id']), False],
+                args=[str(tale["_id"]), False],
                 girder_job_other_fields={
-                    'wt_notification_id': str(notification['_id']),
-                    'instance_id': str(instance['_id']),
+                    "wt_notification_id": str(notification["_id"]),
+                    "instance_id": str(instance["_id"]),
                 },
-                girder_client_token=str(token['_id']),
+                girder_client_token=str(token["_id"]),
                 girder_user=user,
-                immutable=True
+                immutable=True,
             )
             volumeTask = create_volume.signature(
-                args=[str(instance['_id']), Setting().get(PluginSettings.MOUNTS)],
+                args=[str(instance["_id"]), Setting().get(PluginSettings.MOUNTS)],
                 girder_job_other_fields={
-                    'wt_notification_id': str(notification['_id']),
-                    'instance_id': str(instance['_id']),
+                    "wt_notification_id": str(notification["_id"]),
+                    "instance_id": str(instance["_id"]),
                 },
-                girder_client_token=str(token['_id']),
+                girder_client_token=str(token["_id"]),
                 girder_user=user,
-                immutable=True
+                immutable=True,
             )
             serviceTask = launch_container.signature(
                 girder_job_other_fields={
-                    'wt_notification_id': str(notification['_id']),
-                    'instance_id': str(instance['_id']),
+                    "wt_notification_id": str(notification["_id"]),
+                    "instance_id": str(instance["_id"]),
                 },
-                girder_client_token=str(token['_id']),
+                girder_client_token=str(token["_id"]),
                 girder_user=user,
             )
 
             (buildTask | volumeTask | serviceTask).apply_async()
 
-            notify_event([instance["creatorId"]], "wt_instance_launching",
-                         {'taleId': instance['taleId'], 'instanceId': instance['_id']})
+            notify_event(
+                [instance["creatorId"]],
+                "wt_instance_launching",
+                {"taleId": instance["taleId"], "instanceId": instance["_id"]},
+            )
 
         metricsLogger.info(
             "instance.create",
@@ -278,7 +299,7 @@ class Instance(AccessControlledModel):
     def get_logs(self, instance, tail):
         r = requests.get(
             Setting().get(PluginSettings.LOGGER_URL),
-            params={"tail": tail, "name": instance["containerInfo"].get("name")}
+            params={"tail": tail, "name": instance["containerInfo"].get("name")},
         )
         try:
             r.raise_for_status()
@@ -292,31 +313,31 @@ def _wait_for_server(url, token, timeout=30, wait_time=0.5):
     tic = time.time()
     while time.time() - tic < timeout:
         try:
-            r = requests.get(url, cookies={'girderToken': token}, timeout=1)
+            r = requests.get(url, cookies={"girderToken": token}, timeout=1)
             r.raise_for_status()
             if int(r.headers.get("Content-Length", "0")) == 0:
                 raise ValueError("HTTP server returns no content")
         except requests.exceptions.HTTPError as err:
             logger.info(
-                'Booting server at [%s], getting HTTP status [%s]', url, err.response.status_code)
+                "Booting server at [%s], getting HTTP status [%s]",
+                url,
+                err.response.status_code,
+            )
             time.sleep(wait_time)
         except requests.exceptions.SSLError:
-            logger.info(
-                'Booting server at [%s], getting SSLError', url)
+            logger.info("Booting server at [%s], getting SSLError", url)
             time.sleep(wait_time)
         except requests.exceptions.ConnectionError:
-            logger.info(
-                'Booting server at [%s], getting ConnectionError', url)
+            logger.info("Booting server at [%s], getting ConnectionError", url)
             time.sleep(wait_time)
         except Exception as ex:
-            logger.info(
-                'Booting server at [%s], getting "%s"', url, str(ex))
+            logger.info('Booting server at [%s], getting "%s"', url, str(ex))
         else:
             break
 
 
 def finalizeInstance(event):
-    job = event.info['job']
+    job = event.info["job"]
 
     if job.get("instance_id"):
         instance = Instance().load(job["instance_id"], force=True)
@@ -330,11 +351,11 @@ def finalizeInstance(event):
             instance["status"] = InstanceStatus.ERROR
             Instance().updateInstance(instance)
 
-    if job['title'] == 'Spawn Instance' and job.get('status') is not None:
-        status = int(job['status'])
-        instance_id = job['args'][0]['instanceId']
+    if job["title"] == "Spawn Instance" and job.get("status") is not None:
+        status = int(job["status"])
+        instance_id = job["args"][0]["instanceId"]
         instance = Instance().load(instance_id, force=True, exc=True)
-        tale = Tale().load(instance['taleId'], force=True)
+        tale = Tale().load(instance["taleId"], force=True)
         update = True
         event_name = None
 
@@ -343,12 +364,12 @@ def finalizeInstance(event):
             and instance["status"] == InstanceStatus.LAUNCHING  # noqa
         ):
             # Get a url to the container
-            service = getCeleryApp().AsyncResult(job['celeryTaskId']).get()
+            service = getCeleryApp().AsyncResult(job["celeryTaskId"]).get()
             url = service.get("url", "https://girder.hub.yt/")
 
             # Generate the containerInfo
-            valid_keys = set(containerInfoSchema['properties'].keys())
-            containerInfo = {key: service.get(key, '') for key in valid_keys}
+            valid_keys = set(containerInfoSchema["properties"].keys())
+            containerInfo = {key: service.get(key, "") for key in valid_keys}
             # Preserve the imageId / current digest in containerInfo
             containerInfo["imageId"] = tale["imageId"]
             containerInfo["digest"] = tale["imageInfo"]["digest"]
@@ -361,7 +382,7 @@ def finalizeInstance(event):
 
             user = User().load(instance["creatorId"], force=True)
             token = Token().createToken(user=user, days=0.25)
-            _wait_for_server(url, token['_id'])
+            _wait_for_server(url, token["_id"])
 
             # Since _wait_for_server can potentially take some time,
             # we need to refresh the state of the instance
@@ -373,20 +394,18 @@ def finalizeInstance(event):
             instance["status"] = InstanceStatus.RUNNING
             event_name = "wt_instance_running"
         elif (
-            status == JobStatus.ERROR
-            and instance["status"] != InstanceStatus.ERROR  # noqa
+            status == JobStatus.ERROR and instance["status"] != InstanceStatus.ERROR  # noqa
         ):
-            instance['status'] = InstanceStatus.ERROR
+            instance["status"] = InstanceStatus.ERROR
         elif (
-            status == JobStatus.ERROR
-            and instance["status"] == InstanceStatus.ERROR  # noqa
+            status == JobStatus.ERROR and instance["status"] == InstanceStatus.ERROR  # noqa
         ):
             event_name = "wt_instance_error"
         elif (
             status in (JobStatus.QUEUED, JobStatus.RUNNING)
             and instance["status"] != InstanceStatus.LAUNCHING  # noqa
         ):
-            instance['status'] = InstanceStatus.LAUNCHING
+            instance["status"] = InstanceStatus.LAUNCHING
         else:
             update = False
 
@@ -397,8 +416,11 @@ def finalizeInstance(event):
             Instance().updateInstance(instance)
 
             if event_name:
-                notify_event([instance["creatorId"]], event_name,
-                             {'taleId': instance['taleId'], 'instanceId': instance['_id']})
+                notify_event(
+                    [instance["creatorId"]],
+                    event_name,
+                    {"taleId": instance["taleId"], "instanceId": instance["_id"]},
+                )
 
 
 def cullIdleInstances(event):
@@ -410,16 +432,19 @@ def cullIdleInstances(event):
 
     images = Image().find()
     for image in images:
-        idleTimeout = image.get('idleTimeout', DEFAULT_IDLE_TIMEOUT)
+        idleTimeout = image.get("idleTimeout", DEFAULT_IDLE_TIMEOUT)
 
-        cullbefore = datetime.datetime.utcnow() - datetime.timedelta(minutes=idleTimeout)
+        cullbefore = datetime.datetime.utcnow() - datetime.timedelta(
+            minutes=idleTimeout
+        )
 
-        instances = Instance().find({
-            'lastActivity': {'$lt': cullbefore},
-            'containerInfo.imageId': image['_id']
-        })
+        instances = Instance().find(
+            {"lastActivity": {"$lt": cullbefore}, "containerInfo.imageId": image["_id"]}
+        )
 
         for instance in instances:
-            logger.info('Stopping instance {}: idle timeout exceeded.'.format(instance['_id']))
-            user = User().load(instance['creatorId'], force=True)
+            logger.info(
+                "Stopping instance {}: idle timeout exceeded.".format(instance["_id"])
+            )
+            user = User().load(instance["creatorId"], force=True)
             Instance().deleteInstance(instance, user)

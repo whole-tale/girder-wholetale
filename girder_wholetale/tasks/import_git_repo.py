@@ -10,8 +10,8 @@ import time
 from girder.models.folder import Folder
 from girder.models.user import User
 from girder.utility import JsonEncoder
-from girder.plugins.jobs.constants import JobStatus
-from girder.plugins.jobs.models.job import Job
+from girder_jobs.constants import JobStatus
+from girder_jobs.models.job import Job
 
 from ..constants import InstanceStatus, TaleStatus
 from ..lib.metrics import metricsLogger

@@ -1,7 +1,7 @@
 from urllib.parse import urlparse, urlunparse, quote
 
 from girder.api.rest import getApiUrl
-from girder.plugins.oauth.providers.base import ProviderBase
+from girder_oauth.providers.base import ProviderBase
 
 
 D1_ENV_DICT = {

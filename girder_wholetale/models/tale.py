@@ -15,10 +15,9 @@ from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.model_base import AccessControlledModel
 from girder.models.token import Token
-from girder.models.user import User
-from girder.plugins.jobs.constants import JobStatus
-from girder.plugins.jobs.models.job import Job
-from girder.plugins.worker import getCeleryApp
+from girder_jobs.constants import JobStatus
+from girder_jobs.models.job import Job
+from girder_worker import getCeleryApp
 from girder.utility import assetstore_utilities
 from gwvolman.constants import BUILD_TALE_IMAGE_STEP_TOTAL
 from gwvolman.tasks import build_tale_image
@@ -497,7 +496,7 @@ class Tale(AccessControlledModel):
         job = Job().createLocalJob(
             title='Import Tale from zip', user=user,
             type='wholetale.import_tale', public=False, _async=True,
-            module='girder.plugins.wholetale.tasks.import_tale',
+            module='girder_wholetale.tasks.import_tale',
             args=(temp_dir, manifest_file),
             kwargs={'taleId': tale["_id"]},
             otherFields={
@@ -524,7 +523,7 @@ class Tale(AccessControlledModel):
             type="wholetale.import_git_repo",
             public=False,
             _async=True,
-            module="girder.plugins.wholetale.tasks.import_git_repo",
+            module="girder_wholetale.tasks.import_git_repo",
             args=(url,),
             kwargs={
                 "taleId": tale["_id"],

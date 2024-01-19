@@ -1,4 +1,4 @@
-from girder.plugins.oauth.providers import addProvider
+from girder_oauth.providers import addProvider
 from .fakeoauth import FakeDataONE
 
 

@@ -30,8 +30,8 @@ from girder.models.notification import Notification
 from girder.models.token import Token
 from girder.models.user import User
 from girder.utility import config, JsonEncoder
-from girder.plugins.jobs.constants import JobStatus
-from girder.plugins.jobs.models.job import Job
+from girder_jobs.constants import JobStatus
+from girder_jobs.models.job import Job
 
 from ..constants import CATALOG_NAME, InstanceStatus, TaleStatus
 from ..lib import pids_to_entities, register_dataMap
@@ -168,7 +168,7 @@ def run(job):
             # 2. Create a session
             # TODO: yay circular dependencies! IMHO we really should merge
             # wholetale and wt_data_manager plugins...
-            from girder.plugins.wt_data_manager.models.session import Session
+            from girder_wt_data_manager.models.session import Session
 
             # Session is created so that we can easily copy files to workspace,
             # without worrying about how to handler transfers. DMS will do that for us <3

@@ -10,7 +10,7 @@ from girder.utility import JsonEncoder
 from girder.utility.model_importer import ModelImporter
 from girder.exceptions import ValidationException
 from girder.constants import AccessType
-from girder.plugins.virtual_resources.rest import VirtualObject
+from girder_virtual_resources.rest import VirtualObject
 
 import cherrypy
 from girder_client import GirderClient

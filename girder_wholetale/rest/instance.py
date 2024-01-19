@@ -12,8 +12,8 @@ from girder.api.rest import (
     setRawResponse
 )
 from girder.constants import AccessType, SortDir
-from girder.plugins.jobs.constants import JobStatus
-from girder.plugins.worker import getCeleryApp
+from girder_jobs.constants import JobStatus
+from girder_worker import getCeleryApp
 from ..constants import PluginSettings, InstanceStatus
 from ..models.instance import Instance as instanceModel
 

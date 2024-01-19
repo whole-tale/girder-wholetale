@@ -9,8 +9,8 @@ from girder.api.rest import Resource, getApiUrl
 from girder.models.setting import Setting
 from girder.models.token import Token
 from girder.models.user import User
-from girder.plugins.oauth import constants as OAuthConstants
-from girder.plugins.oauth import providers
+from girder_oauth import constants as OAuthConstants
+from girder_oauth import providers
 
 from ..constants import PluginSettings
 from ..lib import Verificators

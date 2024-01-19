@@ -9,8 +9,8 @@ from girder import events
 from girder.constants import AccessType
 from girder.models.folder import Folder
 from girder.models.user import User
-from girder.plugins.jobs.constants import JobStatus
-from girder.plugins.jobs.models.job import Job
+from girder_jobs.constants import JobStatus
+from girder_jobs.models.job import Job
 
 from ..constants import TaleStatus
 from ..models.tale import Tale
