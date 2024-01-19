@@ -26,17 +26,19 @@ from girder.models.notification import Notification, ProgressState
 from girder.models.setting import Setting
 from girder.models.user import User
 from girder.models.file import File
+from girder.plugin import getPlugin, GirderPlugin
 from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job as JobModel
-from girder_worker import getCeleryApp
-from girder_worker.utils import jobInfoSpec
-from girder_worker.status import CustomJobStatus
+from girder_worker.girder_plugin.celery import getCeleryApp
+from girder_worker.girder_plugin.utils import jobInfoSpec
+from girder_worker.girder_plugin.status import CustomJobStatus
 from girder_oauth.rest import OAuth as OAuthResource
 from girder.utility import setting_utilities
 from girder.utility.model_importer import ModelImporter
 
 from .constants import PluginSettings, SettingDefault
 from .lib import update_citation
+from .lib.events import job_update_after_handler, cullIdleInstances
 from .lib.metrics import metricsLogger, _MetricsHandler
 from .rest.account import Account
 from .rest.dataset import Dataset
@@ -48,7 +50,6 @@ from .rest.tale import Tale
 from .rest.instance import Instance
 from .rest.wholetale import wholeTale
 from .rest.license import License
-from .models.instance import finalizeInstance, cullIdleInstances
 from .schema.misc import (
     external_auth_providers_schema,
     external_apikey_groups_schema,
@@ -589,8 +590,7 @@ def getJobResult(self, job):
     return result
 
 
-@access.cookie
-@access.public
+@access.public(cookie=True)
 @autoDescribeRoute(
     Description('Initiate oauth login flow')
     .param("instance", "Authorization is for instance URL",
@@ -662,73 +662,84 @@ def attachJobInfoSpec(event):
         )
 
 
-def load(info):
-    from girder_oauth.providers.globus import Globus
+class WholeTalePlugin(GirderPlugin):
+    DISPLAY_NAME = "WholeTale"
+    CLIENT_SOURCE_PATH = "web_client"
 
-    # Remove unnecessary scope https://github.com/whole-tale/girder_wholetale/issues/534
-    Globus._AUTH_SCOPES.remove("urn:globus:auth:scope:auth.globus.org:view_identities")
-    deriva_scopes = Setting().get(PluginSettings.DERIVA_SCOPES)
-    Globus.addScopes(list(deriva_scopes.values()))
-    info['apiRoot'].wholetale = wholeTale()
-    info['apiRoot'].instance = Instance()
-    tale = Tale()
-    info['apiRoot'].tale = tale
+    def load(self, info):
+        getPlugin("oauth").load(info)
+        getPlugin("virtual_resources").load(info)
+        getPlugin("globus_handler").load(info)
+        from girder_oauth.providers.globus import Globus
 
-    from .models.tale import Tale as TaleModel
-    from .models.tale import _currentTaleFormat
-    q = {
-        '$or': [
-            {'format': {'$exists': False}},
-            {'format': {'$lt': _currentTaleFormat}}
-        ]}
-    for obj in TaleModel().find(q):
-        try:
-            TaleModel().save(obj, validate=True)
-        except GirderException as exc:
-            logprint(exc)
+        # Remove unnecessary scope https://github.com/whole-tale/girder_wholetale/issues/534
+        Globus._AUTH_SCOPES.remove("urn:globus:auth:scope:auth.globus.org:view_identities")
+        deriva_scopes = Setting().get(PluginSettings.DERIVA_SCOPES)
+        Globus.addScopes(list(deriva_scopes.values()))
+        info['apiRoot'].wholetale = wholeTale()
+        info['apiRoot'].instance = Instance()
+        tale = Tale()
+        info['apiRoot'].tale = tale
 
-    info['apiRoot'].dataset = Dataset()
-    info['apiRoot'].image = Image()
-    events.bind('jobs.job.update.after', 'wholetale', tale.updateBuildStatus)
-    events.bind('jobs.job.update.after', 'wholetale', finalizeInstance)
-    events.bind('jobs.job.update.after', 'wholetale', TaleModel._track_publication)
-    events.bind('jobs.job.update', 'wholetale', updateNotification)
-    events.bind('model.file.validate', 'wholetale', validateFileLink)
-    events.bind('oauth.auth_callback.after', 'wholetale', store_other_globus_tokens)
-    events.bind('heartbeat', 'wholetale', cullIdleInstances)
-    events.unbind("model.job.save.after", "worker")
-    events.bind("model.job.save.after", "wholetale", attachJobInfoSpec)
+        from .models.tale import Tale as TaleModel
+        from .models.tale import _currentTaleFormat
+        q = {
+            '$or': [
+                {'format': {'$exists': False}},
+                {'format': {'$lt': _currentTaleFormat}}
+            ]}
+        for obj in TaleModel().find(q):
+            try:
+                TaleModel().save(obj, validate=True)
+            except GirderException as exc:
+                logprint(exc)
 
-    info['apiRoot'].account = Account()
-    info['apiRoot'].repository = Repository()
-    info['apiRoot'].license = License()
-    info['apiRoot'].integration = Integration()
-    info['apiRoot'].folder.route('GET', ('registered',), listImportedData)
-    info['apiRoot'].folder.route('GET', (':id', 'listing'), listFolder)
-    info['apiRoot'].folder.route('GET', (':id', 'dataset'), getDataSet)
-    info['apiRoot'].job.route('GET', (':id', 'result'), getJobResult)
-    info['apiRoot'].resource.route('GET', (), listResources)
+        from .models.image import Image as ImageModel
+        from .models.instance import Instance as InstanceModel
+        ModelImporter.registerModel('instance', InstanceModel, 'wholetale')
+        ModelImporter.registerModel('image', ImageModel, 'wholetale')
+        ModelImporter.registerModel('tale', TaleModel, 'wholetale')
 
-    info['apiRoot'].user.route('PUT', ('settings',), setUserMetadata)
-    info['apiRoot'].user.route('GET', ('settings',), getUserMetadata)
-    info['apiRoot'].user.route('GET', ('sign_in',), signIn)
-    info['apiRoot'].user.route('GET', ('authorize',), authorize)
+        info['apiRoot'].dataset = Dataset()
+        info['apiRoot'].image = Image()
+        events.bind('jobs.job.update.after', 'wholetale', job_update_after_handler)
+        events.bind('jobs.job.update', 'wholetale', updateNotification)
+        events.bind('model.file.validate', 'wholetale', validateFileLink)
+        events.bind('oauth.auth_callback.after', 'wholetale', store_other_globus_tokens)
+        events.bind('heartbeat', 'wholetale', cullIdleInstances)
+        events.unbind("model.job.save.after", "worker")
+        events.bind("model.job.save.after", "wholetale", attachJobInfoSpec)
 
-    ModelImporter.model('user').exposeFields(
-        level=AccessType.WRITE, fields=('meta', 'myData', 'lastLogin'))
-    ModelImporter.model('user').exposeFields(
-        level=AccessType.ADMIN, fields=('otherTokens',))
+        info['apiRoot'].account = Account()
+        info['apiRoot'].repository = Repository()
+        info['apiRoot'].license = License()
+        info['apiRoot'].integration = Integration()
+        info['apiRoot'].folder.route('GET', ('registered',), listImportedData)
+        info['apiRoot'].folder.route('GET', (':id', 'listing'), listFolder)
+        info['apiRoot'].folder.route('GET', (':id', 'dataset'), getDataSet)
+        info['apiRoot'].job.route('GET', (':id', 'result'), getJobResult)
+        info['apiRoot'].resource.route('GET', (), listResources)
 
-    events.bind("tale.update_citation", "wholetale", update_citation)
-    path_to_assets = os.path.join(
-        os.path.dirname(os.path.dirname(__file__)),
-        "web_client/extra/img",
-    )
-    for ext_provider in SettingDefault.defaults[PluginSettings.EXTERNAL_AUTH_PROVIDERS]:
-        logo_path = os.path.join(path_to_assets, ext_provider["name"] + '_logo.jpg')
-        if os.path.isfile(logo_path):
-            with open(logo_path, "rb") as image_file:
-                ext_provider["logo"] = base64.b64encode(image_file.read()).decode()
+        info['apiRoot'].user.route('PUT', ('settings',), setUserMetadata)
+        info['apiRoot'].user.route('GET', ('settings',), getUserMetadata)
+        info['apiRoot'].user.route('GET', ('sign_in',), signIn)
+        info['apiRoot'].user.route('GET', ('authorize',), authorize)
 
-    metricsLogger.setLevel(logging.INFO)
-    metricsLogger.addHandler(_MetricsHandler())
+        ModelImporter.model('user').exposeFields(
+            level=AccessType.WRITE, fields=('meta', 'myData', 'lastLogin'))
+        ModelImporter.model('user').exposeFields(
+            level=AccessType.ADMIN, fields=('otherTokens',))
+
+        events.bind("tale.update_citation", "wholetale", update_citation)
+        path_to_assets = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "web_client/extra/img",
+        )
+        for ext_provider in SettingDefault.defaults[PluginSettings.EXTERNAL_AUTH_PROVIDERS]:
+            logo_path = os.path.join(path_to_assets, ext_provider["name"] + '_logo.jpg')
+            if os.path.isfile(logo_path):
+                with open(logo_path, "rb") as image_file:
+                    ext_provider["logo"] = base64.b64encode(image_file.read()).decode()
+
+        metricsLogger.setLevel(logging.INFO)
+        metricsLogger.addHandler(_MetricsHandler())

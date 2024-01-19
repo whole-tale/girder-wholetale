@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from girder import events
 from girder.api import access
 from girder.api.describe import Description, autoDescribeRoute
 from girder.api.docs import addModel
@@ -12,9 +11,7 @@ from girder.api.rest import (
     setRawResponse
 )
 from girder.constants import AccessType, SortDir
-from girder_jobs.constants import JobStatus
-from girder_worker import getCeleryApp
-from ..constants import PluginSettings, InstanceStatus
+from ..constants import PluginSettings
 from ..models.instance import Instance as instanceModel
 
 
@@ -92,8 +89,6 @@ class Instance(Resource):
         self.route('DELETE', (':id',), self.deleteInstance)
         self.route('PUT', (':id',), self.updateInstance)
         self.route('GET', (':id', 'log'), self.getInstanceLog)
-
-        events.bind('jobs.job.update.after', 'wholetale', self.handleUpdateJob)
 
     @access.user
     @filtermodel(model='instance', plugin='wholetale')
@@ -211,24 +206,6 @@ class Instance(Resource):
             raise RestException(instanceCapErrMsg.format(instance_cap))
 
         return self._model.createInstance(tale, user, name=name, save=True, spawn=spawn)
-
-    def handleUpdateJob(self, event):
-        job = event.info['job']
-        if not (job['title'] == 'Update Instance' and job.get('status') is not None):
-            return
-
-        status = int(job['status'])
-        instance = self._model.load(job['args'][0], force=True)
-
-        if status == JobStatus.SUCCESS:
-            result = getCeleryApp().AsyncResult(job['celeryTaskId']).get()
-            instance['containerInfo'].update(result)
-            instance['status'] = InstanceStatus.RUNNING
-        elif status == JobStatus.ERROR:
-            instance['status'] = InstanceStatus.ERROR
-        elif status in (JobStatus.QUEUED, JobStatus.RUNNING):
-            instance['status'] = InstanceStatus.LAUNCHING
-        self._model.updateInstance(instance)
 
     @access.user
     @autoDescribeRoute(

@@ -15,9 +15,7 @@ from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.model_base import AccessControlledModel
 from girder.models.token import Token
-from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job
-from girder_worker import getCeleryApp
 from girder.utility import assetstore_utilities
 from gwvolman.constants import BUILD_TALE_IMAGE_STEP_TOTAL
 from gwvolman.tasks import build_tale_image
@@ -550,21 +548,3 @@ class Tale(AccessControlledModel):
         restored_tale.update(mp.get_tale_fields_from_environment(environment))
         restored_tale["dataSet"] = mp.get_dataset()
         return restored_tale
-
-    @staticmethod
-    def _track_publication(event):
-        job = event.info["job"]
-        if not (job["title"] == "Publish Tale" and job.get("status") == JobStatus.SUCCESS):
-            return
-        publication_info = getCeleryApp().AsyncResult(job["celeryTaskId"]).get()
-
-        metricsLogger.info(
-            "tale.publish",
-            extra={
-                "details": {
-                    "id": ObjectId(job["args"][0]),
-                    "publishInfo": publication_info,
-                    "userId": ObjectId(job["userId"]),
-                }
-            },
-        )

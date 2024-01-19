@@ -3,7 +3,7 @@ import json
 import magic
 import os
 import requests
-from girder.utility import hash_state, ziputil, JsonEncoder
+from girder.utility import _hash_state, ziputil, JsonEncoder
 from girder.models.folder import Folder
 from girder.constants import AccessType
 from ..license import WholeTaleLicense
@@ -22,8 +22,8 @@ class HashFileStream:
         except TypeError:
             self.gen = gen
         self.state = {
-            'md5': hash_state.serializeHex(md5()),
-            'sha256': hash_state.serializeHex(sha256()),
+            'md5': _hash_state.serializeHex(md5()),
+            'sha256': _hash_state.serializeHex(sha256()),
         }
 
     def __iter__(self):
@@ -32,9 +32,9 @@ class HashFileStream:
     def __next__(self):
         nxt = next(self.gen)
         for alg in self.state.keys():
-            checksum = hash_state.restoreHex(self.state[alg], alg)
+            checksum = _hash_state.restoreHex(self.state[alg], alg)
             checksum.update(nxt)
-            self.state[alg] = hash_state.serializeHex(checksum)
+            self.state[alg] = _hash_state.serializeHex(checksum)
         return nxt
 
     def __call__(self):
@@ -43,11 +43,11 @@ class HashFileStream:
 
     @property
     def sha256(self):
-        return hash_state.restoreHex(self.state['sha256'], 'sha256').hexdigest()
+        return _hash_state.restoreHex(self.state['sha256'], 'sha256').hexdigest()
 
     @property
     def md5(self):
-        return hash_state.restoreHex(self.state['md5'], 'md5').hexdigest()
+        return _hash_state.restoreHex(self.state['md5'], 'md5').hexdigest()
 
 
 class TaleExporter:

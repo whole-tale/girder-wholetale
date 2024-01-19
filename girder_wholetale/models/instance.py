@@ -3,28 +3,18 @@
 
 import datetime
 import json
-import time
-
 import requests
-from bson import ObjectId
-from girder import logger
+
 from girder.constants import AccessType, SortDir, TokenScope
 from girder.exceptions import ValidationException
 from girder.models.model_base import AccessControlledModel
 from girder.models.setting import Setting
 from girder.models.token import Token
-from girder.models.user import User
 from girder.utility import JsonEncoder
-from girder_worker import getCeleryApp
-from girder_jobs.constants import JobStatus, REST_CREATE_JOB_TOKEN_SCOPE
-from gwvolman.tasks import (
-    create_volume,
-    launch_container,
-    update_container,
-    shutdown_container,
-    remove_volume,
-    build_tale_image,
-)
+from girder_jobs.constants import REST_CREATE_JOB_TOKEN_SCOPE
+from gwvolman.tasks import \
+    create_volume, launch_container, update_container, shutdown_container, \
+    remove_volume, build_tale_image
 from gwvolman.tasks_base import BUILD_TALE_IMAGE_STEP_TOTAL
 from gwvolman.tasks_docker import (
     CREATE_VOLUME_STEP_TOTAL,
@@ -34,15 +24,11 @@ from gwvolman.tasks_docker import (
 
 from ..constants import InstanceStatus, PluginSettings
 from ..lib.metrics import metricsLogger
-from ..schema.misc import containerInfoSchema
 from ..utils import init_progress, notify_event
 
-from .tale import Tale
-from .image import Image
 
 TASK_TIMEOUT = 15.0
 BUILD_TIMEOUT = 360.0
-DEFAULT_IDLE_TIMEOUT = 1440.0
 
 
 class Instance(AccessControlledModel):
@@ -306,145 +292,3 @@ class Instance(AccessControlledModel):
             return r.text
         except requests.exceptions.HTTPError:
             return f"Logs for instance {instance['_id']} are currently unavailable..."
-
-
-def _wait_for_server(url, token, timeout=30, wait_time=0.5):
-    """Wait for a server to show up within a newly launched instance."""
-    tic = time.time()
-    while time.time() - tic < timeout:
-        try:
-            r = requests.get(url, cookies={"girderToken": token}, timeout=1)
-            r.raise_for_status()
-            if int(r.headers.get("Content-Length", "0")) == 0:
-                raise ValueError("HTTP server returns no content")
-        except requests.exceptions.HTTPError as err:
-            logger.info(
-                "Booting server at [%s], getting HTTP status [%s]",
-                url,
-                err.response.status_code,
-            )
-            time.sleep(wait_time)
-        except requests.exceptions.SSLError:
-            logger.info("Booting server at [%s], getting SSLError", url)
-            time.sleep(wait_time)
-        except requests.exceptions.ConnectionError:
-            logger.info("Booting server at [%s], getting ConnectionError", url)
-            time.sleep(wait_time)
-        except Exception as ex:
-            logger.info('Booting server at [%s], getting "%s"', url, str(ex))
-        else:
-            break
-
-
-def finalizeInstance(event):
-    job = event.info["job"]
-
-    if job.get("instance_id"):
-        instance = Instance().load(job["instance_id"], force=True)
-        if instance is None:
-            return
-
-        if (
-            instance["status"] == InstanceStatus.LAUNCHING
-            and job["status"] == JobStatus.ERROR  # noqa
-        ):
-            instance["status"] = InstanceStatus.ERROR
-            Instance().updateInstance(instance)
-
-    if job["title"] == "Spawn Instance" and job.get("status") is not None:
-        status = int(job["status"])
-        instance_id = job["args"][0]["instanceId"]
-        instance = Instance().load(instance_id, force=True, exc=True)
-        tale = Tale().load(instance["taleId"], force=True)
-        update = True
-        event_name = None
-
-        if (
-            status == JobStatus.SUCCESS
-            and instance["status"] == InstanceStatus.LAUNCHING  # noqa
-        ):
-            # Get a url to the container
-            service = getCeleryApp().AsyncResult(job["celeryTaskId"]).get()
-            url = service.get("url", "https://girder.hub.yt/")
-
-            # Generate the containerInfo
-            valid_keys = set(containerInfoSchema["properties"].keys())
-            containerInfo = {key: service.get(key, "") for key in valid_keys}
-            # Preserve the imageId / current digest in containerInfo
-            containerInfo["imageId"] = tale["imageId"]
-            containerInfo["digest"] = tale["imageInfo"]["digest"]
-
-            # Set the url and the containerInfo since they're used in /authorize
-            new_fields = {"url": url, "containerInfo": containerInfo}
-            if "sessionId" in service:
-                new_fields["sessionId"] = ObjectId(service["sessionId"])
-            Instance().update({"_id": instance["_id"]}, {"$set": new_fields})
-
-            user = User().load(instance["creatorId"], force=True)
-            token = Token().createToken(user=user, days=0.25)
-            _wait_for_server(url, token["_id"])
-
-            # Since _wait_for_server can potentially take some time,
-            # we need to refresh the state of the instance
-            # TODO: Why? What can modify instance status at this point?
-            instance = Instance().load(instance_id, force=True, exc=True)
-            if instance["status"] != InstanceStatus.LAUNCHING:
-                return  # bail
-
-            instance["status"] = InstanceStatus.RUNNING
-            event_name = "wt_instance_running"
-        elif (
-            status == JobStatus.ERROR and instance["status"] != InstanceStatus.ERROR  # noqa
-        ):
-            instance["status"] = InstanceStatus.ERROR
-        elif (
-            status == JobStatus.ERROR and instance["status"] == InstanceStatus.ERROR  # noqa
-        ):
-            event_name = "wt_instance_error"
-        elif (
-            status in (JobStatus.QUEUED, JobStatus.RUNNING)
-            and instance["status"] != InstanceStatus.LAUNCHING  # noqa
-        ):
-            instance["status"] = InstanceStatus.LAUNCHING
-        else:
-            update = False
-
-        if update:
-            msg = "Updating instance ({_id}) in finalizeInstance".format(**instance)
-            msg += " for job(id={_id}, status={status})".format(**job)
-            logger.debug(msg)
-            Instance().updateInstance(instance)
-
-            if event_name:
-                notify_event(
-                    [instance["creatorId"]],
-                    event_name,
-                    {"taleId": instance["taleId"], "instanceId": instance["_id"]},
-                )
-
-
-def cullIdleInstances(event):
-    """
-    Stop idle instances that have exceeded the configured timeout
-    """
-
-    logger.info("Culling idle instances")
-
-    images = Image().find()
-    for image in images:
-        idleTimeout = image.get("idleTimeout", DEFAULT_IDLE_TIMEOUT)
-
-        cullbefore = datetime.datetime.utcnow() - datetime.timedelta(
-            minutes=idleTimeout
-        )
-
-        instances = Instance().find(
-            {"lastActivity": {"$lt": cullbefore}, "containerInfo.imageId": image["_id"]}
-        )
-
-        for instance in instances:
-            logger.info(
-                "Stopping instance {}: idle timeout exceeded.".format(instance["_id"])
-            )
-            user = User().load(instance["creatorId"], force=True)
-            Instance().deleteInstance(instance, user)

@@ -21,10 +21,7 @@ from girder.models.user import User
 from girder.models.token import Token
 from girder.models.setting import Setting
 from girder_jobs.models.job import Job
-from girder_worker import CustomJobStatus
 from gwvolman.tasks import publish
-
-from girder_jobs.constants import JobStatus
 
 from ..schema.tale import taleModel as taleSchema
 from ..models.tale import Tale as taleModel
@@ -37,9 +34,8 @@ from ..lib.exporters.bag import BagTaleExporter
 from ..lib.exporters.native import NativeTaleExporter
 from ..utils import notify_event, init_progress
 
-from girder_worker import getCeleryApp
 
-from ..constants import ImageStatus, TaleStatus, PluginSettings, \
+from ..constants import TaleStatus, PluginSettings, \
     DEFAULT_IMAGE_ICON, DEFAULT_ILLUSTRATION
 
 
@@ -584,55 +580,6 @@ class Tale(Resource):
     def buildImage(self, tale, force):
         user = self.getCurrentUser()
         return self._model.buildImage(tale, user, force=force)
-
-    def updateBuildStatus(self, event):
-        """
-        Event handler that updates the Tale object based on the build_tale_image task.
-        """
-        job = event.info['job']
-        if job['title'] == 'Build Tale Image' and job.get('status') is not None:
-            status = int(job['status'])
-            tale = self.model('tale', 'wholetale').load(
-                job['args'][0], force=True)
-
-            if 'imageInfo' not in tale:
-                tale['imageInfo'] = {}
-
-            # Store the previous status, if present.
-            previousStatus = -1
-            try:
-                previousStatus = tale['imageInfo']['status']
-            except KeyError:
-                pass
-
-            if status == JobStatus.SUCCESS:
-                result = getCeleryApp().AsyncResult(job['celeryTaskId']).get()
-                tale['imageInfo']['digest'] = result['image_digest']
-                tale["imageInfo"]["imageId"] = tale["imageId"]
-                tale['imageInfo']['repo2docker_version'] = result['repo2docker_version']
-                tale['imageInfo']['last_build'] = result['last_build']
-                tale['imageInfo']['status'] = ImageStatus.AVAILABLE
-            elif status == JobStatus.ERROR:
-                tale["imageInfo"]["status"] = ImageStatus.INVALID
-            elif status in (JobStatus.CANCELED, CustomJobStatus.CANCELING):
-                tale["imageInfo"]["status"] = ImageStatus.UNAVAILABLE
-            elif status in (JobStatus.QUEUED, JobStatus.RUNNING):
-                tale['imageInfo']['jobId'] = job['_id']
-                tale['imageInfo']['status'] = ImageStatus.BUILDING
-
-            delete_instance = status in (
-                JobStatus.ERROR,
-                JobStatus.CANCELED,
-                CustomJobStatus.CANCELING,
-            )
-            if delete_instance and "instance_id" in job:
-                if instance := Instance().load(job["instance_id"], force=True):
-                    instance_creator = User().load(instance["creatorId"], force=True)
-                    Instance().deleteInstance(instance, instance_creator)
-
-            # If the status changed, save the object
-            if 'status' in tale['imageInfo'] and tale['imageInfo']['status'] != previousStatus:
-                self.model('tale', 'wholetale').updateTale(tale)
 
     @access.user
     @autoDescribeRoute(

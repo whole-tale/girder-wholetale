@@ -35,7 +35,7 @@ setup(
         "fs",
     ],
     entry_points={
-        "girder.plugin": ["girder_wholetale = girder_wholetale:WholeTalePlugin"]
+        "girder.plugin": ["wholetale = girder_wholetale:WholeTalePlugin"]
     },
     zip_safe=False,
 )

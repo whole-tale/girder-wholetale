@@ -9,7 +9,7 @@ from girder.api.rest import Resource, getApiUrl
 from girder.models.setting import Setting
 from girder.models.token import Token
 from girder.models.user import User
-from girder_oauth import constants as OAuthConstants
+from girder_oauth.settings import PluginSettings as OAuthPluginSettings
 from girder_oauth import providers
 
 from ..constants import PluginSettings
@@ -98,7 +98,7 @@ class Account(Resource):
 
         # OAuth providers ids with configured credentials that can be used for an external account
         enabled_providers_ids = set(
-            Setting().get(OAuthConstants.PluginSettings.PROVIDERS_ENABLED)
+            Setting().get(OAuthPluginSettings.PROVIDERS_ENABLED)
         )
 
         # External account providers ids that we support, can be defined in plugin settings
