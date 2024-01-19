@@ -1,9 +1,9 @@
-import { wrap } from 'girder/utilities/PluginUtils';
-import CollectionsView from 'girder/views/body/CollectionsView';
+import { wrap } from '@girder/core/utilities/PluginUtils';
+import CollectionsView from '@girder/core/views/body/CollectionsView';
 
 import CollectionsViewTemplate from '../templates/collectionsView.pug';
 
-import 'girder/stylesheets/body/plugins.styl';
+import '@girder/core/stylesheets/body/plugins.styl';
 import 'bootstrap-switch'; // /dist/js/bootstrap-switch.js',
 import 'bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css';
 

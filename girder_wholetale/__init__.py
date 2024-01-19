@@ -40,6 +40,7 @@ from .constants import PluginSettings, SettingDefault
 from .lib import update_citation
 from .lib.events import job_update_after_handler, cullIdleInstances
 from .lib.metrics import metricsLogger, _MetricsHandler
+from .models.instance import Instance as InstanceModel
 from .rest.account import Account
 from .rest.dataset import Dataset
 from .rest.image import Image
@@ -419,7 +420,7 @@ def setUserMetadata(self, params):
         del user['meta'][key]
 
     # Validate and save the user
-    return self.model('user').save(user)
+    return User().save(user)
 
 
 @access.public
@@ -463,7 +464,7 @@ def listResources(self, resources, params):
     result = {}
     for kind in resources:
         try:
-            model = self.model(kind)
+            model = ModelImporter.model(kind)
             result[kind] = [
                 model.load(id=id, user=user, level=AccessType.READ, exc=True)
                 for id in resources[kind]]
@@ -619,7 +620,7 @@ def authorize(self, instance):
               f'https://girder.{domain}/api/v1/user/sign_in?redirect={redirect}')
 
     if instance:
-        inst = self.model('instance', 'wholetale').findOne(
+        inst = InstanceModel().findOne(
             {"containerInfo.name": subdomain, "creatorId": user["_id"]}
         )
         if inst is None:
@@ -629,7 +630,7 @@ def authorize(self, instance):
         # once every 5 min.
         now = datetime.datetime.utcnow()
         if inst["lastActivity"] + datetime.timedelta(minutes=5) < now:
-            self.model('instance', 'wholetale').update(
+            InstanceModel().update(
                 {"_id": inst["_id"]}, {"$set": {"lastActivity": now}})
 
 
@@ -695,7 +696,6 @@ class WholeTalePlugin(GirderPlugin):
                 logprint(exc)
 
         from .models.image import Image as ImageModel
-        from .models.instance import Instance as InstanceModel
         ModelImporter.registerModel('instance', InstanceModel, 'wholetale')
         ModelImporter.registerModel('image', ImageModel, 'wholetale')
         ModelImporter.registerModel('tale', TaleModel, 'wholetale')

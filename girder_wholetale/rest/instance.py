@@ -11,8 +11,12 @@ from girder.api.rest import (
     setRawResponse
 )
 from girder.constants import AccessType, SortDir
+from girder.models.setting import Setting
+from girder.models.user import User
+
 from ..constants import PluginSettings
-from ..models.instance import Instance as instanceModel
+from ..models.instance import Instance as InstanceModel
+from ..models.tale import Tale
 
 
 instanceSchema = {
@@ -81,7 +85,7 @@ class Instance(Resource):
     def __init__(self):
         super(Instance, self).__init__()
         self.resourceName = 'instance'
-        self._model = instanceModel()
+        self._model = InstanceModel()
 
         self.route('GET', (), self.listInstances)
         self.route('POST', (), self.createInstance)
@@ -105,18 +109,18 @@ class Instance(Resource):
         # TODO: text search is ignored
         currentUser = self.getCurrentUser()
         if taleId:
-            tale = self.model('tale', 'wholetale').load(
+            tale = Tale().load(
                 taleId, user=currentUser, level=AccessType.READ)
         else:
             tale = None
 
         if userId:
-            user = self.model('user').load(userId, force=True, exc=True)
+            user = User().load(userId, force=True, exc=True)
         else:
             user = None
 
         # TODO allow to search for instances that belongs to specific user
-        return list(self.model('instance', 'wholetale').list(
+        return list(InstanceModel().list(
             user=user, tale=tale, offset=offset, limit=limit,
             sort=sort, currentUser=currentUser))
 
@@ -144,8 +148,7 @@ class Instance(Resource):
         currentUser = self.getCurrentUser()
 
         taleId = instance['taleId']
-        tale = self.model('tale', 'wholetale').load(
-            taleId, user=currentUser, level=AccessType.READ)
+        tale = Tale().load(taleId, user=currentUser, level=AccessType.READ)
 
         # TODO: Only continue if digest has changed
         # if image['digest'] != instance['containerInfo']['digest']:
@@ -165,7 +168,7 @@ class Instance(Resource):
         .errorResponse('Write access was denied for the instance.', 403)
     )
     def deleteInstance(self, instance, params):
-        self.model('instance', 'wholetale').deleteInstance(
+        InstanceModel().deleteInstance(
             instance, self.getCurrentUser())
 
     @access.user
@@ -187,11 +190,10 @@ class Instance(Resource):
     def createInstance(self, taleId, name, spawn):
         user = self.getCurrentUser()
 
-        taleModel = self.model('tale', 'wholetale')
-        tale = taleModel.load(
+        tale = Tale().load(
             taleId, user=user, level=AccessType.READ)
 
-        existing = self._model.findOne({
+        existing = InstanceModel().findOne({
             'taleId': tale['_id'],
             'creatorId': user['_id'],
         })
@@ -201,11 +203,11 @@ class Instance(Resource):
         running_instances = list(
             self._model.list(user=user, currentUser=user)
         )
-        instance_cap = self.model('setting').get(PluginSettings.INSTANCE_CAP)
+        instance_cap = Setting().get(PluginSettings.INSTANCE_CAP)
         if len(running_instances) + 1 > int(instance_cap):
             raise RestException(instanceCapErrMsg.format(instance_cap))
 
-        return self._model.createInstance(tale, user, name=name, save=True, spawn=spawn)
+        return InstanceModel().createInstance(tale, user, name=name, save=True, spawn=spawn)
 
     @access.user
     @autoDescribeRoute(

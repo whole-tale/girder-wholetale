@@ -1,7 +1,7 @@
-import { wrap } from 'girder/utilities/PluginUtils';
-import { getCurrentUser } from 'girder/auth';
+import { wrap } from '@girder/core/utilities/PluginUtils';
+import { getCurrentUser } from '@girder/core/auth';
 
-import HierarchyWidget from 'girder/views/widgets/HierarchyWidget';
+import HierarchyWidget from '@girder/core/views/widgets/HierarchyWidget';
 
 import WholeTaleHierarchyWidget from '../templates/WholeTaleHierarchyWidget.pug';
 

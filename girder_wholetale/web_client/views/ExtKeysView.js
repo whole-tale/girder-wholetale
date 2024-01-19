@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import _ from 'underscore';
 
-import View from 'girder/views/View';
-import { getCurrentToken, cookie } from 'girder/auth';
-import { restRequest } from 'girder/rest';
-import { splitRoute } from 'girder/misc';
+import View from '@girder/core/views/View';
+import { getCurrentToken, cookie } from '@girder/core/auth';
+import { restRequest } from '@girder/core/rest';
+import { splitRoute } from '@girder/core/misc';
 
 import ExtKeyView from './ExtKeyDialog';
 import ExtKeysViewTemplate from '../templates/extKeysView.pug';

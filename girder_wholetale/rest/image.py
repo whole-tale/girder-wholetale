@@ -6,8 +6,9 @@ from girder.api.describe import Description, autoDescribeRoute
 from girder.api.rest import Resource, filtermodel
 from girder.constants import AccessType, SortDir, TokenScope
 from ..schema.misc import containerConfigSchema, tagsSchema
+from ..models.image import Image as ImageModel
 
-imageModel = {
+imageSchema = {
     "description": "Object representing a WT Image.",
     "required": [
         "_id",
@@ -83,7 +84,7 @@ imageModel = {
         'updated': '2017-01-10T16:15:17.313000+00:00',
     },
 }
-addModel('image', imageModel, resources='image')
+addModel('image', imageSchema, resources='image')
 
 
 class Image(Resource):
@@ -115,23 +116,22 @@ class Image(Resource):
     )
     def listImages(self, parentId, text, tag, limit, offset, sort, params):
         user = self.getCurrentUser()
-        imageModel = self.model('image', 'wholetale')
 
         filters = {}
         if parentId:
-            parent = imageModel.load(
+            parent = ImageModel().load(
                 parentId, user=user, level=AccessType.READ, exc=True)
             filters['parentId'] = parent['_id']
         if tag:
             filters['tags'] = tag
 
         if text:
-            return list(imageModel.textSearch(
+            return list(ImageModel().textSearch(
                 text, user=user, limit=limit, offset=offset, sort=sort,
                 filters=filters, level=AccessType.READ))
         else:
-            cursor = imageModel.find(filters, sort=sort)
-            return list(imageModel.filterResultsByPermission(
+            cursor = ImageModel().find(filters, sort=sort)
+            return list(ImageModel().filterResultsByPermission(
                 cursor, user, AccessType.READ, limit, offset))
 
     @access.public(scope=TokenScope.DATA_READ)
@@ -185,8 +185,8 @@ class Image(Resource):
         if idleTimeout is not None:
             image['idleTimeout'] = idleTimeout
         # TODO: tags magic
-        self.model('image', 'wholetale').setPublic(image, public)
-        return self.model('image', 'wholetale').updateImage(image)
+        ImageModel().setPublic(image, public)
+        return ImageModel().updateImage(image)
 
     @access.admin
     @autoDescribeRoute(
@@ -197,7 +197,7 @@ class Image(Resource):
         .errorResponse('Admin access was denied for the image.', 403)
     )
     def deleteImage(self, image, params):
-        self.model('image', 'wholetale').remove(image)
+        ImageModel().remove(image)
 
     @access.user
     @filtermodel(model='image', plugin='wholetale')
@@ -224,7 +224,7 @@ class Image(Resource):
     def createImage(self, name, description, public, icon,
                     iframe, idleTimeout, tags, config, params):
         user = self.getCurrentUser()
-        return self.model('image', 'wholetale').createImage(
+        return ImageModel().createImage(
             name=name, tags=tags, creator=user,
             save=True, parent=None, description=description, public=public,
             config=config, icon=icon, iframe=iframe, idleTimeout=idleTimeout)
@@ -237,7 +237,7 @@ class Image(Resource):
         .errorResponse('Admin access was denied for the image.', 403)
     )
     def getImageAccess(self, image):
-        return self.model('image', 'wholetale').getFullAccessList(image)
+        return ImageModel().getFullAccessList(image)
 
     @access.user(scope=TokenScope.DATA_OWN)
     @autoDescribeRoute(
@@ -253,5 +253,5 @@ class Image(Resource):
     )
     def updateImageAccess(self, image, access, publicFlags, public):
         user = self.getCurrentUser()
-        return self.model('image', 'wholetale').setAccessList(
+        return ImageModel().setAccessList(
             image, access, save=True, user=user, setPublic=public, publicFlags=publicFlags)

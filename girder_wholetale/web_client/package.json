@@ -1,0 +1,23 @@
+{
+    "name": "@girder/wholetale",
+    "version": "2.0.0",
+    "description": "Core Whole Tale plugin for Girder",
+    "license": "Apache-2.0",
+    "peerDepencencies": {
+        "@girder/core": "*",
+        "@girder/jobs": "*"
+    },
+    "bugs": {
+        "url": "https://github.com/whole-tale/girder_wholetale/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/whole-tale/girder_wholetale.git"
+    },
+    "dependencies": {},
+    "girderPlugin": {
+        "name": "wholetale",
+        "main": "./main.js",
+        "dependencies": ["jobs"]
+    }
+}

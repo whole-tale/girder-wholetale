@@ -1,7 +1,7 @@
-import HeaderUserView from 'girder/views/layout/HeaderUserView';
-import { getCurrentUser } from 'girder/auth';
-import { wrap } from 'girder/utilities/PluginUtils';
-import { restRequest, getApiRoot } from 'girder/rest';
+import HeaderUserView from '@girder/core/views/layout/HeaderUserView';
+import { getCurrentUser } from '@girder/core/auth';
+import { wrap } from '@girder/core/utilities/PluginUtils';
+import { restRequest, getApiRoot } from '@girder/core/rest';
 
 import HeaderLogoTemplate from '../templates/headerLogo.pug';
 import HeaderLinkTemplate from '../templates/headerLink.pug';

@@ -24,8 +24,8 @@ from girder_jobs.models.job import Job
 from gwvolman.tasks import publish
 
 from ..schema.tale import taleModel as taleSchema
-from ..models.tale import Tale as taleModel
-from ..models.image import Image as imageModel
+from ..models.tale import Tale as TaleModel
+from ..models.image import Image as ImageModel
 from ..models.instance import Instance
 from ..lib import pids_to_entities, IMPORT_PROVIDERS
 from ..lib.dataone import DataONELocations  # TODO: get rid of it
@@ -47,7 +47,7 @@ class Tale(Resource):
     def __init__(self):
         super(Tale, self).__init__()
         self.resourceName = 'tale'
-        self._model = taleModel()
+        self._model = TaleModel()
 
         self.route('GET', (), self.listTales)
         self.route('GET', (':id',), self.getTale)
@@ -91,11 +91,11 @@ class Tale(Resource):
         currentUser = self.getCurrentUser()
         image = None
         if imageId:
-            image = imageModel().load(imageId, user=currentUser, level=AccessType.READ, exc=True)
+            image = ImageModel().load(imageId, user=currentUser, level=AccessType.READ, exc=True)
 
         creator = None
         if userId:
-            creator = self.model('user').load(userId, force=True, exc=True)
+            creator = User().load(userId, force=True, exc=True)
 
         if text:
             filters = {}
@@ -144,7 +144,7 @@ class Tale(Resource):
 
         new_imageId = tale.pop("imageId")
         if new_imageId != str(taleObj["imageId"]):
-            image = imageModel().load(
+            image = ImageModel().load(
                 new_imageId, user=self.getCurrentUser(),
                 level=AccessType.READ, exc=True)
             taleObj["imageId"] = image["_id"]
@@ -307,7 +307,7 @@ class Tale(Resource):
                 )
                 raise RestException(msg)
 
-            image = imageModel().load(imageId, user=user, level=AccessType.READ,
+            image = ImageModel().load(imageId, user=user, level=AccessType.READ,
                                       exc=True)
 
             taleKwargs.setdefault("icon", image.get("icon", DEFAULT_IMAGE_ICON))
@@ -376,7 +376,7 @@ class Tale(Resource):
     )
     def createTale(self, tale, params):
         user = self.getCurrentUser()
-        image = self.model("image", "wholetale").load(
+        image = ImageModel().load(
             tale["imageId"], user=user, level=AccessType.READ, exc=True
         )
         default_authors = [
@@ -601,7 +601,7 @@ class Tale(Resource):
     @filtermodel(model='tale', plugin='wholetale')
     def copyTale(self, tale, versionId, shallow):
         user = self.getCurrentUser()
-        image = self.model('image', 'wholetale').load(
+        image = ImageModel().load(
             tale['imageId'], user=user, level=AccessType.READ, exc=True)
         default_authors = [
             dict(firstName=user['firstName'], lastName=user['lastName'], orcid="")

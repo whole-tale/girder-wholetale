@@ -12,7 +12,9 @@ from girder.api.rest import Resource, filtermodel, iterBody
 from girder.constants import AccessType, SortDir, TokenScope
 from girder.exceptions import ValidationException, RestException
 from girder.models.item import Item
+from girder.models.folder import Folder
 from girder.models.user import User
+from girder.utility.model_importer import ModelImporter
 from girder_jobs.models.job import Job
 
 from ..constants import CATALOG_NAME
@@ -120,7 +122,6 @@ class Dataset(Resource):
     )
     def listDatasets(self, myData, identifiers, limit, offset, sort):
         user = self.getCurrentUser()
-        folderModel = self.model('folder')
         datasets = []
 
         filters = {}
@@ -138,13 +139,13 @@ class Dataset(Resource):
             )
 
             for modelType in ('folder', 'item'):
-                for obj in self.model(modelType).find(filters):
+                for obj in ModelImporter.model(modelType).find(filters):
                     obj['_modelType'] = modelType
                     datasets.append(_itemOrFolderToDataset(obj))
             return datasets
 
         parent = getOrCreateRootFolder(CATALOG_NAME)
-        for folder in folderModel.childFolders(
+        for folder in Folder().childFolders(
                 parentType='folder', parent=parent, user=user,
                 limit=limit, offset=offset, sort=sort, filters=filters):
             folder['_modelType'] = 'folder'
@@ -173,10 +174,10 @@ class Dataset(Resource):
     def getDataset(self, id, params):
         user = self.getCurrentUser()
         try:
-            doc = self.model('folder').load(id=id, user=user, level=AccessType.READ, exc=True)
+            doc = Folder().load(id=id, user=user, level=AccessType.READ, exc=True)
             doc['_modelType'] = 'folder'
         except ValidationException:
-            doc = self.model('item').load(id=id, user=user, level=AccessType.READ, exc=True)
+            doc = Item().load(id=id, user=user, level=AccessType.READ, exc=True)
             doc['_modelType'] = 'item'
         if 'meta' not in doc or 'provider' not in doc['meta']:
             raise ValidationException('No such item: %s' % str(doc['_id']), 'id')
@@ -233,7 +234,7 @@ class Dataset(Resource):
             parent = getOrCreateRootFolder(CATALOG_NAME)
             parentType = 'folder'
         else:
-            parent = self.model(parentType).load(
+            parent = ModelImporter.model(parentType).load(
                 parentId, user=user, level=AccessType.WRITE, exc=True)
 
         try:
@@ -277,7 +278,7 @@ class Dataset(Resource):
             parent = getOrCreateRootFolder(CATALOG_NAME)
             parentType = 'folder'
         else:
-            parent = self.model(parentType).load(
+            parent = ModelImporter.model(parentType).load(
                 parentId, user=user, level=AccessType.WRITE, exc=True)
 
         if cherrypy.request.headers.get('Content-Type') == 'application/zip':

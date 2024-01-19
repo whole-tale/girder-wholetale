@@ -259,7 +259,7 @@ class Tale(AccessControlledModel):
 
     def _createAuxFolder(self, tale, rootFolderName, creator=None):
         if creator is None:
-            creator = self.model('user').load(tale['creatorId'], force=True)
+            creator = User().load(tale['creatorId'], force=True)
 
         if tale['public'] is not None and isinstance(tale['public'], bool):
             public = tale['public']
@@ -267,13 +267,13 @@ class Tale(AccessControlledModel):
             public = False
 
         rootFolder = getOrCreateRootFolder(rootFolderName)
-        auxFolder = self.model('folder').createFolder(
+        auxFolder = Folder().createFolder(
             rootFolder, str(tale['_id']), parentType='folder',
             public=public, reuseExisting=True)
-        self.model('folder').setUserAccess(
+        Folder().setUserAccess(
             auxFolder, user=creator, level=AccessType.ADMIN,
             save=True)
-        auxFolder = self.model('folder').setMetadata(
+        auxFolder = Folder().setMetadata(
             auxFolder, {'taleId': str(tale['_id'])})
         return auxFolder
 

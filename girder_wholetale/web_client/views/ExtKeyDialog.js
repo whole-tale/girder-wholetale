@@ -1,6 +1,6 @@
-import View from 'girder/views/View';
-import events from 'girder/events';
-import { restRequest } from 'girder/rest';
+import View from '@girder/core/views/View';
+import events from '@girder/core/events';
+import { restRequest } from '@girder/core/rest';
 
 import ExtKeyDialogTemplate from '../templates/extKeyDialog.pug';
 

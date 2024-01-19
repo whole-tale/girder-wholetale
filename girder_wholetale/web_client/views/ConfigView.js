@@ -1,11 +1,12 @@
+import $ from 'jquery';
 import _ from 'underscore';
 
-import PluginConfigBreadcrumbWidget from 'girder/views/widgets/PluginConfigBreadcrumbWidget';
-import UploadWidget from 'girder/views/widgets/UploadWidget';
-import FolderModel from 'girder/models/FolderModel';
-import View from 'girder/views/View';
-import events from 'girder/events';
-import { restRequest, getApiRoot } from 'girder/rest';
+import PluginConfigBreadcrumbWidget from '@girder/core/views/widgets/PluginConfigBreadcrumbWidget';
+import UploadWidget from '@girder/core/views/widgets/UploadWidget';
+import FolderModel from '@girder/core/models/FolderModel';
+import View from '@girder/core/views/View';
+import events from '@girder/core/events';
+import { restRequest, getApiRoot } from '@girder/core/rest';
 
 import ConfigViewTemplate from '../templates/configView.pug';
 import '../stylesheets/configView.styl';
