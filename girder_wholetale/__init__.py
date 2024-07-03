@@ -12,7 +12,7 @@ import pathlib
 import six
 import validators
 
-from girder import events, logprint, logger
+from girder import events
 from girder.api import access
 from girder.api.describe import Description, describeRoute, autoDescribeRoute
 from girder.api.rest import \
@@ -57,6 +57,8 @@ from .schema.misc import (
     repository_to_provider_schema,
 )
 
+
+logger = logging.getLogger(__name__)
 
 @setting_utilities.validator(PluginSettings.PUBLISHER_REPOS)
 def validatePublisherRepos(doc):
@@ -669,8 +671,7 @@ class WholeTalePlugin(GirderPlugin):
 
     def load(self, info):
         getPlugin("oauth").load(info)
-        getPlugin("virtual_resources").load(info)
-        getPlugin("globus_handler").load(info)
+        getPlugin("girder_virtual_resources").load(info)
         from girder_oauth.providers.globus import Globus
 
         # Remove unnecessary scope https://github.com/whole-tale/girder_wholetale/issues/534
@@ -693,7 +694,7 @@ class WholeTalePlugin(GirderPlugin):
             try:
                 TaleModel().save(obj, validate=True)
             except GirderException as exc:
-                logprint(exc)
+                logger.error(exc)
 
         from .models.image import Image as ImageModel
         ModelImporter.registerModel('instance', InstanceModel, 'wholetale')

@@ -21,7 +21,6 @@ from .dataverse.auth import DataverseVerificator
 from .dataverse.provider import DataverseImportProvider
 from .deriva.auth import DerivaVerificator
 from .entity import Entity
-from .globus.globus_provider import GlobusImportProvider
 from .http_provider import HTTPImportProvider
 from .import_providers import ImportProviders
 from .null_provider import NullImportProvider
@@ -41,7 +40,6 @@ IMPORT_PROVIDERS.addProvider(BDBagProvider())
 IMPORT_PROVIDERS.addProvider(DataverseImportProvider())
 IMPORT_PROVIDERS.addProvider(ZenodoImportProvider())
 IMPORT_PROVIDERS.addProvider(OpenICPSRImportProvider())
-IMPORT_PROVIDERS.addProvider(GlobusImportProvider())
 IMPORT_PROVIDERS.addProvider(DataOneImportProvider())
 
 # (almost) last resort

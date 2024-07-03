@@ -21,7 +21,6 @@ setup(
         "girder>=3",
         "girder-jobs",
         "girder-worker",
-        "girder-globus-handler",
         "girder-virtual-resources",
         "rdflib",
         "celery[redis]",
