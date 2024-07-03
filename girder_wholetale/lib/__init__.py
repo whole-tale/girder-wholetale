@@ -14,8 +14,6 @@ from girder.utility.progress import ProgressContext
 from ..models.tale import Tale
 from ..utils import notify_event
 from .bdbag.bdbag_provider import BDBagProvider
-from .dataone.auth import DataONEVerificator
-from .dataone.provider import DataOneImportProvider
 from .dataverse.auth import DataverseVerificator
 from .dataverse.provider import DataverseImportProvider
 from .entity import Entity
@@ -38,7 +36,6 @@ IMPORT_PROVIDERS.addProvider(BDBagProvider())
 IMPORT_PROVIDERS.addProvider(DataverseImportProvider())
 IMPORT_PROVIDERS.addProvider(ZenodoImportProvider())
 IMPORT_PROVIDERS.addProvider(OpenICPSRImportProvider())
-IMPORT_PROVIDERS.addProvider(DataOneImportProvider())
 
 # (almost) last resort
 IMPORT_PROVIDERS.addProvider(HTTPImportProvider())
@@ -49,28 +46,22 @@ IMPORT_PROVIDERS.addProvider(NullImportProvider())
 Verificators = {
     "zenodo": ZenodoVerificator,
     "dataverse": DataverseVerificator,
-    "dataone": DataONEVerificator,
-    "dataoneprod": DataONEVerificator,
-    "dataonedev": DataONEVerificator,
-    "dataonestage": DataONEVerificator,
     "icpsr": OpenICPSRVerificator,
 }
 
 
-def pids_to_entities(pids, user=None, base_url=None, lookup=True):
+def pids_to_entities(pids, user=None, lookup=True):
     """
     Resolve unique external identifiers into WholeTale Entities or file listings
 
     :param pids: list of external identifiers
     :param user: User performing the resolution
-    :param base_url: DataONE's node endpoint url
     :param lookup: If false, a list of remote files is returned instead of Entities
     """
     results = []
     try:
         for pid in pids:
             entity = Entity(pid.strip(), user)
-            entity["base_url"] = base_url
             entity = RESOLVERS.resolve(entity)
             provider = IMPORT_PROVIDERS.getProvider(entity)
             if lookup:
@@ -89,7 +80,7 @@ def pids_to_entities(pids, user=None, base_url=None, lookup=True):
     return results
 
 
-def register_dataMap(dataMaps, parent, parentType, user=None, base_url=None, progress=False):
+def register_dataMap(dataMaps, parent, parentType, user=None, progress=False):
     """
     Register a list of Data Maps into a given Girder object
 
@@ -97,7 +88,6 @@ def register_dataMap(dataMaps, parent, parentType, user=None, base_url=None, pro
     :param parent: A Collection or a Folder where data should be registered
     :param parentType: Either a 'collection' or a 'folder'
     :param user: User performing the registration
-    :param base_url: DataONE's node endpoint url
     :param progress: If True, emit 'progress' notification for each registered file.
     :return: List of ids of registered objects
     """
@@ -108,7 +98,7 @@ def register_dataMap(dataMaps, parent, parentType, user=None, base_url=None, pro
             # would be merged into it
             provider = IMPORT_PROVIDERS.getFromDataMap(dataMap)
             objType, obj = provider.register(
-                parent, parentType, ctx, user, dataMap, base_url=base_url
+                parent, parentType, ctx, user, dataMap,
             )
             importedData.append(obj["_id"])
     return importedData

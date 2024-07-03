@@ -104,10 +104,9 @@ class BDBagFullTestCase(base.TestCase):
     def testBDBagValidation(self):
         from girder.plugins.jobs.models.job import Job
 
-        # Get a datamap for variety of sources (Zenodo, Dataverse, DataONE, http)
+        # Get a datamap for variety of sources (Zenodo, Dataverse, http)
         dois = [
             "doi:10.7910/DVN/RLMYMR",
-            "doi:10.18739/A23M1P",
             "doi:10.5281/zenodo.6038195",
             "https://gwosc.org/s/events/BBH_events_v3.json",
         ]
@@ -121,7 +120,7 @@ class BDBagFullTestCase(base.TestCase):
         self.assertStatus(resp, 200)
         self.assertEqual(
             sorted([_["repository"] for _ in resp.json]),
-            sorted(["Dataverse", "DataONE", "Zenodo", "HTTP"]),
+            sorted(["Dataverse", "Zenodo", "HTTP"]),
         )
         datamap = resp.json
 

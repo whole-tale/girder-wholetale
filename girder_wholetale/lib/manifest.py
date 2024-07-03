@@ -83,23 +83,6 @@ class Manifest:
         self.add_version_info()
         self.add_run_info()
 
-    publishers = {
-        "DataONE":
-            {
-                "@id": "https://www.dataone.org/",
-                "@type": "Organization",
-                "legalName": "DataONE",
-                "Description": "A federated data network allowing access to science data"
-            },
-        "Globus":
-            {
-                "@id": "https://www.materialsdatafacility.org/",
-                "@type": "Organization",
-                "legalName": "Materials Data Facility",
-                "Description": "A simple way to publish, discover, and access materials datasets"
-            }
-    }
-
     def validate(self):
         """
         Checks for the presence of required tale information so
@@ -256,7 +239,6 @@ class Manifest:
                 "@type": "schema:Dataset",
                 "schema:name": folder['name'],
                 "schema:identifier": identifier,
-                # "publisher": self.publishers[provider]
             }
 
         except (KeyError, TypeError, ValidationException):

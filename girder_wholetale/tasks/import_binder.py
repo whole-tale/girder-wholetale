@@ -35,7 +35,6 @@ from girder_jobs.models.job import Job
 
 from ..constants import CATALOG_NAME, InstanceStatus, TaleStatus
 from ..lib import pids_to_entities, register_dataMap
-from ..lib.dataone import DataONELocations  # TODO: get rid of it
 from ..lib.metrics import metricsLogger
 from ..models.instance import Instance
 from ..models.tale import Tale
@@ -127,16 +126,14 @@ def run(job):
             progressMessage="Registering external data",
         )
         dataIds = lookup_kwargs.pop("dataId")
-        base_url = lookup_kwargs.get("base_url", DataONELocations.prod_cn)
         dataMaps = pids_to_entities(
-            dataIds, user=user, base_url=base_url, lookup=True
-        )  # DataONE shouldn't be here
+            dataIds, user=user, lookup=True
+        )
         imported_data = register_dataMap(
             dataMaps,
             getOrCreateRootFolder(CATALOG_NAME),
             "folder",
             user=user,
-            base_url=base_url,
         )
 
         dataMap = dataMaps[0]

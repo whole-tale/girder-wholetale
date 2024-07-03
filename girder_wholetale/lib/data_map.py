@@ -30,14 +30,9 @@ dataMapDoc = {
             "type": "boolean",
             "description": "If True, external data resource is a Tale",
         },
-        "base_url": {
-            "type": "string",
-            "description": "Optional CN url for DataONE datasets",
-        },
     },
     "required": ["dataId", "repository", "doi", "name", "size"],
     "example": {
-        "base_url": "https://cn.dataone.org/cn/v2",
         "dataId": "urn:uuid:42969280-e11c-41a9-92dc-33964bf785c8",
         "doi": "10.5063/F1Z899CZ",
         "name": (
@@ -60,7 +55,6 @@ class DataMap:
     name: str = None
     repository: str = None
     tale: bool = False
-    base_url: str = None
 
     def toDict(self) -> Dict:
         ret = {
@@ -71,8 +65,6 @@ class DataMap:
             "name": self.name,
             "tale": self.tale,
         }
-        if self.base_url:
-            ret["base_url"] = self.base_url
         return ret
 
     @staticmethod
@@ -84,7 +76,6 @@ class DataMap:
             doi=d.get("doi"),
             name=d.get("name", "Unknown Dataset"),
             tale=d.get("tale", False),
-            base_url=d.get("base_url"),
         )
 
     @staticmethod

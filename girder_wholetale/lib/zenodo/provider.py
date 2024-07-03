@@ -189,9 +189,7 @@ class ZenodoImportProvider(ImportProvider):
             )
         return hierarchy
 
-    def _listRecursive(
-        self, user, pid: str, name: str, base_url: str = None, progress=None
-    ):
+    def _listRecursive(self, user, pid: str, name: str, progress=None):
         record = self._get_record(pid)
         doi = self._get_doi_from_record(record)
 

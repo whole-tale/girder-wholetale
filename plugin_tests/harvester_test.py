@@ -136,29 +136,21 @@ class DataONEHarversterTestCase(base.TestCase):
         resp = self.request(
             path='/repository/lookup', method='GET',
             params={'dataId':
-                    json.dumps(['doi:10.18739/A2ND53',
-                                'http://use.yt/upload/944d8537'])})
+                    json.dumps(['http://use.yt/upload/944d8537'])})
         self.assertStatus(resp, 200)
         dataMap = resp.json
 
         self.assertEqual(
             dataMap, [
                 {
-                    'base_url': 'https://cn.dataone.org/cn/v2',
-                    'dataId': 'resource_map_doi:10.18739/A2ND53',
-                    'doi': 'doi:10.18739/A2ND53',
-                    'name': 'Thaw depth in the ITEX plots at Barrow and Atqasuk, Alaska',
-                    'repository': 'DataONE',
-                    'size': 27747,
-                    'tale': False,
-                }, {
                     'dataId': 'http://use.yt/upload/944d8537',
                     'doi': None,
                     'name': 'nginx.tmpl',
                     'repository': 'HTTP',
                     'size': 8792,
                     'tale': False,
-                }]
+                }
+            ]
         )
 
         resp = self.request(

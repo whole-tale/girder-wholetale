@@ -16,14 +16,6 @@ DEFAULT_ILLUSTRATION = (
 )
 
 
-class HarvesterType:
-    """
-    All possible data harverster implementation types.
-    """
-
-    DATAONE = 0
-
-
 class PluginSettings:
     INSTANCE_CAP = "wholetale.instance_cap"
     DATAVERSE_URL = "wholetale.dataverse_url"
@@ -93,19 +85,6 @@ class SettingDefault:
                 "targets": [],
             },
             {
-                "name": "dataone",
-                "logo": "",
-                "fullName": "DataONE",
-                "tags": ["publish"],
-                "url": "",
-                "type": "apikey",
-                "docs_href": (
-                    "https://{siteUrl}/portal/oauth?action=start&"
-                    "target=https%3A%2F%2F{siteUrl}%2Fportal%2Ftoken"
-                ),
-                "targets": [],
-            },
-            {
                 "name": "icpsr",
                 "logo": "",
                 "fullName": "ICPSR",
@@ -126,13 +105,6 @@ class SettingDefault:
                     "demo.dataverse.org",
                 ],
             },
-            {
-                "name": "dataone",
-                "targets": [
-                    "cn-stage.test.dataone.org",
-                    "cn.dataone.org",
-                ],
-            },
             {"name": "icpsr", "targets": ["www.openicpsr.org"]},
         ],
         PluginSettings.ZENODO_EXTRA_HOSTS: [],
@@ -141,11 +113,6 @@ class SettingDefault:
                 "repository": "sandbox.zenodo.org",
                 "auth_provider": "zenodo",
                 "name": "Zenodo Sandbox",
-            },
-            {
-                "repository": "https://dev.nceas.ucsb.edu/knb/d1/mn",
-                "auth_provider": "dataone",
-                "name": "DataONE Dev",
             },
         ],
         PluginSettings.LOGGER_URL: "http://logger:8000/",

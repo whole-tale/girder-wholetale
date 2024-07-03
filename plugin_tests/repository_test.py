@@ -77,31 +77,7 @@ class RepositoryTestCase(base.TestCase):
         resp = self.request(path="/repository", method="GET")
         self.assertStatusOk(resp)
         self.assertEqual(resp.json, [])
-
-        # Pretend we have authorized with DataONE
-        self.user["otherTokens"] = [
-            {
-                "provider": "dataone",
-                "access_token": "dataone_token",
-                "resource_server": "cn-stage.test.dataone.org",
-                "token_type": "dataone",
-            }
-        ]
-        self.user = User().save(self.user)
-
-        resp = self.request(path="/repository", method="GET", user=self.user)
-        self.assertStatusOk(resp)
-        self.assertEqual(
-            resp.json,
-            [
-                {
-                    "name": "DataONE Dev",
-                    "repository": "https://dev.nceas.ucsb.edu/knb/d1/mn",
-                }
-            ],
-        )
-
-        # Pretend we have authorized with DataONE and Zenodo
+        # Pretend we have authorized with Zenodo
         self.user["otherTokens"].append(
             {
                 "provider": "zenodo",
@@ -117,10 +93,6 @@ class RepositoryTestCase(base.TestCase):
         self.assertEqual(
             resp.json,
             [
-                {
-                    "name": "DataONE Dev",
-                    "repository": "https://dev.nceas.ucsb.edu/knb/d1/mn",
-                },
                 {"name": "Zenodo Sandbox", "repository": "sandbox.zenodo.org"},
             ],
         )

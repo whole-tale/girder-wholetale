@@ -9,7 +9,6 @@ from girder.api.rest import Resource, RestException
 from girder.models.setting import Setting
 
 from ..constants import PluginSettings
-from ..lib.dataone import DataONELocations
 from ..lib.data_map import dataMapDoc
 from ..lib.file_map import fileMapDoc
 from ..lib import pids_to_entities
@@ -41,22 +40,12 @@ class Repository(Resource):
             required=True,
             description='List of external datasets identificators.',
         )
-        .param(
-            'base_url',
-            'The node endpoint url. This can be used to register datasets from custom networks, '
-            'such as the DataONE development network. This can be passed in as '
-            'an ordinary string. Examples include https://dev.nceas.ucsb.edu/knb/d1/mn/v2 and '
-            'https://cn.dataone.org/cn/v2',
-            required=False,
-            dataType='string',
-            default=DataONELocations.prod_cn,
-        )
         .responseClass('dataMap', array=True)
     )
-    def lookupData(self, dataId, base_url):
+    def lookupData(self, dataId):
         try:
             results = pids_to_entities(
-                dataId, user=self.getCurrentUser(), base_url=base_url, lookup=True
+                dataId, user=self.getCurrentUser(), lookup=True
             )
         except RuntimeError as exc:
             raise RestException(exc.args[0])
@@ -65,7 +54,7 @@ class Repository(Resource):
     @access.public
     @autoDescribeRoute(
         Description(
-            'Retrieve a list of files and nested packages in a DataONE repository'
+            'Retrieve a list of files and nested packages in a repository'
         )
         .notes(
             'Given a list of external data identifiers, returns a list of files inside '
@@ -77,20 +66,12 @@ class Repository(Resource):
             required=True,
             description='List of external datasets identificators.',
         )
-        .param(
-            'base_url',
-            'The member node base url. This can be used to search datasets from custom networks ,'
-            'such as the DataONE development network.',
-            required=False,
-            dataType='string',
-            default=DataONELocations.prod_cn,
-        )
         .responseClass('fileMap', array=True)
     )
-    def listFiles(self, dataId, base_url):
+    def listFiles(self, dataId):
         try:
             results = pids_to_entities(
-                dataId, user=self.getCurrentUser(), base_url=base_url, lookup=False
+                dataId, user=self.getCurrentUser(), lookup=False
             )
         except RuntimeError as exc:
             raise RestException(exc.args[0])
@@ -110,13 +91,8 @@ class Repository(Resource):
         targets = []
         for entry in Setting().get(PluginSettings.PUBLISHER_REPOS):
             repository = entry["repository"]
-            publisher = entry["auth_provider"]
-            if publisher.startswith("dataone"):
-                key = "provider"  # Dataone
-                value = publisher
-            else:
-                key = "resource_server"
-                value = repository
+            key = "resource_server"
+            value = repository
 
             token = next(
                 (_ for _ in user.get("otherTokens", []) if _.get(key) == value), None

@@ -2,8 +2,7 @@ from typing import Optional, List, Dict
 
 fileMapDoc = {
     'type': 'object',
-    'description': ('A container with a list of filenames and sizes '
-                    'from a DataONE repository.'),
+    'description': 'A container with a list of filenames and sizes ',
     'properties': {
         'name': {
             'type': 'string',

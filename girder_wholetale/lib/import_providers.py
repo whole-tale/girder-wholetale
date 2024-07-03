@@ -80,15 +80,14 @@ class ImportProvider:
             "category": "science",
         }
 
-    def register(self, parent: object, parentType: str, progress, user, dataMap: DataMap,
-                 base_url: str = None):
+    def register(self, parent: object, parentType: str, progress, user, dataMap: DataMap):
         stack = [(parent, parentType)]
         pid = dataMap.dataId
         name = dataMap.name
         rootObj = None
         rootType = None
 
-        for item in self._listRecursive(user, pid, name, base_url, progress=progress):
+        for item in self._listRecursive(user, pid, name, progress=progress):
             if item.type == ImportItem.FOLDER:
                 (obj, objType) = self._registerFolder(stack, item, user)
             elif item.type == ImportItem.END_FOLDER:
@@ -144,7 +143,7 @@ class ImportProvider:
                                           reuseExisting=True)
         return (gitem, 'item')
 
-    def _listRecursive(self, user, pid: str, name: str, base_url: str = None, progress=None):
+    def _listRecursive(self, user, pid: str, name: str, progress=None):
         raise NotImplementedError()
 
     def check_auth(self, user):

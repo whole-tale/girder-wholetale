@@ -38,16 +38,6 @@ AUTH_PROVIDERS = [
     },
 ]
 
-DATAONE_PROVIDER = {
-    "name": "dataoneprod",
-    "logo": "",
-    "fullName": "DataONE Production CN",
-    "tags": ["publish"],
-    "url": "",
-    "type": "dataone",
-    "state": "unauthorized",
-}
-
 APIKEY_GROUPS = [
     {"name": "zenodo", "targets": ["sandbox.zenodo.org", "zenodo.org"]},
     {"name": "dataverse", "targets": ["demo.dataverse.org"]},
@@ -229,12 +219,6 @@ class ExternalAccountsTestCase(base.TestCase):
                 "access_token": "zenodo_key",
                 "resource_server": "sandbox.zenodo.org",
                 "token_type": "apikey",
-            },
-            {
-                "provider": "that_is_not_supported",
-                "access_token": "blah",
-                "resource_server": "example.org",
-                "token_type": "dataone",
             },
             {
                 "provider": "zenodo",
@@ -616,109 +600,6 @@ class ExternalAccountsTestCase(base.TestCase):
             PluginSettings.EXTERNAL_AUTH_PROVIDERS,
             PluginSettings.EXTERNAL_APIKEY_GROUPS,
         ):
-            Setting().set(key, SettingDefault.defaults[key])
-        self.user["otherTokens"] = []
-        User().save(self.user)
-
-    def test_dataone(self):
-        from girder.plugins.wholetale.constants import SettingDefault, PluginSettings
-
-        Setting().set(PluginSettings.EXTERNAL_AUTH_PROVIDERS, [DATAONE_PROVIDER])
-        provider_info = DATAONE_PROVIDER
-
-        resp = self.request(
-            path="/account",
-            method="GET",
-            user=self.user,
-            params={"redirect": "http://localhost"},
-        )
-        self.assertStatusOk(resp)
-        accounts = resp.json
-        self.assertTrue(
-            accounts[0]["url"].startswith(
-                "https://cn.dataone.org/portal/oauth?action=start"
-            )
-        )
-
-        valid_token = Token().createToken(user=self.user, days=0.25)
-        valid_state = "{_id}.blah".format(**valid_token)
-        with httmock.HTTMock(mockOtherRequests):
-            resp = self.request(
-                method="GET",
-                path="/account/%s/callback" % provider_info["name"],
-                params={"code": "dataone", "state": valid_state},
-                isJson=False,
-            )
-        self.assertStatus(resp, 303)
-        self.user = User().load(self.user["_id"], force=True)
-        self.assertEqual(
-            self.user["otherTokens"][0],
-            {
-                "provider": provider_info["name"],
-                "resource_server": "cn.dataone.org",
-                "token_type": "dataone-pre",
-                "access_token": "",
-            },
-        )
-
-        # Url should change to /token after "pre-authorization"
-        resp = self.request(
-            path="/account",
-            method="GET",
-            user=self.user,
-            params={"redirect": "http://localhost"},
-        )
-        self.assertStatusOk(resp)
-        accounts = resp.json
-        self.assertTrue(
-            accounts[0]["url"].startswith("https://cn.dataone.org/portal/token")
-        )
-
-        resp = self.request(
-            method="POST",
-            path="/account/dataoneprod/key",
-            params={
-                "resource_server": "cn.dataone.org",
-                "key": "dataone_token",
-                "key_type": "dataone",
-            },
-            user=self.user,
-        )
-        self.assertStatus(resp, 400)
-        self.assertEqual(resp.json["message"], "Invalid JWT Token: 'dataone_token'")
-
-        example_jwt = (
-           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikpv"
-           "aG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-        )
-
-        resp = self.request(
-            method="POST",
-            path="/account/dataoneprod/key",
-            params={
-                "resource_server": "cn.dataone.org",
-                "key": example_jwt,
-                "key_type": "dataone",
-            },
-            user=self.user,
-        )
-        self.assertStatusOk(resp)
-
-        self.user = User().load(self.user["_id"], force=True)
-        self.assertEqual(len(self.user["otherTokens"]), 1)
-        user_token = self.user["otherTokens"][0]
-        self.assertEqual(
-            user_token,
-            {
-                "access_token": example_jwt,
-                "provider": "dataoneprod",
-                "resource_server": "cn.dataone.org",
-                "token_type": "dataone",
-            },
-        )
-
-        # Return to defaults
-        for key in (PluginSettings.EXTERNAL_AUTH_PROVIDERS,):
             Setting().set(key, SettingDefault.defaults[key])
         self.user["otherTokens"] = []
         User().save(self.user)

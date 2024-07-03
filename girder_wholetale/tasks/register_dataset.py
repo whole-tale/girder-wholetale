@@ -12,7 +12,6 @@ from ..lib.metrics import metricsLogger
 
 def run(job):
     data_maps, parent, parentType, user = job["args"]
-    base_url = job["kwargs"].get("base_url")
     # In case this job is a part of a more complex task, progressTotal and progressCurrent can be
     # passed as kwargs to take that into account
     progressTotal = job["kwargs"].get("progressTotal", 2)
@@ -38,7 +37,6 @@ def run(job):
         parent,
         parentType,
         user=user,
-        base_url=base_url,
         progress=False
     )
     if importedData:

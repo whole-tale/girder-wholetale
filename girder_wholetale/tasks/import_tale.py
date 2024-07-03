@@ -19,7 +19,6 @@ from girder_jobs.models.job import Job
 
 from ..constants import CATALOG_NAME, TaleStatus
 from ..lib import pids_to_entities, register_dataMap
-from ..lib.dataone import DataONELocations  # TODO: get rid of it
 from ..lib.manifest_parser import ManifestParser
 from ..lib.metrics import metricsLogger
 from ..models.tale import Tale
@@ -54,15 +53,12 @@ def run(job):
         )
         dataIds = mp.get_external_data_ids()
         if dataIds:
-            dataMaps = pids_to_entities(
-                dataIds, user=user, base_url=DataONELocations.prod_cn, lookup=True
-            )  # DataONE shouldn't be here
+            dataMaps = pids_to_entities(dataIds, user=user, lookup=True)
             register_dataMap(
                 dataMaps,
                 getOrCreateRootFolder(CATALOG_NAME),
                 "folder",
                 user=user,
-                base_url=DataONELocations.prod_cn,
             )
 
         # 2. Construct the dataSet

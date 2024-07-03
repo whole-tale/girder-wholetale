@@ -148,7 +148,7 @@ class OpenICPSRImportProvider(ImportProvider):
         return zfname
 
     def _listRecursive(
-        self, user, pid: str, name: str, base_url: str = None, progress=None
+        self, user, pid: str, name: str, progress=None
     ):
         record = self._get_landing_page(pid)
         zfname = self._get_payload(record["download_url"], user)

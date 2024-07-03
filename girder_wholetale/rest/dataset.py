@@ -20,7 +20,6 @@ from girder_jobs.models.job import Job
 from ..constants import CATALOG_NAME
 from ..lib import IMPORT_PROVIDERS
 from ..lib.data_map import DataMap
-from ..lib.dataone import DataONELocations
 from ..schema.misc import dataMapListSchema
 from ..utils import getOrCreateRootFolder, init_progress
 
@@ -77,7 +76,6 @@ datasetModel = {
             "type": "string",
             "description": "Name of the provider",
             "enum": [
-                "DataONE",
                 "HTTP",
                 "Globus"
             ]
@@ -198,12 +196,6 @@ class Dataset(Resource):
     @filtermodel(model=Job)
     @autoDescribeRoute(
         Description('Create a folder containing references to an external data')
-        .notes('This does not upload or copy the existing data, it just creates '
-               'references to it in the Girder data hierarchy. Deleting '
-               'those references will not delete the underlying data. This '
-               'operation is currently only supported for DataONE repositories.\n'
-               'If the parentId and the parentType is not provided, data will be '
-               'registered into home directory of the user calling the endpoint')
         .param('parentId', 'Parent ID for the new parent of this folder.',
                required=False)
         .param('parentType', "Type of the folder's parent", required=False,
@@ -213,13 +205,6 @@ class Dataset(Resource):
                required=False, dataType='boolean', default=True)
         .jsonParam('dataMap', 'A list of data mappings',
                    paramType='body', schema=dataMapListSchema)
-        .param('base_url', 'The node endpoint url. This can be used '
-                           'to register datasets from custom networks, '
-                           'such as the DataONE development network. This can '
-                           'be passed in as an ordinary string. Examples '
-                           'include https://dev.nceas.ucsb.edu/knb/d1/mn/v2 and '
-                           'https://cn.dataone.org/cn/v2',
-               required=False, dataType='string', default=DataONELocations.prod_cn)
         .errorResponse('Write access denied for parent collection.', 403)
     )
     def importData(self,
@@ -227,7 +212,6 @@ class Dataset(Resource):
                    parentType,
                    public,
                    dataMap,
-                   base_url,
                    params):
         user = self.getCurrentUser()
         if not parentId or parentType not in ('folder', 'item'):
@@ -254,7 +238,7 @@ class Dataset(Resource):
             resource, user, 'Registering Data',
             'Initialization', 2)
 
-        job = self._createImportJob(dataMap, parent, parentType, user, base_url, notification)
+        job = self._createImportJob(dataMap, parent, parentType, user, notification)
         Job().scheduleJob(job)
         return job
 
@@ -293,7 +277,6 @@ class Dataset(Resource):
             f.seek(0)
 
             path = f.name
-            base_url = ''
 
         try:
             dataMap = {'dataId': path, 'repository': 'BDBag'}
@@ -305,7 +288,7 @@ class Dataset(Resource):
                 resource, user, 'Importing BDBag',
                 'Initialization', 2)
 
-            job = self._createImportJob([dataMap], parent, parentType, user, base_url, notification)
+            job = self._createImportJob([dataMap], parent, parentType, user, notification)
             Job().scheduleJob(job)
             return job
         finally:
@@ -314,13 +297,12 @@ class Dataset(Resource):
             # It happens to work if the job is a synchronous job, which it seems to be for now.
             os.unlink(path)
 
-    def _createImportJob(self, data_maps, parent, parentType, user, base_url, notification):
+    def _createImportJob(self, data_maps, parent, parentType, user, notification):
         job = Job().createLocalJob(
             title='Registering Data', user=user,
             type='wholetale.register_data', public=False, _async=False,
             module='girder_wholetale.tasks.register_dataset',
             args=(data_maps, parent, parentType, user),
-            kwargs={'base_url': base_url},
             otherFields={'wt_notification_id': str(notification['_id'])},
         )
         return job

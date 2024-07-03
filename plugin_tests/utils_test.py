@@ -12,7 +12,7 @@ def tearDownModule():
     base.stopServer()
 
 
-class TestDataONEUtils(base.TestCase):
+class TestUtils(base.TestCase):
 
     def test_getOrCreateRootFolder(self):
         from server.utils import getOrCreateRootFolder

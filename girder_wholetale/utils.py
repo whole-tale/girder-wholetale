@@ -20,24 +20,6 @@ def getOrCreateRootFolder(name, description=""):
     return folder
 
 
-def check_pid(pid):
-    """
-    Check that a pid is of type str. Pids are generated as uuid4, and this
-    check is done to make sure the programmer has converted it to a str before
-    attempting to use it with the DataONE client.
-
-    :param pid: The pid that is being checked
-    :type pid: str, int
-    :return: Returns the pid as a str, or just the pid if it was already a str
-    :rtype: str
-    """
-
-    if not isinstance(pid, str):
-        return str(pid)
-    else:
-        return pid
-
-
 def esc(value):
     """
     Escape a string so it can be used in a Solr query string

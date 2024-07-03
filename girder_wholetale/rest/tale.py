@@ -28,7 +28,6 @@ from ..models.tale import Tale as TaleModel
 from ..models.image import Image as ImageModel
 from ..models.instance import Instance
 from ..lib import pids_to_entities, IMPORT_PROVIDERS
-from ..lib.dataone import DataONELocations  # TODO: get rid of it
 from ..lib.manifest import Manifest
 from ..lib.exporters.bag import BagTaleExporter
 from ..lib.exporters.native import NativeTaleExporter
@@ -240,7 +239,7 @@ class Tale(Resource):
             taleKwargs = {}
 
         if cherrypy.request.headers.get('Content-Type') == 'application/zip':
-            tale = taleModel().createTaleFromStream(iterBody, user=user)
+            tale = self._model.createTaleFromStream(iterBody, user=user)
         else:
             if not url:
                 msg = (
@@ -260,7 +259,6 @@ class Tale(Resource):
                 dataMap = pids_to_entities(
                     lookupKwargs["dataId"],
                     user=user,
-                    base_url=lookupKwargs.get("base_url", DataONELocations.prod_cn),
                     lookup=True
                 )[0]
                 provider = IMPORT_PROVIDERS.providerMap[dataMap.repository]
@@ -672,12 +670,8 @@ class Tale(Resource):
         except KeyError:
             raise RestException("Unknown publisher repository ({})".format(repository))
 
-        if publisher.startswith("dataone"):
-            key = "provider"  # Dataone
-            value = publisher
-        else:
-            key = "resource_server"
-            value = repository
+        key = "resource_server"
+        value = repository
 
         token = next(
             (_ for _ in user.get("otherTokens", []) if _.get(key) == value), None

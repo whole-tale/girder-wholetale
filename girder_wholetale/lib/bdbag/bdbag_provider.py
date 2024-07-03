@@ -74,9 +74,7 @@ class BDBagProvider(ImportProvider):
         return str(entity.getValue()).endswith('.zip')
 
     def _listRecursive(self, user: Dict[str, object], pid: str, name: str,
-                       base_url: Optional[str] = None,
                        progress: Optional[object] = None) -> Generator[ImportItem, None, None]:
-        # base_url + '/' + name is expected to be a path to a zip file
         if not pid:
             raise ValueError('pid must contain a path to a bag.')
         if pid.startswith('https://'):

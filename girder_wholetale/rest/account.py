@@ -104,26 +104,16 @@ class Account(Resource):
         # External account providers ids that we support, can be defined in plugin settings
         supported_providers_ids = set(self.supported_providers().keys())
 
-        # Some special handling for DataONE, since we haven't done that for a while.
-        # DataONE OAuth providers are "fake" </SHOCK> They don't really use OAuth, we derive it
-        # from oauth.BaseProvider but only mock a limited set of methods that we need, e.g. to
-        # get the name or the url for a coordinating node.
-        dataone_providers_ids = {
-            provider_name
-            for provider_name, provider in self.supported_providers().items()
-            if provider["type"] == "dataone"
-        }
-
         # Supported providers that happen to be OAuth providers, need CSRF token for OAuth flow
         state = None
-        if enabled_providers_ids & supported_providers_ids | dataone_providers_ids:
+        if enabled_providers_ids & supported_providers_ids:
             state = self._createStateToken(redirect, user=user)
 
         # All supported *AND* enabled providers will be mapped by 'enabled_providers'
         # Note: apikey providers are always enabled.
         enabled_providers = {}
         for provider_name, provider in self.supported_providers().items():
-            if provider["type"] in ("apikey", "dataone") or (
+            if provider["type"] == "apikey" or (
                 provider["type"] == "bearer"
                 and provider_name  # noqa
                 in enabled_providers_ids & supported_providers_ids  # noqa
@@ -132,26 +122,21 @@ class Account(Resource):
 
         # We need to check which tokens user already has and modify the state of relevant
         # providers in 'enabled_providers' mapping. Two things happend here:
-        #  1. State is modified to 'authorized' if user already has a token (for oauth and dataone)
+        #  1. State is modified to 'authorized' if user already has a token
         #     or target is appended to list of authorized apikey providers of a given type.
         #  2. An "action" url for a given provider is constructed, which is basically:
         #     * "how to authorize" if state is "unauthorized",
         #     * "how to revoke token" if state is "authorized".
-        # NOTE: for Dataone, revoke url is bogus. There's no way to truly revoke it via their API.
         user_tokens = user.get("otherTokens", [])
         for user_token in user_tokens:
             try:
                 enabled_provider = enabled_providers[user_token["provider"]]
-                if user_token["token_type"].lower() in ("bearer", "dataone"):
+                if user_token["token_type"].lower() == "bearer":
                     provider = providers.idMap[user_token["provider"]]
                     enabled_provider["url"] = "/".join(
                         (getApiUrl(), "account", user_token["provider"], "revoke")
                     )
                     enabled_provider["state"] = "authorized"
-                elif user_token["token_type"].lower() == "dataone-pre":
-                    provider = providers.idMap[user_token["provider"]]
-                    enabled_provider["state"] = "preauthorized"
-                    enabled_provider["url"] = provider.getTokenUrl()
                 else:
                     enabled_provider["targets"].append(
                         {
@@ -173,11 +158,10 @@ class Account(Resource):
                 pass
 
         for provider_name in (
-            enabled_providers_ids & supported_providers_ids | dataone_providers_ids
+            enabled_providers_ids & supported_providers_ids
         ):
             if not enabled_providers[provider_name]["url"]:
                 provider = providers.idMap[provider_name]
-                # NOTE: for dataone it's "/oauth?", so this should be noop
                 enabled_providers[provider_name]["url"] = provider.getUrl(
                     state
                 ).replace("%2Foauth%2F", "%2Faccount%2F")
@@ -195,7 +179,6 @@ class Account(Resource):
 
         In case of OAuth use the proper flow (usually calling /revoke with refreshToken).
         In case of API Key, just drop it from the user model.
-        In case of DataONE, hahaha you thought that's possible via API?! You silly goose!
         (User would have to clear cookies from CN or login to ORCID and deauthorize there)
         """
         try:
@@ -316,7 +299,7 @@ class Account(Resource):
             "Type of the API key.",
             required=False,
             default="apikey",
-            enum=["apikey", "dataone"],
+            enum=["apikey"],
         )
     )
     def addAccountKey(self, provider, resource_server, key, key_type):
