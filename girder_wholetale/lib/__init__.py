@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from functools import lru_cache
+import logging
 from urllib.request import urlopen
 
 import html2markdown
-from girder import logger
 from girder.constants import AccessType
 from girder.exceptions import ValidationException
 from girder.models.folder import Folder
@@ -30,6 +30,7 @@ from .resolvers import DOIResolver, ResolutionException, Resolvers, MinidResolve
 from .zenodo.auth import ZenodoVerificator
 from .zenodo.provider import ZenodoImportProvider
 
+logger = logging.getLogger(__name__)
 RESOLVERS = Resolvers()
 RESOLVERS.add(DOIResolver())
 RESOLVERS.add(MinidResolver())

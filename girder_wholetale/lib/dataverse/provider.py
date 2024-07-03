@@ -1,12 +1,13 @@
 import hashlib
 import json
+import logging
 import re
 import os
 import pathlib
 import requests
 from urllib.parse import urlparse, urlunparse, parse_qs, unquote
 
-from girder import events, logger
+from girder import events
 from girder.constants import AccessType
 from girder.models.folder import Folder
 from girder.models.setting import Setting
@@ -19,6 +20,8 @@ from ..import_item import ImportItem
 from ..entity import Entity
 from ... import constants
 
+
+logger = logging.getLogger(__name__)
 _DOI_REGEX = re.compile(r'(10.\d{4,9}/[-._;()/:A-Z0-9]+)', re.IGNORECASE)
 _QUOTES_REGEX = re.compile(r'"(.*)"')
 _CNTDISP_REGEX = re.compile(r'filename="(.*)"')

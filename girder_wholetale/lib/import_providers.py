@@ -1,12 +1,15 @@
+import logging
 import textwrap
 
-from girder import logger
 from girder.utility.model_importer import ModelImporter
 
 from .entity import Entity
 from .data_map import DataMap
 from .file_map import FileMap
 from .import_item import ImportItem
+
+
+logger = logging.getLogger(__name__)
 
 
 class ImportProvider:

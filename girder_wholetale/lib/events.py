@@ -1,9 +1,9 @@
 import datetime
+import logging
 import time
 
 import requests
 from bson import ObjectId
-from girder import logger
 from girder.models.token import Token
 from girder.models.user import User
 from girder_jobs.constants import JobStatus
@@ -19,7 +19,7 @@ from ..utils import notify_event
 from .metrics import metricsLogger
 
 DEFAULT_IDLE_TIMEOUT = 1440.0
-
+logger = logging.getLogger(__name__)
 
 def job_update_after_handler(event):
     job = event.info

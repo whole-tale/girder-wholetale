@@ -1,8 +1,9 @@
 import json
+import logging
 import os
 from urllib.parse import quote
 
-from girder import events, logger
+from girder import events
 from girder.models.folder import Folder
 from girder.models.user import User
 from girder.models.token import Token
@@ -19,6 +20,8 @@ from gwvolman.r2d import ImageBuilder
 from .license import WholeTaleLicense
 from . import IMPORT_PROVIDERS
 
+
+logger = logging.getLogger(__name__)
 
 class Manifest:
     """

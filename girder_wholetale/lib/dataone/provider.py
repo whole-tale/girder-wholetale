@@ -1,6 +1,6 @@
+import logging
 from urllib.request import urlopen
 
-from girder import logger
 from girder.api.rest import RestException
 from girder.constants import AccessType
 from girder.models.folder import Folder
@@ -23,6 +23,7 @@ from .register import \
     check_multiple_metadata
 
 
+logger = logging.getLogger(__name__)
 ALL_LOCATIONS = [DataONELocations.prod_cn, DataONELocations.dev_mn, DataONELocations.dev_cn]
 
 
