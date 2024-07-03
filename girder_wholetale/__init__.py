@@ -127,25 +127,6 @@ def validateZenodoExtraHosts(doc):
             raise ValidationException('Invalid URL in Zenodo extra hosts', 'value')
 
 
-@setting_utilities.validator(PluginSettings.DERIVA_EXPORT_URLS)
-def validateDerivaExportUrls(doc):
-    if not doc['value']:
-        doc['value'] = defaultDerivaExportUrls()
-    if not isinstance(doc['value'], list):
-        raise ValidationException('Deriva export URLs setting must be a list.', 'value')
-    for url in doc['value']:
-        if not validators.url(url):
-            raise ValidationException('Invalid URL in Deriva exportURLs', 'value')
-
-
-@setting_utilities.validator(PluginSettings.DERIVA_SCOPES)
-def validateDerivaScopes(doc):
-    if not doc['value']:
-        doc['value'] = defaultDerivaScopes()
-    if not isinstance(doc['value'], dict):
-        raise ValidationException('Deriva scopes must be a dict.', 'value')
-
-
 @setting_utilities.validator(PluginSettings.INSTANCE_CAP)
 def validateInstanceCap(doc):
     if not doc['value']:
@@ -244,16 +225,6 @@ def defaultDataverseExtraHosts():
 @setting_utilities.default(PluginSettings.ZENODO_EXTRA_HOSTS)
 def defaultZenodoExtraHosts():
     return SettingDefault.defaults[PluginSettings.ZENODO_EXTRA_HOSTS]
-
-
-@setting_utilities.default(PluginSettings.DERIVA_EXPORT_URLS)
-def defaultDerivaExportUrls():
-    return SettingDefault.defaults[PluginSettings.DERIVA_EXPORT_URLS]
-
-
-@setting_utilities.default(PluginSettings.DERIVA_SCOPES)
-def defaultDerivaScopes():
-    return SettingDefault.defaults[PluginSettings.DERIVA_SCOPES]
 
 
 @setting_utilities.default(PluginSettings.LOGGER_URL)
@@ -672,12 +643,6 @@ class WholeTalePlugin(GirderPlugin):
     def load(self, info):
         getPlugin("oauth").load(info)
         getPlugin("girder_virtual_resources").load(info)
-        from girder_oauth.providers.globus import Globus
-
-        # Remove unnecessary scope https://github.com/whole-tale/girder_wholetale/issues/534
-        Globus._AUTH_SCOPES.remove("urn:globus:auth:scope:auth.globus.org:view_identities")
-        deriva_scopes = Setting().get(PluginSettings.DERIVA_SCOPES)
-        Globus.addScopes(list(deriva_scopes.values()))
         info['apiRoot'].wholetale = wholeTale()
         info['apiRoot'].instance = Instance()
         tale = Tale()

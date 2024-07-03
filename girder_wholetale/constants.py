@@ -14,9 +14,6 @@ DEFAULT_ILLUSTRATION = (
     "https://raw.githubusercontent.com/whole-tale/dashboard/master/public/"
     "images/demo-graph2.jpg"
 )
-DEFAULT_DERIVA_SCOPE = (
-    "https://auth.globus.org/scopes/a77ee64a-fb7f-11e5-810e-8c705ad34f60/deriva_all"
-)
 
 
 class HarvesterType:
@@ -35,8 +32,6 @@ class PluginSettings:
     EXTERNAL_APIKEY_GROUPS = "wholetale.external_apikey_groups"
     ZENODO_EXTRA_HOSTS = "wholetale.zenodo_extra_hosts"
     PUBLISHER_REPOS = "wholetale.publisher_repositories"
-    DERIVA_EXPORT_URLS = "wholetale.deriva.export_urls"
-    DERIVA_SCOPES = "wholetale.deriva.scopes"
     LOGGER_URL = "wholetale.instance_logger"
     WEBSITE_URL = "wholetale.website_url"
     DASHBOARD_LINK_TITLE = "wholetale.dashboard_link_title"
@@ -153,10 +148,6 @@ class SettingDefault:
                 "name": "DataONE Dev",
             },
         ],
-        PluginSettings.DERIVA_EXPORT_URLS: ["https://pbcconsortium.s3.amazonaws.com/"],
-        PluginSettings.DERIVA_SCOPES: {
-            "pbcconsortium.isrd.isi.edu": DEFAULT_DERIVA_SCOPE
-        },
         PluginSettings.LOGGER_URL: "http://logger:8000/",
         PluginSettings.ABOUT_HREF: "https://wholetale.org/",
         PluginSettings.CONTACT_HREF: "https://groups.google.com/forum/#!forum/wholetale",

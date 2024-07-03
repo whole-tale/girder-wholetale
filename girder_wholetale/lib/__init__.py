@@ -14,12 +14,10 @@ from girder.utility.progress import ProgressContext
 from ..models.tale import Tale
 from ..utils import notify_event
 from .bdbag.bdbag_provider import BDBagProvider
-from .deriva.provider import DerivaProvider
 from .dataone.auth import DataONEVerificator
 from .dataone.provider import DataOneImportProvider
 from .dataverse.auth import DataverseVerificator
 from .dataverse.provider import DataverseImportProvider
-from .deriva.auth import DerivaVerificator
 from .entity import Entity
 from .http_provider import HTTPImportProvider
 from .import_providers import ImportProviders
@@ -36,7 +34,6 @@ RESOLVERS.add(DOIResolver())
 RESOLVERS.add(MinidResolver())
 
 IMPORT_PROVIDERS = ImportProviders()
-IMPORT_PROVIDERS.addProvider(DerivaProvider())
 IMPORT_PROVIDERS.addProvider(BDBagProvider())
 IMPORT_PROVIDERS.addProvider(DataverseImportProvider())
 IMPORT_PROVIDERS.addProvider(ZenodoImportProvider())
@@ -56,7 +53,6 @@ Verificators = {
     "dataoneprod": DataONEVerificator,
     "dataonedev": DataONEVerificator,
     "dataonestage": DataONEVerificator,
-    "deriva": DerivaVerificator,
     "icpsr": OpenICPSRVerificator,
 }
 
