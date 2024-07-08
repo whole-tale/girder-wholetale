@@ -1,0 +1,893 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/datasets/:persistentId?persistentId=doi:10.7910/DVN/TJCLKP
+  response:
+    body:
+      string: '{"status":"OK","data":{"id":3035124,"identifier":"DVN/TJCLKP","persistentUrl":"https://doi.org/10.7910/DVN/TJCLKP","protocol":"doi","authority":"10.7910","publisher":"Harvard
+        Dataverse","publicationDate":"2017-07-06","storageIdentifier":"s3://10.7910/DVN/TJCLKP","latestVersion":{"id":337724,"datasetId":3035124,"datasetPersistentId":"doi:10.7910/DVN/TJCLKP","storageIdentifier":"s3://10.7910/DVN/TJCLKP","versionNumber":4,"versionMinorNumber":0,"versionState":"RELEASED","UNF":"UNF:6:e9+1ZqpZtjCuBzTDSrsHgA==","lastUpdateTime":"2023-01-03T21:06:41Z","releaseTime":"2023-01-03T21:06:41Z","createTime":"2023-01-03T20:51:59Z","publicationDate":"2017-07-06","citationDate":"2017-07-06","license":{"name":"CC0
+        1.0","uri":"http://creativecommons.org/publicdomain/zero/1.0","iconUri":"https://licensebuttons.net/p/zero/1.0/88x31.png"},"fileAccessRequest":false,"metadataBlocks":{"citation":{"displayName":"Citation
+        Metadata","name":"citation","fields":[{"typeName":"title","multiple":false,"typeClass":"primitive","value":"Open
+        Source at Harvard"},{"typeName":"author","multiple":true,"typeClass":"compound","value":[{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Durbin,
+        Philip"},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Harvard
+        University"},"authorIdentifierScheme":{"typeName":"authorIdentifierScheme","multiple":false,"typeClass":"controlledVocabulary","value":"ORCID"},"authorIdentifier":{"typeName":"authorIdentifier","multiple":false,"typeClass":"primitive","value":"0000-0002-9528-9470"}}]},{"typeName":"datasetContact","multiple":true,"typeClass":"compound","value":[{"datasetContactName":{"typeName":"datasetContactName","multiple":false,"typeClass":"primitive","value":"Durbin,
+        Philip"},"datasetContactAffiliation":{"typeName":"datasetContactAffiliation","multiple":false,"typeClass":"primitive","value":"Harvard
+        University"},"datasetContactEmail":{"typeName":"datasetContactEmail","multiple":false,"typeClass":"primitive","value":"philip_durbin@harvard.edu"}}]},{"typeName":"dsDescription","multiple":true,"typeClass":"compound","value":[{"dsDescriptionValue":{"typeName":"dsDescriptionValue","multiple":false,"typeClass":"primitive","value":"The
+        tabular file contains information on known Harvard repositories on GitHub,
+        such as the number of stars, programming language, day last updated, number
+        of open issues, size, number of forks, repository URL, create date, and description.
+        Each repository has a corresponding JSON file (see primary-data.zip) that
+        was retrieved using the GitHub API with code and a list of repositories available
+        from <a href=\"https://github.com/IQSS/open-source-at-harvard\">https://github.com/IQSS/open-source-at-harvard</a>."}}]},{"typeName":"subject","multiple":true,"typeClass":"controlledVocabulary","value":["Social
+        Sciences"]},{"typeName":"depositor","multiple":false,"typeClass":"primitive","value":"Durbin,
+        Philip"},{"typeName":"dateOfDeposit","multiple":false,"typeClass":"primitive","value":"2017-07-06"}]}},"files":[{"description":"Information
+        on known Harvard repositories on GitHub, such as the number of stars, programming
+        language, day last updated, number of open issues, size, number of forks,
+        repository URL, create date, and description.","label":"2023-01-03.tab","restricted":false,"directoryLabel":"data","version":5,"datasetVersionId":337724,"dataFile":{"id":6867331,"persistentId":"","filename":"2023-01-03.tab","contentType":"text/tab-separated-values","friendlyType":"Tab-Delimited","filesize":21865,"description":"Information
+        on known Harvard repositories on GitHub, such as the number of stars, programming
+        language, day last updated, number of open issues, size, number of forks,
+        repository URL, create date, and description.","storageIdentifier":"s3://dvn-cloud:1857969e99e-4f2e20cc0a46","originalFileFormat":"text/tsv","originalFormatLabel":"Tab-Separated
+        Values","originalFileSize":21119,"originalFileName":"2023-01-03.tsv","UNF":"UNF:6:e9+1ZqpZtjCuBzTDSrsHgA==","rootDataFileId":3035125,"previousDataFileId":3371438,"md5":"6fd497bf13dab9a06fe737ebc22f1917","checksum":{"type":"MD5","value":"6fd497bf13dab9a06fe737ebc22f1917"},"tabularData":true,"creationDate":"2023-01-03","publicationDate":"2023-01-03","fileAccessRequest":false}},{"description":"Creates
+        a TSV file with the language and repo URL.","label":"language.py","restricted":false,"directoryLabel":"code","version":2,"datasetVersionId":337724,"dataFile":{"id":6867336,"persistentId":"","filename":"language.py","contentType":"text/x-python-script","friendlyType":"Python
+        Source Code","filesize":590,"description":"Creates a TSV file with the language
+        and repo URL.","storageIdentifier":"s3://dvn-cloud:185796bf0eb-43bd4ab485ab","rootDataFileId":-1,"md5":"9d61582bcf497c83bbd1ed0eed3c772e","checksum":{"type":"MD5","value":"9d61582bcf497c83bbd1ed0eed3c772e"},"tabularData":false,"creationDate":"2023-01-03","publicationDate":"2023-01-03","fileAccessRequest":false}},{"description":"JSON
+        files about each repo from the GitHub API.","label":"primary-data.zip","restricted":false,"directoryLabel":"data/primary","version":3,"datasetVersionId":337724,"dataFile":{"id":6867328,"persistentId":"","filename":"primary-data.zip","contentType":"application/zip","friendlyType":"ZIP
+        Archive","filesize":283920,"description":"JSON files about each repo from
+        the GitHub API.","storageIdentifier":"s3://dvn-cloud:1857968c903-b4cc793925b6","rootDataFileId":-1,"md5":"a8f6fc3fc58f503cd48e23fa8b088694","checksum":{"type":"MD5","value":"a8f6fc3fc58f503cd48e23fa8b088694"},"tabularData":false,"creationDate":"2023-01-03","publicationDate":"2023-01-03","fileAccessRequest":false}}]}}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '5694'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:27:43 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=8rBxEnc7/qVPZo0dcYMOER06hevNE7UfiO5h8FJzCTv3Ftjka9J0U6uwmE4uT70YzLcf7wyfHF9evuyI/haN3cbjNq8V6B8/jv3k+vZe205ek+g7Hg44ZY2UnlkD;
+        Expires=Mon, 15 Jul 2024 17:27:43 GMT; Path=/
+      - AWSALBCORS=8rBxEnc7/qVPZo0dcYMOER06hevNE7UfiO5h8FJzCTv3Ftjka9J0U6uwmE4uT70YzLcf7wyfHF9evuyI/haN3cbjNq8V6B8/jv3k+vZe205ek+g7Hg44ZY2UnlkD;
+        Expires=Mon, 15 Jul 2024 17:27:43 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=3631902d9beded553cfec5ddc64c; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/api/access/datafile/6867331?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:27:44 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/1857969e99e-4f2e20cc0a46.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272023-01-03.tsv&response-content-type=text%2Ftsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T172743Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=1568293202c39ba3e1797902b9331685bf14be8c815ca8ce8684b9b7f3c6fd26
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=mEznNGBxSEVg5StynDEHgS8YVfn8aUiShD/HLQZ/Mgd9Cy6U8tCtK3bbsCbzIqvv0SpBiJ8eVRgICW0Z4JQKOF19SaqKchauWYlswv6+aVcyAWf5lN0Oe+Ouueav;
+        Expires=Mon, 15 Jul 2024 17:27:43 GMT; Path=/
+      - AWSALBCORS=mEznNGBxSEVg5StynDEHgS8YVfn8aUiShD/HLQZ/Mgd9Cy6U8tCtK3bbsCbzIqvv0SpBiJ8eVRgICW0Z4JQKOF19SaqKchauWYlswv6+aVcyAWf5lN0Oe+Ouueav;
+        Expires=Mon, 15 Jul 2024 17:27:43 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=3631a0c02e27f90a9911886f06f0; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/1857969e99e-4f2e20cc0a46.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272023-01-03.tsv&response-content-type=text%2Ftsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T172743Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=1568293202c39ba3e1797902b9331685bf14be8c815ca8ce8684b9b7f3c6fd26
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Mon, 08 Jul 2024 17:27:44 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - 49oGM1ZFmlNGtn+ukceIhOLb82Kh7YzYfewCQvTZGMNJAGSRtHYzffdtsVoFQvVmrIWem8yjUI8mTY6JWvuvGA==
+      x-amz-request-id:
+      - Z45KBSJYWQ5Y65NY
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/6867331?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Mon, 08 Jul 2024 17:27:44 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/1857969e99e-4f2e20cc0a46.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272023-01-03.tsv&response-content-type=text%2Ftsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T172744Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=50bcf6013260a618db2385edb628687950f2f6260bafa2a9c1c20c4f02577f6d
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=0/6pmxeYRGjKKhf7R9wCgjZgAxjyYFecmT1R6sGQ/RGKhVqJHIBBXsyEX888XEUPA9ZTKCGu5xbBDrRiuNRKJmBhpfPGrstDGhdjYepg/RirgrsLLlgAMQejyjQn;
+        Expires=Mon, 15 Jul 2024 17:27:44 GMT; Path=/
+      - AWSALBCORS=0/6pmxeYRGjKKhf7R9wCgjZgAxjyYFecmT1R6sGQ/RGKhVqJHIBBXsyEX888XEUPA9ZTKCGu5xbBDrRiuNRKJmBhpfPGrstDGhdjYepg/RirgrsLLlgAMQejyjQn;
+        Expires=Mon, 15 Jul 2024 17:27:44 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=3631c72fbc0b05a5d221f0a22241; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/1857969e99e-4f2e20cc0a46.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272023-01-03.tsv&response-content-type=text%2Ftsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T172744Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=50bcf6013260a618db2385edb628687950f2f6260bafa2a9c1c20c4f02577f6d
+  response:
+    body:
+      string: "stars\tlanguage\tupdated\tissues\tsize\tforks\twatchers\trepo\tcreated\tdescription\n732\tJava\t2023-01-03\t1345\t1"
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''2023-01-03.tsv
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/21119
+      Content-Type:
+      - text/tsv
+      Date:
+      - Mon, 08 Jul 2024 17:27:45 GMT
+      ETag:
+      - '"6fd497bf13dab9a06fe737ebc22f1917"'
+      Last-Modified:
+      - Tue, 03 Jan 2023 20:54:28 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - 4sY8zOpiht6MV5YzVy1eOyCE263JZzix2MDiOuaW1/RON/oO33GL0xT7qlbAzc+LUva8Z7Wx9zg=
+      x-amz-replication-status:
+      - COMPLETED
+      x-amz-request-id:
+      - Z45YKHSXV88W4WT8
+      x-amz-server-side-encryption:
+      - AES256
+      x-amz-version-id:
+      - .DvKj7gMsqPyi8aZUWHVUX.qssZA10Ey
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/api/access/datafile/6867331?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:27:45 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/1857969e99e-4f2e20cc0a46.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272023-01-03.tsv&response-content-type=text%2Ftsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T172745Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=e5a1798ab23d264dd4ad271011a76173e64c39f3f55073c8555176d07f906b92
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=P53kXeMQqxR+dhMSVoEnf6rhUVdeVVPbOzHY69BEVcoGU6iuUafThPOq1ljNGvoaGh92z6FItUtyY+Nqx61dbspEjim9Ghxla/mqXDMXDAHfI1GW35P+YYArBbS0;
+        Expires=Mon, 15 Jul 2024 17:27:45 GMT; Path=/
+      - AWSALBCORS=P53kXeMQqxR+dhMSVoEnf6rhUVdeVVPbOzHY69BEVcoGU6iuUafThPOq1ljNGvoaGh92z6FItUtyY+Nqx61dbspEjim9Ghxla/mqXDMXDAHfI1GW35P+YYArBbS0;
+        Expires=Mon, 15 Jul 2024 17:27:45 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=3631e90b5f8f3d9bc9e925c6ff60; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/1857969e99e-4f2e20cc0a46.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272023-01-03.tsv&response-content-type=text%2Ftsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T172745Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=e5a1798ab23d264dd4ad271011a76173e64c39f3f55073c8555176d07f906b92
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Mon, 08 Jul 2024 17:27:45 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - zoh7/UntHbjdKPEbOhuXhfSBif7my+v+P8V03X+2zi93YAD9ucPABAR/EZtsXaZXj3H9TfMHnwR3S+VL6NqpGg==
+      x-amz-request-id:
+      - QWEZ18Q294M54DJP
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/6867331?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Mon, 08 Jul 2024 17:27:45 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/1857969e99e-4f2e20cc0a46.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272023-01-03.tsv&response-content-type=text%2Ftsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T172745Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=e5a1798ab23d264dd4ad271011a76173e64c39f3f55073c8555176d07f906b92
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=Uu4BWGmGSlLX9xllngnzNWVAifEHbkzikXIsg9khpI8mCc3tyNE2p95k35q44bS85ZiOAyqpFkT594OnSn9XkiUag0onYVY35vtYNBNst6m8xF7TsQ9nM1aLJjQn;
+        Expires=Mon, 15 Jul 2024 17:27:45 GMT; Path=/
+      - AWSALBCORS=Uu4BWGmGSlLX9xllngnzNWVAifEHbkzikXIsg9khpI8mCc3tyNE2p95k35q44bS85ZiOAyqpFkT594OnSn9XkiUag0onYVY35vtYNBNst6m8xF7TsQ9nM1aLJjQn;
+        Expires=Mon, 15 Jul 2024 17:27:45 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=363206b4d705afc31550b34d6663; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/1857969e99e-4f2e20cc0a46.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272023-01-03.tsv&response-content-type=text%2Ftsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T172745Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=e5a1798ab23d264dd4ad271011a76173e64c39f3f55073c8555176d07f906b92
+  response:
+    body:
+      string: "stars\tlanguage\tupdated\tissues\tsize\tforks\twatchers\trepo\tcreated\tdescription\n732\tJava\t2023-01-03\t1345\t1"
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''2023-01-03.tsv
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/21119
+      Content-Type:
+      - text/tsv
+      Date:
+      - Mon, 08 Jul 2024 17:27:46 GMT
+      ETag:
+      - '"6fd497bf13dab9a06fe737ebc22f1917"'
+      Last-Modified:
+      - Tue, 03 Jan 2023 20:54:28 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - z2nufmRlVgklVyRLZMx9I0F0iGwg5y8PBzNIbN8Smc4SPM59K2rvAKh2xyTCiI4Xyx/jKAwt494=
+      x-amz-replication-status:
+      - COMPLETED
+      x-amz-request-id:
+      - QWERFCK4J423SQD5
+      x-amz-server-side-encryption:
+      - AES256
+      x-amz-version-id:
+      - .DvKj7gMsqPyi8aZUWHVUX.qssZA10Ey
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/6867331
+  response:
+    body:
+      string: "stars\tlanguage\tupdated\tissues\tsize\tforks\twatchers\trepo\tcreated\tdescription\n732\t\"Java\"\t2023-01-03\t1345\t123092\t411\t732\t\"https://github.com/IQSS/dataverse\"\t2013-11-01\t\"Open
+        source research data repository software\"\n675\t\"Python\"\t2022-12-23\t450\t50868\t149\t675\t\"https://github.com/glue-viz/glue\"\t2011-05-18\t\"Linked
+        Data Visualizations Across Multiple Files\"\n651\t\"R\"\t2022-02-07\t122\t31425\t133\t651\t\"https://github.com/hms-dbmi/UpSetR\"\t2015-05-26\t\"An
+        R implementation of the UpSet set visualization technique published by Lex,
+        Gehlenborg, et al..\"\n346\t\"JavaScript\"\t2022-12-23\t174\t57214\t65\t346\t\"https://github.com/harvard-lil/perma\"\t2013-05-06\t\"Indelible
+        links\"\n269\t\"Python\"\t2022-11-10\t153\t263770\t87\t269\t\"https://github.com/mediacloud/backend\"\t2013-06-26\t\"Media
+        Cloud is an open source, open data platform that allows researchers to answer
+        quantitative questions about the content of online media.\"\n193\t\"Java\"\t2022-02-08\t15\t66056\t50\t193\t\"https://github.com/harvardinformatics/JAuth\"\t2011-09-23\t\"Java
+        GUI client to generate Google authentication codes\"\n187\t\"JavaScript\"\t2022-12-14\t74\t18263\t31\t187\t\"https://github.com/hms-dbmi/viv\"\t2020-01-24\t\"Library
+        for multiscale visualization of high-resolution multiplexed bioimaging data
+        on the web. Directly renders Zarr and OME-TIFF.\"\n171\t\"HTML\"\t2018-02-21\t1\t19713\t20\t171\t\"https://github.com/berkmancenter/internet_monitor\"\t2013-08-05\t\"The
+        Internet Monitor is a research project to evaluate, describe, and summarize
+        the means, mechanisms, and extent of Internet content controls and Internet
+        activity around the world.\"\n159\t\"R\"\t2020-04-05\t43\t14632\t64\t159\t\"https://github.com/hms-dbmi/scde\"\t2015-05-06\t\"R
+        package for analyzing single-cell RNA-seq data\"\n149\t\"Ruby\"\t2022-05-31\t20\t245\t28\t149\t\"https://github.com/berkmancenter/namae\"\t2012-05-21\t\"Namae
+        (\u540D\u524D) parses personal names and splits them into their component
+        parts.\"\n123\t\"Ruby\"\t2023-01-03\t2\t19565\t102\t123\t\"https://github.com/berkmancenter/lumendatabase\"\t2012-04-16\t\"The
+        Lumen Database collects and analyzes legal complaints and requests for removal
+        of online materials.\"\n113\t\"JavaScript\"\t2016-02-05\t5\t3601\t11\t113\t\"https://github.com/HBRGTech/daisy\"\t2014-11-16\t\"daisy
+        is a vagrant and grunt-powered Pattern Lab, derivative work from hbr.org's
+        2014 redesign.\"\n103\t\"C\"\t2017-06-01\t1\t135\t1\t103\t\"https://github.com/HarvardPL/shill\"\t2014-10-04\t\"Scripting
+        with Least Privilege\"\n100\t\"R\"\t2022-04-14\t47\t115076\t45\t100\t\"https://github.com/IQSS/Zelig\"\t2013-12-05\t\"A
+        statistical framework that serves as a common interface to a large range of
+        models\"\n100\t\"Python\"\t2022-12-10\t332\t129969\t22\t100\t\"https://github.com/refinery-platform/refinery-platform\"\t2011-11-23\t\"The
+        Refinery Platform is a data management, analysis and visualization system
+        for bioinformatics and computational biology applications. The platforms consists
+        of three major components: a data repository with rich metadata capabilities,
+        a workflow engine based on the popular Galaxy system, and visualization tools
+        to support the exploration and interpretation of results at all stages of
+        the analysis process.\"\n96\t\"JavaScript\"\t2019-09-17\t30\t275270\t31\t96\t\"https://github.com/cga-harvard/geonode\"\t2010-11-01\t\"Harvard
+        WorldMap is a heavily modified fork of GeoNode 1.4 which has recently been
+        migrated to GeoNode 2.10. WorldMap is being made available by Harvard's Center
+        for Geographic Analysis to lower the barrier for scholars and others who wish
+        to explore, visualize, edit, collaborate with, and publish geospatial information.\"\n96\t\"Python\"\t2019-01-07\t0\t1829\t36\t96\t\"https://github.com/harvardinformatics/ATAC-seq\"\t2017-10-06\t\"\"\n85\t\"Ruby\"\t2022-09-26\t16\t6919\t28\t85\t\"https://github.com/berkmancenter/tagteam\"\t2011-07-12\t\"Enhanced
+        Social Tagging for Academic Communities\"\n85\t\"Java\"\t2022-12-22\t20\t913321\t44\t85\t\"https://github.com/harvard-lts/fits\"\t2013-03-02\t\"File
+        Information Tool Set\"\n48\t\"Python\"\t2020-10-19\t5\t41\t12\t48\t\"https://github.com/cid-harvard/pandas-to-postgres\"\t2018-07-12\t\"Copy
+        Pandas DataFrames and HDF5 files to PostgreSQL database\"\n46\t\"JavaScript\"\t2017-11-07\t13\t3367\t27\t46\t\"https://github.com/berkmancenter/dotplot\"\t2015-02-19\t\"Telling
+        a story through dots\"\n46\t\"Python\"\t2022-12-06\t3\t90\t21\t46\t\"https://github.com/cid-harvard/py-ecomplexity\"\t2018-10-29\t\"Python
+        package to compute economic complexity and associated variables\"\n39\t\"JavaScript\"\t2020-06-25\t12\t2435\t10\t39\t\"https://github.com/harvard-library/aspace-import-excel\"\t2017-01-19\t\"Import
+        resources, archival objects, etc. into ArchivesSpace using Excel spreadsheet
+        files\"\n37\t\"JavaScript\"\t2022-12-09\t40\t8492\t42\t37\t\"https://github.com/berkmancenter/question_tool\"\t2015-06-15\t\"A
+        web application to propose and vote on questions on a particular subject.\"\n36\t\"JavaScript\"\t2022-07-06\t67\t2932\t20\t36\t\"https://github.com/cga-harvard/Hypermap-Registry\"\t2015-12-17\t\"Hypermap
+        Registry, remote map services made easy for your SDI\"\n36\t\"Shell\"\t2021-08-05\t7\t37\t42\t36\t\"https://github.com/harvard-dce/canvas-docker\"\t2015-01-30\t\"Containerized
+        Canvas instance for dev/testing\"\n30\t\"JavaScript\"\t2018-08-02\t31\t23323\t18\t30\t\"https://github.com/IQSS/TwoRavens\"\t2013-07-02\t\"See
+        https://github.com/tworavens/tworavens for current repository for this project
+        and http://2ra.vn for project pages.\"\n27\t\"TypeScript\"\t2022-09-30\t2\t2100\t5\t27\t\"https://github.com/harvard-edtech/caccl\"\t2018-11-02\t\"The
+        Canvas App Complete Connection Library (CACCL) is an all-in-one library for
+        building Canvas-integrated apps. By handling LTI, authorization, and api for
+        you, CACCL makes building Canvas-integrated tools quick and easy. Keywords:
+        Canvas LMS Instructure API LTI Authorization EdTech Education\"\n26\t\"Python\"\t2023-01-02\t126\t109316\t24\t26\t\"https://github.com/harvard-lil/h2o\"\t2015-09-01\t\"H2O
+        is a web app for creating and reading open educational resources, primarily
+        in the legal field\"\n26\t\"Ruby\"\t2022-12-05\t4\t90674\t5\t26\t\"https://github.com/fasrc/helmod\"\t2013-12-16\t\"Harvard
+        Extensions for Lmod deployment\"\n24\t\"PHP\"\t2019-04-11\t21\t2741\t10\t24\t\"https://github.com/berkmancenter/amber_wordpress\"\t2014-02-11\t\"Amber
+        plugin for Wordpress\"\n24\t\"Python\"\t2019-10-21\t5\t156\t18\t24\t\"https://github.com/IQSS/redmine2github\"\t2014-07-01\t\"Scripts
+        to migrate redmine tickets to github issues\"\n21\t\"PHP\"\t2022-12-02\t1\t9701\t3\t21\t\"https://github.com/cbdb-project/cbdb-online-main-server\"\t2017-08-09\t\"CBDB
+        \u5728\u7EBF\u7CFB\u7EDF\u4E3B\u670D\u52A1\u5668\"\n21\t\"Stata\"\t2020-10-19\t3\t35\t6\t21\t\"https://github.com/cid-harvard/ecomplexity\"\t2014-08-19\t\"\"\n20\t\"Python\"\t2022-11-21\t5\t2247\t5\t20\t\"https://github.com/penzance/canvas_python_sdk\"\t2014-06-18\t\"Canvas
+        Python SDK\"\n19\t\"Python\"\t2022-09-16\t3\t116\t20\t19\t\"https://github.com/Harvard-University-iCommons/django-auth-lti\"\t2013-11-22\t\"\"\n17\t\"Python\"\t2022-03-01\t1\t68995\t6\t17\t\"https://github.com/cid-harvard/classifications\"\t2015-02-04\t\"Various
+        industry and product classifications that we took from original sources and
+        cleaned to be computer-readable\"\n15\t\"Jupyter Notebook\"\t2017-05-24\t1\t86066\t6\t15\t\"https://github.com/cid-harvard/visualization-notebook-templates\"\t2015-09-23\t\"A
+        set of iPython notebooks that can be used to generate some of the most common
+        atlas-style visualizations with datasets in stata or csv\"\n14\t\"HTML\"\t2020-06-16\t12\t2082\t6\t14\t\"https://github.com/OpenSDP/OpenSDPsynthR\"\t2017-02-28\t\"Codebase
+        to generate simulated data for OpenSDP project\"\n14\t\"Ruby\"\t2018-03-17\t89\t3968\t21\t14\t\"https://github.com/berkmancenter/bookanook\"\t2015-07-01\t\"\"\n13\t\"Ruby\"\t2016-05-26\t4\t89\t4\t13\t\"https://github.com/harvard-dce/dce_lti\"\t2014-10-31\t\"An
+        engine to simplify LTI Authentication for rails applications\"\n13\t\"JavaScript\"\t2021-08-11\t5\t27015\t16\t13\t\"https://github.com/cid-harvard/atlas-subnational-frontend\"\t2015-04-21\t\"\"\n12\t\"Vue\"\t2022-02-25\t6\t1707\t1\t12\t\"https://github.com/cbdb-project/cbdb-online-query-app\"\t2020-06-17\t\"\"\n12\t\"JavaScript\"\t2022-10-26\t0\t3344\t6\t12\t\"https://github.com/Colin-Fredericks/hx-js\"\t2016-03-04\t\"Collecting
+        some javascript from HarvardX all in one place.\"\n11\t\"Java\"\t2022-02-25\t2\t86438\t2\t11\t\"https://github.com/harvard-library/librarycloud\"\t2014-04-07\t\"Harvard
+        University Library Cloud API\"\n9\t\"Python\"\t2017-10-04\t1\t10\t3\t9\t\"https://github.com/harvard-dce/python-docker-test\"\t2015-07-10\t\"TestCase
+        mixin for executing functional tests against a live docker container\"\n9\t\"JavaScript\"\t2022-11-17\t0\t1857\t7\t9\t\"https://github.com/HarvardX/edx_course_templater\"\t2019-01-18\t\"Makes
+        edX courses for HarvardX using survey responses\"\n9\t\"JavaScript\"\t2016-12-09\t1\t332\t3\t9\t\"https://github.com/berkmancenter/tmulk\"\t2016-10-29\t\"Twitter
+        mass bulk download\"\n8\t\"HTML\"\t2018-04-03\t1\t279\t4\t8\t\"https://github.com/OpenSDP/dataviz-r\"\t2017-05-18\t\"OpenSDP
+        data visualization tutorials in R for education data analysts, including R
+        Shiny tutorial\"\n8\t\"Python\"\t2018-09-26\t0\t378\t4\t8\t\"https://github.com/cid-harvard/atlas-playbooks\"\t2014-01-13\t\"Ansible
+        playbooks and Vagrantfile for the Atlas of Economic Complexity\"\n8\t\"\"\t2017-01-06\t2\t532\t2\t8\t\"https://github.com/berkmancenter/amber_drupal\"\t2014-02-11\t\"Amber
+        module for Drupal\"\n7\t\"Java\"\t2022-12-14\t4\t2209\t2\t7\t\"https://github.com/kurator-org/kurator-akka\"\t2015-01-26\t\"Provenance-enabled
+        workflow platform and toolkit to curate biodiversity data  https://doi.org/10.5281/zenodo.1068311\"\n7\t\"Java\"\t2022-10-10\t77\t37445\t13\t7\t\"https://github.com/IQSS/DataTaggingLibrary\"\t2013-08-22\t\"Language
+        tools for DataTags (Decision graph variant). Including the embeddable runtime
+        engine\"\n7\t\"Jupyter Notebook\"\t2022-12-08\t0\t2296\t4\t7\t\"https://github.com/onnela-lab/beiwe\"\t2018-06-19\t\"Beiwe
+        is a smartphone-based digital phenotyping research platform.\"\n7\t\"HTML\"\t2022-05-31\t11\t103008\t10\t7\t\"https://github.com/farhat-lab/gentb-site\"\t2015-10-06\t\"The
+        genTB project, the Django site, variant calling and prediciton pipeline, and
+        mapping pipeline with hooks to two ravens\"\n6\t\"Java\"\t2022-12-04\t4\t109308\t9\t6\t\"https://github.com/harvard-lts/FITSservlet\"\t2015-06-22\t\"A
+        web application to expose FITS as a service.\"\n6\t\"Python\"\t2016-05-17\t2\t24\t1\t6\t\"https://github.com/harvard-dce/pytest-ghostinspector\"\t2015-10-16\t\"pytest
+        plugin for discovering & executing https://ghostinspector.com tests\"\n6\t\"Java\"\t2021-02-23\t1\t4675\t2\t6\t\"https://github.com/penzance/harvard-data-tools\"\t2016-02-09\t\"\"\n6\t\"Python\"\t2021-07-15\t1\t224\t7\t6\t\"https://github.com/cid-harvard/atlas_core\"\t2015-03-04\t\"\"\n6\t\"HTML\"\t2018-04-13\t1\t308\t4\t6\t\"https://github.com/OpenSDP/nearly-unique-r\"\t2017-05-18\t\"OpenSDP
+        data cleaning tutorial on applying decision rules\"\n6\t\"JavaScript\"\t2022-01-30\t1\t21467\t1\t6\t\"https://github.com/harvard-library/metadata_server\"\t2015-02-11\t\"Django/Elasticsearch
+        IIIF Metadata server\"\n6\t\"R\"\t2018-12-27\t1\t8192\t4\t6\t\"https://github.com/OpenSDP/college-going-r\"\t2017-05-18\t\"OpenSDP
+        College-Going Pathways (R)\"\n6\t\"HTML\"\t2016-10-04\t1\t1584\t4\t6\t\"https://github.com/berkmancenter/amber_common\"\t2014-05-09\t\"Common
+        code and documentation for the Amber project\"\n5\t\"PHP\"\t2019-05-13\t0\t20537\t2\t5\t\"https://github.com/harvard-library/acorn\"\t2017-01-24\t\"A
+        COnservation Records Network\"\n5\t\"Python\"\t2022-08-30\t0\t6994\t2\t5\t\"https://github.com/Colin-Fredericks/hx_util\"\t2018-05-03\t\"HarvardX
+        scripts and utilities for edX courses\"\n4\t\"R\"\t2018-04-03\t0\t8\t1\t4\t\"https://github.com/OpenSDP/template-r\"\t2017-05-19\t\"OpenSDP
+        Analysis Template (R)\"\n4\t\"Python\"\t2022-12-14\t6\t27245\t3\t4\t\"https://github.com/kurator-org/kurator-validation\"\t2015-01-26\t\"Biodiversity
+        data validation services and actors for the Kurator toolkit.\"\n4\t\"JavaScript\"\t2022-12-21\t1\t32124\t2\t4\t\"https://github.com/Harvard-University-iCommons/canvas_account_admin_tools\"\t2015-09-28\t\"\"\n4\t\"Ruby\"\t2022-12-14\t10\t7401\t3\t4\t\"https://github.com/harvard-library/ClassRequestTool\"\t2014-04-10\t\"An
+        application for scheduling class visits to archives and special collections.\"\n4\t\"Java\"\t2016-06-15\t2\t232\t2\t4\t\"https://github.com/IQSS/UNF\"\t2014-08-17\t\"Universal
+        Numerical Fingerprint\"\n4\t\"C\"\t2015-08-14\t1\t543\t1\t4\t\"https://github.com/berkmancenter/amber_nginx\"\t2014-02-11\t\"Amber
+        module for Nginx\"\n4\t\"TypeScript\"\t2017-12-04\t0\t325\t3\t4\t\"https://github.com/cid-harvard/product-space\"\t2017-11-28\t\"Customizable
+        and interactive product space\"\n4\t\"Ruby\"\t2022-12-14\t9\t1715\t0\t4\t\"https://github.com/harvard-library/inscriptio\"\t2013-11-18\t\"An
+        app to help manage the reservation of carrels and other reservable library
+        resources\"\n4\t\"C\"\t2015-11-17\t2\t52\t1\t4\t\"https://github.com/berkmancenter/amber_apache\"\t2014-02-11\t\"Amber
+        module for Apache\"\n3\t\"Stata\"\t2018-12-27\t3\t6608\t4\t3\t\"https://github.com/OpenSDP/college-going-stata\"\t2017-05-18\t\"OpenSDP
+        College-Going Pathways (Stata)\"\n3\t\"C\"\t2022-10-21\t20\t953\t0\t3\t\"https://github.com/nthallen/icosfit\"\t2019-08-13\t\"ICOSfit
+        Absorption Spectra Fitting Software\"\n3\t\"Java\"\t2018-06-08\t12\t104367\t1\t3\t\"https://github.com/kurator-org/kurator-web\"\t2016-01-22\t\"\"\n3\t\"Java\"\t2022-08-30\t1\t1258\t0\t3\t\"https://github.com/FilteredPush/event_date_qc\"\t2016-10-05\t\"DataQuality
+        library for dwc:eventDate and other dwc:Event terms.\"\n3\t\"JavaScript\"\t2016-10-31\t1\t2646\t5\t3\t\"https://github.com/berkmancenter/fair_use_tool\"\t2010-07-14\t\"Creative
+        Rights fair use tool for determining copyright usage.\"\n3\t\"JavaScript\"\t2021-06-10\t1\t13350\t3\t3\t\"https://github.com/cid-harvard/aid-explorer\"\t2014-04-18\t\"Aid
+        data explorer which can be seen at: http://www.atlas.cid.harvard.edu/aidxp\"\n3\t\"Python\"\t2022-12-09\t0\t42\t4\t3\t\"https://github.com/harvard-lil/lil-nudgebot\"\t2016-06-17\t\"\"\n3\t\"PHP\"\t2017-07-26\t0\t97\t5\t3\t\"https://github.com/berkmancenter/category_subscriptions\"\t2011-04-05\t\"A
+        wordpress plugin that allows for per-user category subscriptions.\"\n3\t\"Python\"\t2022-06-01\t0\t6542\t2\t3\t\"https://github.com/Colin-Fredericks/hx-py\"\t2016-09-29\t\"Collection
+        of python used in HarvardX problems\"\n3\t\"\"\t2017-09-20\t0\t10\t2\t3\t\"https://github.com/OpenSDP/nearly-unique-stata\"\t2017-05-18\t\"OpenSDP
+        data cleaning tutorial in Stata on applying decision rules\"\n3\t\"XSLT\"\t2016-01-14\t1\t75\t1\t3\t\"https://github.com/harvard-library/schematronium\"\t2015-07-28\t\"A
+        library for running schematrons over XML files\"\n3\t\"Python\"\t2018-12-13\t1\t434\t10\t3\t\"https://github.com/cid-harvard/atlas-subnational-api\"\t2014-12-03\t\"Subnational
+        atlas API backend\"\n3\t\"Jupyter Notebook\"\t2022-08-04\t0\t189\t0\t3\t\"https://github.com/cbdb-project/accessAndMySQLTransfer\"\t2017-09-25\t\"convert
+        Access MDB file to MySQL, and convert MySQL dump to MDB\"\n3\t\"Ruby\"\t2021-09-01\t0\t1004\t3\t3\t\"https://github.com/berkmancenter/brkmn\"\t2012-03-20\t\"The
+        dirt-simple URL shortener at brk.mn\"\n3\t\"Python\"\t2017-11-15\t2\t15\t0\t3\t\"https://github.com/harvard-dce/django-canvas-api-token\"\t2014-12-17\t\"A
+        reusable django app for generating Canvas API user oauth tokens\"\n3\t\"C\"\t2017-03-16\t0\t52824\t1\t3\t\"https://github.com/berkmancenter/curarium\"\t2014-05-06\t\"The
+        Curarium is a collection of collections. It is a platform which leverages
+        the power of the crowd in order to annotate, curate, and augment works within
+        and beyond their respective collections, with the aim of constructing sharable,
+        media-rich stories and elaborate arguments about individual items as well
+        as groups of items in our corpora.\"\n3\t\"Python\"\t2022-12-08\t4\t39\t1\t3\t\"https://github.com/harvard-dce/panopto-cli\"\t2019-04-26\t\"Command-line
+        tool for interacting with the Panopto SOAP API\"\n2\t\"Ruby\"\t2022-12-14\t7\t530\t1\t2\t\"https://github.com/harvard-dce/hola_mundo\"\t2014-11-21\t\"An
+        LTI app allowing students in a course to introduce themselves via webcam-captured
+        youtube videos\"\n2\t\"\"\t2017-05-18\t0\t9\t2\t2\t\"https://github.com/OpenSDP/faketucky\"\t2017-05-18\t\"OpenSDP
+        Faketucky College-Going Dataset (Stata and R)\"\n2\t\"JavaScript\"\t2018-04-03\t0\t432\t1\t2\t\"https://github.com/OpenSDP/template-stata\"\t2017-05-19\t\"OpenSDP
+        Analysis Template (Stata)\"\n2\t\"TypeScript\"\t2022-09-30\t0\t3352\t1\t2\t\"https://github.com/harvard-edtech/caccl-lti\"\t2018-08-07\t\"Validates
+        and parses LTI launch requests.\"\n2\t\"Python\"\t2017-08-05\t2\t114\t1\t2\t\"https://github.com/HarvardOpenData/propublica-data\"\t2017-05-31\t\"Python
+        script that uses the Propublica API to retrieve data (in csv format) on any
+        list of organizations.\"\n2\t\"Ruby\"\t2014-09-02\t0\t711\t3\t2\t\"https://github.com/berkmancenter/hei\"\t2012-06-25\t\"A
+        tag heavy development project registry.\"\n2\t\"Ruby\"\t2023-01-03\t2\t653\t3\t2\t\"https://github.com/harvard-lts/spotlight-oaipmh-resources\"\t2017-05-30\t\"An
+        OAI-PMH harvester plugin for Spotlight\"\n2\t\"Ruby\"\t2022-09-27\t1\t1578\t4\t2\t\"https://github.com/harvard-library/archivesspace-checker\"\t2015-08-11\t\"A
+        small website for checking EADs against local standards via schematron\"\n2\t\"Shell\"\t2018-05-14\t0\t380\t5\t2\t\"https://github.com/cid-harvard/subnational-playbooks\"\t2014-12-18\t\"Playbooks
+        for the colombia, mexico, peru atlas\"\n2\t\"Java\"\t2022-11-24\t2\t17114\t3\t2\t\"https://github.com/MCZbase/DataShot_DesktopApp\"\t2016-11-24\t\"Desktop
+        application client intended to support an object-precapture-image-data workflow
+        for capture of natural science collections data.  See the wiki (https://github.com/MCZbase/DataShot_DesktopApp/wiki)
+        for user documentation, or the README below for developer documentation.\"\n2\t\"ColdFusion\"\t2023-01-03\t0\t76490\t1\t2\t\"https://github.com/MCZbase/MCZbase\"\t2015-08-21\t\"Arctos
+        branch in use by the Museum of Comparative Zoology, Harvard University  https://doi.org/10.5281/zenodo.891420\"\n2\t\"Ruby\"\t2016-11-16\t0\t82\t0\t2\t\"https://github.com/berkmancenter/classifurlr\"\t2016-05-11\t\"Given
+        request & response data, attempts to determine likelihood that page is available
+        vs. down or blocked.\"\n2\t\"Python\"\t2022-09-23\t6\t1027\t6\t2\t\"https://github.com/harvard-lil/perma-payments\"\t2017-06-07\t\"\"\n1\t\"HTML\"\t2020-01-16\t0\t130134\t1\t1\t\"https://github.com/HarvardX/studio-advanced\"\t2019-11-05\t\"The
+        training course for advanced users of edX Studio\"\n1\t\"Python\"\t2022-10-24\t0\t849\t2\t1\t\"https://github.com/Colin-Fredericks/hx-xml\"\t2018-05-04\t\"XML
+        utilities from HarvardX, for use in edX courses\"\n1\t\"Ruby\"\t2022-11-06\t0\t18\t4\t1\t\"https://github.com/harvard-library/aspace-utils\"\t2016-08-19\t\"Bulk
+        ingest script for ArchivesSpace, analysis script that processes logs from
+        afforementioned.\"\n1\t\"Ruby\"\t2022-09-14\t0\t594\t3\t1\t\"https://github.com/harvard-library/archivesspace-preprocessor\"\t2015-12-11\t\"Preprocessor
+        for EAD files to prepare them for ingest into Archivesspace\"\n1\t\"Ruby\"\t2019-09-16\t0\t185\t3\t1\t\"https://github.com/berkmancenter/feed-abstract\"\t2011-08-19\t\"RSS
+        Feed abstraction library using ruby standard lib classes.\"\n1\t\"TypeScript\"\t2022-10-11\t14\t10278\t2\t1\t\"https://github.com/harvard-edtech/caccl-api\"\t2018-09-25\t\"A
+        class that defines a set of smart Canvas endpoints that actually behave how
+        you'd expect them to.\"\n1\t\"PHP\"\t2022-07-01\t0\t45\t2\t1\t\"https://github.com/berkmancenter/wiki-uturn\"\t2012-09-20\t\"Wiki
+        Reversion Tool\"\n1\t\"PHP\"\t2013-07-23\t0\t226\t1\t1\t\"https://github.com/berkmancenter/blog_network_stats\"\t2013-03-04\t\"A
+        wordpress plugin to aggregate data about blogs into a single table.\"\n1\t\"Python\"\t2017-07-16\t0\t12278\t0\t1\t\"https://github.com/cbdb-project/crop_books_by_lines\"\t2017-03-06\t\"crop
+        books by lines or blanks\"\n1\t\"\"\t2016-04-15\t0\t183\t1\t1\t\"https://github.com/onnela-lab/HX_python_for_research\"\t2016-04-13\t\"\"\n1\t\"PLSQL\"\t2022-11-21\t0\t541\t0\t1\t\"https://github.com/MCZbase/DDL\"\t2018-08-14\t\"Build
+        Scripts for all Database Objects in MCZbase\"\n1\t\"Java\"\t2022-07-06\t0\t10765\t1\t1\t\"https://github.com/MCZbase/PreCapture\"\t2016-09-16\t\"PreCapture
+        application used for creating human and machine readable labels for natural
+        science collections storage containers to support object to image to data
+        workflows.  Used by the MCZ and the NEVP TCN.\"\n0\t\"C++\"\t2017-07-03\t0\t347\t0\t0\t\"https://github.com/cbdb-project/reg-cpp\"\t2017-07-03\t\"regular
+        expression replacer\"\n0\t\"Ruby\"\t2018-12-07\t2\t460\t0\t0\t\"https://github.com/harvard-library/lts-lti-reserves\"\t2015-06-11\t\"The
+        Reserves Tool as seen/used via Canvas\"\n0\t\"Ruby\"\t2022-02-16\t1\t5270\t0\t0\t\"https://github.com/harvard-library/list_view\"\t2014-10-08\t\"A
+        tool for displaying ordered lists of links.\"\n0\t\"Ruby\"\t2016-07-28\t0\t543\t0\t0\t\"https://github.com/harvard-library/linkomatic\"\t2015-01-12\t\"Automatically
+        adds NRS links to digitized records in EAD\"\n0\t\"Ruby\"\t2016-12-02\t0\t9\t1\t0\t\"https://github.com/harvard-library/harvard-ead-importer\"\t2016-09-30\t\"ArchivesSpace
+        plugin overriding EAD Importer to implement specific fixes.\"\n0\t\"Ruby\"\t2014-10-09\t0\t1265\t0\t0\t\"https://github.com/harvard-library/geosearch_solr_prep\"\t2014-08-06\t\"geosearch_solr_prep\"\n0\t\"Ruby\"\t2020-11-16\t0\t26\t0\t0\t\"https://github.com/harvard-library/devise_harvard_auth_proxy\"\t2014-05-01\t\"Devise
+        plugin to use the Harvard authentication proxy.\"\n0\t\"Ruby\"\t2017-11-01\t0\t35\t0\t0\t\"https://github.com/harvard-library/aspace-linkomatic\"\t2017-02-21\t\"A
+        plugin to help automate the insertion of links to digitized records into Archives
+        Space.\"\n0\t\"\"\t2022-10-03\t0\t7\t0\t0\t\"https://github.com/cga-harvard/Twitter-Sentiment-Geographical-Index\"\t2022-12-14\t\"Twitter
+        Sentiment Geographical Index\"\n0\t\"Java\"\t2022-06-07\t0\t56\t0\t0\t\"https://github.com/kurator-org/ffdq-api\"\t2016-12-15\t\"An
+        API for making Fitt4Use Framework assertions available to Data Quality reports.\"\n0\t\"Python\"\t2022-11-08\t0\t28454\t0\t0\t\"https://github.com/Colin-Fredericks/edx_replace_staff\"\t2022-03-28\t\"\"\n0\t\"Java\"\t2022-11-15\t4\t2399\t0\t0\t\"https://github.com/kurator-org/kurator-ffdq\"\t2016-11-02\t\"FFDQ
+        framework for data quality assertions\"\n0\t\"Java\"\t2022-12-14\t4\t309\t1\t0\t\"https://github.com/kurator-org/kurator-fp-validation\"\t2015-03-03\t\"Biodiversity
+        data validation actors and workflows derived from the FP-Akka package\"\n0\t\"Go\"\t2019-02-01\t0\t1705\t0\t0\t\"https://github.com/cbdb-project/ip-director\"\t2018-10-29\t\"Direct
+        IPs from different geographic locations to different URLs\"\n0\t\"Ruby\"\t2022-05-06\t0\t62850\t0\t0\t\"https://github.com/berkmancenter/eda\"\t2014-07-03\t\"Emily
+        Dickinson Archive platform\"\n0\t\"\"\t2022-12-20\t0\t20\t0\t0\t\"https://github.com/MCZbase/queries_MCZbase\"\t2017-11-21\t\"A
+        library of SQL queries and scripts used with MCZbase\"\n0\t\"Java\"\t2018-04-23\t0\t9130\t0\t0\t\"https://github.com/MCZbase/eDecViewer\"\t2015-08-21\t\"USFWS
+        eDec generation tool for MCZbase and Arctos\"\n0\t\"HTML\"\t2021-03-08\t0\t3450\t0\t0\t\"https://github.com/MCZbase/datashot_web\"\t2016-11-24\t\"\"\n0\t\"Java\"\t2022-01-27\t0\t25154\t0\t0\t\"https://github.com/MCZbase/datashot_ejb\"\t2016-11-24\t\"\"\n0\t\"\"\t2021-03-08\t0\t81\t0\t0\t\"https://github.com/MCZbase/datashot_ee\"\t2016-11-24\t\"\"\n0\t\"Java\"\t2022-10-05\t1\t27192\t0\t0\t\"https://github.com/FilteredPush/FP-KurationServices\"\t2016-12-20\t\"\"\n0\t\"PHP\"\t2017-06-12\t0\t26\t0\t0\t\"https://github.com/DRSC-FG/gene2function\"\t2017-06-09\t\"\"\n"
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '21940'
+      Content-Type:
+      - text/tab-separated-values; name="2023-01-03.tab";charset=UTF-8
+      Content-disposition:
+      - attachment; filename="2023-01-03.tab"
+      Date:
+      - Mon, 08 Jul 2024 17:27:46 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=lFnt531T9SrieZrt8WZnwdptZb9dpsJbcJYUY1EcwD/8aSWq/Ri0p7ojJza4ry0FZNt8wdxwwhK32Cs3BoDKBvj8KmD/drppE3TpY8R54SHRYXLk5Dn5Ws6t9m8Q;
+        Expires=Mon, 15 Jul 2024 17:27:46 GMT; Path=/
+      - AWSALBCORS=lFnt531T9SrieZrt8WZnwdptZb9dpsJbcJYUY1EcwD/8aSWq/Ri0p7ojJza4ry0FZNt8wdxwwhK32Cs3BoDKBvj8KmD/drppE3TpY8R54SHRYXLk5Dn5Ws6t9m8Q;
+        Expires=Mon, 15 Jul 2024 17:27:46 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=36322a5a9b6af5eea11edfb0d14e; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: http://use.yt/upload/9241131f
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Length:
+      - '18'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Mon, 08 Jul 2024 17:27:46 GMT
+      Location:
+      - https://use.yt/upload/9241131f
+    status:
+      code: 308
+      message: Permanent Redirect
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/datasets/:persistentId?persistentId=doi:10.7910/DVN/CR02PG
+  response:
+    body:
+      string: "{\"status\":\"OK\",\"data\":{\"id\":48000,\"identifier\":\"DVN/CR02PG\",\"persistentUrl\":\"https://doi.org/10.7910/DVN/CR02PG\",\"protocol\":\"doi\",\"authority\":\"10.7910\",\"publisher\":\"Harvard
+        Dataverse\",\"publicationDate\":\"2009-12-07\",\"storageIdentifier\":\"s3://1902.1/00709\",\"latestVersion\":{\"id\":348348,\"datasetId\":48000,\"datasetPersistentId\":\"doi:10.7910/DVN/CR02PG\",\"storageIdentifier\":\"s3://1902.1/00709\",\"versionNumber\":9,\"versionMinorNumber\":0,\"versionState\":\"RELEASED\",\"distributionDate\":\"1988\",\"lastUpdateTime\":\"2023-07-31T16:14:07Z\",\"releaseTime\":\"2023-07-31T16:14:07Z\",\"createTime\":\"2023-07-31T16:12:38Z\",\"alternativePersistentId\":\"hdl:1902.1/00709\",\"publicationDate\":\"2009-12-07\",\"termsOfUse\":\"<div
+        style=\\\"padding-left: 30px;\\\"> <ul style=\\\"list-style-type: decimal;\\\"
+        ><li> The Murray Archive (the Distributor) has granted me a revocable license
+        to use this dataset solely for the purposes of conducting research, and the
+        Distributor may terminate this license at any time and for any reason. </li>
+        <li> I will use the dataset solely for statistical analysis and reporting
+        of aggregated information, and not for investigation of specific individuals
+        or organizations, except when identification is authorized in writing by the
+        Distributor.   </li> <li>I will produce no links among the Distributor\u2019s
+        datasets or among the Distributor\u2019s data and other datasets that could
+        identify individuals or organizations. </li> <li>I represent that neither
+        I, nor anyone I know, has any prior knowledge of the possible identities of
+        any study participants in any dataset that I am being licensed to use.   </li>
+        <li> I will not knowingly divulge any information that could be used to identify
+        individual participants in the study, nor will I attempt to identify or contact
+        any study participant, and I agree to use any precautions necessary to prevent
+        such identification.\\n</li> <li> I will make no use of the identity of any
+        person or establishment discovered inadvertently.  If I suspect that I might
+        recognize or know a study participant, I will immediately inform the Distributor,
+        and I will not use or retain a copy of data regarding that study participant.
+        \ If these measures to resolve an identity disclosure are not sufficient,
+        the Distributor may terminate my use of the dataset. </li> <li> I will not
+        reproduce the dataset except as is necessary for my scholarly purposes.  I
+        will destroy the dataset upon the completion of my scholarly work with it.\\n</li>
+        <li> I will not share data from the dataset (in any form or by any means)
+        with any third party, including other members of my research team, as I understand
+        that all users of data must obtain the data directly from the Distributor.
+        </li> <li> I will make appropriate acknowledgement of the contributor of the
+        dataset as well as the Distributor in any manuscript or presentation (published
+        or unpublished) using the citation standard documented here: <a  href=\\\"http://thedata.org/citation\\\">
+        http://thedata.org/citation</a> </li> <li> THE DISTRIBUTOR MAKES NO WARRANTIES,
+        EXPRESS OR IMPLIED, BY OPERATION OF LAW OR OTHERWISE, REGARDING OR RELATING
+        TO THE DATASET.   </li> </ul> </div>\",\"specialPermissions\":\"<b>An addendum
+        has been added giving \\\"open access\\\" to the dataset, aside from additional
+        conditions listed below, including the completion of the \\\"guestbook\\\"
+        and agreement to the \\\"Murray Terms of Use.\\\"<b/>\\n\\n<br /><br />\\n<b>The
+        following subject is restricted as to publication; data cannot be used in
+        publications:<b/><br />\\n00709Walzer-OralHistory-PaperData-Subject_Hubbard.pdf<br
+        />\",\"restrictions\":\"I will use these data solely for the purposes stated
+        in the guestbook. I will honor all agreements and conditions made between
+        the Contributor of the Data and the study participants, and between the Contributor
+        of the Data and the Henry A. Murray Research Archive, Harvard University,
+        as specified in the Memorandum of Agreement.\",\"citationRequirements\":\"I
+        will include a bibliographic citation acknowledging the use of these data
+        in any publication or presentation in which these data are used. Such citations
+        will appear in footnotes or in the reference section of any such manuscript.
+        I understand the guideline in \\\"How to Cite This Dataset\\\" described in
+        the Summary of this study.\\n\\n<br /><br />\\n<b>A copy of additional data
+        or publications stemming from my use of this data will be deposited with the
+        Murray Archive at the end of my project date.<b/>\",\"depositorRequirements\":\"Murray
+        Research Archive will list my publication and manuscripts on the Archive website
+        when I submit a bibliographic citation or title of the manuscript, and indicate
+        the Henry A. Murray Research Archive data used. Doing this will also help
+        Henry A. Murray Research Archive to provide funding agencies with essential
+        information about use of archival resources, to fulfill requirements of some
+        memoranda of agreement, and to promote the broader exchange of information
+        about research activities.\",\"conditions\":\"<b>The subjects in this dataset
+        are all deceased and thus some restrictions on the use of the data have expired.
+        An application form is no longer required to access the data, including the
+        audio files.<b/>\\n<br /><br />\\n<b>The following subject is restricted as
+        to publication; data cannot be used in publications:<b/><br />\\n00709Walzer-OralHistory-PaperData-Subject_Hubbard.pdf\",\"termsOfAccess\":\"I
+        agree to the Murray Archive terms of use stated for this dataset. I agree
+        to complete the required guestbook information honestly and to the best of
+        my knowledge.\\n\\n<br /><br />Submission of the following <a href= \\\"https://murray.harvard.edu/application\\\"
+        target=\\\"_blank\\\">Application For The Use Of Data</a> is required to access
+        the data from this study.\\n\\n<br /><br />\\n<b>Additionally, the following
+        subject is restricted as to publication; data cannot be used in publications:<b/><br
+        />\\n00709Walzer-OralHistory-PaperData-Subject_Hubbard.pdf\",\"originalArchive\":\"Henry
+        A. Murray Research Archive, Institute for Quantitative Social Sciences, Harvard
+        University\",\"availabilityStatus\":\"Available\",\"contactForAccess\":\"<a
+        href=\\\"mailto:mra@help.hmdc.harvard.edu\\\">Manager of Operations</a>, the
+        Henry A. Murray Research Archive, Institute for Quantitative Social Sciences,
+        1737 Cambridge St, Cambridge, MA 02138, USA.\",\"fileAccessRequest\":false,\"metadataBlocks\":{\"citation\":{\"displayName\":\"Citation
+        Metadata\",\"name\":\"citation\",\"fields\":[{\"typeName\":\"title\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Oral
+        History of the Tenured Women in the Faculty of Arts and Sciences at Harvard
+        University, 1981\"},{\"typeName\":\"otherId\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"otherIdValue\":{\"typeName\":\"otherIdValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"00709\"}}]},{\"typeName\":\"author\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"authorName\":{\"typeName\":\"authorName\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Walzer,
+        Judith B.\"}}]},{\"typeName\":\"datasetContact\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"datasetContactEmail\":{\"typeName\":\"datasetContactEmail\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"mra_support@help.hmdc.harvard.edu\"}}]},{\"typeName\":\"dsDescription\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"dsDescriptionValue\":{\"typeName\":\"dsDescriptionValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"The
+        purpose of this 1981 study was to document the history of women faculty at
+        Harvard University. Of the then 13 women tenured in the Faculty of Arts and
+        Sciences at Harvard in 1981, 11 professors and the husband of one deceased
+        professor participated in interviews. Nine of these women were of foreign
+        background and one was African American. The interviews focused on the development
+        of their careers, the challenges they faced, their educational and occupational
+        histories, life histories, and demographic information.\\n<br /><br />The
+        12 participants took part in intensive, open-ended interviews. The interview
+        followed a rough chronological outline and produced a biographical sketch
+        of each participant, in addition to information about academic work, career,
+        and view of Harvard. The interviews were transcribed and approved by the participants.<br
+        /><br />The Murray Research Archive has the original tapes and the interview
+        transcripts for all participants. Each professor made her own confidentiality
+        agreements\\nwith Dr. Walzer. Because it is not possible to disguise the participants'
+        identities, access to some transcripts is restricted and requires special
+        permission.\\n<br/><br /><b>Audio Data Availability Note:</b> This study contains
+        audio data that have been digitized. There are 78 audio files available.\"}}]},{\"typeName\":\"subject\",\"multiple\":true,\"typeClass\":\"controlledVocabulary\",\"value\":[\"Social
+        Sciences\"]},{\"typeName\":\"topicClassification\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"mra\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"50
+        or fewer\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Sampsize\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://www.murray.harvard.edu/vocabulary\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"female\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Gender\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://www.murray.harvard.edu/vocabulary\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"40-49,
+        50-59, 60-69, 70+\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Age\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://www.murray.harvard.edu/vocabulary\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"White,
+        mixed\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Race\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://www.murray.harvard.edu/vocabulary\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"middle\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"SES\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://www.murray.harvard.edu/vocabulary\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"1\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Generations\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://www.murray.harvard.edu/vocabulary\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"yes\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Follow-up
+        permitted\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://www.murray.harvard.edu/vocabulary\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Women
+        and education\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Education\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://authorities.loc.gov/\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Work\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://authorities.loc.gov/\"}},{\"topicClassValue\":{\"typeName\":\"topicClassValue\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Women\"},\"topicClassVocab\":{\"typeName\":\"topicClassVocab\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Family.
+        Marriage. Women.\"},\"topicClassVocabURI\":{\"typeName\":\"topicClassVocabURI\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://authorities.loc.gov/\"}}]},{\"typeName\":\"distributor\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"distributorName\":{\"typeName\":\"distributorName\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"Murray
+        Research Archive\"},\"distributorURL\":{\"typeName\":\"distributorURL\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"http://www.murray.harvard.edu\"},\"distributorLogoURL\":{\"typeName\":\"distributorLogoURL\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"https://dataverse.harvard.edu/logos/10/mra_logo.jpg\"}}]},{\"typeName\":\"distributionDate\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"1988\"},{\"typeName\":\"timePeriodCovered\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"timePeriodCoveredStart\":{\"typeName\":\"timePeriodCoveredStart\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"1980\"},\"timePeriodCoveredEnd\":{\"typeName\":\"timePeriodCoveredEnd\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"1990\"}}]},{\"typeName\":\"dateOfCollection\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"dateOfCollectionStart\":{\"typeName\":\"dateOfCollectionStart\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"1981\"}}]},{\"typeName\":\"kindOfData\",\"multiple\":true,\"typeClass\":\"primitive\",\"value\":[\"case
+        study/oral history\"]}]},\"geospatial\":{\"displayName\":\"Geospatial Metadata\",\"name\":\"geospatial\",\"fields\":[{\"typeName\":\"geographicCoverage\",\"multiple\":true,\"typeClass\":\"compound\",\"value\":[{\"country\":{\"typeName\":\"country\",\"multiple\":false,\"typeClass\":\"controlledVocabulary\",\"value\":\"United
+        States\"}}]}]},\"socialscience\":{\"displayName\":\"Social Science and Humanities
+        Metadata\",\"name\":\"socialscience\",\"fields\":[{\"typeName\":\"unitOfAnalysis\",\"multiple\":true,\"typeClass\":\"primitive\",\"value\":[\"individuals\"]},{\"typeName\":\"samplingProcedure\",\"multiple\":false,\"typeClass\":\"primitive\",\"value\":\"quota
+        sample\"},{\"typeName\":\"collectionMode\",\"multiple\":true,\"typeClass\":\"primitive\",\"value\":[\"interview\"]}]},\"customMRA\":{\"displayName\":\"MRA
+        Metadata\",\"name\":\"customMRA\",\"fields\":[{\"typeName\":\"mraCollection\",\"multiple\":true,\"typeClass\":\"controlledVocabulary\",\"value\":[\"Education\",\"Family.
+        Marriage. Women\",\"Studies with Audio Data\",\"Work\"]}]}},\"files\":[{\"description\":\"The
+        most recent version of the agreement with the contributor of the data. \",\"label\":\"00709Walzer-OralHistory-AddendumMemo.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"4.
+        Detailed Usage Terms\"],\"dataFile\":{\"id\":4912839,\"persistentId\":\"\",\"filename\":\"00709Walzer-OralHistory-AddendumMemo.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":57601,\"description\":\"The most recent version of the
+        agreement with the contributor of the data. \",\"categories\":[\"4. Detailed
+        Usage Terms\"],\"storageIdentifier\":\"s3://dvn-cloud:17acf6bd19d-810f6a91dd61\",\"rootDataFileId\":-1,\"md5\":\"7bf01e391a6696230536c7e8185c003b\",\"checksum\":{\"type\":\"MD5\",\"value\":\"7bf01e391a6696230536c7e8185c003b\"},\"tabularData\":false,\"creationDate\":\"2021-07-22\",\"publicationDate\":\"2022-06-21\",\"fileAccessRequest\":false}},{\"description\":\"Shklar
+        Interview Tape 1, Side A\",\"label\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape1SideA.mp3\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":4946431,\"persistentId\":\"\",\"filename\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape1SideA.mp3\",\"contentType\":\"audio/mpeg\",\"friendlyType\":\"MP3
+        Audio\",\"filesize\":95688860,\"description\":\"Shklar Interview Tape 1, Side
+        A\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:17b0a5e7bb5-291350b29f17\",\"rootDataFileId\":-1,\"md5\":\"064b7fab769dfad8d62a614c1e7990ed\",\"checksum\":{\"type\":\"MD5\",\"value\":\"064b7fab769dfad8d62a614c1e7990ed\"},\"tabularData\":false,\"creationDate\":\"2021-08-03\",\"publicationDate\":\"2022-06-21\",\"fileAccessRequest\":false}},{\"description\":\"Shklar
+        Interview Tape 1, Side B\",\"label\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape1SideB.mp3\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":4946432,\"persistentId\":\"\",\"filename\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape1SideB.mp3\",\"contentType\":\"audio/mpeg\",\"friendlyType\":\"MP3
+        Audio\",\"filesize\":106660700,\"description\":\"Shklar Interview Tape 1,
+        Side B\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:17b0a5f9d89-d65f99052a65\",\"rootDataFileId\":-1,\"md5\":\"c5b15d0a688ed2465d076250a980a3ef\",\"checksum\":{\"type\":\"MD5\",\"value\":\"c5b15d0a688ed2465d076250a980a3ef\"},\"tabularData\":false,\"creationDate\":\"2021-08-03\",\"publicationDate\":\"2022-06-21\",\"fileAccessRequest\":false}},{\"description\":\"Shklar
+        Interview Tape 2, Side A\",\"label\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape2SideA.mp3\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":4946433,\"persistentId\":\"\",\"filename\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape2SideA.mp3\",\"contentType\":\"audio/mpeg\",\"friendlyType\":\"MP3
+        Audio\",\"filesize\":107048540,\"description\":\"Shklar Interview Tape 2,
+        Side A\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:17b0a60c210-54969a837e38\",\"rootDataFileId\":-1,\"md5\":\"c4d295a12d9e9dc52ee79cf8e7892322\",\"checksum\":{\"type\":\"MD5\",\"value\":\"c4d295a12d9e9dc52ee79cf8e7892322\"},\"tabularData\":false,\"creationDate\":\"2021-08-03\",\"publicationDate\":\"2022-06-21\",\"fileAccessRequest\":false}},{\"description\":\"Shklar
+        Interview Tape 2, Side B\",\"label\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape2SideB.mp3\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":4946429,\"persistentId\":\"\",\"filename\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape2SideB.mp3\",\"contentType\":\"audio/mpeg\",\"friendlyType\":\"MP3
+        Audio\",\"filesize\":104684060,\"description\":\"Shklar Interview Tape 2,
+        Side B\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:17b0a61db64-9de5d5f64c6a\",\"rootDataFileId\":-1,\"md5\":\"c6955ccd7a7b702f22f2cf19ee1d6f5d\",\"checksum\":{\"type\":\"MD5\",\"value\":\"c6955ccd7a7b702f22f2cf19ee1d6f5d\"},\"tabularData\":false,\"creationDate\":\"2021-08-03\",\"publicationDate\":\"2022-06-21\",\"fileAccessRequest\":false}},{\"description\":\"Shklar
+        Interview Tape 3\",\"label\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape3.mp3\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":4946430,\"persistentId\":\"\",\"filename\":\"00709Walzer-OralHistory-AudioData-Subject_Shklar_Tape3.mp3\",\"contentType\":\"audio/mpeg\",\"friendlyType\":\"MP3
+        Audio\",\"filesize\":109212350,\"description\":\"Shklar Interview Tape 3\",\"categories\":[\"2.
+        Data\"],\"storageIdentifier\":\"s3://dvn-cloud:17b0a6300a9-15d92178bc45\",\"rootDataFileId\":-1,\"md5\":\"6037acdb9a0c022d6ccec55b6d3dfa2f\",\"checksum\":{\"type\":\"MD5\",\"value\":\"6037acdb9a0c022d6ccec55b6d3dfa2f\"},\"tabularData\":false,\"creationDate\":\"2021-08-03\",\"publicationDate\":\"2022-06-21\",\"fileAccessRequest\":false}},{\"description\":\"Describe
+        contents of each box of a paper data set\",\"label\":\"00709Walzer-OralHistory-BoxCoverSheets.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"3.
+        Supplementary Documentation\"],\"dataFile\":{\"id\":109076,\"persistentId\":\"doi:10.7910/DVN/CR02PG/S7OJSI\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/S7OJSI\",\"filename\":\"00709Walzer-OralHistory-BoxCoverSheets.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":324573,\"description\":\"Describe contents of each box
+        of a paper data set\",\"categories\":[\"3. Supplementary Documentation\"],\"storageIdentifier\":\"s3://dvn-cloud:fawjgulxqc\",\"rootDataFileId\":-1,\"md5\":\"3866b78b8d82e12ee56a9864dc6aa368\",\"checksum\":{\"type\":\"MD5\",\"value\":\"3866b78b8d82e12ee56a9864dc6aa368\"},\"tabularData\":false,\"creationDate\":\"2007-03-09\",\"publicationDate\":\"2009-12-06\",\"fileAccessRequest\":false}},{\"description\":\"Legal
+        agreement between data depositor and the Murray Archive\",\"label\":\"00709Walzer-OralHistory-MemoOfAgreement.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"4.
+        Detailed Usage Terms\"],\"dataFile\":{\"id\":2497261,\"persistentId\":\"doi:10.7910/DVN/CR02PG/UCHJBN\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/UCHJBN\",\"filename\":\"00709Walzer-OralHistory-MemoOfAgreement.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":336852,\"description\":\"Legal agreement between data depositor
+        and the Murray Archive\",\"categories\":[\"4. Detailed Usage Terms\"],\"storageIdentifier\":\"s3://dvn-cloud:229599\",\"rootDataFileId\":-1,\"md5\":\"1959c81bb7a37be58294e119f73d8a4f\",\"checksum\":{\"type\":\"MD5\",\"value\":\"1959c81bb7a37be58294e119f73d8a4f\"},\"tabularData\":false,\"creationDate\":\"2014-08-07\",\"publicationDate\":\"2014-08-06\",\"fileAccessRequest\":false}},{\"description\":\"Inventory
+        of data on each participant and measures\",\"label\":\"00709Walzer-OralHistory-PaperDataInventory.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"3.
+        Supplementary Documentation\"],\"dataFile\":{\"id\":109100,\"persistentId\":\"doi:10.7910/DVN/CR02PG/BDNPUV\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/BDNPUV\",\"filename\":\"00709Walzer-OralHistory-PaperDataInventory.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":96386,\"description\":\"Inventory of data on each participant
+        and measures\",\"categories\":[\"3. Supplementary Documentation\"],\"storageIdentifier\":\"s3://dvn-cloud:pcrhiqcfjs\",\"rootDataFileId\":-1,\"md5\":\"43e2dcb9acb76784394bf6a590eeaf18\",\"checksum\":{\"type\":\"MD5\",\"value\":\"43e2dcb9acb76784394bf6a590eeaf18\"},\"tabularData\":false,\"creationDate\":\"2007-03-09\",\"publicationDate\":\"2009-12-06\",\"fileAccessRequest\":false}},{\"description\":\"Cohn
+        Interview Transcript\\r\\nDeceased; data available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Cohn.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2693077,\"persistentId\":\"doi:10.7910/DVN/CR02PG/EXSZKY\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/EXSZKY\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Cohn.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":3648339,\"description\":\"Cohn Interview Transcript\\r\\nDeceased;
+        data available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14e798928af-3c1d2fed4880\",\"rootDataFileId\":-1,\"md5\":\"3b35e377db0da430e1aed64789deb29d\",\"checksum\":{\"type\":\"MD5\",\"value\":\"3b35e377db0da430e1aed64789deb29d\"},\"tabularData\":false,\"creationDate\":\"2015-07-10\",\"publicationDate\":\"2015-07-10\",\"fileAccessRequest\":false}},{\"description\":\"DuBois
+        Interview Transcript\\r\\nUnrestricted for use: data may be used in  publications.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_DuBois.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2695070,\"persistentId\":\"doi:10.7910/DVN/CR02PG/M0ZQHE\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/M0ZQHE\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_DuBois.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":2939085,\"description\":\"DuBois Interview Transcript\\r\\nUnrestricted
+        for use: data may be used in  publications.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14ead1fa195-97fa05f2e18a\",\"rootDataFileId\":-1,\"md5\":\"69db5a8186ecfe8faf8358e41cb45d2d\",\"checksum\":{\"type\":\"MD5\",\"value\":\"69db5a8186ecfe8faf8358e41cb45d2d\"},\"tabularData\":false,\"creationDate\":\"2015-07-20\",\"publicationDate\":\"2015-07-20\",\"fileAccessRequest\":false}},{\"description\":\"Hubbard
+        Interview Transcript\\r\\nRestricted as to publication; data cannot be used
+        in any publications.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Hubbard.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2693071,\"persistentId\":\"doi:10.7910/DVN/CR02PG/QOV1BB\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/QOV1BB\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Hubbard.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":4005799,\"description\":\"Hubbard Interview Transcript\\r\\nRestricted
+        as to publication; data cannot be used in any publications.\",\"categories\":[\"2.
+        Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14e798928a9-585e29135c7f\",\"rootDataFileId\":-1,\"md5\":\"dd74648174641981294bbb967cf63cc3\",\"checksum\":{\"type\":\"MD5\",\"value\":\"dd74648174641981294bbb967cf63cc3\"},\"tabularData\":false,\"creationDate\":\"2015-07-10\",\"publicationDate\":\"2015-07-10\",\"fileAccessRequest\":false}},{\"description\":\"Macaffery
+        Interview Transcript\\r\\nUnrestricted for use: data may be used in  publications.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Macaffery.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2695072,\"persistentId\":\"doi:10.7910/DVN/CR02PG/URUK22\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/URUK22\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Macaffery.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":1004435,\"description\":\"Macaffery Interview Transcript\\r\\nUnrestricted
+        for use: data may be used in  publications.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14ead3d1ea2-288f501b285e\",\"rootDataFileId\":-1,\"md5\":\"6c5109e1bdce30df4c1e682952bb9fad\",\"checksum\":{\"type\":\"MD5\",\"value\":\"6c5109e1bdce30df4c1e682952bb9fad\"},\"tabularData\":false,\"creationDate\":\"2015-07-20\",\"publicationDate\":\"2015-07-20\",\"fileAccessRequest\":false}},{\"description\":\"Pian
+        Interview Transcript\\r\\nDeceased; data available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Pian.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2693073,\"persistentId\":\"doi:10.7910/DVN/CR02PG/NWTMLH\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/NWTMLH\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Pian.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":4064830,\"description\":\"Pian Interview Transcript\\r\\nDeceased;
+        data available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14e798928a6-d0d5f391ce4b\",\"rootDataFileId\":-1,\"md5\":\"4cb9dd2d9e4c4aa9144dd5cb9b07b24a\",\"checksum\":{\"type\":\"MD5\",\"value\":\"4cb9dd2d9e4c4aa9144dd5cb9b07b24a\"},\"tabularData\":false,\"creationDate\":\"2015-07-10\",\"publicationDate\":\"2015-07-10\",\"fileAccessRequest\":false}},{\"description\":\"Rivers
+        Interview Transcript\\r\\n\\r\\nDeceased; data available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Rivers.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2693075,\"persistentId\":\"doi:10.7910/DVN/CR02PG/TPVLXF\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/TPVLXF\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Rivers.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":5285701,\"description\":\"Rivers Interview Transcript\\r\\n\\r\\nDeceased;
+        data available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14e798928ee-23ee7397daf2\",\"rootDataFileId\":-1,\"md5\":\"fdedddc0b600a3ab3ff65052d64ea19c\",\"checksum\":{\"type\":\"MD5\",\"value\":\"fdedddc0b600a3ab3ff65052d64ea19c\"},\"tabularData\":false,\"creationDate\":\"2015-07-10\",\"publicationDate\":\"2015-07-10\",\"fileAccessRequest\":false}},{\"description\":\"Rosenkrantz
+        Interview Transcript\\r\\nDeceased: data available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Rosenkrantz.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2693074,\"persistentId\":\"doi:10.7910/DVN/CR02PG/XB7MEW\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/XB7MEW\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Rosenkrantz.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":4754237,\"description\":\"Rosenkrantz Interview Transcript\\r\\nDeceased:
+        data available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14e798928d2-5f1e39bf457f\",\"rootDataFileId\":-1,\"md5\":\"5cffa5fa5eac963fe927ea0f9ed6b6b0\",\"checksum\":{\"type\":\"MD5\",\"value\":\"5cffa5fa5eac963fe927ea0f9ed6b6b0\"},\"tabularData\":false,\"creationDate\":\"2015-07-10\",\"publicationDate\":\"2015-07-10\",\"fileAccessRequest\":false}},{\"description\":\"Shklar
+        Interview Transcript\\r\\nDeceased; data available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Shklar.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2695063,\"persistentId\":\"doi:10.7910/DVN/CR02PG/VHWGVM\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/VHWGVM\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Shklar.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":4275366,\"description\":\"Shklar Interview Transcript\\r\\nDeceased;
+        data available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14eace383c4-ea732ae65402\",\"rootDataFileId\":-1,\"md5\":\"7d2f5f122bcc52cf5e2dc560a0af9602\",\"checksum\":{\"type\":\"MD5\",\"value\":\"7d2f5f122bcc52cf5e2dc560a0af9602\"},\"tabularData\":false,\"creationDate\":\"2015-07-20\",\"publicationDate\":\"2015-07-20\",\"fileAccessRequest\":false}},{\"description\":\"Southern
+        Interview Transcript\\r\\nDeceased; data are available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Southern.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2693072,\"persistentId\":\"doi:10.7910/DVN/CR02PG/ZHVAG7\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/ZHVAG7\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Southern.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":4851684,\"description\":\"Southern Interview Transcript\\r\\nDeceased;
+        data are available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14e798928be-9b18b48d0e6e\",\"rootDataFileId\":-1,\"md5\":\"83fbe24833f01942e2c5e479be1723a2\",\"checksum\":{\"type\":\"MD5\",\"value\":\"83fbe24833f01942e2c5e479be1723a2\"},\"tabularData\":false,\"creationDate\":\"2015-07-10\",\"publicationDate\":\"2015-07-10\",\"fileAccessRequest\":false}},{\"description\":\"Turner
+        Interview Transcript\\r\\nDeceased; data available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Turner.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2695071,\"persistentId\":\"doi:10.7910/DVN/CR02PG/8WJA8G\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/8WJA8G\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Turner.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":3446277,\"description\":\"Turner Interview Transcript\\r\\nDeceased;
+        data available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14ead1fa0d1-cc44ab64c1c7\",\"rootDataFileId\":-1,\"md5\":\"b74b3cd98e45bfa150cc14e2bdb34b6d\",\"checksum\":{\"type\":\"MD5\",\"value\":\"b74b3cd98e45bfa150cc14e2bdb34b6d\"},\"tabularData\":false,\"creationDate\":\"2015-07-20\",\"publicationDate\":\"2015-07-20\",\"fileAccessRequest\":false}},{\"description\":\"Vermeule
+        Interview Transcript\\r\\nDeceased; data available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Vermeule.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2695068,\"persistentId\":\"doi:10.7910/DVN/CR02PG/LTU9UM\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/LTU9UM\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Vermeule.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":1566703,\"description\":\"Vermeule Interview Transcript\\r\\nDeceased;
+        data available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14ead1fa070-9847cbe90412\",\"rootDataFileId\":-1,\"md5\":\"e6145665242bd037329420c11b581315\",\"checksum\":{\"type\":\"MD5\",\"value\":\"e6145665242bd037329420c11b581315\"},\"tabularData\":false,\"creationDate\":\"2015-07-20\",\"publicationDate\":\"2015-07-20\",\"fileAccessRequest\":false}},{\"description\":\"Vosgerchain
+        Interview Transcript\\r\\nDeceased; data available for use and publication.\",\"label\":\"00709Walzer-OralHistory-PaperData-Subject_Vosgerchain.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"2.
+        Data\"],\"dataFile\":{\"id\":2695069,\"persistentId\":\"doi:10.7910/DVN/CR02PG/6FROAO\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/6FROAO\",\"filename\":\"00709Walzer-OralHistory-PaperData-Subject_Vosgerchain.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":2343540,\"description\":\"Vosgerchain Interview Transcript\\r\\nDeceased;
+        data available for use and publication.\",\"categories\":[\"2. Data\"],\"storageIdentifier\":\"s3://dvn-cloud:14ead1fa1e1-fe7c4599a301\",\"rootDataFileId\":-1,\"md5\":\"a3c6171d95fe422bf88ef9f44ec6247d\",\"checksum\":{\"type\":\"MD5\",\"value\":\"a3c6171d95fe422bf88ef9f44ec6247d\"},\"tabularData\":false,\"creationDate\":\"2015-07-20\",\"publicationDate\":\"2015-07-20\",\"fileAccessRequest\":false}},{\"description\":\"Overview:
+        abstract, research methodology, publications, and other info.\",\"label\":\"00709Walzer-OralHistory-StudyDescription.pdf\",\"restricted\":false,\"version\":1,\"datasetVersionId\":348348,\"categories\":[\"1.
+        Documentation\"],\"dataFile\":{\"id\":109130,\"persistentId\":\"doi:10.7910/DVN/CR02PG/ONVSHL\",\"pidURL\":\"https://doi.org/10.7910/DVN/CR02PG/ONVSHL\",\"filename\":\"00709Walzer-OralHistory-StudyDescription.pdf\",\"contentType\":\"application/pdf\",\"friendlyType\":\"Adobe
+        PDF\",\"filesize\":14045,\"description\":\"Overview: abstract, research methodology,
+        publications, and other info.\",\"categories\":[\"1. Documentation\"],\"storageIdentifier\":\"s3://dvn-cloud:pploppmzmp\",\"rootDataFileId\":-1,\"md5\":\"c00bebe260b38e136d1f4abcc7828f0e\",\"checksum\":{\"type\":\"MD5\",\"value\":\"c00bebe260b38e136d1f4abcc7828f0e\"},\"tabularData\":false,\"creationDate\":\"2007-03-09\",\"publicationDate\":\"2009-12-06\",\"fileAccessRequest\":false}}]}}}"
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:27:46 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=zCArTAjBBfLhvPlF5J8mhccU1D+0onsSDuw7BGz2FQYM7qkzv2ZiT/ROQU3j+BSmk/jpIjSrTTR8t7psmzVf/t0AK7DZ/FgZL/026wHvqh047n8FBwJ8aKwBNZDp;
+        Expires=Mon, 15 Jul 2024 17:27:46 GMT; Path=/
+      - AWSALBCORS=zCArTAjBBfLhvPlF5J8mhccU1D+0onsSDuw7BGz2FQYM7qkzv2ZiT/ROQU3j+BSmk/jpIjSrTTR8t7psmzVf/t0AK7DZ/FgZL/026wHvqh047n8FBwJ8aKwBNZDp;
+        Expires=Mon, 15 Jul 2024 17:27:46 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=363256507405ad9ff5bfad8661e0; Path=/; Secure
+      Transfer-Encoding:
+      - chunked
+    status:
+      code: 200
+      message: OK
+version: 1
