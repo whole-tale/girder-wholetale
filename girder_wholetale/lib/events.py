@@ -22,7 +22,9 @@ DEFAULT_IDLE_TIMEOUT = 1440.0
 logger = logging.getLogger(__name__)
 
 def job_update_after_handler(event):
-    job = event.info
+    job = event.info.get("job")
+    if not job:
+        return
     if job["title"] == "Build Tale Image" and job.get("status") is not None:
         update_build_status(event)
     elif job["title"] == "Publish Tale" and job.get("status") == JobStatus.SUCCESS:

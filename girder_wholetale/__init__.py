@@ -494,7 +494,7 @@ def updateNotification(event):
             resource["jobCurrent"] = 0
             resource["jobId"] = resource["jobs"][-1]
 
-        if not params["progressCurrent"]:
+        if not params.get("progressCurrent"):
             increment = 0
         else:
             try:
