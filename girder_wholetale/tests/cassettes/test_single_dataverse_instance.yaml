@@ -1,0 +1,1313 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/info/version
+  response:
+    body:
+      string: '{"status":"OK","data":{"version":"6.2","build":"\"v6.2+10451+10463+10383-iqss\""}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '82'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:45:59 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/datasets/:persistentId?persistentId=doi:10.70122/FK2/P1TO3S
+  response:
+    body:
+      string: '{"status":"OK","data":{"id":2353190,"identifier":"FK2/P1TO3S","persistentUrl":"https://doi.org/10.70122/FK2/P1TO3S","protocol":"doi","authority":"10.70122","publisher":"Demo
+        Dataverse","publicationDate":"2024-07-02","storageIdentifier":"s3://10.70122/FK2/P1TO3S","latestVersion":{"id":257239,"datasetId":2353190,"datasetPersistentId":"doi:10.70122/FK2/P1TO3S","storageIdentifier":"s3://10.70122/FK2/P1TO3S","versionNumber":3,"versionMinorNumber":0,"versionState":"RELEASED","UNF":"UNF:6:iSz38eRfzxPv54AKU42WGA==","lastUpdateTime":"2024-07-02T17:21:30Z","releaseTime":"2024-07-02T17:21:30Z","createTime":"2024-07-02T17:20:48Z","publicationDate":"2024-07-02","citationDate":"2024-07-02","license":{"name":"CC0
+        1.0","uri":"http://creativecommons.org/publicdomain/zero/1.0","iconUri":"https://licensebuttons.net/p/zero/1.0/88x31.png"},"fileAccessRequest":true,"metadataBlocks":{"citation":{"displayName":"Citation
+        Metadata","name":"citation","fields":[{"typeName":"title","multiple":false,"typeClass":"primitive","value":"title"},{"typeName":"author","multiple":true,"typeClass":"compound","value":[{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Cruz
+        Sanchez, Karla"}}]},{"typeName":"datasetContact","multiple":true,"typeClass":"compound","value":[{"datasetContactName":{"typeName":"datasetContactName","multiple":false,"typeClass":"primitive","value":"Cruz
+        Sanchez, Karla"},"datasetContactEmail":{"typeName":"datasetContactEmail","multiple":false,"typeClass":"primitive","value":"cruzsanchezk@carleton.edu"}}]},{"typeName":"dsDescription","multiple":true,"typeClass":"compound","value":[{"dsDescriptionValue":{"typeName":"dsDescriptionValue","multiple":false,"typeClass":"primitive","value":"demo"}}]},{"typeName":"subject","multiple":true,"typeClass":"controlledVocabulary","value":["Earth
+        and Environmental Sciences"]},{"typeName":"depositor","multiple":false,"typeClass":"primitive","value":"Cruz
+        Sanchez, Karla"},{"typeName":"dateOfDeposit","multiple":false,"typeClass":"primitive","value":"2024-07-02"}]}},"files":[{"label":"BarChart.jpg","restricted":false,"directoryLabel":"Project/Images","version":1,"datasetVersionId":257239,"dataFile":{"id":2353201,"persistentId":"doi:10.70122/FK2/P1TO3S/A63VYX","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/A63VYX","filename":"BarChart.jpg","contentType":"image/jpeg","friendlyType":"JPEG
+        Image","filesize":339679,"storageIdentifier":"s3://demo-dataverse-org:1907475d505-3aebf7a8b0d7","rootDataFileId":-1,"md5":"e114c017c20b68fc568fe5efce692946","checksum":{"type":"MD5","value":"e114c017c20b68fc568fe5efce692946"},"tabularData":false,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"ImageChart.png","restricted":false,"directoryLabel":"Project/Images","version":1,"datasetVersionId":257239,"dataFile":{"id":2353202,"persistentId":"doi:10.70122/FK2/P1TO3S/IO5NAN","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/IO5NAN","filename":"ImageChart.png","contentType":"image/png","friendlyType":"PNG
+        Image","filesize":56083,"storageIdentifier":"s3://demo-dataverse-org:1907475d4ff-7f497523e272","rootDataFileId":-1,"md5":"754f0d3a9923c34af78e3493f010382b","checksum":{"type":"MD5","value":"754f0d3a9923c34af78e3493f010382b"},"tabularData":false,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"Test
+        Data Alpha.tab","restricted":false,"directoryLabel":"Project/Data","version":3,"datasetVersionId":257239,"dataFile":{"id":2353203,"persistentId":"doi:10.70122/FK2/P1TO3S/YUZMSL","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/YUZMSL","filename":"Test
+        Data Alpha.tab","contentType":"text/tab-separated-values","friendlyType":"Tab-Delimited","filesize":6394,"storageIdentifier":"s3://demo-dataverse-org:1907475d50e-91870a6843ed","originalFileFormat":"application/x-stata","originalFormatLabel":"Stata
+        Binary","originalFileSize":9090,"originalFileName":"Test Data Alpha.dta","UNF":"UNF:6:Iav+suqRnjXHbcZOlOxueQ==","rootDataFileId":-1,"md5":"faeb19ec96a34523e4fd0defea0cebda","checksum":{"type":"MD5","value":"faeb19ec96a34523e4fd0defea0cebda"},"tabularData":true,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"Test
+        Data Beta.tab","restricted":false,"directoryLabel":"Project/Data","version":3,"datasetVersionId":257239,"dataFile":{"id":2353200,"persistentId":"doi:10.70122/FK2/P1TO3S/C4MBBA","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/C4MBBA","filename":"Test
+        Data Beta.tab","contentType":"text/tab-separated-values","friendlyType":"Tab-Delimited","filesize":35441,"storageIdentifier":"s3://demo-dataverse-org:1907475d50f-7b8a8f083db8","originalFileFormat":"application/x-stata","originalFormatLabel":"Stata
+        Binary","originalFileSize":31175,"originalFileName":"Test Data Beta.dta","UNF":"UNF:6:y5lOy2RfMHvDW3OeIDYgYQ==","rootDataFileId":-1,"md5":"ba1fb8e3b8c77c5ab09a6d88a82d3ed9","checksum":{"type":"MD5","value":"ba1fb8e3b8c77c5ab09a6d88a82d3ed9"},"tabularData":true,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"Test
+        Document 1.pdf","restricted":false,"directoryLabel":"Project","version":1,"datasetVersionId":257239,"dataFile":{"id":2353199,"persistentId":"doi:10.70122/FK2/P1TO3S/XJ7PQJ","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/XJ7PQJ","filename":"Test
+        Document 1.pdf","contentType":"application/pdf","friendlyType":"Adobe PDF","filesize":40226,"storageIdentifier":"s3://demo-dataverse-org:1907475d4f6-36a81e2a3cda","rootDataFileId":-1,"md5":"4b2680b30fda5d346d6876b4a11986a2","checksum":{"type":"MD5","value":"4b2680b30fda5d346d6876b4a11986a2"},"tabularData":false,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"Test
+        Document 2.docx","restricted":false,"directoryLabel":"Project","version":1,"datasetVersionId":257239,"dataFile":{"id":2353198,"persistentId":"doi:10.70122/FK2/P1TO3S/9S70YX","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/9S70YX","filename":"Test
+        Document 2.docx","contentType":"application/vnd.openxmlformats-officedocument.wordprocessingml.document","friendlyType":"MS
+        Word","filesize":15873,"storageIdentifier":"s3://demo-dataverse-org:1907475d4fb-df105d57b3fb","rootDataFileId":-1,"md5":"4d5461be9dc4b76be0bb046a62b53340","checksum":{"type":"MD5","value":"4d5461be9dc4b76be0bb046a62b53340"},"tabularData":false,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}}]}}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '6448'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:45:59 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373d344e94f4626b4a5859afaedc; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/datasets/:persistentId?persistentId=doi:10.70122/FK2/P1TO3S
+  response:
+    body:
+      string: '{"status":"OK","data":{"id":2353190,"identifier":"FK2/P1TO3S","persistentUrl":"https://doi.org/10.70122/FK2/P1TO3S","protocol":"doi","authority":"10.70122","publisher":"Demo
+        Dataverse","publicationDate":"2024-07-02","storageIdentifier":"s3://10.70122/FK2/P1TO3S","latestVersion":{"id":257239,"datasetId":2353190,"datasetPersistentId":"doi:10.70122/FK2/P1TO3S","storageIdentifier":"s3://10.70122/FK2/P1TO3S","versionNumber":3,"versionMinorNumber":0,"versionState":"RELEASED","UNF":"UNF:6:iSz38eRfzxPv54AKU42WGA==","lastUpdateTime":"2024-07-02T17:21:30Z","releaseTime":"2024-07-02T17:21:30Z","createTime":"2024-07-02T17:20:48Z","publicationDate":"2024-07-02","citationDate":"2024-07-02","license":{"name":"CC0
+        1.0","uri":"http://creativecommons.org/publicdomain/zero/1.0","iconUri":"https://licensebuttons.net/p/zero/1.0/88x31.png"},"fileAccessRequest":true,"metadataBlocks":{"citation":{"displayName":"Citation
+        Metadata","name":"citation","fields":[{"typeName":"title","multiple":false,"typeClass":"primitive","value":"title"},{"typeName":"author","multiple":true,"typeClass":"compound","value":[{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Cruz
+        Sanchez, Karla"}}]},{"typeName":"datasetContact","multiple":true,"typeClass":"compound","value":[{"datasetContactName":{"typeName":"datasetContactName","multiple":false,"typeClass":"primitive","value":"Cruz
+        Sanchez, Karla"},"datasetContactEmail":{"typeName":"datasetContactEmail","multiple":false,"typeClass":"primitive","value":"cruzsanchezk@carleton.edu"}}]},{"typeName":"dsDescription","multiple":true,"typeClass":"compound","value":[{"dsDescriptionValue":{"typeName":"dsDescriptionValue","multiple":false,"typeClass":"primitive","value":"demo"}}]},{"typeName":"subject","multiple":true,"typeClass":"controlledVocabulary","value":["Earth
+        and Environmental Sciences"]},{"typeName":"depositor","multiple":false,"typeClass":"primitive","value":"Cruz
+        Sanchez, Karla"},{"typeName":"dateOfDeposit","multiple":false,"typeClass":"primitive","value":"2024-07-02"}]}},"files":[{"label":"BarChart.jpg","restricted":false,"directoryLabel":"Project/Images","version":1,"datasetVersionId":257239,"dataFile":{"id":2353201,"persistentId":"doi:10.70122/FK2/P1TO3S/A63VYX","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/A63VYX","filename":"BarChart.jpg","contentType":"image/jpeg","friendlyType":"JPEG
+        Image","filesize":339679,"storageIdentifier":"s3://demo-dataverse-org:1907475d505-3aebf7a8b0d7","rootDataFileId":-1,"md5":"e114c017c20b68fc568fe5efce692946","checksum":{"type":"MD5","value":"e114c017c20b68fc568fe5efce692946"},"tabularData":false,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"ImageChart.png","restricted":false,"directoryLabel":"Project/Images","version":1,"datasetVersionId":257239,"dataFile":{"id":2353202,"persistentId":"doi:10.70122/FK2/P1TO3S/IO5NAN","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/IO5NAN","filename":"ImageChart.png","contentType":"image/png","friendlyType":"PNG
+        Image","filesize":56083,"storageIdentifier":"s3://demo-dataverse-org:1907475d4ff-7f497523e272","rootDataFileId":-1,"md5":"754f0d3a9923c34af78e3493f010382b","checksum":{"type":"MD5","value":"754f0d3a9923c34af78e3493f010382b"},"tabularData":false,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"Test
+        Data Alpha.tab","restricted":false,"directoryLabel":"Project/Data","version":3,"datasetVersionId":257239,"dataFile":{"id":2353203,"persistentId":"doi:10.70122/FK2/P1TO3S/YUZMSL","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/YUZMSL","filename":"Test
+        Data Alpha.tab","contentType":"text/tab-separated-values","friendlyType":"Tab-Delimited","filesize":6394,"storageIdentifier":"s3://demo-dataverse-org:1907475d50e-91870a6843ed","originalFileFormat":"application/x-stata","originalFormatLabel":"Stata
+        Binary","originalFileSize":9090,"originalFileName":"Test Data Alpha.dta","UNF":"UNF:6:Iav+suqRnjXHbcZOlOxueQ==","rootDataFileId":-1,"md5":"faeb19ec96a34523e4fd0defea0cebda","checksum":{"type":"MD5","value":"faeb19ec96a34523e4fd0defea0cebda"},"tabularData":true,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"Test
+        Data Beta.tab","restricted":false,"directoryLabel":"Project/Data","version":3,"datasetVersionId":257239,"dataFile":{"id":2353200,"persistentId":"doi:10.70122/FK2/P1TO3S/C4MBBA","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/C4MBBA","filename":"Test
+        Data Beta.tab","contentType":"text/tab-separated-values","friendlyType":"Tab-Delimited","filesize":35441,"storageIdentifier":"s3://demo-dataverse-org:1907475d50f-7b8a8f083db8","originalFileFormat":"application/x-stata","originalFormatLabel":"Stata
+        Binary","originalFileSize":31175,"originalFileName":"Test Data Beta.dta","UNF":"UNF:6:y5lOy2RfMHvDW3OeIDYgYQ==","rootDataFileId":-1,"md5":"ba1fb8e3b8c77c5ab09a6d88a82d3ed9","checksum":{"type":"MD5","value":"ba1fb8e3b8c77c5ab09a6d88a82d3ed9"},"tabularData":true,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"Test
+        Document 1.pdf","restricted":false,"directoryLabel":"Project","version":1,"datasetVersionId":257239,"dataFile":{"id":2353199,"persistentId":"doi:10.70122/FK2/P1TO3S/XJ7PQJ","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/XJ7PQJ","filename":"Test
+        Document 1.pdf","contentType":"application/pdf","friendlyType":"Adobe PDF","filesize":40226,"storageIdentifier":"s3://demo-dataverse-org:1907475d4f6-36a81e2a3cda","rootDataFileId":-1,"md5":"4b2680b30fda5d346d6876b4a11986a2","checksum":{"type":"MD5","value":"4b2680b30fda5d346d6876b4a11986a2"},"tabularData":false,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}},{"label":"Test
+        Document 2.docx","restricted":false,"directoryLabel":"Project","version":1,"datasetVersionId":257239,"dataFile":{"id":2353198,"persistentId":"doi:10.70122/FK2/P1TO3S/9S70YX","pidURL":"https://doi.org/10.70122/FK2/P1TO3S/9S70YX","filename":"Test
+        Document 2.docx","contentType":"application/vnd.openxmlformats-officedocument.wordprocessingml.document","friendlyType":"MS
+        Word","filesize":15873,"storageIdentifier":"s3://demo-dataverse-org:1907475d4fb-df105d57b3fb","rootDataFileId":-1,"md5":"4d5461be9dc4b76be0bb046a62b53340","checksum":{"type":"MD5","value":"4d5461be9dc4b76be0bb046a62b53340"},"tabularData":false,"creationDate":"2024-07-02","publicationDate":"2024-07-02","fileAccessRequest":true}}]}}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '6448'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:46:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373d43c5e66bfb4decd3daadc6d5; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://demo.dataverse.org/api/access/datafile/2353203?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:46:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Location:
+      - https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50e-91870a6843ed.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Alpha.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174600Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5fc1407eba69d61db36376824b8f01471eaa688152aa009ecead3aff26cdd20f
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373d51295c511c3e1a22e4a242eb; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50e-91870a6843ed.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Alpha.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174600Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5fc1407eba69d61db36376824b8f01471eaa688152aa009ecead3aff26cdd20f
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Mon, 08 Jul 2024 17:46:00 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - UHHD24Q69s+G/25eh9w7tSMm/9YGosG+r5B8ECB138L8k2ZggU6rFrj4WICUtDWrbmDIAeLJPJI=
+      x-amz-request-id:
+      - 0XJZRY8AT4DMC6A5
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/access/datafile/2353203?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '0'
+      Date:
+      - Mon, 08 Jul 2024 17:46:00 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Location:
+      - https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50e-91870a6843ed.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Alpha.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174600Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5fc1407eba69d61db36376824b8f01471eaa688152aa009ecead3aff26cdd20f
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373d703a2c1d898bcb15f4e159e1; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50e-91870a6843ed.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Alpha.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174600Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5fc1407eba69d61db36376824b8f01471eaa688152aa009ecead3aff26cdd20f
+  response:
+    body:
+      string: !!binary |
+        cgIBABYAMwAAAAAAAAABAAAAAAAAABABAAAAAAAAAYWSBAAAAAB4CklAAQAAAMKTIUEBAAAAoB6Y
+        QAEAAADgkCFBAQAAABMBAAAAAAAARDpcc3RhdGUgb3BpbjI2IEp1biAyMDE=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''Test%20Data%20Alpha.dta
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/9090
+      Content-Type:
+      - application/x-stata
+      Date:
+      - Mon, 08 Jul 2024 17:46:02 GMT
+      ETag:
+      - '"faeb19ec96a34523e4fd0defea0cebda"'
+      Last-Modified:
+      - Tue, 02 Jul 2024 17:20:49 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - 5ZJsF2YBbKaTMoiOfcdcnVtNv4rre/hi8HzZcNIPni0a3MRhx7ofUmmA3TPQ8b2b/vAhzRlw5U5kVLePtSM1AQ==
+      x-amz-request-id:
+      - GQQH6P60GYG96WMY
+      x-amz-server-side-encryption:
+      - AES256
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://demo.dataverse.org/api/access/datafile/2353203?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:46:01 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Location:
+      - https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50e-91870a6843ed.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Alpha.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174601Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=82aa7e80bec8354cab01fca3b0fcd83b5968b3cc40e724bf661fbcb257fc381e
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373d8b8d8ce8c51787ca6e820f71; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50e-91870a6843ed.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Alpha.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174601Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=82aa7e80bec8354cab01fca3b0fcd83b5968b3cc40e724bf661fbcb257fc381e
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Mon, 08 Jul 2024 17:46:00 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - OF0H9cQrmvV/V+hk+AlzOaUvqOGhNcnMsKT7PUUS7g+qxl+0DdME2J2JO2ssz/LAVgxy3TPsfSU8M67F4hfokw==
+      x-amz-request-id:
+      - GQQXG4E4SBSCE423
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/access/datafile/2353203?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '0'
+      Date:
+      - Mon, 08 Jul 2024 17:46:01 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Location:
+      - https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50e-91870a6843ed.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Alpha.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174601Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=82aa7e80bec8354cab01fca3b0fcd83b5968b3cc40e724bf661fbcb257fc381e
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373daa808d4df471f7f5ac7393f0; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50e-91870a6843ed.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Alpha.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174601Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=82aa7e80bec8354cab01fca3b0fcd83b5968b3cc40e724bf661fbcb257fc381e
+  response:
+    body:
+      string: !!binary |
+        cgIBABYAMwAAAAAAAAABAAAAAAAAABABAAAAAAAAAYWSBAAAAAB4CklAAQAAAMKTIUEBAAAAoB6Y
+        QAEAAADgkCFBAQAAABMBAAAAAAAARDpcc3RhdGUgb3BpbjI2IEp1biAyMDE=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''Test%20Data%20Alpha.dta
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/9090
+      Content-Type:
+      - application/x-stata
+      Date:
+      - Mon, 08 Jul 2024 17:46:02 GMT
+      ETag:
+      - '"faeb19ec96a34523e4fd0defea0cebda"'
+      Last-Modified:
+      - Tue, 02 Jul 2024 17:20:49 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - TovCKAot/cDgT+o3petq69V/Tw7Yh0d5PpsTefGL/UrE7SP0mCxC6wuQO5y+SI7DIhpA8XizrwBVMIbbn59UGTH8yo9mBLR9NRUrN4SynQg=
+      x-amz-request-id:
+      - GQQVKMPGNETKTXZ3
+      x-amz-server-side-encryption:
+      - AES256
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/access/datafile/2353203
+  response:
+    body:
+      string: "year\tnational\tstate3\tlocal4\thappy\tmood\tics\ttostatelocal4\tsfiscal\tlfiscal\tslemp2\tratecommunity\tscap\tratenational\tcivic\titrust\tunem\tinflation\ttostateloc\ttostatelocal2\ttostatelocal3\tstatelocpers\n1955\t\t\t\t47.208\t57.883\t98.23333\t0.8\t\t\t\t\t\t\t\t\t4.4\t-0.4\t3207\t20.9\t4.7\t\n1956\t\t\t\t48.325\t60.626\t99.43333\t0.8\t\t\t\t\t\t\t\t\t4.1\t1.5\t3561\t23.1\t5.0\t\n1957\t\t\t\t48.957\t60.307\t88.3\t0.9\t\t\t\t\t\t\t\t\t4.3\t3.3\t3974\t24.4\t5.2\t\n1958\t62.854\t\t\t48.477\t65.302\t83.4\t1.1\t\t\t\t\t\t\t\t\t6.8\t2.8\t4905\t28.3\t6.0\t\n1959\t63.083\t\t\t48.739\t65.511\t94.55\t1.3\t\t\t\t\t\t\t\t\t5.5\t0.7\t6463\t36.2\t7.0\t\n1960\t63.082\t\t\t48.904\t64.928\t95.15\t1.4\t\t\t\t\t\t\t\t\t5.5\t1.7\t7019\t39.0\t7.6\t\n1961\t63.079\t\t\t49.041\t69.12\t94.075\t1.3\t\t\t\t\t\t\t\t\t6.7\t1.0\t7126\t39.7\t7.3\t\n1962\t63.065\t\t\t49.213\t68.086\t95.475\t1.4\t\t\t35.113487\t\t\t\t\t\t5.5\t1.0\t7926\t43.7\t7.4\t6550\n1963\t62.996\t\t\t47.913\t65.317\t95.225\t1.4\t\t\t36.292156\t\t\t\t\t\t5.7\t1.3\t8602\t46.1\t7.7\t6868\n1964\t62.415\t\t\t48.844\t62.783\t99.625\t1.6\t\t\t37.771835\t\t\t\t\t\t5.2\t1.3\t10164\t53.9\t8.6\t7248\n1965\t60.882\t\t\t44.987\t61.384\t103.425\t1.6\t\t\t39.60824\t\t\t\t\t\t4.5\t1.6\t10910\t56.7\t9.2\t7696\n1966\t58.921\t\t\t44.498\t62.609\t93.8\t1.7\t\t\t41.82438\t\t\t\t\t\t3.8\t2.9\t12887\t67.4\t9.6\t8221\n1967\t57.144\t74.284\t75.542\t44.759\t62.657\t94.975\t1.9\t103.95167\t96.93914\t43.646084\t\t\t\t\t\t3.8\t3.1\t15233\t78.1\t9.7\t8673\n1968\t55.843\t65.087\t67.572\t44.732\t63.178\t93.425\t2.1\t103.32961\t96.97887\t45.349915\t\t\t\t\t\t3.6\t4.2\t18551\t91.6\t10.4\t9102\n1969\t53.419\t65.088\t67.677\t44.802\t57.147\t88.95\t2.1\t104.52261\t95.859634\t46.56177\t\t\t\t\t\t3.5\t5.5\t20164\t93.8\t11.0\t9437\n1970\t51.068\t65.094\t67.948\t45.002\t59.08\t75.875\t2.4\t104.56645\t97.16824\t47.900043\t\t\t\t\t\t4.9\t5.7\t24065\t105.3\t12.3\t9822\n1971\t50.005\t65.157\t68.648\t45.427\t60.434\t80.6\t2.6\t98.37414\t96.031075\t49.041466\t57.591\t\t25.498\t\t\t5.9\t4.4\t28099\t115.4\t13.4\t10184\n1972\t48.468\t65.722\t70.453\t45.722\t59.577\t91.825\t2.9\t102.806595\t96.79163\t50.73465\t59.388\t43.46125\t21.167\t38.2625\t66.14025\t5.6\t3.2\t34375\t134.6\t14.9\t10649\n1973\t40.531\t68.174\t74.773\t49.232\t57.404\t76.85\t3.2\t109.22616\t100.85871\t52.234688\t60.511\t41.3345\t17.553\t38.1895\t56.65675\t4.9\t6.2\t41847\t160.5\t17.0\t11069\n1974\t40.263\t71.396\t73.727\t50.105\t56.276\t64.45\t3.0\t106.56985\t101.99875\t53.5225\t62.034\t39.66125\t16.196\t37.601\t54.32975\t5.6\t11.0\t43357\t151.9\t16.1\t11446\n1975\t40.216\t72.562\t71.04\t47.628\t55.388\t70.425\t3.2\t99.01454\t98.40501\t55.270798\t63.804\t39.40675\t19.348\t37.34625\t52.63975\t8.5\t9.1\t49791\t157.7\t15.0\t11937\n1976\t40.31\t67.516\t71.676\t45.933\t55.889\t86.15\t3.4\t101.78439\t98.09463\t55.66996\t65.157\t39.621\t29.168\t37.6725\t54.26575\t7.7\t5.8\t59094\t173.4\t15.9\t12138\n1977\t39.92\t66.721\t71.395\t45.668\t54.299\t87.675\t3.5\t106.921745\t100.79373\t56.30247\t64.1\t39.08825\t36.96\t37.107\t55.0\t7.1\t6.5\t68415\t186.4\t16.7\t12400\n1978\t38.074\t67.736\t71.277\t44.174\t54.319\t79.40833\t3.5\t110.39043\t101.62829\t58.045242\t65.511\t37.881\t30.162\t35.76475\t54.3375\t6.1\t7.6\t77889\t199.3\t17.0\t12920\n1979\t38.639\t65.305\t69.964\t47.429\t52.546\t66.025\t3.3\t109.94276\t100.203026\t58.5368\t65.792\t37.301\t20.356\t35.14425\t51.96425\t5.8\t11.3\t83351\t195.8\t16.5\t13174\n1980\t38.53\t68.346\t70.974\t46.145\t52.942\t64.41666\t3.4\t107.427895\t99.049385\t58.732864\t64.611\t37.2105\t20.354\t35.1755\t48.81975\t7.1\t13.5\t91385\t192.6\t15.5\t13375\n1981\t46.163\t68.865\t72.691\t44.321\t54.011\t70.675\t3.1\t106.62066\t99.74459\t57.65635\t62.014\t37.8365\t29.566\t35.64075\t56.3375\t7.6\t10.3\t94704\t179.4\t14.0\t13259\n1982\t42.401\t73.949\t77.636\t46.628\t55.297\t67.975\t2.7\t106.65728\t100.56426\t56.411186\t61.634\t37.53475\t31.821\t35.43475\t48.923\t9.7\t6.2\t88134\t154.7\t11.8\t13098\n1983\t44.936\t72.197\t77.588\t45.837\t56.493\t87.38333\t2.7\t107.07804\t100.84244\t55.892483\t64.359\t36.9395\t37.421\t34.81025\t54.05925\t9.6\t3.2\t92448\t154.5\t11.4\t13096\n1984\t47.276\t77.263\t77.619\t46.932\t58.067\t97.475\t2.5\t112.78409\t101.94986\t55.917545\t66.762\t37.8445\t46.097\t35.6675\t52.97275\t7.5\t4.3\t97553\t155.9\t11.5\t13216\n1985\t45.211\t72.717\t75.057\t44.233\t58.879\t93.16666\t2.6\t112.27622\t102.8133\t56.69152\t64.319\t37.7025\t46.318\t35.6735\t51.53875\t7.2\t3.6\t105852\t163.1\t11.2\t13519\n1986\t44.808\t71.875\t74.763\t45.29\t61.011\t94.79166\t2.5\t113.4434\t101.63551\t57.319523\t65.858\t37.2205\t42.785\t35.2055\t50.56325\t7.0\t1.9\t112331\t167.6\t11.3\t13794\n1987\t45.085\t67.969\t72.864\t45.371\t62.235\t90.64167\t2.3\t113.37719\t101.07758\t57.93562\t67.854\t36.684\t36.365\t34.58525\t52.01325\t6.2\t3.6\t108400\t155.4\t10.8\t14067\n1988\t44.244\t67.542\t71.116\t45.429\t63.323\t93.73334\t2.3\t111.75258\t99.798386\t58.83169\t68.881\t35.5045\t40.33\t33.331\t51.49475\t5.5\t4.1\t115342\t159.4\t10.8\t14415\n1989\t43.24\t65.098\t70.95\t43.503\t63.158\t92.75833\t2.3\t111.809525\t99.812386\t59.79979\t67.479\t35.691\t39.74\t33.598\t51.75425\t5.3\t4.8\t121928\t161.9\t10.7\t14791\n1990\t40.945\t63.092\t71.914\t38.005\t62.567\t81.61667\t2.4\t110.48951\t99.82789\t60.96794\t67.171\t34.0715\t31.912\t31.91875\t48.7835\t5.6\t5.4\t135325\t172.1\t10.8\t15219\n1991\t39.348\t56.632\t68.304\t37.993\t62.568\t77.55\t2.6\t105.08743\t98.23435\t61.01644\t65.749\t33.086\t32.667\t30.8595\t47.061\t6.8\t4.2\t154519\t188.6\t11.7\t15436\n1992\t35.542\t53.568\t63.566\t36.146\t62.864\t77.25\t2.9\t106.11626\t98.84144\t61.107777\t65.22\t31.9755\t20.472\t29.68475\t45.84925\t7.5\t3.0\t178065\t211.4\t12.9\t15675\n1993\t34.754\t54.031\t63.394\t42.112\t60.985\t82.79166\t2.9\t108.33274\t99.055016\t61.272934\t61.41\t31.1755\t29.339\t28.81425\t41.47925\t6.9\t3.0\t193612\t223.9\t13.7\t15926\n1994\t34.203\t57.627\t64.645\t41.629\t58.837\t92.26666\t3.0\t108.60113\t100.23695\t61.787888\t58.289\t32.04025\t26.321\t29.66525\t40.36225\t6.1\t2.6\t210596\t238.1\t14.4\t16258\n1995\t33.487\t62.903\t69.098\t45.327\t61.275\t92.24167\t3.1\t108.28142\t99.74089\t61.905228\t60.263\t33.96875\t25.136\t31.805\t40.46175\t5.6\t2.8\t224991\t247.9\t14.8\t16484\n1996\t38.861\t66.544\t68.341\t44.287\t59.204\t93.60833\t3.0\t112.47198\t101.18576\t61.84993\t58.417\t34.3535\t31.921\t31.816\t51.07025\t5.4\t2.9\t227811\t245.5\t14.6\t16662\n1997\t37.923\t68.135\t68.636\t43.828\t61.448\t103.2167\t2.9\t116.34261\t101.33788\t61.830868\t59.041\t33.57275\t32.723\t30.70425\t50.9865\t4.9\t2.3\t234160\t247.7\t14.6\t16858\n1998\t41.239\t71.047\t70.907\t43.98\t60.402\t104.6167\t2.9\t117.82998\t102.81459\t62.123444\t59.524\t33.22375\t41.231\t29.998\t49.836\t4.5\t1.6\t246128\t257.3\t14.9\t17137\n1999\t37.787\t66.418\t68.112\t44.448\t60.138\t105.825\t2.9\t115.47576\t101.4584\t62.851204\t56.946\t32.44225\t40.301\t31.5695\t44.805\t4.2\t2.2\t267081\t274.7\t15.7\t17538\n2000\t39.589\t68.277\t68.368\t44.88\t60.606\t107.575\t2.9\t116.30224\t101.76237\t63.515\t55.69\t33.38967\t43.819\t32.633\t44.78033\t4.0\t3.4\t284659\t284.7\t15.9\t17925\n2001\t44.131\t69.652\t70.284\t45.447\t59.436\t89.24167\t3.2\t99.591736\t99.81958\t64.34901\t52.657\t\t42.265\t\t\t4.7\t2.8\t317211\t309.5\t17.0\t18354\n2002\t44.945\t62.068\t67.239\t44.733\t62.974\t89.58333\t3.4\t85.516106\t95.00451\t65.0653\t50.387\t\t42.349\t\t\t5.8\t1.6\t351550\t337.4\t17.5\t18722\n2003\t41.12\t58.291\t67.67\t44.655\t67.011\t87.625\t3.6\t95.33574\t95.45588\t64.7258\t51.086\t\t38.02\t\t\t6.0\t2.3\t387281\t363.0\t17.9\t18745\n2004\t40.125\t64.099\t67.633\t44.601\t68.763\t95.2\t3.6\t112.83933\t99.19548\t64.330894\t50.257\t\t36.191\t\t\t5.5\t2.7\t418091\t384.2\t18.0\t\n2005\t\t\t\t\t\t\t\t111.55082\t\t64.3425\t\t\t34.806\t\t\t\t\t\t\t\t\n"
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '6586'
+      Content-Type:
+      - text/tab-separated-values; name="Test%20Data%20Alpha.tab";charset=UTF-8
+      Content-disposition:
+      - attachment; filename="Test%20Data%20Alpha.tab"
+      Date:
+      - Mon, 08 Jul 2024 17:46:02 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373dc4e4c2564950ba2ad571a51d; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://demo.dataverse.org/api/access/datafile/2353200?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:46:02 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Location:
+      - https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50f-7b8a8f083db8.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Beta.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174602Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=52b2fda9f6d5906ef41cbe5241bb83e264ad2cad3ce919d0ee5e88f3d42d613f
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373dd4035a40889e4988117cd7f1; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50f-7b8a8f083db8.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Beta.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174602Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=52b2fda9f6d5906ef41cbe5241bb83e264ad2cad3ce919d0ee5e88f3d42d613f
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Mon, 08 Jul 2024 17:46:02 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - FANvB066as6rK9ECUHKkCCFWXfFwUFK747H9pB7YHbKPxIo6kniIRoNxpblK3U2tgDA6bd8Jk+U=
+      x-amz-request-id:
+      - 9PEDY8690STM0QTY
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/access/datafile/2353200?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '0'
+      Date:
+      - Mon, 08 Jul 2024 17:46:02 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Location:
+      - https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50f-7b8a8f083db8.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Beta.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174602Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=52b2fda9f6d5906ef41cbe5241bb83e264ad2cad3ce919d0ee5e88f3d42d613f
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373df0b118efc1d99d21f33d6ad7; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50f-7b8a8f083db8.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Beta.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174602Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=52b2fda9f6d5906ef41cbe5241bb83e264ad2cad3ce919d0ee5e88f3d42d613f
+  response:
+    body:
+      string: !!binary |
+        cQIBACEA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''Test%20Data%20Beta.dta
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/31175
+      Content-Type:
+      - application/x-stata
+      Date:
+      - Mon, 08 Jul 2024 17:46:04 GMT
+      ETag:
+      - '"ba1fb8e3b8c77c5ab09a6d88a82d3ed9"'
+      Last-Modified:
+      - Tue, 02 Jul 2024 17:20:50 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - tQLEBO54LZkKSpy4YVLj6HskFaeUZISR3W1p5+XL64irYqxRPgdtbn5k3WHJJYqKrNsxer+BU9I=
+      x-amz-request-id:
+      - 5N0VATJ9C206WDHW
+      x-amz-server-side-encryption:
+      - AES256
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://demo.dataverse.org/api/access/datafile/2353200?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Mon, 08 Jul 2024 17:46:03 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Location:
+      - https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50f-7b8a8f083db8.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Beta.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174603Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=880b71e6d84e1ec618dc6f58b0e06d51e6d6fa299793fcdbf12e225da7d90bf8
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373e0b8028eed25e18770ca3c74e; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50f-7b8a8f083db8.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Beta.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174603Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=880b71e6d84e1ec618dc6f58b0e06d51e6d6fa299793fcdbf12e225da7d90bf8
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Mon, 08 Jul 2024 17:46:02 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - hKZ1nKnq9ZDBPkT+kv//EHfRCVbtraX5F0HnXkmNrrogqTV9BXObDhoxEBgdHCoBxb/6QOK0poQ=
+      x-amz-request-id:
+      - 5N0ZMY8C2FRR0PH2
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/access/datafile/2353200?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '0'
+      Date:
+      - Mon, 08 Jul 2024 17:46:03 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Location:
+      - https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50f-7b8a8f083db8.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Beta.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174603Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=880b71e6d84e1ec618dc6f58b0e06d51e6d6fa299793fcdbf12e225da7d90bf8
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373e27fe8506a75e17e9aceafb5b; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo-dataverse-org.s3.amazonaws.com/10.70122/FK2/P1TO3S/1907475d50f-7b8a8f083db8.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Test%2520Data%2520Beta.dta&response-content-type=application%2Fx-stata&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240708T174603Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIATSIAZ34BOFFCDXPQ%2F20240708%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=880b71e6d84e1ec618dc6f58b0e06d51e6d6fa299793fcdbf12e225da7d90bf8
+  response:
+    body:
+      string: !!binary |
+        cQIBACEA+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''Test%20Data%20Beta.dta
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/31175
+      Content-Type:
+      - application/x-stata
+      Date:
+      - Mon, 08 Jul 2024 17:46:04 GMT
+      ETag:
+      - '"ba1fb8e3b8c77c5ab09a6d88a82d3ed9"'
+      Last-Modified:
+      - Tue, 02 Jul 2024 17:20:50 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - kWv98tAMMj6/Yy0L3o2efd6T/8wWMtvJOmi/GqTKYeHuoY+XmBMmJ0WKqKd6bCFCN+v3jX53BHc11EnpQt5vqu2bDVwDCIQ2Pk7Jxv7wA3M=
+      x-amz-request-id:
+      - 5N0PBA9AS1HVDDEJ
+      x-amz-server-side-encryption:
+      - AES256
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://demo.dataverse.org/api/access/datafile/2353200
+  response:
+    body:
+      string: "cond1\tcond2\tcond3\tleakiness\tinference1\tinference2\tmc\tstigma1\tstigma2\tstigma3\tdis1\tdis2\tdis3\tdis4\tdis5\tdis6\tdis7\tdis8\tdiss_shape\tdiss_weight\tcc1\tcc2\tage\temployment\tfeet\tgender\theight\tinches\tlbs\tsessn_id\ttotal_t\tz_beg\tz_end\n2\t3\t4\t-1\t1\t1\t-2\t1\t1\t2\t1\t6\t1\t2\t5\t1\t2\t1\t7\t7\t3\t1\t26\t\"Yes:
+        part-time\"\t6\t1\t72.0\t0.0\t150\t8529491895\t3.0166667\t\"8/17/2012 at 1:31
+        PM\"\t\"8/17/2012 at 1:34 PM\"\n2\t1\t2\t0\t-3\t1\t-2\t2\t5\t6\t2\t5\t1\t3\t1\t4\t1\t2\t1\t1\t3\t1\t30\t\"No\"\t5\t2\t67.0\t7.0\t230\t3692342515\t3.3666666\t\"8/17/2012
+        at 1:33 PM\"\t\"8/17/2012 at 1:36 PM\"\n1\t1\t1\t2\t0\t3\t3\t1\t1\t7\t1\t5\t1\t1\t5\t5\t1\t5\t3\t5\t3\t2\t20\t\"No\"\t6\t1\t73.0\t1.0\t188\t8294865684\t2.1833334\t\"8/17/2012
+        at 1:37 PM\"\t\"8/17/2012 at 1:39 PM\"\n2\t1\t2\t-3\t3\t3\t-3\t7\t7\t7\t7\t1\t7\t7\t1\t1\t7\t1\t2\t2\t3\t1\t28\t\"Yes:
+        full-time\"\t5\t2\t60.0\t0.0\t137\t6637314589\t3.9333334\t\"8/17/2012 at 1:35
+        PM\"\t\"8/17/2012 at 1:39 PM\"\n1\t1\t1\t-3\t-3\t-3\t0\t7\t4\t7\t4\t3\t7\t7\t1\t1\t7\t1\t5\t7\t3\t2\t24\t\"No\"\t5\t1\t66.0\t6.0\t147\t7261275485\t3.3\t\"8/17/2012
+        at 1:36 PM\"\t\"8/17/2012 at 1:39 PM\"\n2\t3\t4\t0\t1\t1\t-3\t5\t6\t7\t5\t3\t6\t6\t2\t2\t6\t2\t1\t1\t3\t1\t20\t\"Yes:
+        part-time\"\t5\t2\t67.0\t7.0\t135\t2789352125\t2.8\t\"8/17/2012 at 1:37 PM\"\t\"8/17/2012
+        at 1:40 PM\"\n1\t1\t1\t0\t-2\t3\t2\t1\t1\t1\t1\t6\t1\t1\t6\t4\t1\t2\t4\t4\t3\t2\t31\t\"Yes:
+        full-time\"\t5\t1\t61.0\t1.0\t165\t2358315747\t1.8833333\t\"8/17/2012 at 1:38
+        PM\"\t\"8/17/2012 at 1:40 PM\"\n2\t2\t3\t-1\t1\t-3\t-2\t3\t5\t4\t1\t6\t2\t6\t2\t6\t2\t6\t7\t7\t3\t1\t21\t\"Yes:
+        part-time\"\t6\t1\t72.0\t0.0\t185\t5936353657\t2.75\t\"8/17/2012 at 1:38 PM\"\t\"8/17/2012
+        at 1:41 PM\"\n1\t1\t1\t-2\t2\t2\t2\t4\t4\t4\t3\t4\t2\t3\t5\t3\t4\t4\t4\t4\t3\t2\t19\t\"Yes:
+        part-time\"\t5\t2\t63.0\t3.0\t120\t9287672253\t2.2333333\t\"8/17/2012 at 1:38
+        PM\"\t\"8/17/2012 at 1:41 PM\"\n2\t2\t3\t-1\t1\t-1\t-1\t3\t2\t4\t4\t6\t5\t5\t3\t2\t5\t3\t6\t6\t3\t2\t18\t\"No\"\t5\t1\t69.0\t9.0\t140\t9428964821\t3.75\t\"8/17/2012
+        at 1:37 PM\"\t\"8/17/2012 at 1:41 PM\"\n2\t1\t2\t-2\t2\t2\t1\t6\t7\t7\t4\t5\t4\t3\t5\t3\t5\t3\t1\t1\t3\t1\t28\t\"No\"\t5\t1\t71.0\t11.0\t205\t1274385169\t2.9833333\t\"8/17/2012
+        at 1:38 PM\"\t\"8/17/2012 at 1:41 PM\"\n2\t1\t2\t-3\t2\t2\t0\t1\t2\t5\t1\t6\t2\t2\t5\t2\t1\t1\t5\t7\t3\t1\t26\t\"No\"\t5\t1\t68.0\t8.0\t135\t5782699538\t2.6333334\t\"8/17/2012
+        at 1:39 PM\"\t\"8/17/2012 at 1:42 PM\"\n2\t2\t3\t0\t1\t2\t-1\t1\t1\t1\t2\t6\t1\t1\t6\t4\t2\t4\t2\t2\t3\t1\t28\t\"Yes:
+        full-time\"\t5\t1\t61.0\t1.0\t180\t7664213981\t3.0666666\t\"8/17/2012 at 1:39
+        PM\"\t\"8/17/2012 at 1:42 PM\"\n2\t2\t3\t-3\t2\t1\t-3\t4\t2\t3\t4\t5\t3\t3\t6\t3\t4\t4\t5\t5\t3\t1\t22\t\"Yes:
+        full-time\"\t5\t1\t68.0\t8.0\t130\t6457374252\t2.7833333\t\"8/17/2012 at 1:39
+        PM\"\t\"8/17/2012 at 1:42 PM\"\n2\t1\t2\t-3\t3\t2\t-3\t6\t7\t7\t6\t2\t7\t7\t1\t1\t6\t1\t7\t6\t3\t1\t23\t\"Yes:
+        full-time\"\t5\t2\t65.0\t5.0\t130\t4333332894\t2.9333334\t\"8/17/2012 at 1:39
+        PM\"\t\"8/17/2012 at 1:42 PM\"\n1\t1\t1\t0\t2\t3\t2\t1\t1\t1\t1\t6\t2\t\t7\t7\t7\t7\t4\t4\t3\t1\t24\t\"Yes:
+        full-time\"\t5\t2\t60.0\t0.0\t6\t4154178659\t3.0833333\t\"8/17/2012 at 1:39
+        PM\"\t\"8/17/2012 at 1:42 PM\"\n2\t3\t4\t-1\t3\t-1\t-2\t5\t4\t5\t3\t2\t1\t2\t2\t2\t3\t2\t3\t3\t3\t1\t32\t\"No\"\t5\t1\t67.0\t7.0\t160\t4344493296\t2.8\t\"8/17/2012
+        at 1:39 PM\"\t\"8/17/2012 at 1:42 PM\"\n2\t1\t2\t-3\t2\t2\t-3\t6\t4\t6\t3\t6\t5\t5\t3\t2\t4\t2\t7\t7\t3\t1\t22\t\"Yes:
+        part-time\"\t5\t2\t65.0\t5.0\t105\t9645413446\t2.6833334\t\"8/17/2012 at 1:39
+        PM\"\t\"8/17/2012 at 1:42 PM\"\n2\t2\t3\t-2\t2\t2\t-2\t6\t5\t5\t5\t4\t5\t5\t3\t\t5\t3\t4\t4\t3\t1\t25\t\"Yes:
+        full-time\"\t5\t1\t69.0\t9.0\t160\t5943727933\t4.3\t\"8/17/2012 at 1:38 PM\"\t\"8/17/2012
+        at 1:42 PM\"\n2\t2\t3\t-2\t1\t3\t-2\t3\t4\t1\t3\t6\t2\t2\t6\t5\t2\t5\t2\t2\t3\t1\t24\t\"Yes:
+        part-time\"\t5\t2\t66.0\t6.0\t170\t6824731547\t2.0166667\t\"8/17/2012 at 1:41
+        PM\"\t\"8/17/2012 at 1:43 PM\"\n2\t2\t3\t-1\t2\t3\t-2\t1\t1\t4\t2\t7\t4\t4\t2\t4\t1\t2\t2\t6\t3\t1\t22\t\"No\"\t5\t2\t65.0\t5.0\t110\t4391595454\t3.5166667\t\"8/17/2012
+        at 1:39 PM\"\t\"8/17/2012 at 1:43 PM\"\n2\t3\t4\t-2\t2\t1\t-3\t1\t1\t2\t2\t3\t3\t5\t1\t1\t4\t1\t3\t3\t3\t1\t29\t\"Yes:
+        full-time\"\t5\t1\t67.0\t7.0\t150\t9899147579\t5.7166667\t\"8/17/2012 at 1:38
+        PM\"\t\"8/17/2012 at 1:43 PM\"\n2\t3\t4\t1\t0\t2\t1\t2\t2\t4\t1\t7\t2\t2\t6\t5\t2\t4\t3\t4\t3\t1\t29\t\"No\"\t6\t1\t74.0\t2.0\t173\t9197726746\t2.9333334\t\"8/17/2012
+        at 1:41 PM\"\t\"8/17/2012 at 1:43 PM\"\n2\t3\t4\t-3\t2\t-2\t-3\t7\t7\t7\t7\t1\t6\t6\t6\t1\t6\t1\t2\t2\t3\t1\t42\t\"No\"\t\t2\t\t0.0\t\t7974734689\t5.116667\t\"8/17/2012
+        at 1:38 PM\"\t\"8/17/2012 at 1:44 PM\"\n2\t3\t4\t-2\t1\t0\t-2\t2\t2\t2\t1\t6\t3\t3\t6\t4\t2\t4\t7\t5\t1\t1\t18\t\"Yes:
+        part-time\"\t5\t2\t67.0\t7.0\t108\t7579642236\t3.9666667\t\"8/17/2012 at 1:40
+        PM\"\t\"8/17/2012 at 1:44 PM\"\n2\t2\t3\t-2\t3\t0\t-3\t2\t2\t7\t4\t3\t\t6\t4\t2\t5\t2\t6\t7\t3\t1\t22\t\"Yes:
+        full-time\"\t5\t2\t65.0\t5.0\t112\t2332895792\t2.3833334\t\"8/17/2012 at 1:42
+        PM\"\t\"8/17/2012 at 1:44 PM\"\n2\t3\t4\t-3\t3\t-2\t-3\t1\t1\t7\t1\t6\t3\t3\t3\t2\t4\t1\t7\t7\t3\t1\t31\t\"Yes:
+        full-time\"\t5\t1\t71.0\t11.0\t165\t2946536587\t2.7833333\t\"8/17/2012 at
+        1:42 PM\"\t\"8/17/2012 at 1:44 PM\"\n2\t2\t3\t-3\t1\t3\t-3\t\t7\t7\t7\t1\t7\t7\t1\t1\t7\t1\t1\t1\t3\t1\t56\t\"Yes:
+        part-time\"\t5\t2\t62.0\t2.0\t178\t2724451982\t3.35\t\"8/17/2012 at 1:41 PM\"\t\"8/17/2012
+        at 1:44 PM\"\n2\t1\t2\t-3\t3\t0\t-3\t7\t7\t7\t7\t3\t7\t7\t1\t1\t7\t1\t4\t3\t3\t1\t31\t\"Yes:
+        part-time\"\t5\t2\t63.0\t3.0\t170\t3847329293\t2.4833333\t\"8/17/2012 at 1:44
+        PM\"\t\"8/17/2012 at 1:46 PM\"\n2\t2\t3\t-2\t-1\t2\t-2\t7\t7\t7\t1\t6\t4\t4\t2\t1\t4\t2\t4\t4\t3\t1\t26\t\"Yes:
+        full-time\"\t5\t2\t65.0\t5.0\t128\t3893169926\t2.4333334\t\"8/17/2012 at 1:44
+        PM\"\t\"8/17/2012 at 1:47 PM\"\n2\t3\t4\t-2\t2\t-2\t-2\t6\t6\t6\t6\t3\t7\t6\t1\t1\t7\t1\t1\t1\t3\t1\t25\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t300\t5429473361\t4.8333335\t\"8/17/2012 at 1:42
+        PM\"\t\"8/17/2012 at 1:47 PM\"\n2\t1\t2\t-1\t1\t1\t-2\t3\t6\t7\t5\t1\t5\t6\t2\t1\t5\t1\t1\t1\t3\t1\t24\t\"No\"\t5\t1\t68.0\t8.0\t250\t7415984522\t3.4\t\"8/17/2012
+        at 1:44 PM\"\t\"8/17/2012 at 1:47 PM\"\n1\t1\t1\t-1\t-2\t2\t1\t1\t1\t1\t2\t7\t1\t1\t6\t6\t1\t5\t3\t3\t3\t2\t25\t\"Yes:
+        full-time\"\t5\t2\t66.0\t6.0\t221\t6498352996\t4.2\t\"8/17/2012 at 1:43 PM\"\t\"8/17/2012
+        at 1:48 PM\"\n1\t1\t1\t-1\t0\t0\t-2\t4\t4\t4\t5\t5\t5\t5\t3\t3\t3\t3\t5\t5\t3\t2\t33\t\"Yes:
+        full-time\"\t5\t2\t63.0\t3.0\t135\t1933844638\t4.5\t\"8/17/2012 at 1:43 PM\"\t\"8/17/2012
+        at 1:48 PM\"\n2\t1\t2\t-2\t1\t1\t-3\t7\t6\t7\t4\t4\t5\t6\t2\t1\t6\t2\t3\t3\t3\t1\t33\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t220\t2165438286\t3.2833333\t\"8/17/2012 at 1:44
+        PM\"\t\"8/17/2012 at 1:48 PM\"\n1\t1\t1\t0\t-2\t1\t2\t2\t2\t3\t2\t6\t2\t3\t4\t3\t3\t3\t5\t6\t3\t2\t19\t\"No\"\t5\t1\t67.0\t7.0\t150\t6765559951\t2.95\t\"8/17/2012
+        at 1:45 PM\"\t\"8/17/2012 at 1:48 PM\"\n2\t3\t4\t-3\t1\t0\t-3\t2\t2\t2\t3\t4\t4\t4\t3\t3\t4\t2\t6\t7\t3\t1\t19\t\"No\"\t5\t2\t63.0\t3.0\t115\t8962138844\t3.3833334\t\"8/17/2012
+        at 1:45 PM\"\t\"8/17/2012 at 1:49 PM\"\n2\t1\t2\t0\t-1\t0\t0\t6\t3\t6\t3\t2\t3\t5\t4\t6\t5\t5\t2\t1\t3\t2\t27\t\"Yes:
+        full-time\"\t5\t1\t66.0\t6.0\t170\t6235981636\t1.7833333\t\"8/17/2012 at 1:48
+        PM\"\t\"8/17/2012 at 1:50 PM\"\n1\t1\t1\t-3\t2\t3\t2\t1\t1\t1\t1\t7\t1\t1\t7\t4\t2\t3\t6\t6\t3\t2\t27\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t175\t4636631833\t4.45\t\"8/17/2012 at 1:47 PM\"\t\"8/17/2012
+        at 1:51 PM\"\n2\t2\t3\t-3\t2\t2\t-3\t6\t6\t6\t4\t3\t5\t6\t1\t2\t5\t2\t2\t3\t3\t1\t20\t\"Yes:
+        part-time\"\t5\t2\t61.0\t1.0\t190\t1388823138\t3.9\t\"8/17/2012 at 1:47 PM\"\t\"8/17/2012
+        at 1:51 PM\"\n1\t1\t1\t-3\t3\t1\t3\t4\t7\t7\t7\t3\t7\t7\t1\t1\t7\t1\t1\t1\t1\t2\t30\t\"No\"\t5\t1\t68.0\t8.0\t450\t3624436484\t4.5333333\t\"8/17/2012
+        at 1:48 PM\"\t\"8/17/2012 at 1:52 PM\"\n1\t1\t1\t1\t1\t0\t2\t5\t5\t6\t3\t4\t5\t4\t2\t4\t5\t3\t5\t6\t3\t2\t28\t\"Yes:
+        full-time\"\t5\t2\t60.0\t0.0\t3\t1459735492\t2.9833333\t\"8/17/2012 at 1:49
+        PM\"\t\"8/17/2012 at 1:52 PM\"\n2\t2\t3\t-3\t2\t2\t-3\t1\t1\t7\t2\t4\t6\t6\t2\t1\t6\t1\t3\t5\t3\t1\t34\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t150\t5329547399\t6.75\t\"8/17/2012 at 1:46 PM\"\t\"8/17/2012
+        at 1:53 PM\"\n1\t1\t1\t2\t-1\t0\t2\t1\t1\t7\t1\t6\t2\t2\t6\t5\t5\t6\t3\t5\t3\t2\t46\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t185\t3754765393\t3.1833334\t\"8/17/2012 at 1:50
+        PM\"\t\"8/17/2012 at 1:53 PM\"\n2\t1\t2\t-2\t1\t1\t-2\t5\t5\t5\t4\t5\t5\t5\t2\t2\t5\t2\t5\t4\t3\t1\t24\t\"No\"\t6\t1\t72.0\t0.0\t230\t7767398114\t4.3\t\"8/17/2012
+        at 1:48 PM\"\t\"8/17/2012 at 1:53 PM\"\n2\t3\t4\t-2\t2\t1\t-3\t5\t3\t5\t5\t4\t5\t5\t3\t3\t5\t2\t4\t3\t3\t1\t18\t\"No\"\t5\t1\t71.0\t11.0\t185\t5468983562\t6.8333335\t\"8/17/2012
+        at 1:46 PM\"\t\"8/17/2012 at 1:53 PM\"\n2\t1\t2\t-3\t1\t0\t-3\t6\t5\t6\t3\t5\t4\t4\t3\t4\t3\t3\t3\t3\t3\t1\t38\t\"No\"\t5\t2\t62.0\t2.0\t135\t3631258286\t2.9333334\t\"8/17/2012
+        at 1:50 PM\"\t\"8/17/2012 at 1:53 PM\"\n2\t1\t2\t2\t0\t2\t2\t2\t2\t2\t3\t6\t3\t3\t6\t6\t3\t6\t4\t4\t3\t1\t24\t\"Yes:
+        full-time\"\t5\t1\t61.0\t1.0\t150\t7185539711\t2.1\t\"8/17/2012 at 1:52 PM\"\t\"8/17/2012
+        at 1:54 PM\"\n1\t1\t1\t2\t0\t2\t2\t1\t1\t2\t1\t6\t1\t1\t6\t1\t1\t4\t6\t7\t3\t2\t27\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t165\t4561143353\t2.7666667\t\"8/17/2012 at 1:51
+        PM\"\t\"8/17/2012 at 1:54 PM\"\n2\t3\t4\t2\t0\t1\t1\t1\t1\t1\t2\t7\t1\t1\t7\t6\t2\t3\t4\t5\t3\t1\t20\t\"No\"\t5\t2\t60.0\t0.0\t120\t9261444625\t4.25\t\"8/17/2012
+        at 1:51 PM\"\t\"8/17/2012 at 1:55 PM\"\n2\t3\t4\t-2\t1\t1\t-2\t3\t1\t3\t5\t4\t5\t5\t5\t2\t5\t2\t4\t5\t3\t1\t18\t\"No\"\t6\t1\t75.0\t3.0\t180\t3217211382\t3.3\t\"8/17/2012
+        at 1:53 PM\"\t\"8/17/2012 at 1:56 PM\"\n2\t1\t2\t-2\t2\t2\t-3\t1\t1\t5\t4\t4\t2\t4\t5\t1\t5\t2\t3\t3\t3\t1\t23\t\"No\"\t5\t1\t69.0\t9.0\t120\t9772151217\t2.75\t\"8/17/2012
+        at 1:54 PM\"\t\"8/17/2012 at 1:57 PM\"\n1\t1\t1\t0\t2\t3\t3\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t3\t3\t3\t2\t21\t\"No\"\t5\t2\t71.0\t11.0\t126\t4237191644\t2.3166666\t\"8/17/2012
+        at 1:54 PM\"\t\"8/17/2012 at 1:57 PM\"\n2\t2\t3\t-2\t1\t2\t-2\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t5\t7\t3\t1\t29\t\"Yes:
+        part-time\"\t5\t1\t71.0\t11.0\t145\t3628965498\t3.8166666\t\"8/17/2012 at
+        1:53 PM\"\t\"8/17/2012 at 1:57 PM\"\n2\t2\t3\t-3\t-2\t3\t-3\t1\t2\t4\t1\t4\t1\t1\t3\t4\t2\t4\t1\t1\t2\t1\t64\t\"No\"\t5\t2\t61.0\t1.0\t135\t2379724696\t7.05\t\"8/17/2012
+        at 1:50 PM\"\t\"8/17/2012 at 1:57 PM\"\n2\t1\t2\t-3\t3\t3\t3\t6\t7\t6\t1\t6\t3\t4\t5\t5\t3\t5\t6\t6\t3\t2\t29\t\"Yes:
+        full-time\"\t5\t1\t67.0\t7.0\t147\t5285423738\t6.0666666\t\"8/17/2012 at 1:51
+        PM\"\t\"8/17/2012 at 1:58 PM\"\n2\t2\t3\t-3\t1\t0\t3\t3\t4\t4\t1\t7\t2\t2\t5\t6\t3\t1\t1\t3\t3\t1\t26\t\"No\"\t5\t2\t65.0\t5.0\t135\t5858169171\t4.383333\t\"8/17/2012
+        at 1:53 PM\"\t\"8/17/2012 at 1:58 PM\"\n2\t3\t4\t-2\t3\t2\t-3\t4\t4\t4\t2\t5\t2\t5\t3\t2\t2\t3\t2\t3\t3\t1\t26\t\"Yes:
+        full-time\"\t5\t2\t68.0\t8.0\t160\t8173958162\t2.3833334\t\"8/17/2012 at 1:56
+        PM\"\t\"8/17/2012 at 1:58 PM\"\n2\t1\t2\t-2\t0\t0\t-2\t1\t1\t4\t1\t7\t5\t5\t1\t1\t3\t2\t3\t4\t3\t1\t30\t\"Yes:
+        full-time\"\t5\t1\t68.0\t8.0\t150\t3598568733\t5.15\t\"8/17/2012 at 1:54 PM\"\t\"8/17/2012
+        at 1:59 PM\"\n2\t1\t2\t1\t1\t0\t1\t5\t5\t4\t3\t4\t3\t5\t4\t4\t4\t\t4\t5\t3\t1\t24\t\"Yes:
+        part-time\"\t5\t1\t68.0\t8.0\t155\t4612116235\t2.5833333\t\"8/17/2012 at 1:57
+        PM\"\t\"8/17/2012 at 1:59 PM\"\n2\t1\t2\t-3\t2\t-2\t-3\t5\t2\t5\t4\t5\t5\t5\t6\t2\t6\t2\t2\t2\t3\t1\t24\t\"No\"\t5\t1\t65.0\t5.0\t200\t6295825613\t3.5166667\t\"8/17/2012
+        at 1:56 PM\"\t\"8/17/2012 at 2:00 PM\"\n1\t1\t1\t2\t-1\t2\t2\t2\t3\t5\t1\t6\t2\t2\t5\t4\t2\t3\t4\t6\t3\t2\t21\t\"Yes:
+        part-time\"\t5\t1\t68.0\t8.0\t140\t8985959128\t3.4833333\t\"8/17/2012 at 1:56
+        PM\"\t\"8/17/2012 at 2:00 PM\"\n2\t2\t3\t0\t3\t2\t-3\t4\t\t1\t2\t7\t3\t1\t7\t6\t4\t4\t6\t7\t3\t1\t19\t\"No\"\t5\t1\t63.0\t3.0\t130\t6772316297\t3.9166667\t\"8/17/2012
+        at 1:57 PM\"\t\"8/17/2012 at 2:01 PM\"\n1\t1\t1\t3\t1\t3\t3\t1\t1\t4\t1\t7\t1\t3\t6\t5\t1\t7\t3\t5\t3\t2\t18\t\"No\"\t5\t2\t65.0\t5.0\t125\t2265346373\t1.8666667\t\"8/17/2012
+        at 2:01 PM\"\t\"8/17/2012 at 2:03 PM\"\n2\t3\t4\t-3\t3\t3\t0\t7\t7\t7\t2\t7\t6\t6\t2\t6\t4\t1\t3\t6\t3\t1\t20\t\"Yes:
+        part-time\"\t6\t1\t76.0\t4.0\t190\t1834523424\t2.1166666\t\"8/17/2012 at 2:02
+        PM\"\t\"8/17/2012 at 2:04 PM\"\n2\t2\t3\t-3\t3\t3\t-3\t7\t4\t3\t3\t4\t7\t7\t1\t1\t6\t1\t6\t7\t3\t1\t27\t\"No\"\t5\t2\t66.0\t6.0\t126\t2683565897\t5.4166665\t\"8/17/2012
+        at 2:00 PM\"\t\"8/17/2012 at 2:06 PM\"\n2\t1\t2\t0\t0\t0\t-3\t2\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t5\t5\t3\t1\t22\t\"Yes:
+        full-time\"\t5\t1\t68.0\t8.0\t180\t2756299127\t3.05\t\"8/17/2012 at 2:03 PM\"\t\"8/17/2012
+        at 2:06 PM\"\n2\t1\t2\t0\t0\t0\t3\t1\t1\t4\t4\t7\t1\t1\t7\t4\t1\t4\t5\t5\t3\t1\t32\t\"Yes:
+        full-time\"\t5\t1\t61.0\t1.0\t165\t9997616621\t2.7\t\"8/17/2012 at 2:04 PM\"\t\"8/17/2012
+        at 2:07 PM\"\n2\t1\t2\t-2\t2\t-2\t-2\t3\t2\t2\t4\t4\t4\t4\t5\t3\t4\t3\t6\t7\t3\t1\t22\t\"Yes:
+        full-time\"\t5\t2\t62.0\t2.0\t102\t1913541186\t4.133333\t\"8/17/2012 at 2:03
+        PM\"\t\"8/17/2012 at 2:07 PM\"\n1\t1\t1\t0\t0\t0\t1\t1\t1\t1\t1\t7\t1\t1\t7\t1\t1\t1\t2\t2\t3\t2\t28\t\"Yes:
+        full-time\"\t6\t1\t75.0\t3.0\t240\t2756321247\t3.0666666\t\"8/17/2012 at 2:05
+        PM\"\t\"8/17/2012 at 2:08 PM\"\n2\t3\t4\t-2\t2\t1\t-3\t3\t2\t4\t2\t6\t1\t2\t6\t3\t2\t3\t5\t5\t3\t1\t20\t\"Yes:
+        part-time\"\t5\t1\t68.0\t8.0\t145\t8116631818\t2.5166667\t\"8/17/2012 at 2:07
+        PM\"\t\"8/17/2012 at 2:10 PM\"\n2\t1\t2\t-3\t2\t2\t-3\t7\t7\t7\t7\t1\t7\t7\t1\t1\t7\t1\t3\t4\t3\t1\t19\t\"No\"\t6\t1\t76.0\t4.0\t250\t7935855842\t3.8166666\t\"8/17/2012
+        at 2:06 PM\"\t\"8/17/2012 at 2:10 PM\"\n2\t2\t3\t-1\t-1\t1\t1\t1\t1\t1\t1\t7\t1\t1\t7\t6\t1\t5\t3\t6\t3\t2\t27\t\"No\"\t5\t1\t61.0\t1.0\t170\t9148113632\t4.5333333\t\"8/17/2012
+        at 2:06 PM\"\t\"8/17/2012 at 2:10 PM\"\n2\t2\t3\t0\t0\t3\t0\t6\t7\t7\t7\t2\t\t7\t1\t1\t7\t1\t7\t7\t3\t1\t20\t\"No\"\t5\t1\t61.0\t1.0\t125\t1899269987\t2.3\t\"8/17/2012
+        at 2:11 PM\"\t\"8/17/2012 at 2:13 PM\"\n1\t1\t1\t2\t0\t2\t2\t4\t4\t6\t6\t3\t4\t4\t4\t2\t6\t4\t4\t4\t3\t2\t24\t\"No\"\t5\t1\t68.0\t8.0\t173\t9973489113\t4.1833334\t\"8/17/2012
+        at 2:11 PM\"\t\"8/17/2012 at 2:16 PM\"\n2\t1\t2\t-3\t3\t3\t-3\t7\t7\t7\t7\t1\t7\t7\t7\t1\t7\t1\t4\t4\t3\t1\t27\t\"Yes:
+        part-time\"\t5\t2\t60.0\t0.0\t140\t2198153894\t2.4166667\t\"8/17/2012 at 2:15
+        PM\"\t\"8/17/2012 at 2:17 PM\"\n2\t1\t2\t-2\t1\t-1\t-2\t3\t1\t5\t4\t4\t3\t4\t4\t4\t\t4\t5\t5\t3\t1\t29\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t170\t8928543947\t2.8833334\t\"8/17/2012 at 2:15
+        PM\"\t\"8/17/2012 at 2:18 PM\"\n1\t1\t1\t-2\t-1\t2\t-1\t3\t1\t3\t2\t7\t2\t2\t2\t2\t2\t2\t5\t6\t3\t2\t19\t\"Yes:
+        part-time\"\t5\t1\t68.0\t8.0\t120\t4969496495\t2.8666666\t\"8/17/2012 at 2:16
+        PM\"\t\"8/17/2012 at 2:19 PM\"\n2\t2\t3\t-2\t2\t-2\t-3\t7\t7\t7\t4\t2\t5\t\t2\t1\t6\t4\t3\t5\t3\t1\t34\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t283\t5992534893\t3.35\t\"8/17/2012 at 2:19 PM\"\t\"8/17/2012
+        at 2:22 PM\"\n2\t3\t4\t1\t1\t3\t-3\t3\t2\t6\t3\t4\t6\t4\t7\t1\t5\t3\t7\t6\t3\t1\t22\t\"Yes:
+        full-time\"\t5\t2\t66.0\t6.0\t147\t3245986165\t2.5166667\t\"8/17/2012 at 2:20
+        PM\"\t\"8/17/2012 at 2:23 PM\"\n1\t1\t1\t2\t1\t-1\t2\t5\t3\t4\t1\t6\t1\t3\t2\t2\t3\t3\t1\t1\t3\t2\t25\t\"No\"\t5\t1\t61.0\t1.0\t240\t7171386493\t3.9166667\t\"8/17/2012
+        at 2:19 PM\"\t\"8/17/2012 at 2:23 PM\"\n2\t2\t3\t3\t0\t3\t3\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t4\t3\t3\t1\t25\t\"No\"\t5\t1\t61.0\t1.0\t170\t7536387993\t2.3333333\t\"8/17/2012
+        at 2:23 PM\"\t\"8/17/2012 at 2:25 PM\"\n2\t2\t3\t-3\t0\t1\t-3\t6\t3\t1\t2\t6\t4\t4\t6\t4\t4\t4\t5\t7\t3\t1\t19\t\"No\"\t5\t1\t68.0\t8.0\t111\t1142852527\t3.3333333\t\"8/17/2012
+        at 2:23 PM\"\t\"8/17/2012 at 2:26 PM\"\n1\t1\t1\t3\t3\t0\t2\t1\t1\t1\t5\t1\t5\t1\t1\t1\t5\t5\t1\t2\t3\t2\t33\t\"Yes:
+        full-time\"\t5\t1\t68.0\t8.0\t162\t1324895198\t1.5166667\t\"8/17/2012 at 2:25
+        PM\"\t\"8/17/2012 at 2:26 PM\"\n1\t1\t1\t-1\t-1\t-1\t-2\t4\t3\t3\t4\t3\t4\t4\t3\t4\t4\t3\t4\t4\t2\t1\t22\t\"Yes:
+        part-time\"\t5\t1\t68.0\t8.0\t65\t7288836498\t2.9\t\"8/17/2012 at 2:25 PM\"\t\"8/17/2012
+        at 2:28 PM\"\n2\t2\t3\t-1\t1\t-1\t-1\t5\t5\t5\t5\t4\t3\t5\t5\t3\t5\t3\t2\t2\t3\t1\t26\t\"Yes:
+        part-time\"\t5\t1\t65.0\t5.0\t150\t5533888757\t3.3166666\t\"8/17/2012 at 2:25
+        PM\"\t\"8/17/2012 at 2:28 PM\"\n1\t1\t1\t0\t1\t2\t1\t3\t2\t2\t2\t6\t2\t2\t6\t5\t2\t6\t6\t6\t3\t2\t23\t\"No\"\t5\t2\t64.0\t4.0\t124\t4392639675\t2.0833333\t\"8/17/2012
+        at 2:28 PM\"\t\"8/17/2012 at 2:30 PM\"\n1\t1\t1\t2\t2\t2\t-1\t5\t5\t4\t4\t4\t3\t5\t3\t3\t3\t3\t2\t2\t3\t2\t25\t\"Yes:
+        full-time\"\t5\t2\t66.0\t6.0\t190\t9475556724\t3.3333333\t\"8/17/2012 at 2:27
+        PM\"\t\"8/17/2012 at 2:30 PM\"\n2\t1\t2\t-1\t1\t0\t-2\t7\t7\t7\t7\t2\t7\t7\t1\t1\t6\t1\t5\t6\t3\t1\t34\t\"Yes:
+        part-time\"\t5\t2\t66.0\t6.0\t185\t3785218961\t3.6\t\"8/17/2012 at 2:27 PM\"\t\"8/17/2012
+        at 2:31 PM\"\n2\t1\t2\t2\t2\t2\t-3\t5\t5\t5\t2\t4\t4\t2\t3\t3\t5\t2\t3\t3\t3\t1\t18\t\"Yes:
+        full-time\"\t6\t1\t74.0\t2.0\t190\t5937222878\t2.0\t\"8/17/2012 at 2:29 PM\"\t\"8/17/2012
+        at 2:31 PM\"\n2\t2\t3\t-2\t-1\t2\t-2\t2\t1\t1\t2\t6\t2\t1\t6\t4\t4\t4\t6\t7\t3\t1\t26\t\"Yes:
+        part-time\"\t5\t1\t71.0\t11.0\t155\t4786198995\t3.1\t\"8/17/2012 at 2:30 PM\"\t\"8/17/2012
+        at 2:33 PM\"\n2\t3\t4\t2\t3\t3\t1\t4\t3\t4\t1\t6\t3\t4\t5\t5\t4\t3\t3\t6\t3\t1\t26\t\"Yes:
+        part-time\"\t5\t1\t69.0\t9.0\t150\t7494724111\t2.6\t\"8/17/2012 at 2:31 PM\"\t\"8/17/2012
+        at 2:34 PM\"\n2\t1\t2\t-3\t3\t1\t-3\t7\t7\t7\t7\t1\t7\t7\t1\t1\t7\t1\t7\t7\t3\t1\t30\t\"Yes:
+        full-time\"\t6\t1\t75.0\t3.0\t210\t3561572884\t3.2666667\t\"8/17/2012 at 2:31
+        PM\"\t\"8/17/2012 at 2:35 PM\"\n1\t1\t1\t1\t0\t1\t2\t3\t3\t2\t2\t5\t3\t3\t3\t4\t4\t3\t3\t2\t3\t2\t54\t\"Yes:
+        full-time\"\t5\t2\t65.0\t5.0\t148\t4891923942\t5.866667\t\"8/17/2012 at 2:32
+        PM\"\t\"8/17/2012 at 2:37 PM\"\n2\t3\t4\t-2\t-1\t0\t-2\t1\t1\t1\t1\t7\t1\t1\t7\t3\t1\t3\t6\t6\t3\t1\t20\t\"Yes:
+        part-time\"\t6\t1\t74.0\t2.0\t140\t1929441914\t2.7333333\t\"8/17/2012 at 2:36
+        PM\"\t\"8/17/2012 at 2:38 PM\"\n1\t1\t1\t3\t0\t0\t3\t6\t7\t7\t7\t2\t7\t7\t7\t1\t2\t1\t3\t4\t3\t2\t43\t\"No\"\t5\t2\t68.0\t8.0\t175\t6627148791\t3.9\t\"8/17/2012
+        at 2:35 PM\"\t\"8/17/2012 at 2:39 PM\"\n2\t2\t3\t0\t-2\t2\t\t2\t2\t2\t1\t1\t1\t1\t1\t4\t1\t1\t6\t7\t4\t2\t40\t\"No\"\t5\t2\t60.0\t0.0\t108\t8787417133\t8.966666\t\"8/17/2012
+        at 2:32 PM\"\t\"8/17/2012 at 2:41 PM\"\n2\t1\t2\t-3\t2\t-2\t-3\t7\t7\t7\t5\t6\t7\t7\t1\t1\t7\t1\t4\t3\t3\t1\t26\t\"Yes:
+        part-time\"\t5\t2\t65.0\t5.0\t178\t5769168548\t1.95\t\"8/17/2012 at 2:40 PM\"\t\"8/17/2012
+        at 2:42 PM\"\n2\t3\t4\t0\t0\t1\t1\t1\t2\t5\t1\t6\t2\t2\t5\t3\t2\t3\t5\t5\t3\t1\t27\t\"Yes:
+        full-time\"\t5\t1\t61.0\t1.0\t182\t5298951625\t2.1333334\t\"8/17/2012 at 2:42
+        PM\"\t\"8/17/2012 at 2:44 PM\"\n1\t1\t1\t0\t-1\t1\t\t5\t4\t5\t6\t5\t4\t5\t3\t4\t3\t5\t5\t4\t1\t1\t32\t\"Yes:
+        part-time\"\t5\t1\t67.0\t7.0\t101\t9338845668\t1.2166667\t\"8/17/2012 at 2:46
+        PM\"\t\"8/17/2012 at 2:47 PM\"\n2\t3\t4\t2\t1\t1\t-2\t5\t5\t6\t5\t3\t6\t5\t2\t5\t6\t2\t2\t2\t3\t1\t22\t\"No\"\t5\t1\t71.0\t11.0\t222\t2249667122\t3.5\t\"8/17/2012
+        at 2:44 PM\"\t\"8/17/2012 at 2:47 PM\"\n1\t1\t1\t-3\t2\t0\t2\t1\t1\t4\t1\t7\t2\t2\t2\t4\t2\t4\t3\t3\t3\t2\t37\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t0\t5561585544\t2.5\t\"8/17/2012 at 2:45 PM\"\t\"8/17/2012
+        at 2:48 PM\"\n2\t2\t3\t-2\t0\t0\t-2\t4\t2\t4\t1\t6\t3\t2\t3\t3\t2\t2\t7\t7\t3\t1\t19\t\"No\"\t5\t1\t67.0\t7.0\t120\t4162556457\t2.9333334\t\"8/17/2012
+        at 2:46 PM\"\t\"8/17/2012 at 2:49 PM\"\n2\t2\t3\t-2\t-3\t2\t-2\t1\t1\t1\t1\t7\t1\t2\t7\t4\t1\t2\t4\t7\t3\t1\t38\t\"Yes:
+        full-time\"\t6\t1\t76.0\t4.0\t185\t7188418881\t3.4\t\"8/17/2012 at 2:48 PM\"\t\"8/17/2012
+        at 2:51 PM\"\n2\t3\t4\t-3\t3\t3\t3\t1\t1\t4\t1\t7\t1\t1\t7\t5\t1\t5\t2\t2\t3\t1\t27\t\"Yes:
+        full-time\"\t6\t1\t73.0\t1.0\t190\t4234311663\t2.2\t\"8/17/2012 at 2:49 PM\"\t\"8/17/2012
+        at 2:51 PM\"\n2\t2\t3\t0\t0\t2\t-2\t5\t2\t4\t3\t4\t2\t5\t4\t4\t2\t3\t4\t3\t3\t1\t20\t\"Yes:
+        part-time\"\t5\t1\t71.5\t11.5\t175\t4999625623\t2.4166667\t\"8/17/2012 at
+        2:49 PM\"\t\"8/17/2012 at 2:52 PM\"\n2\t3\t4\t0\t1\t3\t-2\t3\t3\t3\t3\t4\t3\t3\t5\t3\t3\t3\t3\t3\t3\t1\t28\t\"Yes:
+        full-time\"\t5\t1\t69.0\t9.0\t165\t9644222161\t3.8666666\t\"8/17/2012 at 2:48
+        PM\"\t\"8/17/2012 at 2:52 PM\"\n2\t1\t2\t-1\t1\t0\t-2\t3\t3\t2\t1\t7\t2\t2\t6\t1\t1\t1\t3\t2\t3\t1\t41\t\"Yes:
+        full-time\"\t6\t1\t73.0\t1.0\t240\t7491591911\t2.8666666\t\"8/17/2012 at 2:50
+        PM\"\t\"8/17/2012 at 2:53 PM\"\n1\t1\t1\t3\t0\t2\t2\t3\t3\t3\t1\t7\t2\t2\t5\t3\t3\t4\t3\t6\t3\t2\t22\t\"No\"\t5\t1\t69.0\t9.0\t175\t4494916162\t2.9833333\t\"8/17/2012
+        at 2:50 PM\"\t\"8/17/2012 at 2:53 PM\"\n2\t3\t4\t-2\t1\t2\t0\t1\t1\t1\t3\t6\t2\t2\t7\t2\t4\t1\t5\t5\t4\t2\t20\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t150\t7178581591\t2.85\t\"8/17/2012 at 2:55 PM\"\t\"8/17/2012
+        at 2:58 PM\"\n2\t3\t4\t-2\t0\t1\t-1\t5\t7\t6\t5\t3\t5\t6\t3\t4\t6\t4\t3\t3\t3\t1\t21\t\"No\"\t5\t2\t61.0\t1.0\t125\t8937846819\t2.9\t\"8/17/2012
+        at 2:55 PM\"\t\"8/17/2012 at 2:58 PM\"\n2\t2\t3\t0\t3\t3\t0\t1\t1\t1\t4\t4\t3\t3\t5\t2\t4\t2\t3\t3\t3\t1\t25\t\"No\"\t5\t2\t66.0\t6.0\t112\t9977582872\t2.05\t\"8/17/2012
+        at 3:00 PM\"\t\"8/17/2012 at 3:02 PM\"\n2\t1\t2\t0\t1\t0\t-2\t3\t3\t3\t1\t7\t1\t3\t2\t2\t3\t3\t2\t3\t3\t1\t23\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t190\t6813333738\t3.9333334\t\"8/17/2012 at 2:59
+        PM\"\t\"8/17/2012 at 3:03 PM\"\n1\t1\t1\t-3\t2\t3\t3\t4\t2\t2\t3\t6\t1\t2\t6\t6\t4\t5\t6\t6\t3\t2\t21\t\"No\"\t5\t1\t60.0\t0.0\t7\t2656444182\t4.5666666\t\"8/17/2012
+        at 2:59 PM\"\t\"8/17/2012 at 3:03 PM\"\n2\t1\t2\t-2\t-1\t2\t-1\t1\t1\t2\t1\t7\t1\t1\t7\t4\t1\t4\t1\t3\t3\t1\t34\t\"Yes:
+        full-time\"\t5\t1\t71.0\t11.0\t145\t2911565938\t2.6166666\t\"8/17/2012 at
+        3:03 PM\"\t\"8/17/2012 at 3:05 PM\"\n1\t1\t1\t-1\t2\t2\t3\t2\t2\t1\t2\t7\t2\t3\t6\t5\t3\t4\t3\t5\t3\t2\t21\t\"No\"\t6\t1\t73.0\t1.0\t170\t8569833638\t5.35\t\"8/17/2012
+        at 3:04 PM\"\t\"8/17/2012 at 3:09 PM\"\n2\t2\t3\t-3\t-1\t2\t-3\t1\t1\t1\t2\t6\t1\t2\t5\t5\t1\t4\t4\t6\t3\t1\t27\t\"No\"\t6\t1\t75.0\t3.0\t190\t9649845282\t3.7\t\"8/17/2012
+        at 3:07 PM\"\t\"8/17/2012 at 3:11 PM\"\n2\t3\t4\t-3\t3\t3\t-3\t4\t6\t5\t4\t4\t6\t6\t6\t2\t6\t4\t4\t4\t3\t1\t28\t\"Yes:
+        full-time\"\t5\t1\t66.0\t6.0\t\t5988155642\t2.9666667\t\"8/17/2012 at 3:09
+        PM\"\t\"8/17/2012 at 3:12 PM\"\n2\t2\t3\t-2\t1\t3\t-3\t5\t4\t5\t4\t4\t4\t5\t3\t3\t4\t4\t4\t5\t3\t1\t20\t\"Yes:
+        part-time\"\t6\t1\t72.0\t0.0\t150\t9229414999\t2.3666666\t\"8/17/2012 at 3:10
+        PM\"\t\"8/17/2012 at 3:12 PM\"\n2\t1\t2\t-2\t1\t1\t-3\t3\t3\t4\t4\t4\t3\t3\t5\t4\t4\t4\t4\t4\t3\t1\t26\t\"No\"\t5\t1\t67.0\t7.0\t165\t6179424669\t2.1833334\t\"8/17/2012
+        at 3:12 PM\"\t\"8/17/2012 at 3:14 PM\"\n1\t1\t1\t3\t2\t2\t1\t1\t1\t6\t7\t4\t6\t4\t3\t3\t6\t1\t7\t7\t3\t2\t30\t\"Yes:
+        part-time\"\t6\t1\t72.0\t0.0\t125\t1589178516\t5.0833335\t\"8/17/2012 at 3:10
+        PM\"\t\"8/17/2012 at 3:15 PM\"\n1\t1\t1\t0\t1\t1\t1\t1\t1\t5\t1\t7\t3\t5\t5\t1\t1\t1\t5\t5\t3\t2\t21\t\"Yes:
+        part-time\"\t5\t1\t67.0\t7.0\t170\t7173938251\t4.3166666\t\"8/17/2012 at 3:13
+        PM\"\t\"8/17/2012 at 3:17 PM\"\n1\t1\t1\t1\t0\t2\t2\t1\t1\t1\t1\t7\t1\t1\t1\t4\t2\t4\t6\t5\t3\t1\t18\t\"Yes:
+        part-time\"\t6\t1\t73.0\t1.0\t170\t4131585322\t4.05\t\"8/17/2012 at 3:14 PM\"\t\"8/17/2012
+        at 3:18 PM\"\n2\t2\t3\t-1\t2\t3\t-2\t1\t1\t4\t2\t4\t2\t3\t2\t2\t4\t2\t4\t3\t3\t1\t27\t\"No\"\t5\t1\t70.0\t10.0\t165\t4788277985\t2.35\t\"8/17/2012
+        at 3:18 PM\"\t\"8/17/2012 at 3:21 PM\"\n2\t3\t4\t1\t1\t1\t-2\t5\t5\t3\t2\t6\t3\t5\t3\t2\t5\t3\t5\t6\t3\t1\t33\t\"No\"\t6\t1\t72.0\t0.0\t160\t5721284867\t7.2\t\"8/17/2012
+        at 3:14 PM\"\t\"8/17/2012 at 3:21 PM\"\n2\t2\t3\t-3\t2\t0\t-3\t6\t7\t7\t5\t4\t2\t5\t5\t3\t5\t2\t5\t5\t3\t1\t25\t\"Yes:
+        full-time\"\t5\t2\t64.0\t4.0\t129\t5721736724\t7.0\t\"8/17/2012 at 3:16 PM\"\t\"8/17/2012
+        at 3:23 PM\"\n2\t3\t4\t0\t2\t1\t0\t5\t6\t4\t2\t4\t4\t4\t4\t3\t4\t4\t3\t4\t3\t2\t25\t\"Yes:
+        part-time\"\t5\t1\t67.0\t7.0\t160\t8899451437\t4.133333\t\"8/17/2012 at 3:19
+        PM\"\t\"8/17/2012 at 3:23 PM\"\n1\t1\t1\t2\t0\t2\t2\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t6\t6\t3\t2\t22\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t170\t8564393298\t3.95\t\"8/17/2012 at 3:21 PM\"\t\"8/17/2012
+        at 3:25 PM\"\n1\t1\t1\t-2\t1\t1\t1\t5\t1\t6\t4\t4\t5\t5\t3\t2\t5\t1\t6\t5\t3\t2\t25\t\"Yes:
+        part-time\"\t5\t2\t63.0\t3.0\t110\t4216937732\t3.5666666\t\"8/17/2012 at 3:23
+        PM\"\t\"8/17/2012 at 3:26 PM\"\n2\t2\t3\t0\t0\t0\t-2\t4\t5\t5\t5\t4\t4\t4\t4\t2\t5\t3\t3\t4\t3\t1\t23\t\"No\"\t5\t1\t71.0\t11.0\t190\t7994668884\t3.6166666\t\"8/17/2012
+        at 3:23 PM\"\t\"8/17/2012 at 3:26 PM\"\n1\t1\t1\t-1\t-2\t1\t-2\t3\t1\t3\t1\t3\t3\t3\t5\t2\t3\t2\t4\t5\t3\t2\t19\t\"Yes:
+        part-time\"\t5\t1\t69.0\t9.0\t145\t6333896343\t3.6\t\"8/17/2012 at 3:24 PM\"\t\"8/17/2012
+        at 3:27 PM\"\n2\t3\t4\t-2\t2\t2\t-2\t5\t5\t6\t5\t3\t3\t5\t3\t3\t5\t3\t3\t3\t3\t1\t21\t\"No\"\t5\t2\t67.0\t7.0\t170\t5993282821\t1.6166667\t\"8/17/2012
+        at 3:27 PM\"\t\"8/17/2012 at 3:29 PM\"\n1\t1\t1\t-3\t2\t1\t-1\t5\t6\t7\t6\t3\t5\t5\t4\t2\t4\t2\t3\t4\t3\t2\t21\t\"No\"\t5\t1\t61.0\t1.0\t200\t2793564855\t3.5\t\"8/17/2012
+        at 3:26 PM\"\t\"8/17/2012 at 3:29 PM\"\n2\t2\t3\t-2\t1\t0\t-2\t5\t4\t6\t6\t5\t3\t2\t5\t2\t2\t2\t5\t6\t3\t1\t27\t\"Yes:
+        full-time\"\t5\t1\t69.0\t9.0\t165\t6194257279\t4.7\t\"8/17/2012 at 3:28 PM\"\t\"8/17/2012
+        at 3:32 PM\"\n2\t2\t3\t-3\t3\t3\t-3\t7\t7\t7\t7\t1\t7\t7\t1\t1\t7\t1\t1\t1\t3\t1\t22\t\"No\"\t6\t1\t77.0\t5.0\t330\t5955397666\t3.6833334\t\"8/17/2012
+        at 3:34 PM\"\t\"8/17/2012 at 3:37 PM\"\n2\t2\t3\t-1\t1\t1\t0\t3\t3\t4\t3\t5\t4\t4\t4\t3\t4\t3\t3\t3\t3\t1\t26\t\"Yes:
+        full-time\"\t5\t1\t66.0\t6.0\t120\t9395789285\t3.4833333\t\"8/17/2012 at 3:34
+        PM\"\t\"8/17/2012 at 3:38 PM\"\n2\t2\t3\t-3\t3\t3\t-3\t4\t7\t6\t4\t4\t7\t7\t1\t1\t7\t1\t3\t3\t3\t1\t26\t\"Yes:
+        part-time\"\t5\t2\t65.0\t5.0\t170\t8473149554\t2.7333333\t\"8/17/2012 at 3:39
+        PM\"\t\"8/17/2012 at 3:41 PM\"\n2\t3\t4\t-3\t3\t-2\t-3\t4\t4\t6\t6\t4\t7\t6\t1\t1\t6\t1\t6\t6\t3\t1\t31\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t155\t3323995282\t2.8833334\t\"8/17/2012 at 3:41
+        PM\"\t\"8/17/2012 at 3:44 PM\"\n2\t1\t2\t-3\t2\t2\t-3\t1\t1\t4\t1\t7\t2\t2\t6\t4\t1\t2\t2\t6\t3\t1\t20\t\"Yes:
+        full-time\"\t5\t1\t69.0\t9.0\t159\t8467834299\t4.1666665\t\"8/17/2012 at 3:41
+        PM\"\t\"8/17/2012 at 3:45 PM\"\n2\t2\t3\t-1\t1\t2\t-1\t2\t2\t2\t2\t6\t2\t2\t5\t4\t2\t5\t4\t5\t3\t1\t19\t\"No\"\t5\t2\t68.0\t8.0\t125\t9831763164\t2.0166667\t\"8/17/2012
+        at 3:44 PM\"\t\"8/17/2012 at 3:46 PM\"\n2\t3\t4\t-1\t0\t0\t-1\t5\t6\t5\t6\t5\t2\t5\t3\t6\t5\t4\t3\t3\t3\t1\t\t\"Yes:
+        full-time\"\t5\t1\t61.0\t1.0\t160\t5141445643\t1.9\t\"8/17/2012 at 3:45 PM\"\t\"8/17/2012
+        at 3:47 PM\"\n2\t1\t2\t-3\t1\t2\t-3\t7\t7\t7\t7\t4\t7\t\t1\t1\t5\t2\t1\t1\t3\t1\t53\t\"Yes:
+        full-time\"\t5\t2\t63.0\t3.0\t200\t3569759899\t2.6333334\t\"8/17/2012 at 3:46
+        PM\"\t\"8/17/2012 at 3:49 PM\"\n1\t1\t1\t0\t1\t2\t-1\t4\t4\t5\t4\t4\t4\t3\t3\t2\t5\t2\t3\t3\t3\t2\t45\t\"No\"\t5\t1\t71.0\t11.0\t187\t1358517893\t2.1333334\t\"8/17/2012
+        at 3:48 PM\"\t\"8/17/2012 at 3:50 PM\"\n2\t2\t3\t0\t-1\t1\t-1\t2\t2\t3\t3\t6\t3\t3\t\t2\t3\t2\t7\t6\t3\t1\t27\t\"Yes:
+        full-time\"\t6\t1\t78.0\t6.0\t195\t2633782582\t1.65\t\"8/17/2012 at 3:49 PM\"\t\"8/17/2012
+        at 3:51 PM\"\n1\t1\t1\t-1\t1\t1\t-1\t3\t3\t3\t4\t3\t5\t6\t3\t3\t6\t2\t2\t2\t3\t1\t19\t\"Yes:
+        full-time\"\t6\t1\t74.0\t2.0\t195\t7187818381\t2.4166667\t\"8/17/2012 at 3:50
+        PM\"\t\"8/17/2012 at 3:52 PM\"\n2\t2\t3\t-1\t2\t0\t-2\t4\t5\t4\t4\t5\t3\t3\t6\t4\t3\t5\t4\t5\t3\t1\t27\t\"Yes:
+        full-time\"\t5\t1\t61.0\t1.0\t176\t3367777366\t4.883333\t\"8/17/2012 at 3:49
+        PM\"\t\"8/17/2012 at 3:53 PM\"\n2\t1\t2\t-2\t1\t0\t-2\t1\t1\t6\t1\t6\t2\t4\t2\t3\t2\t1\t5\t5\t3\t1\t31\t\"Yes:
+        full-time\"\t5\t2\t71.0\t11.0\t164\t1335282747\t4.133333\t\"8/17/2012 at 3:50
+        PM\"\t\"8/17/2012 at 3:54 PM\"\n2\t3\t4\t-3\t3\t-3\t-3\t7\t7\t7\t6\t2\t6\t6\t2\t2\t6\t2\t2\t2\t3\t1\t30\t\"No\"\t5\t1\t68.0\t8.0\t275\t7471771778\t3.1666667\t\"8/17/2012
+        at 3:52 PM\"\t\"8/17/2012 at 3:55 PM\"\n2\t3\t4\t-2\t1\t-1\t2\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t6\t6\t3\t1\t32\t\"Yes:
+        full-time\"\t5\t2\t66.0\t6.0\t120\t2289276271\t2.6833334\t\"8/17/2012 at 3:59
+        PM\"\t\"8/17/2012 at 4:02 PM\"\n2\t1\t2\t-3\t1\t-2\t-2\t6\t6\t6\t7\t1\t6\t6\t2\t2\t6\t2\t3\t2\t3\t1\t26\t\"Yes:
+        full-time\"\t6\t1\t73.0\t1.0\t255\t3528894354\t2.9666667\t\"8/17/2012 at 3:59
+        PM\"\t\"8/17/2012 at 4:02 PM\"\n2\t1\t2\t0\t0\t3\t2\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t6\t7\t7\t3\t1\t23\t\"Yes:
+        part-time\"\t5\t1\t71.0\t11.0\t140\t1739482396\t2.8666666\t\"8/17/2012 at
+        3:59 PM\"\t\"8/17/2012 at 4:02 PM\"\n2\t3\t4\t-3\t3\t2\t-3\t2\t3\t4\t3\t5\t5\t5\t3\t3\t4\t4\t3\t4\t3\t1\t23\t\"Yes:
+        full-time\"\t5\t2\t64.0\t4.0\t127\t5926246527\t3.8\t\"8/17/2012 at 4:03 PM\"\t\"8/17/2012
+        at 4:07 PM\"\n2\t3\t4\t-2\t2\t3\t-3\t3\t3\t5\t5\t3\t2\t3\t4\t4\t6\t3\t5\t6\t3\t1\t22\t\"No\"\t5\t1\t61.0\t1.0\t170\t1399499191\t3.3333333\t\"8/17/2012
+        at 4:08 PM\"\t\"8/17/2012 at 4:12 PM\"\n2\t2\t3\t-1\t2\t-2\t2\t4\t6\t6\t2\t6\t5\t5\t6\t1\t5\t2\t2\t2\t3\t1\t23\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t170\t7747616189\t2.65\t\"8/17/2012 at 4:12 PM\"\t\"8/17/2012
+        at 4:15 PM\"\n2\t2\t3\t0\t2\t0\t2\t5\t5\t6\t6\t2\t4\t5\t1\t1\t5\t2\t7\t5\t3\t2\t19\t\"Yes:
+        part-time\"\t5\t2\t69.0\t9.0\t180\t4247796454\t2.9166667\t\"8/17/2012 at 4:13
+        PM\"\t\"8/17/2012 at 4:16 PM\"\n2\t2\t3\t2\t0\t1\t-2\t1\t1\t2\t1\t7\t3\t3\t4\t4\t1\t1\t2\t1\t3\t1\t21\t\"No\"\t5\t2\t68.0\t8.0\t125\t8337333862\t2.6833334\t\"8/17/2012
+        at 4:15 PM\"\t\"8/17/2012 at 4:17 PM\"\n1\t1\t1\t3\t-2\t2\t2\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t4\t5\t5\t3\t2\t28\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t145\t9721561994\t3.25\t\"8/17/2012 at 4:14 PM\"\t\"8/17/2012
+        at 4:18 PM\"\n2\t1\t2\t1\t-2\t2\t-2\t1\t1\t1\t1\t7\t1\t1\t1\t6\t1\t6\t5\t3\t3\t1\t28\t\"Yes:
+        full-time\"\t5\t2\t67.0\t7.0\t160\t4243446831\t5.1666665\t\"8/17/2012 at 4:16
+        PM\"\t\"8/17/2012 at 4:21 PM\"\n2\t1\t2\t-3\t2\t3\t-3\t1\t7\t7\t6\t4\t6\t7\t2\t1\t\t2\t6\t6\t3\t1\t26\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t169\t8986454679\t2.65\t\"8/17/2012 at 4:20 PM\"\t\"8/17/2012
+        at 4:22 PM\"\n2\t2\t3\t0\t-2\t1\t3\t1\t1\t1\t3\t6\t4\t4\t5\t5\t2\t1\t6\t6\t3\t1\t26\t\"No\"\t6\t1\t72.0\t0.0\t155\t4646239286\t3.3166666\t\"8/17/2012
+        at 4:20 PM\"\t\"8/17/2012 at 4:23 PM\"\n1\t1\t1\t3\t-1\t-1\t2\t6\t5\t6\t5\t4\t4\t4\t3\t3\t5\t3\t5\t3\t3\t2\t21\t\"No\"\t5\t2\t68.0\t8.0\t180\t9576792871\t3.1333334\t\"8/17/2012
+        at 4:20 PM\"\t\"8/17/2012 at 4:23 PM\"\n1\t1\t1\t1\t1\t1\t2\t2\t1\t2\t1\t6\t1\t2\t4\t4\t3\t3\t4\t5\t3\t2\t22\t\"Yes:
+        part-time\"\t5\t1\t68.0\t8.0\t142\t3271661677\t6.5666666\t\"8/17/2012 at 4:21
+        PM\"\t\"8/17/2012 at 4:28 PM\"\n1\t1\t1\t3\t3\t2\t3\t5\t4\t4\t4\t3\t3\t5\t3\t4\t5\t4\t5\t6\t4\t1\t19\t\"No\"\t5\t1\t71.0\t11.0\t\t3739385245\t1.1333333\t\"8/17/2012
+        at 4:31 PM\"\t\"8/17/2012 at 4:32 PM\"\n1\t1\t1\t-2\t2\t-2\t-3\t4\t1\t7\t2\t5\t5\t6\t5\t4\t4\t2\t5\t5\t3\t2\t20\t\"Yes:
+        part-time\"\t6\t1\t76.0\t4.0\t175\t4665642319\t2.4166667\t\"8/17/2012 at 4:34
+        PM\"\t\"8/17/2012 at 4:36 PM\"\n2\t2\t3\t-3\t2\t1\t-3\t1\t3\t5\t2\t7\t2\t2\t4\t3\t3\t1\t4\t6\t2\t1\t38\t\"Yes:
+        full-time\"\t5\t2\t62.0\t2.0\t118\t3844254852\t3.1\t\"8/17/2012 at 4:39 PM\"\t\"8/17/2012
+        at 4:42 PM\"\n2\t3\t4\t1\t0\t0\t-1\t4\t2\t6\t3\t5\t3\t5\t4\t4\t5\t3\t7\t7\t3\t1\t20\t\"No\"\t5\t2\t65.0\t5.0\t115\t6886255853\t2.2833333\t\"8/17/2012
+        at 4:40 PM\"\t\"8/17/2012 at 4:42 PM\"\n1\t1\t1\t-1\t2\t2\t2\t2\t3\t5\t3\t4\t3\t5\t6\t4\t3\t6\t4\t3\t5\t2\t24\t\"Yes:
+        part-time\"\t5\t1\t71.0\t11.0\t140\t8551925731\t1.8\t\"8/17/2012 at 4:42 PM\"\t\"8/17/2012
+        at 4:43 PM\"\n1\t1\t1\t1\t3\t2\t-3\t7\t7\t6\t5\t2\t6\t6\t2\t1\t6\t1\t2\t1\t3\t2\t26\t\"No\"\t5\t2\t65.0\t5.0\t200\t8842778922\t5.35\t\"8/17/2012
+        at 4:38 PM\"\t\"8/17/2012 at 4:44 PM\"\n2\t1\t2\t-2\t2\t2\t-3\t1\t1\t3\t3\t6\t3\t2\t7\t3\t3\t4\t6\t6\t3\t1\t21\t\"No\"\t5\t1\t69.0\t9.0\t153\t7777548566\t3.55\t\"8/17/2012
+        at 4:40 PM\"\t\"8/17/2012 at 4:44 PM\"\n2\t2\t3\t-3\t1\t2\t-3\t7\t7\t6\t4\t3\t6\t6\t2\t1\t3\t1\t5\t5\t3\t1\t21\t\"Yes:
+        part-time\"\t6\t1\t73.0\t1.0\t180\t9813234133\t4.016667\t\"8/17/2012 at 4:42
+        PM\"\t\"8/17/2012 at 4:46 PM\"\n2\t3\t4\t-3\t0\t-2\t1\t4\t1\t3\t1\t7\t1\t1\t7\t1\t1\t1\t3\t4\t3\t1\t17\t\"No\"\t6\t1\t73.0\t1.0\t160\t4217645895\t3.2833333\t\"8/17/2012
+        at 4:43 PM\"\t\"8/17/2012 at 4:46 PM\"\n1\t1\t1\t-2\t-1\t2\t1\t5\t6\t6\t5\t6\t5\t5\t3\t2\t7\t1\t4\t3\t3\t2\t52\t\"Yes:
+        full-time\"\t5\t2\t61.0\t1.0\t146\t7324441237\t4.9166665\t\"8/17/2012 at 4:45
+        PM\"\t\"8/17/2012 at 4:50 PM\"\n2\t3\t4\t-2\t-1\t0\t-1\t2\t2\t2\t2\t6\t3\t3\t6\t3\t3\t3\t3\t4\t3\t1\t20\t\"No\"\t5\t1\t66.0\t6.0\t140\t2888954474\t2.25\t\"8/17/2012
+        at 4:48 PM\"\t\"8/17/2012 at 4:50 PM\"\n1\t1\t1\t0\t1\t3\t0\t5\t4\t5\t5\t3\t5\t4\t3\t2\t6\t2\t4\t4\t3\t2\t23\t\"Yes:
+        full-time\"\t5\t2\t64.0\t4.0\t\t7843924684\t3.1666667\t\"8/17/2012 at 4:48
+        PM\"\t\"8/17/2012 at 4:51 PM\"\n2\t2\t3\t-3\t3\t2\t-3\t7\t7\t7\t5\t2\t7\t7\t1\t1\t7\t1\t7\t6\t3\t1\t22\t\"Yes:
+        full-time\"\t5\t2\t68.0\t8.0\t155\t5249871293\t4.7833333\t\"8/17/2012 at 4:48
+        PM\"\t\"8/17/2012 at 4:52 PM\"\n2\t1\t2\t-3\t3\t0\t-3\t7\t7\t7\t6\t3\t6\t6\t\t1\t7\t1\t5\t3\t3\t1\t18\t\"Yes:
+        full-time\"\t5\t2\t64.0\t4.0\t160\t4172512915\t13.25\t\"8/17/2012 at 4:40
+        PM\"\t\"8/17/2012 at 4:53 PM\"\n2\t3\t4\t-3\t3\t-3\t-3\t7\t7\t7\t4\t1\t6\t7\t1\t1\t7\t1\t7\t7\t3\t1\t25\t\"Yes:
+        full-time\"\t5\t2\t66.0\t6.0\t125\t2315171898\t2.0833333\t\"8/17/2012 at 4:52
+        PM\"\t\"8/17/2012 at 4:54 PM\"\n2\t1\t2\t-2\t3\t-1\t-3\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t5\t5\t3\t1\t23\t\"Yes:
+        full-time\"\t6\t1\t75.0\t3.0\t205\t2617565264\t3.2666667\t\"8/17/2012 at 4:55
+        PM\"\t\"8/17/2012 at 4:58 PM\"\n2\t2\t3\t2\t2\t2\t-3\t2\t2\t2\t4\t3\t5\t6\t2\t1\t6\t2\t5\t5\t3\t1\t66\t\"Yes:
+        full-time\"\t5\t2\t65.0\t5.0\t\t8585472531\t7.3166666\t\"8/17/2012 at 4:52
+        PM\"\t\"8/17/2012 at 4:59 PM\"\n1\t1\t1\t2\t2\t3\t2\t7\t6\t6\t5\t4\t5\t6\t2\t2\t6\t2\t6\t7\t3\t2\t21\t\"No\"\t5\t1\t65.0\t5.0\t130\t9239371899\t3.6\t\"8/17/2012
+        at 5:01 PM\"\t\"8/17/2012 at 5:04 PM\"\n2\t2\t3\t2\t-2\t2\t3\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t3\t6\t3\t1\t23\t\"Yes:
+        full-time\"\t5\t1\t71.0\t11.0\t165\t2583973616\t1.95\t\"8/17/2012 at 5:03
+        PM\"\t\"8/17/2012 at 5:05 PM\"\n2\t3\t4\t-3\t-1\t0\t1\t5\t1\t5\t5\t3\t6\t5\t4\t2\t5\t3\t4\t5\t3\t2\t20\t\"No\"\t\t2\t\t0.0\t\t1473713549\t4.866667\t\"8/17/2012
+        at 5:05 PM\"\t\"8/17/2012 at 5:10 PM\"\n2\t1\t2\t-1\t1\t2\t-2\t6\t6\t3\t4\t4\t6\t6\t2\t2\t6\t1\t2\t2\t3\t1\t31\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t290\t5771761188\t7.616667\t\"8/17/2012 at 5:03
+        PM\"\t\"8/17/2012 at 5:11 PM\"\n2\t2\t3\t0\t1\t-1\t1\t3\t4\t5\t4\t5\t3\t5\t5\t3\t4\t5\t4\t5\t3\t1\t18\t\"No\"\t6\t1\t72.0\t0.0\t155\t5786297255\t6.766667\t\"8/17/2012
+        at 5:06 PM\"\t\"8/17/2012 at 5:13 PM\"\n2\t2\t3\t-3\t2\t-2\t-3\t7\t6\t5\t3\t7\t5\t5\t6\t3\t5\t2\t7\t3\t3\t1\t21\t\"No\"\t5\t2\t61.0\t1.0\t102\t8648317242\t2.4\t\"8/17/2012
+        at 5:12 PM\"\t\"8/17/2012 at 5:15 PM\"\n2\t1\t2\t-3\t2\t2\t-3\t3\t2\t5\t3\t4\t4\t4\t2\t1\t4\t2\t2\t3\t3\t1\t21\t\"Yes:
+        part-time\"\t5\t2\t69.0\t9.0\t185\t6188913256\t3.1666667\t\"8/17/2012 at 5:12
+        PM\"\t\"8/17/2012 at 5:15 PM\"\n2\t1\t2\t-2\t2\t1\t-2\t5\t5\t6\t3\t4\t5\t5\t3\t3\t5\t2\t3\t3\t1\t1\t23\t\"No\"\t5\t1\t66.0\t6.0\t140\t6316916495\t2.3166666\t\"8/17/2012
+        at 5:14 PM\"\t\"8/17/2012 at 5:17 PM\"\n1\t1\t1\t0\t-2\t2\t2\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t7\t4\t4\t1\t2\t23\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t220\t9337242277\t2.8\t\"8/17/2012 at 5:14 PM\"\t\"8/17/2012
+        at 5:17 PM\"\n2\t2\t3\t-3\t3\t1\t-2\t7\t7\t5\t7\t1\t7\t7\t1\t1\t7\t1\t5\t6\t3\t1\t28\t\"Yes:
+        full-time\"\t5\t1\t71.0\t11.0\t195\t8768575142\t3.95\t\"8/17/2012 at 5:15
+        PM\"\t\"8/17/2012 at 5:19 PM\"\n2\t1\t2\t-3\t3\t2\t-2\t5\t6\t6\t5\t5\t6\t6\t2\t3\t6\t2\t3\t3\t3\t1\t29\t\"Yes:
+        part-time\"\t6\t1\t73.0\t1.0\t220\t7579921995\t4.8\t\"8/17/2012 at 5:17 PM\"\t\"8/17/2012
+        at 5:22 PM\"\n2\t2\t3\t0\t-3\t0\t-2\t2\t1\t1\t1\t7\t1\t1\t7\t6\t1\t4\t5\t5\t3\t1\t21\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t129\t7562851296\t3.5\t\"8/17/2012 at 5:20 PM\"\t\"8/17/2012
+        at 5:23 PM\"\n2\t3\t4\t-2\t3\t1\t-3\t6\t3\t5\t4\t3\t4\t5\t3\t3\t5\t2\t3\t3\t3\t1\t31\t\"No\"\t5\t1\t68.0\t8.0\t205\t3611799516\t3.1833334\t\"8/17/2012
+        at 5:21 PM\"\t\"8/17/2012 at 5:24 PM\"\n2\t2\t3\t-3\t3\t3\t-3\t2\t4\t6\t4\t4\t4\t4\t3\t3\t5\t3\t4\t6\t3\t1\t20\t\"No\"\t5\t2\t62.0\t2.0\t93\t6562137918\t3.35\t\"8/17/2012
+        at 5:23 PM\"\t\"8/17/2012 at 5:27 PM\"\n2\t2\t3\t0\t0\t0\t0\t4\t4\t4\t5\t4\t5\t4\t4\t5\t6\t5\t5\t4\t2\t2\t21\t\"No\"\t6\t1\t72.0\t0.0\t200\t7272655499\t0.98333335\t\"8/17/2012
+        at 5:26 PM\"\t\"8/17/2012 at 5:27 PM\"\n2\t3\t4\t0\t-1\t1\t-2\t2\t2\t2\t1\t5\t3\t2\t5\t5\t\t4\t5\t6\t3\t1\t26\t\"Yes:
+        part-time\"\t5\t2\t67.0\t7.0\t125\t6439368777\t3.6333334\t\"8/17/2012 at 5:24
+        PM\"\t\"8/17/2012 at 5:27 PM\"\n2\t2\t3\t-1\t1\t1\t-3\t2\t2\t2\t1\t7\t1\t1\t5\t4\t1\t5\t1\t1\t3\t1\t24\t\"No\"\t5\t1\t67.0\t7.0\t\t1131515623\t2.2833333\t\"8/17/2012
+        at 5:26 PM\"\t\"8/17/2012 at 5:28 PM\"\n2\t1\t2\t-3\t3\t3\t-3\t6\t6\t7\t5\t4\t7\t6\t1\t1\t6\t1\t1\t1\t3\t1\t35\t\"Yes:
+        full-time\"\t5\t1\t61.0\t1.0\t240\t6163327627\t2.5333333\t\"8/17/2012 at 5:31
+        PM\"\t\"8/17/2012 at 5:33 PM\"\n2\t1\t2\t0\t1\t0\t-3\t4\t4\t4\t2\t4\t4\t4\t4\t2\t2\t2\t4\t4\t3\t1\t23\t\"No\"\t5\t2\t64.0\t4.0\t150\t1241785577\t3.2333333\t\"8/17/2012
+        at 5:31 PM\"\t\"8/17/2012 at 5:34 PM\"\n2\t3\t4\t2\t0\t2\t1\t5\t2\t3\t2\t5\t3\t3\t3\t4\t3\t3\t2\t3\t3\t1\t19\t\"No\"\t6\t1\t73.0\t1.0\t269\t2648323381\t3.1333334\t\"8/17/2012
+        at 5:31 PM\"\t\"8/17/2012 at 5:34 PM\"\n2\t2\t3\t2\t2\t2\t2\t5\t5\t4\t4\t5\t4\t3\t5\t3\t3\t5\t3\t4\t3\t1\t21\t\"No\"\t5\t2\t61.0\t1.0\t117\t9489596922\t3.45\t\"8/17/2012
+        at 5:31 PM\"\t\"8/17/2012 at 5:35 PM\"\n2\t1\t2\t1\t0\t2\t0\t5\t5\t6\t4\t4\t4\t4\t5\t4\t6\t3\t6\t6\t1\t2\t23\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t205\t6115221231\t3.6166666\t\"8/17/2012 at 5:32
+        PM\"\t\"8/17/2012 at 5:36 PM\"\n1\t1\t1\t1\t0\t1\t2\t1\t1\t\t1\t6\t1\t6\t5\t6\t1\t4\t5\t6\t3\t2\t30\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t220\t9314756184\t3.4166667\t\"8/17/2012 at 5:36
+        PM\"\t\"8/17/2012 at 5:40 PM\"\n2\t1\t2\t-2\t1\t2\t-2\t7\t6\t6\t6\t5\t6\t6\t2\t2\t6\t2\t3\t3\t3\t1\t28\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t\t8426556235\t3.25\t\"8/17/2012 at 5:38 PM\"\t\"8/17/2012
+        at 5:42 PM\"\n2\t2\t3\t2\t0\t0\t3\t6\t5\t6\t5\t5\t6\t3\t5\t3\t4\t6\t6\t6\t2\t1\t22\t\"Yes:
+        part-time\"\t5\t1\t61.0\t1.0\t140\t5377372666\t1.2\t\"8/17/2012 at 5:41 PM\"\t\"8/17/2012
+        at 5:42 PM\"\n2\t3\t4\t-3\t1\t-2\t-2\t6\t3\t6\t5\t5\t2\t5\t1\t1\t5\t2\t7\t7\t3\t1\t19\t\"Yes:
+        full-time\"\t5\t1\t63.0\t3.0\t130\t3421967594\t3.4166667\t\"8/17/2012 at 5:41
+        PM\"\t\"8/17/2012 at 5:44 PM\"\n2\t3\t4\t-2\t0\t2\t-1\t2\t1\t2\t2\t7\t2\t2\t7\t5\t2\t7\t4\t4\t3\t1\t21\t\"No\"\t5\t1\t65.0\t5.0\t108\t1313586737\t2.3166666\t\"8/17/2012
+        at 5:44 PM\"\t\"8/17/2012 at 5:47 PM\"\n1\t1\t1\t2\t1\t0\t-2\t7\t7\t6\t5\t3\t6\t5\t1\t1\t6\t1\t7\t7\t3\t2\t34\t\"Yes:
+        part-time\"\t5\t2\t62.0\t2.0\t120\t2594126295\t2.2333333\t\"8/17/2012 at 5:45
+        PM\"\t\"8/17/2012 at 5:47 PM\"\n2\t1\t2\t-1\t-2\t1\t2\t1\t1\t1\t1\t6\t1\t1\t6\t5\t1\t5\t3\t4\t3\t1\t20\t\"No\"\t6\t1\t72.0\t0.0\t175\t1984223461\t2.9666667\t\"8/17/2012
+        at 5:45 PM\"\t\"8/17/2012 at 5:48 PM\"\n2\t3\t4\t0\t2\t0\t0\t6\t5\t2\t4\t3\t5\t5\t3\t3\t3\t3\t4\t4\t2\t1\t\t\"Yes:
+        part-time\"\t5\t1\t71.0\t11.0\t155\t4331553121\t2.6333334\t\"8/17/2012 at
+        5:47 PM\"\t\"8/17/2012 at 5:49 PM\"\n2\t3\t4\t-3\t1\t0\t-3\t1\t1\t1\t\t7\t1\t1\t7\t4\t1\t\t2\t7\t3\t1\t20\t\"No\"\t5\t2\t67.0\t7.0\t126\t6415378183\t3.9666667\t\"8/17/2012
+        at 5:49 PM\"\t\"8/17/2012 at 5:53 PM\"\n2\t3\t4\t2\t1\t1\t1\t3\t3\t4\t3\t5\t4\t3\t5\t3\t4\t3\t3\t3\t5\t1\t21\t\"Yes:
+        full-time\"\t5\t1\t71.0\t11.0\t275\t6731115143\t1.7666667\t\"8/17/2012 at
+        5:52 PM\"\t\"8/17/2012 at 5:53 PM\"\n2\t1\t2\t-3\t3\t3\t-3\t7\t7\t7\t7\t1\t7\t7\t1\t1\t7\t1\t\t1\t3\t1\t35\t\"No\"\t5\t2\t69.0\t9.0\t350\t1842369284\t2.6166666\t\"8/17/2012
+        at 5:56 PM\"\t\"8/17/2012 at 5:58 PM\"\n2\t3\t4\t-2\t1\t2\t-3\t4\t2\t5\t1\t7\t2\t3\t7\t2\t3\t1\t6\t3\t3\t1\t21\t\"No\"\t5\t2\t65.0\t5.0\t160\t6428931581\t2.9\t\"8/17/2012
+        at 5:59 PM\"\t\"8/17/2012 at 6:01 PM\"\n1\t1\t1\t-3\t-2\t0\t1\t1\t1\t1\t1\t7\t1\t2\t4\t5\t2\t4\t5\t6\t3\t2\t18\t\"No\"\t5\t1\t69.0\t9.0\t150\t4221157238\t2.4833333\t\"8/17/2012
+        at 6:02 PM\"\t\"8/17/2012 at 6:05 PM\"\n1\t1\t1\t2\t0\t2\t2\t5\t4\t5\t3\t6\t4\t3\t5\t4\t3\t5\t5\t5\t3\t2\t19\t\"No\"\t5\t1\t64.0\t4.0\t133\t9333631293\t3.8333333\t\"8/17/2012
+        at 6:02 PM\"\t\"8/17/2012 at 6:05 PM\"\n2\t2\t3\t-2\t0\t2\t-2\t1\t1\t1\t1\t6\t1\t1\t6\t4\t3\t1\t4\t4\t3\t1\t22\t\"No\"\t5\t1\t61.0\t1.0\t135\t6765713341\t3.0333333\t\"8/17/2012
+        at 6:07 PM\"\t\"8/17/2012 at 6:10 PM\"\n2\t2\t3\t-2\t\t2\t2\t5\t3\t5\t5\t4\t6\t5\t6\t4\t4\t5\t1\t1\t3\t1\t19\t\"Yes:
+        part-time\"\t6\t1\t72.0\t0.0\t175\t4287338775\t3.25\t\"8/17/2012 at 6:14 PM\"\t\"8/17/2012
+        at 6:17 PM\"\n1\t1\t1\t-3\t2\t2\t-3\t6\t6\t7\t6\t5\t5\t4\t3\t2\t5\t2\t4\t6\t3\t2\t29\t\"Yes:
+        full-time\"\t6\t1\t76.0\t4.0\t190\t4236995859\t2.5666666\t\"8/17/2012 at 6:16
+        PM\"\t\"8/17/2012 at 6:19 PM\"\n1\t1\t1\t0\t-2\t2\t1\t1\t1\t4\t2\t5\t2\t4\t6\t2\t1\t2\t3\t3\t3\t2\t23\t\"No\"\t5\t1\t69.0\t9.0\t140\t6317499615\t4.1\t\"8/17/2012
+        at 6:19 PM\"\t\"8/17/2012 at 6:23 PM\"\n1\t1\t1\t3\t-1\t2\t3\t5\t1\t6\t1\t7\t7\t7\t5\t1\t6\t2\t2\t4\t3\t2\t22\t\"No\"\t5\t1\t71.0\t11.0\t163\t4691797119\t3.3\t\"8/17/2012
+        at 6:20 PM\"\t\"8/17/2012 at 6:24 PM\"\n1\t1\t1\t0\t-1\t1\t2\t2\t1\t1\t1\t7\t1\t1\t1\t4\t2\t6\t3\t4\t3\t2\t25\t\"Yes:
+        full-time\"\t5\t1\t65.0\t5.0\t140\t7742567967\t4.2166667\t\"8/17/2012 at 6:21
+        PM\"\t\"8/17/2012 at 6:25 PM\"\n1\t1\t1\t0\t0\t2\t1\t1\t1\t1\t2\t7\t2\t2\t6\t3\t1\t2\t4\t5\t3\t2\t22\t\"Yes:
+        part-time\"\t6\t1\t74.0\t2.0\t167\t4124641612\t1.8666667\t\"8/17/2012 at 6:28
+        PM\"\t\"8/17/2012 at 6:30 PM\"\n2\t2\t3\t2\t0\t1\t-2\t1\t1\t1\t1\t5\t1\t1\t6\t5\t1\t5\t4\t5\t3\t1\t20\t\"Yes:
+        part-time\"\t5\t2\t60.0\t0.0\t110\t2912664672\t2.2\t\"8/17/2012 at 6:28 PM\"\t\"8/17/2012
+        at 6:30 PM\"\n2\t3\t4\t0\t2\t2\t0\t4\t5\t5\t2\t5\t4\t5\t2\t4\t5\t4\t2\t3\t3\t1\t23\t\"Yes:
+        part-time\"\t5\t2\t71.0\t11.0\t140\t7296114947\t6.75\t\"8/17/2012 at 6:28
+        PM\"\t\"8/17/2012 at 6:34 PM\"\n2\t2\t3\t-1\t1\t-1\t-1\t1\t1\t4\t2\t6\t5\t6\t2\t2\t6\t4\t6\t6\t3\t1\t24\t\"No\"\t5\t1\t68.0\t8.0\t175\t4224157498\t3.7166667\t\"8/17/2012
+        at 6:33 PM\"\t\"8/17/2012 at 6:36 PM\"\n2\t3\t4\t-3\t2\t-2\t-3\t7\t7\t7\t7\t1\t7\t7\t1\t1\t7\t1\t6\t6\t3\t1\t20\t\"Yes:
+        full-time\"\t6\t1\t78.0\t6.0\t220\t7756638953\t2.4833333\t\"8/17/2012 at 6:42
+        PM\"\t\"8/17/2012 at 6:44 PM\"\n2\t3\t4\t-2\t2\t2\t-2\t6\t6\t6\t3\t2\t6\t6\t1\t1\t4\t1\t3\t2\t3\t1\t20\t\"Yes:
+        part-time\"\t5\t2\t66.0\t6.0\t130\t8258946668\t2.1666667\t\"8/17/2012 at 6:43
+        PM\"\t\"8/17/2012 at 6:45 PM\"\n1\t1\t1\t1\t-1\t3\t-2\t1\t1\t1\t3\t6\t3\t1\t7\t5\t5\t4\t5\t7\t3\t2\t21\t\"No\"\t5\t1\t71.0\t11.0\t165\t4393815514\t3.2666667\t\"8/17/2012
+        at 6:45 PM\"\t\"8/17/2012 at 6:48 PM\"\n2\t3\t4\t-3\t3\t-3\t-3\t1\t1\t4\t2\t4\t7\t7\t1\t1\t4\t1\t6\t6\t3\t1\t22\t\"No\"\t5\t1\t71.0\t11.0\t\t2314198666\t4.9666667\t\"8/17/2012
+        at 6:44 PM\"\t\"8/17/2012 at 6:49 PM\"\n2\t2\t3\t-3\t3\t1\t-3\t4\t4\t5\t1\t5\t4\t5\t1\t3\t6\t1\t2\t3\t3\t1\t21\t\"No\"\t5\t2\t64.0\t4.0\t\t4782419821\t2.9833333\t\"8/17/2012
+        at 6:55 PM\"\t\"8/17/2012 at 6:58 PM\"\n2\t1\t2\t0\t3\t3\t-1\t4\t4\t7\t4\t4\t6\t5\t1\t2\t5\t3\t4\t5\t3\t2\t23\t\"Yes:
+        full-time\"\t5\t2\t67.0\t7.0\t190\t4374792215\t16.016666\t\"8/17/2012 at 6:42
+        PM\"\t\"8/17/2012 at 6:58 PM\"\n2\t3\t4\t-2\t2\t2\t-2\t1\t6\t1\t1\t6\t3\t2\t6\t4\t6\t6\t3\t3\t3\t1\t22\t\"No\"\t5\t1\t66.0\t6.0\t170\t6878637854\t4.75\t\"8/17/2012
+        at 6:53 PM\"\t\"8/17/2012 at 6:58 PM\"\n2\t2\t3\t0\t0\t3\t3\t1\t1\t1\t1\t7\t1\t1\t7\t7\t1\t1\t3\t5\t3\t1\t24\t\"Yes:
+        part-time\"\t6\t1\t73.0\t1.0\t170\t6477859397\t2.5666666\t\"8/17/2012 at 6:57
+        PM\"\t\"8/17/2012 at 7:00 PM\"\n2\t2\t3\t1\t1\t-1\t0\t5\t4\t3\t3\t5\t2\t2\t5\t5\t5\t3\t3\t4\t3\t2\t25\t\"Yes:
+        full-time\"\t6\t1\t72.0\t0.0\t300\t9629395625\t2.4333334\t\"8/17/2012 at 6:58
+        PM\"\t\"8/17/2012 at 7:01 PM\"\n2\t1\t2\t1\t1\t2\t-3\t3\t1\t3\t1\t7\t1\t3\t4\t1\t2\t1\t4\t5\t3\t1\t19\t\"Yes:
+        part-time\"\t5\t1\t69.0\t9.0\t140\t5564989413\t3.5666666\t\"8/17/2012 at 7:00
+        PM\"\t\"8/17/2012 at 7:03 PM\"\n2\t1\t2\t-3\t2\t3\t-3\t1\t5\t6\t2\t7\t2\t5\t4\t2\t5\t2\t2\t2\t3\t1\t27\t\"Yes:
+        full-time\"\t5\t1\t66.0\t6.0\t126\t2282442635\t2.0166667\t\"8/17/2012 at 7:04
+        PM\"\t\"8/17/2012 at 7:06 PM\"\n2\t3\t4\t0\t1\t-1\t2\t5\t3\t5\t2\t2\t4\t3\t3\t4\t3\t5\t5\t5\t3\t1\t19\t\"Yes:
+        part-time\"\t5\t2\t63.0\t3.0\t125\t5213616379\t3.8333333\t\"8/17/2012 at 7:06
+        PM\"\t\"8/17/2012 at 7:10 PM\"\n2\t2\t3\t-3\t3\t3\t3\t1\t1\t1\t1\t7\t2\t1\t7\t4\t1\t2\t7\t7\t3\t2\t18\t\"Yes:
+        part-time\"\t5\t1\t67.0\t7.0\t125\t8892368245\t3.05\t\"8/17/2012 at 7:11 PM\"\t\"8/17/2012
+        at 7:14 PM\"\n2\t2\t3\t-2\t2\t3\t-3\t1\t1\t1\t6\t4\t6\t4\t3\t3\t5\t3\t4\t4\t3\t1\t32\t\"No\"\t5\t2\t67.0\t7.0\t140\t5944266793\t3.5666666\t\"8/17/2012
+        at 7:15 PM\"\t\"8/17/2012 at 7:18 PM\"\n2\t1\t2\t-2\t2\t2\t1\t6\t7\t7\t5\t3\t6\t6\t3\t3\t5\t5\t3\t3\t3\t1\t22\t\"Yes:
+        part-time\"\t5\t1\t68.0\t8.0\t220\t8138753592\t2.4666667\t\"8/17/2012 at 7:18
+        PM\"\t\"8/17/2012 at 7:21 PM\"\n2\t2\t3\t-2\t\t2\t-2\t4\t5\t5\t2\t5\t4\t6\t6\t6\t2\t6\t5\t6\t3\t1\t29\t\"Yes:
+        full-time\"\t5\t2\t65.0\t5.0\t130\t7512341863\t5.6\t\"8/17/2012 at 7:20 PM\"\t\"8/17/2012
+        at 7:26 PM\"\n2\t2\t3\t-3\t-1\t1\t-3\t4\t2\t7\t3\t5\t4\t4\t1\t1\t6\t1\t3\t2\t3\t1\t34\t\"Yes:
+        full-time\"\t6\t1\t74.0\t2.0\t236\t9822225419\t1.6\t\"8/17/2012 at 7:24 PM\"\t\"8/17/2012
+        at 7:26 PM\"\n1\t1\t1\t-2\t-1\t1\t2\t3\t3\t3\t2\t5\t2\t2\t3\t4\t2\t2\t3\t3\t3\t2\t35\t\"Yes:
+        full-time\"\t6\t1\t74.0\t2.0\t250\t7196226647\t2.6833334\t\"8/17/2012 at 7:24
+        PM\"\t\"8/17/2012 at 7:26 PM\"\n2\t3\t4\t0\t1\t2\t1\t1\t1\t1\t1\t7\t1\t1\t7\t4\t1\t5\t5\t5\t3\t1\t23\t\"Yes:
+        part-time\"\t6\t1\t76.0\t4.0\t205\t3795148784\t3.5666666\t\"8/17/2012 at 7:26
+        PM\"\t\"8/17/2012 at 7:30 PM\"\n2\t1\t2\t-2\t2\t2\t-3\t5\t5\t6\t4\t5\t6\t6\t2\t2\t5\t2\t2\t2\t3\t1\t26\t\"Yes:
+        full-time\"\t5\t2\t66.0\t6.0\t160\t7893356669\t2.8833334\t\"8/17/2012 at 7:31
+        PM\"\t\"8/17/2012 at 7:34 PM\"\n2\t3\t4\t-3\t3\t0\t-3\t7\t7\t7\t6\t2\t7\t7\t1\t1\t7\t1\t1\t1\t3\t1\t27\t\"Yes:
+        full-time\"\t5\t1\t71.0\t11.0\t325\t4446329288\t3.0333333\t\"8/17/2012 at
+        7:33 PM\"\t\"8/17/2012 at 7:36 PM\"\n1\t1\t1\t-1\t0\t2\t3\t4\t2\t5\t1\t5\t3\t4\t\t3\t4\t2\t3\t5\t3\t2\t21\t\"Yes:
+        part-time\"\t5\t2\t63.0\t3.0\t100\t2899431389\t2.8333333\t\"8/17/2012 at 7:36
+        PM\"\t\"8/17/2012 at 7:39 PM\"\n2\t3\t4\t-2\t1\t1\t2\t2\t2\t3\t5\t6\t2\t5\t6\t6\t4\t5\t3\t5\t3\t1\t26\t\"Yes:
+        part-time\"\t5\t2\t63.0\t3.0\t115\t4116488355\t2.7\t\"8/17/2012 at 7:58 PM\"\t\"8/17/2012
+        at 8:01 PM\"\n"
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - Keep-Alive
+      Content-Length:
+      - '35663'
+      Content-Type:
+      - text/tab-separated-values; name="Test%20Data%20Beta.tab";charset=UTF-8
+      Content-disposition:
+      - attachment; filename="Test%20Data%20Beta.tab"
+      Date:
+      - Mon, 08 Jul 2024 17:46:04 GMT
+      Keep-Alive:
+      - timeout=5, max=100
+      Server:
+      - Apache/2.4.37 (rocky) OpenSSL/1.1.1k mod_apreq2-20101207/2.8.1
+      Set-Cookie:
+      - JSESSIONID=373e429df7bac4eba55f4102b0bc; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+version: 1

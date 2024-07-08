@@ -14,6 +14,7 @@ from girder.models.assetstore import Assetstore
 from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.model_base import AccessControlledModel
+from girder.models.user import User
 from girder.models.token import Token
 from girder_jobs.models.job import Job
 from girder.utility import assetstore_utilities
@@ -239,8 +240,8 @@ class Tale(AccessControlledModel):
             notify_event([creator["_id"]], "wt_tale_created", {"taleId": tale['_id']})
 
         if tale['dataSet']:
-            events.daemon.trigger(
-                eventName="tale.update_citation",
+            events.trigger(
+                "tale.update_citation",
                 info={"tale": tale, "user": creator}
             )
 

@@ -1,4 +1,5 @@
 # dependencies for tests
-vcrpy
+mock
+pytest-vcr
 bdbag
 responses
