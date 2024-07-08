@@ -642,6 +642,7 @@ class WholeTalePlugin(GirderPlugin):
 
     def load(self, info):
         getPlugin("oauth").load(info)
+        getPlugin("jobs").load(info)
         getPlugin("girder_virtual_resources").load(info)
         info['apiRoot'].wholetale = wholeTale()
         info['apiRoot'].instance = Instance()
