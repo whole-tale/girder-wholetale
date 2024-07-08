@@ -337,7 +337,7 @@ class Tale(Resource):
                     user=user,
                     type="wholetale.import_binder",
                     public=False,
-                    _async=True,
+                    asynchronous=True,
                     module="girder_wholetale.tasks.import_binder",
                     args=(lookupKwargs,),
                     kwargs={
@@ -627,7 +627,7 @@ class Tale(Resource):
         # asynchronously copy the workspace of a source Tale
         job = Job().createLocalJob(
             title='Copy "{title}" workspace'.format(**tale), user=user,
-            type='wholetale.copy_workspace', public=False, _async=True,
+            type='wholetale.copy_workspace', public=False, asynchronous=True,
             module='girder_wholetale.tasks.copy_workspace',
             args=(tale, new_tale, versionId, shallow),
         )

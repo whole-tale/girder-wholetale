@@ -493,7 +493,7 @@ class Tale(AccessControlledModel):
 
         job = Job().createLocalJob(
             title='Import Tale from zip', user=user,
-            type='wholetale.import_tale', public=False, _async=True,
+            type='wholetale.import_tale', public=False, asynchronous=True,
             module='girder_wholetale.tasks.import_tale',
             args=(temp_dir, manifest_file),
             kwargs={'taleId': tale["_id"]},
@@ -520,7 +520,7 @@ class Tale(AccessControlledModel):
             user=user,
             type="wholetale.import_git_repo",
             public=False,
-            _async=True,
+            asynchronous=True,
             module="girder_wholetale.tasks.import_git_repo",
             args=(url,),
             kwargs={

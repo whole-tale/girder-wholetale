@@ -300,7 +300,7 @@ class Dataset(Resource):
     def _createImportJob(self, data_maps, parent, parentType, user, notification):
         job = Job().createLocalJob(
             title='Registering Data', user=user,
-            type='wholetale.register_data', public=False, _async=False,
+            type='wholetale.register_data', public=False, asynchronous=False,
             module='girder_wholetale.tasks.register_dataset',
             args=(data_maps, parent, parentType, user),
             otherFields={'wt_notification_id': str(notification['_id'])},
