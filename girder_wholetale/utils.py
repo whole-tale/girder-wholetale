@@ -1,14 +1,21 @@
 import os
 import datetime
+import pathlib
 import six.moves.urllib as urllib
 
 from girder.utility.model_importer import ModelImporter
 from girder.models.notification import Notification
 from girder.models.user import User
+from girder.models.setting import Setting
 
 
 NOTIFICATION_EXP_HOURS = 1
 WT_EVENT_EXP_SECONDS = int(os.environ.get("GIRDER_WT_EVENT_EXP_SECONDS", 5))
+
+
+def get_tale_dir_root(tale: dict, root_path_setting: str) -> pathlib.Path:
+    root = Setting().get(root_path_setting)
+    return pathlib.Path(root) / str(tale["_id"])[0:2] / str(tale["_id"])
 
 
 def getOrCreateRootFolder(name, description=""):

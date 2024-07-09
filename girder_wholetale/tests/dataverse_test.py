@@ -12,7 +12,7 @@ from pytest_girder.assertions import assertStatus, assertStatusOk
 @pytest.mark.vcr()
 @pytest.mark.plugin("wholetale")
 @responses.activate
-def test_dataverse_lookup(server, user):
+def test_dataverse_lookup(server, user, fsAssetstore):
     responses.add_passthru("https://dataverse.harvard.edu/api/access")
     responses.add_passthru("https://dataverse.harvard.edu/api/datasets")
     responses.add_passthru("https://dataverse.harvard.edu/dataset.xhtml")
@@ -416,8 +416,7 @@ def test_extra_hosts(server, admin):
 
 # @vcr.use_cassette(os.path.join(DATA_PATH, "dataverse_hierarchy.txt"))
 @pytest.mark.plugin("wholetale")
-def _test_dataverse_dataset_with_hierarchy(server, user):
-    # TODO: needs working wt_home_dirs and potentialy wt_versioning
+def test_dataverse_dataset_with_hierarchy(server, user):
     from girder_jobs.constants import JobStatus
     from girder_jobs.models.job import Job
 

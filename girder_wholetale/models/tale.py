@@ -109,7 +109,6 @@ class Tale(AccessControlledModel):
                 obj["itemId"],
                 level=AccessType.READ,
                 user=creator,
-                fields={},
                 exc=True
             )
 

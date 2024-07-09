@@ -2,93 +2,99 @@
 # -*- coding: utf-8 -*-
 
 import base64
-import cherrypy
 import copy
 import datetime
-import jsonschema
 import logging
 import os
 import pathlib
+
+import cherrypy
+import jsonschema
 import six
 import validators
-
 from girder import events
 from girder.api import access
-from girder.api.describe import Description, describeRoute, autoDescribeRoute
-from girder.api.rest import \
-    boundHandler, loadmodel, RestException
-from girder.constants import AccessType, TokenScope
+from girder.api.describe import Description, autoDescribeRoute, describeRoute
+from girder.api.rest import RestException, boundHandler, loadmodel
+from girder.constants import AccessType, CoreEventHandler, TokenScope
 from girder.exceptions import GirderException
 from girder.models.assetstore import Assetstore
+from girder.models.file import File
 from girder.models.folder import Folder
 from girder.models.model_base import AccessException, ValidationException
 from girder.models.notification import Notification, ProgressState
-from girder.models.setting import Setting
 from girder.models.user import User
-from girder.models.file import File
-from girder.plugin import getPlugin, GirderPlugin
-from girder_jobs.constants import JobStatus
-from girder_jobs.models.job import Job as JobModel
-from girder_worker.girder_plugin.celery import getCeleryApp
-from girder_worker.girder_plugin.utils import jobInfoSpec
-from girder_worker.girder_plugin.status import CustomJobStatus
-from girder_oauth.rest import OAuth as OAuthResource
+from girder.plugin import GirderPlugin, getPlugin
 from girder.utility import setting_utilities
 from girder.utility.model_importer import ModelImporter
+from girder_jobs.constants import JobStatus
+from girder_jobs.models.job import Job as JobModel
+from girder_oauth.rest import OAuth as OAuthResource
+from girder_worker.girder_plugin.celery import getCeleryApp
+from girder_worker.girder_plugin.status import CustomJobStatus
+from girder_worker.girder_plugin.utils import jobInfoSpec
 
-from .constants import PluginSettings, SettingDefault
+from .constants import FIELD_STATUS_CODE, PluginSettings, SettingDefault
 from .lib import update_citation
-from .lib.events import job_update_after_handler, cullIdleInstances
-from .lib.metrics import metricsLogger, _MetricsHandler
+from .lib.events import (
+    copy_versions_and_runs,
+    cullIdleInstances,
+    delete_tale_dirs,
+    job_update_after_handler,
+    set_home_mapping,
+    set_tale_dirs_mapping,
+)
+from .lib.metrics import _MetricsHandler, metricsLogger
 from .models.instance import Instance as InstanceModel
+from .models.version_hierarchy import VersionHierarchyModel
 from .rest.account import Account
 from .rest.dataset import Dataset
-from .rest.image import Image
-from .rest.integration import Integration
-from .rest.repository import Repository
 from .rest.harvester import listImportedData
-from .rest.tale import Tale
+from .rest.image import Image
 from .rest.instance import Instance
-from .rest.wholetale import wholeTale
+from .rest.integration import Integration
 from .rest.license import License
+from .rest.repository import Repository
+from .rest.run import Run
+from .rest.tale import Tale
+from .rest.version import Version
+from .rest.wholetale import wholeTale
 from .schema.misc import (
-    external_auth_providers_schema,
     external_apikey_groups_schema,
+    external_auth_providers_schema,
     repository_to_provider_schema,
 )
 
-
 logger = logging.getLogger(__name__)
+
 
 @setting_utilities.validator(PluginSettings.PUBLISHER_REPOS)
 def validatePublisherRepos(doc):
     try:
-        jsonschema.validate(doc['value'], repository_to_provider_schema)
+        jsonschema.validate(doc["value"], repository_to_provider_schema)
     except jsonschema.ValidationError as e:
-        raise ValidationException('Invalid Repository to Auth Provider map: ' + str(e))
+        raise ValidationException("Invalid Repository to Auth Provider map: " + str(e))
 
 
 @setting_utilities.default(PluginSettings.PUBLISHER_REPOS)
 def defaultPublisherRepos():
-    return copy.deepcopy(
-        SettingDefault.defaults[PluginSettings.PUBLISHER_REPOS]
-    )
+    return copy.deepcopy(SettingDefault.defaults[PluginSettings.PUBLISHER_REPOS])
 
 
 @setting_utilities.validator(PluginSettings.EXTERNAL_APIKEY_GROUPS)
 def validateExternalApikeyGroups(doc):
     try:
-        jsonschema.validate(doc['value'], external_apikey_groups_schema)
+        jsonschema.validate(doc["value"], external_apikey_groups_schema)
     except jsonschema.ValidationError as e:
-        raise ValidationException('Invalid External Apikey Groups list: ' + str(e))
+        raise ValidationException("Invalid External Apikey Groups list: " + str(e))
 
 
 @setting_utilities.validator(PluginSettings.EXTERNAL_AUTH_PROVIDERS)
 def validateOtherSettings(doc):
     try:
-        jsonschema.validate(doc['value'], external_auth_providers_schema)
+        jsonschema.validate(doc["value"], external_auth_providers_schema)
     except jsonschema.ValidationError as e:
-        raise ValidationException('Invalid External Auth Providers list: ' + str(e))
+        raise ValidationException("Invalid External Auth Providers list: " + str(e))
 
 
 @setting_utilities.default(PluginSettings.EXTERNAL_AUTH_PROVIDERS)
@@ -100,111 +106,131 @@ def defaultExternalAuthProviders():
 
 @setting_utilities.default(PluginSettings.EXTERNAL_APIKEY_GROUPS)
 def defaultExternalApikeyGroups():
-    return copy.deepcopy(
-        SettingDefault.defaults[PluginSettings.EXTERNAL_APIKEY_GROUPS]
-    )
+    return copy.deepcopy(SettingDefault.defaults[PluginSettings.EXTERNAL_APIKEY_GROUPS])
 
 
 @setting_utilities.validator(PluginSettings.DATAVERSE_EXTRA_HOSTS)
 def validateDataverseExtraHosts(doc):
-    if not doc['value']:
-        doc['value'] = defaultDataverseExtraHosts()
-    if not isinstance(doc['value'], list):
-        raise ValidationException('Dataverse extra hosts setting must be a list.', 'value')
-    for url in doc['value']:
+    if not doc["value"]:
+        doc["value"] = defaultDataverseExtraHosts()
+    if not isinstance(doc["value"], list):
+        raise ValidationException(
+            "Dataverse extra hosts setting must be a list.", "value"
+        )
+    for url in doc["value"]:
         if not validators.domain(url):
-            raise ValidationException('Invalid domain in Dataverse extra hosts', 'value')
+            raise ValidationException(
+                "Invalid domain in Dataverse extra hosts", "value"
+            )
 
 
 @setting_utilities.validator(PluginSettings.ZENODO_EXTRA_HOSTS)
 def validateZenodoExtraHosts(doc):
-    if not doc['value']:
-        doc['value'] = defaultZenodoExtraHosts()
-    if not isinstance(doc['value'], list):
-        raise ValidationException('Zenodo extra hosts setting must be a list.', 'value')
-    for url in doc['value']:
+    if not doc["value"]:
+        doc["value"] = defaultZenodoExtraHosts()
+    if not isinstance(doc["value"], list):
+        raise ValidationException("Zenodo extra hosts setting must be a list.", "value")
+    for url in doc["value"]:
         if not validators.url(url):
-            raise ValidationException('Invalid URL in Zenodo extra hosts', 'value')
+            raise ValidationException("Invalid URL in Zenodo extra hosts", "value")
 
 
 @setting_utilities.validator(PluginSettings.INSTANCE_CAP)
 def validateInstanceCap(doc):
-    if not doc['value']:
-        doc['value'] = defaultInstanceCap()
+    if not doc["value"]:
+        doc["value"] = defaultInstanceCap()
     try:
-        int(doc['value'])
+        int(doc["value"])
     except ValueError:
-        raise ValidationException(
-            'Instance Cap needs to be an integer.', 'value')
+        raise ValidationException("Instance Cap needs to be an integer.", "value")
 
 
 @setting_utilities.validator(PluginSettings.DATAVERSE_URL)
 def validateDataverseURL(doc):
-    if not doc['value']:
-        doc['value'] = defaultDataverseURL()
-    if not validators.url(doc['value']):
-        raise ValidationException('Invalid Dataverse URL', 'value')
+    if not doc["value"]:
+        doc["value"] = defaultDataverseURL()
+    if not validators.url(doc["value"]):
+        raise ValidationException("Invalid Dataverse URL", "value")
 
 
 @setting_utilities.validator(PluginSettings.LOGGER_URL)
 def validateLoggerURL(doc):
-    if not doc['value']:
-        doc['value'] = defaultLoggerUrl()
-    if not validators.url(doc['value']):
-        raise ValidationException('Invalid Instance Logger URL', 'value')
+    if not doc["value"]:
+        doc["value"] = defaultLoggerUrl()
+    if not validators.url(doc["value"]):
+        raise ValidationException("Invalid Instance Logger URL", "value")
 
 
 @setting_utilities.validator(PluginSettings.DASHBOARD_LINK_TITLE)
 def validateDashboardLinkTitle(doc):
-    if not doc['value']:
-        doc['value'] = defaultDashboardLinkTitle()
-    if not isinstance(doc['value'], six.string_types):
-        raise ValidationException('The setting is not a string', 'value')
+    if not doc["value"]:
+        doc["value"] = defaultDashboardLinkTitle()
+    if not isinstance(doc["value"], six.string_types):
+        raise ValidationException("The setting is not a string", "value")
 
 
 @setting_utilities.validator(PluginSettings.CATALOG_LINK_TITLE)
 def validateCatalogLinkTitle(doc):
-    if not doc['value']:
-        doc['value'] = defaultCatalogLinkTitle()
-    if not isinstance(doc['value'], six.string_types):
-        raise ValidationException('The setting is not a string', 'value')
+    if not doc["value"]:
+        doc["value"] = defaultCatalogLinkTitle()
+    if not isinstance(doc["value"], six.string_types):
+        raise ValidationException("The setting is not a string", "value")
 
 
 @setting_utilities.validator(PluginSettings.ENABLE_DATA_CATALOG)
 def validateEnableDataCatalog(doc):
-    if not doc['value']:
-        doc['value'] = defaultEnableDataCatalog()
-    if not isinstance(doc['value'], bool):
-        raise ValidationException('The setting is not a boolean', 'value')
+    if not doc["value"]:
+        doc["value"] = defaultEnableDataCatalog()
+    if not isinstance(doc["value"], bool):
+        raise ValidationException("The setting is not a boolean", "value")
 
 
 @setting_utilities.validator(PluginSettings.WEBSITE_URL)
 def validateWebsiteUrl(doc):
-    if not doc['value']:
-        doc['value'] = defaultWebsiteUrl()
-    if not validators.url(doc['value']):
-        raise ValidationException('Invalid  URL', 'value')
+    if not doc["value"]:
+        doc["value"] = defaultWebsiteUrl()
+    if not validators.url(doc["value"]):
+        raise ValidationException("Invalid  URL", "value")
 
 
 @setting_utilities.validator(PluginSettings.LOGO)
 def _validateLogo(doc):
     try:
-        logoFile = File().load(doc['value'], level=AccessType.READ, user=None, exc=True)
+        logoFile = File().load(doc["value"], level=AccessType.READ, user=None, exc=True)
     except AccessException:
-        raise ValidationException('Logo must be publicly readable', 'value')
+        raise ValidationException("Logo must be publicly readable", "value")
 
     # Store this field natively as an ObjectId
-    doc['value'] = logoFile['_id']
+    doc["value"] = logoFile["_id"]
 
 
-@setting_utilities.validator({
-    PluginSettings.ABOUT_HREF,
-    PluginSettings.CONTACT_HREF,
-    PluginSettings.BUG_HREF,
-    PluginSettings.MOUNTS,
-})
+@setting_utilities.validator(
+    {
+        PluginSettings.ABOUT_HREF,
+        PluginSettings.CONTACT_HREF,
+        PluginSettings.BUG_HREF,
+        PluginSettings.MOUNTS,
+    }
+)
 def validateHref(doc):
     pass
+
+
+@setting_utilities.validator(
+    {
+        PluginSettings.HOME_DIRS_ROOT,
+        PluginSettings.TALE_DIRS_ROOT,
+        PluginSettings.RUNS_DIRS_ROOT,
+        PluginSettings.DAV_SERVER,
+    }
+)
+def validateDirPaths(doc):
+    if not doc["value"]:
+        doc["value"] = SettingDefault.defaults[doc["key"]]
+    if not isinstance(doc["value"], six.string_types):
+        raise ValidationException("The setting is not a string", "value")
+    if not os.path.isabs(doc["value"]):
+        raise ValidationException("The setting is not an absolute path", "value")
 
 
 @setting_utilities.default(PluginSettings.INSTANCE_CAP)
@@ -277,13 +303,33 @@ def defaultMounts():
     return SettingDefault.defaults[PluginSettings.MOUNTS]
 
 
+@setting_utilities.default(PluginSettings.HOME_DIRS_ROOT)
+def defaultHomeDirsRoot():
+    return SettingDefault.defaults[PluginSettings.HOME_DIRS_ROOT]
+
+
+@setting_utilities.default(PluginSettings.TALE_DIRS_ROOT)
+def defaultTaleDirsRoot():
+    return SettingDefault.defaults[PluginSettings.TALE_DIRS_ROOT]
+
+
+@setting_utilities.default(PluginSettings.RUNS_DIRS_ROOT)
+def defaultRunsDirsRoot():
+    return SettingDefault.defaults[PluginSettings.RUNS_DIRS_ROOT]
+
+
+@setting_utilities.default(PluginSettings.VERSIONS_DIRS_ROOT)
+def defaultVersionsDirsRoot():
+    return SettingDefault.defaults[PluginSettings.VERSIONS_DIRS_ROOT]
+
+
 @access.public(scope=TokenScope.DATA_READ)
-@loadmodel(model='folder', level=AccessType.READ)
+@loadmodel(model="folder", level=AccessType.READ)
 @describeRoute(
-    Description('List the content of a folder.')
-    .param('id', 'The ID of the folder.', paramType='path')
-    .errorResponse('ID was invalid.')
-    .errorResponse('Read access was denied for the folder.', 403)
+    Description("List the content of a folder.")
+    .param("id", "The ID of the folder.", paramType="path")
+    .errorResponse("ID was invalid.")
+    .errorResponse("Read access was denied for the folder.", 403)
 )
 @boundHandler()
 def listFolder(self, folder, params):
@@ -297,7 +343,11 @@ def listFolder(self, folder, params):
     current_assetstore = Assetstore().getCurrent()
     assetstore_path = current_assetstore["root"]
     for fs_path, fobj in Folder().fileList(
-        folder, user=user, data=False, subpath=False, path="",
+        folder,
+        user=user,
+        data=False,
+        subpath=False,
+        path="",
     ):
         if fobj.get("imported", False):
             host_path = fobj["path"]
@@ -323,16 +373,16 @@ def listFolder(self, folder, params):
 
 @access.public(scope=TokenScope.DATA_READ)
 @autoDescribeRoute(
-    Description('Convert folder content into DM dataSet')
-    .modelParam('id', 'The ID of the folder', model='folder',
-                level=AccessType.READ)
+    Description("Convert folder content into DM dataSet").modelParam(
+        "id", "The ID of the folder", model="folder", level=AccessType.READ
+    )
 )
 @boundHandler()
 def getDataSet(self, folder, params):
     dataSet = [
         {
             "itemId": item["_id"],
-            "mountPath":  "/" + item["name"],
+            "mountPath": "/" + item["name"],
             "_modelType": "item",
         }
         for item in Folder().childItems(folder=folder)
@@ -340,11 +390,11 @@ def getDataSet(self, folder, params):
     dataSet += [
         {
             "itemId": childFolder["_id"],
-            "mountPath":  "/" + childFolder["name"],
+            "mountPath": "/" + childFolder["name"],
             "_modelType": "folder",
         }
         for childFolder in Folder().childFolders(
-            parentType='folder', parent=folder, user=self.getCurrentUser()
+            parentType="folder", parent=folder, user=self.getCurrentUser()
         )
     ]
     return dataSet
@@ -352,21 +402,23 @@ def getDataSet(self, folder, params):
 
 @access.user
 @describeRoute(
-    Description('Update the user settings.')
-    .errorResponse('Read access was denied.', 403)
+    Description("Update the user settings.").errorResponse(
+        "Read access was denied.", 403
+    )
 )
 @boundHandler()
 def getUserMetadata(self, params):
     user = self.getCurrentUser()
-    return user.get('meta', {})
+    return user.get("meta", {})
 
 
 @access.user
 @describeRoute(
-    Description('Get the user settings.')
-    .param('body', 'A JSON object containing the metadata keys to add',
-           paramType='body')
-    .errorResponse('Write access was denied.', 403)
+    Description("Get the user settings.")
+    .param(
+        "body", "A JSON object containing the metadata keys to add", paramType="body"
+    )
+    .errorResponse("Write access was denied.", 403)
 )
 @boundHandler()
 def setUserMetadata(self, params):
@@ -376,21 +428,23 @@ def setUserMetadata(self, params):
     # Make sure we let user know if we can't accept a metadata key
     for k in metadata:
         if not len(k):
-            raise RestException('Key names must be at least one character long.')
-        if '.' in k or k[0] == '$':
-            raise RestException('The key name %s must not contain a period '
-                                'or begin with a dollar sign.' % k)
+            raise RestException("Key names must be at least one character long.")
+        if "." in k or k[0] == "$":
+            raise RestException(
+                "The key name %s must not contain a period "
+                "or begin with a dollar sign." % k
+            )
 
-    if 'meta' not in user:
-        user['meta'] = {}
+    if "meta" not in user:
+        user["meta"] = {}
 
     # Add new metadata to existing metadata
-    user['meta'].update(six.viewitems(metadata))
+    user["meta"].update(six.viewitems(metadata))
 
     # Remove metadata fields that were set to null (use items in py3)
-    toDelete = [k for k, v in six.viewitems(user['meta']) if v is None]
+    toDelete = [k for k, v in six.viewitems(user["meta"]) if v is None]
     for key in toDelete:
-        del user['meta'][key]
+        del user["meta"][key]
 
     # Validate and save the user
     return User().save(user)
@@ -398,8 +452,9 @@ def setUserMetadata(self, params):
 
 @access.public
 @autoDescribeRoute(
-    Description('Initiate oauth login flow')
-    .param('redirect', 'URL to redirect to after login', required=False)
+    Description("Initiate oauth login flow").param(
+        "redirect", "URL to redirect to after login", required=False
+    )
 )
 @boundHandler()
 def signIn(self, redirect):
@@ -419,17 +474,21 @@ def signIn(self, redirect):
 
 @access.user
 @autoDescribeRoute(
-    Description('Get a set of items and folders.')
-    .jsonParam('resources', 'A JSON-encoded set of resources to get. Each type '
-               'is a list of ids. Only folders and items may be specified. '
-               'For example: {"item": [(item id 1), (item id2)], "folder": '
-               '[(folder id 1)]}.', requireObject=True)
-    .errorResponse('Unsupport or unknown resource type.')
-    .errorResponse('Invalid resources format.')
-    .errorResponse('Resource type not supported.')
-    .errorResponse('No resources specified.')
-    .errorResponse('Resource not found.')
-    .errorResponse('ID was invalid.')
+    Description("Get a set of items and folders.")
+    .jsonParam(
+        "resources",
+        "A JSON-encoded set of resources to get. Each type "
+        "is a list of ids. Only folders and items may be specified. "
+        'For example: {"item": [(item id 1), (item id2)], "folder": '
+        "[(folder id 1)]}.",
+        requireObject=True,
+    )
+    .errorResponse("Unsupport or unknown resource type.")
+    .errorResponse("Invalid resources format.")
+    .errorResponse("Resource type not supported.")
+    .errorResponse("No resources specified.")
+    .errorResponse("Resource not found.")
+    .errorResponse("ID was invalid.")
 )
 @boundHandler()
 def listResources(self, resources, params):
@@ -440,7 +499,8 @@ def listResources(self, resources, params):
             model = ModelImporter.model(kind)
             result[kind] = [
                 model.load(id=id, user=user, level=AccessType.READ, exc=True)
-                for id in resources[kind]]
+                for id in resources[kind]
+            ]
         except ImportError:
             pass
     return result
@@ -449,21 +509,21 @@ def listResources(self, resources, params):
 def validateFileLink(event):
     # allow globus URLs
     doc = event.info
-    if doc.get('assetstoreId') is None:
-        if 'linkUrl' not in doc:
+    if doc.get("assetstoreId") is None:
+        if "linkUrl" not in doc:
             raise ValidationException(
-                'File must have either an assetstore ID or a link URL.',
-                'linkUrl')
-            doc['linkUrl'] = doc['linkUrl'].strip()
+                "File must have either an assetstore ID or a link URL.", "linkUrl"
+            )
+            doc["linkUrl"] = doc["linkUrl"].strip()
 
-        if not doc['linkUrl'].startswith(('http:', 'https:', 'globus:')):
+        if not doc["linkUrl"].startswith(("http:", "https:", "globus:")):
             raise ValidationException(
-                'Linked file URL must start with http: or https: or globus:.',
-                'linkUrl')
-    if 'name' not in doc or not doc['name']:
-        raise ValidationException('File name must not be empty.', 'name')
+                "Linked file URL must start with http: or https: or globus:.", "linkUrl"
+            )
+    if "name" not in doc or not doc["name"]:
+        raise ValidationException("File name must not be empty.", "name")
 
-    doc['exts'] = [ext.lower() for ext in doc['name'].split('.')[1:]]
+    doc["exts"] = [ext.lower() for ext in doc["name"].split(".")[1:]]
     event.preventDefault().addResponse(doc)
 
 
@@ -480,13 +540,13 @@ def updateNotification(event):
         resource = notification["data"]["resource"]
 
         # Add job IDs to the resource
-        if 'jobs' not in notification['data']['resource']:
-            resource['jobs'] = []
+        if "jobs" not in notification["data"]["resource"]:
+            resource["jobs"] = []
 
-        if job['_id'] not in notification['data']['resource']['jobs']:
-            resource['jobs'].append(job['_id'])
+        if job["_id"] not in notification["data"]["resource"]["jobs"]:
+            resource["jobs"].append(job["_id"])
 
-        if job["_id"] != resource['jobs'][-1]:
+        if job["_id"] != resource["jobs"][-1]:
             return  # ignore previous jobs' out of order notifications
 
         # reset current job counter for a new job
@@ -505,8 +565,10 @@ def updateNotification(event):
         resource["jobCurrent"] += increment
 
         # For multi-job tasks, ignore success for intermediate events
-        would_be_last = \
-            int(notification['data']['total']) == int(notification['data']['current']) + increment
+        would_be_last = (
+            int(notification["data"]["total"])
+            == int(notification["data"]["current"]) + increment
+        )
         job_status = params["status"] or job["status"]
         if job_status == JobStatus.CANCELED:
             # ProgressState is not a real enum, but just a collection of strings..
@@ -521,41 +583,40 @@ def updateNotification(event):
 
         # Note, if expires parameter is not provided, updateProgress resets to 1 hour
         Notification().updateProgress(
-            notification, state=state,
+            notification,
+            state=state,
             expires=notification["expires"],
             message=params["progressMessage"] or notification["data"]["message"],
             increment=int(increment),
-            total=notification["data"]["total"]
+            total=notification["data"]["total"],
         )
 
 
 @access.user
 @autoDescribeRoute(
-    Description('Get output from celery job.')
-    .modelParam('id', 'The ID of the job.', model=JobModel, force=True, includeLog=True)
-    .errorResponse('ID was invalid.')
-    .errorResponse('Read access was denied for the job.', 403)
+    Description("Get output from celery job.")
+    .modelParam("id", "The ID of the job.", model=JobModel, force=True, includeLog=True)
+    .errorResponse("ID was invalid.")
+    .errorResponse("Read access was denied for the job.", 403)
 )
 @boundHandler()
 def getJobResult(self, job):
     user = self.getCurrentUser()
-    if not job.get('public', False):
+    if not job.get("public", False):
         if user:
             JobModel().requireAccess(job, user, level=AccessType.READ)
         else:
-            self.ensureTokenScopes('jobs.job_' + str(job['_id']))
+            self.ensureTokenScopes("jobs.job_" + str(job["_id"]))
 
-    if 'result' in job:
-        return job['result']
+    if "result" in job:
+        return job["result"]
 
-    celeryTaskId = job.get('celeryTaskId')
+    celeryTaskId = job.get("celeryTaskId")
     if celeryTaskId is None:
-        logger.warn(
-            "Job '{}' doesn't have a Celery task id.".format(job['_id']))
+        logger.warn("Job '{}' doesn't have a Celery task id.".format(job["_id"]))
         return
-    if job['status'] != JobStatus.SUCCESS:
-        logger.warn(
-            "Job '{}' hasn't completed sucessfully.".format(job['_id']))
+    if job["status"] != JobStatus.SUCCESS:
+        logger.warn("Job '{}' hasn't completed sucessfully.".format(job["_id"]))
     asyncResult = getCeleryApp().AsyncResult(celeryTaskId)
     try:
         result = asyncResult.get()
@@ -566,9 +627,13 @@ def getJobResult(self, job):
 
 @access.public(cookie=True)
 @autoDescribeRoute(
-    Description('Initiate oauth login flow')
-    .param("instance", "Authorization is for instance URL",
-           default=False, required=False, dataType="boolean")
+    Description("Initiate oauth login flow").param(
+        "instance",
+        "Authorization is for instance URL",
+        default=False,
+        required=False,
+        dataType="boolean",
+    )
 )
 @boundHandler()
 def authorize(self, instance):
@@ -578,33 +643,35 @@ def authorize(self, instance):
     # for a running instance.
     user = self.getCurrentUser()
 
-    forwarded_host = cherrypy.request.headers.get('X-Forwarded-Host')
-    forwarded_uri = cherrypy.request.headers.get('X-Forwarded-Uri')
+    forwarded_host = cherrypy.request.headers.get("X-Forwarded-Host")
+    forwarded_uri = cherrypy.request.headers.get("X-Forwarded-Uri")
     if not forwarded_host and not forwarded_uri:
-        raise RestException('Forward auth request required', code=400)
-    subdomain, domain = forwarded_host.split('.', 1)
+        raise RestException("Forward auth request required", code=400)
+    subdomain, domain = forwarded_host.split(".", 1)
 
     if user is None:
         # If no user, redirect to authentication endpoint to initiate oauth flow
-        redirect = f'https://{forwarded_host}{forwarded_uri}'
+        redirect = f"https://{forwarded_host}{forwarded_uri}"
         # As a forward-auth request, the host is the origin (e.g., tmp-xxx.*)
         # but we need to redirect to Girder.
         raise cherrypy.HTTPRedirect(
-              f'https://girder.{domain}/api/v1/user/sign_in?redirect={redirect}')
+            f"https://girder.{domain}/api/v1/user/sign_in?redirect={redirect}"
+        )
 
     if instance:
         inst = InstanceModel().findOne(
             {"containerInfo.name": subdomain, "creatorId": user["_id"]}
         )
         if inst is None:
-            raise RestException('Access denied for instance', code=403)
+            raise RestException("Access denied for instance", code=403)
 
         # Authorize can be called quite a lot. Therefore we only update db
         # once every 5 min.
         now = datetime.datetime.utcnow()
         if inst["lastActivity"] + datetime.timedelta(minutes=5) < now:
             InstanceModel().update(
-                {"_id": inst["_id"]}, {"$set": {"lastActivity": now}})
+                {"_id": inst["_id"]}, {"$set": {"lastActivity": now}}
+            )
 
 
 def store_other_globus_tokens(event):
@@ -631,8 +698,7 @@ def attachJobInfoSpec(event):
     job = event.info
     if not job.get("module"):
         JobModel().updateJob(
-            job,
-            otherFields={"jobInfoSpec": jobInfoSpec(job, token=job.get("token"))}
+            job, otherFields={"jobInfoSpec": jobInfoSpec(job, token=job.get("token"))}
         )
 
 
@@ -644,18 +710,20 @@ class WholeTalePlugin(GirderPlugin):
         getPlugin("oauth").load(info)
         getPlugin("jobs").load(info)
         getPlugin("girder_virtual_resources").load(info)
-        info['apiRoot'].wholetale = wholeTale()
-        info['apiRoot'].instance = Instance()
+        info["apiRoot"].wholetale = wholeTale()
+        info["apiRoot"].instance = Instance()
         tale = Tale()
-        info['apiRoot'].tale = tale
+        info["apiRoot"].tale = tale
 
         from .models.tale import Tale as TaleModel
         from .models.tale import _currentTaleFormat
+
         q = {
-            '$or': [
-                {'format': {'$exists': False}},
-                {'format': {'$lt': _currentTaleFormat}}
-            ]}
+            "$or": [
+                {"format": {"$exists": False}},
+                {"format": {"$lt": _currentTaleFormat}},
+            ]
+        }
         for obj in TaleModel().find(q):
             try:
                 TaleModel().save(obj, validate=True)
@@ -663,50 +731,68 @@ class WholeTalePlugin(GirderPlugin):
                 logger.error(exc)
 
         from .models.image import Image as ImageModel
-        ModelImporter.registerModel('instance', InstanceModel, 'wholetale')
-        ModelImporter.registerModel('image', ImageModel, 'wholetale')
-        ModelImporter.registerModel('tale', TaleModel, 'wholetale')
 
-        info['apiRoot'].dataset = Dataset()
-        info['apiRoot'].image = Image()
-        events.bind('jobs.job.update.after', 'wholetale', job_update_after_handler)
-        events.bind('jobs.job.update', 'wholetale', updateNotification)
-        events.bind('model.file.validate', 'wholetale', validateFileLink)
-        events.bind('oauth.auth_callback.after', 'wholetale', store_other_globus_tokens)
-        events.bind('heartbeat', 'wholetale', cullIdleInstances)
+        ModelImporter.registerModel("instance", InstanceModel, "wholetale")
+        ModelImporter.registerModel("image", ImageModel, "wholetale")
+        ModelImporter.registerModel("tale", TaleModel, "wholetale")
+
+        info["apiRoot"].dataset = Dataset()
+        info["apiRoot"].image = Image()
+        events.bind("jobs.job.update.after", "wholetale", job_update_after_handler)
+        events.bind("jobs.job.update", "wholetale", updateNotification)
+        events.bind("model.file.validate", "wholetale", validateFileLink)
+        events.bind("oauth.auth_callback.after", "wholetale", store_other_globus_tokens)
+        events.bind("heartbeat", "wholetale", cullIdleInstances)
         events.unbind("model.job.save.after", "worker")
         events.bind("model.job.save.after", "wholetale", attachJobInfoSpec)
 
-        info['apiRoot'].account = Account()
-        info['apiRoot'].repository = Repository()
-        info['apiRoot'].license = License()
-        info['apiRoot'].integration = Integration()
-        info['apiRoot'].folder.route('GET', ('registered',), listImportedData)
-        info['apiRoot'].folder.route('GET', (':id', 'listing'), listFolder)
-        info['apiRoot'].folder.route('GET', (':id', 'dataset'), getDataSet)
-        info['apiRoot'].job.route('GET', (':id', 'result'), getJobResult)
-        info['apiRoot'].resource.route('GET', (), listResources)
+        events.unbind("model.user.save.created", CoreEventHandler.USER_DEFAULT_FOLDERS)
+        events.bind("model.user.save.created", "wholetale", set_home_mapping)
+        events.bind("model.tale.save.created", "wholetale", set_tale_dirs_mapping)
+        events.bind("model.tale.remove", "wholetale", delete_tale_dirs)
+        events.bind("model.tale.copied", "wholetale", copy_versions_and_runs)
 
-        info['apiRoot'].user.route('PUT', ('settings',), setUserMetadata)
-        info['apiRoot'].user.route('GET', ('settings',), getUserMetadata)
-        info['apiRoot'].user.route('GET', ('sign_in',), signIn)
-        info['apiRoot'].user.route('GET', ('authorize',), authorize)
+        info["apiRoot"].account = Account()
+        info["apiRoot"].repository = Repository()
+        info["apiRoot"].license = License()
+        info["apiRoot"].integration = Integration()
+        info["apiRoot"].folder.route("GET", ("registered",), listImportedData)
+        info["apiRoot"].folder.route("GET", (":id", "listing"), listFolder)
+        info["apiRoot"].folder.route("GET", (":id", "dataset"), getDataSet)
+        info["apiRoot"].job.route("GET", (":id", "result"), getJobResult)
+        info["apiRoot"].resource.route("GET", (), listResources)
 
-        ModelImporter.model('user').exposeFields(
-            level=AccessType.WRITE, fields=('meta', 'myData', 'lastLogin'))
-        ModelImporter.model('user').exposeFields(
-            level=AccessType.ADMIN, fields=('otherTokens',))
+        info["apiRoot"].user.route("PUT", ("settings",), setUserMetadata)
+        info["apiRoot"].user.route("GET", ("settings",), getUserMetadata)
+        info["apiRoot"].user.route("GET", ("sign_in",), signIn)
+        info["apiRoot"].user.route("GET", ("authorize",), authorize)
+
+        info["apiRoot"].version = Version(info["apiRoot"].tale)
+        info["apiRoot"].run = Run()
+
+        ModelImporter.model("user").exposeFields(
+            level=AccessType.WRITE, fields=("meta", "myData", "lastLogin")
+        )
+        ModelImporter.model("user").exposeFields(
+            level=AccessType.ADMIN, fields=("otherTokens",)
+        )
+        ModelImporter.model("folder").exposeFields(
+            level=AccessType.READ, fields=("runVersionId", FIELD_STATUS_CODE)
+        )
 
         events.bind("tale.update_citation", "wholetale", update_citation)
         path_to_assets = os.path.join(
             os.path.dirname(os.path.dirname(__file__)),
             "web_client/extra/img",
         )
-        for ext_provider in SettingDefault.defaults[PluginSettings.EXTERNAL_AUTH_PROVIDERS]:
-            logo_path = os.path.join(path_to_assets, ext_provider["name"] + '_logo.jpg')
+        for ext_provider in SettingDefault.defaults[
+            PluginSettings.EXTERNAL_AUTH_PROVIDERS
+        ]:
+            logo_path = os.path.join(path_to_assets, ext_provider["name"] + "_logo.jpg")
             if os.path.isfile(logo_path):
                 with open(logo_path, "rb") as image_file:
                     ext_provider["logo"] = base64.b64encode(image_file.read()).decode()
 
         metricsLogger.setLevel(logging.INFO)
         metricsLogger.addHandler(_MetricsHandler())
+        VersionHierarchyModel().resetCrashedCriticalSections()

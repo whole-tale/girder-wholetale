@@ -3,9 +3,12 @@
 
 from girder import events
 
-
 API_VERSION = "2.1"
 CATALOG_NAME = "WholeTale Catalog"
+WORKSPACE_NAME = "WholeTale Workspaces"
+RUNS_ROOT_DIR_NAME = "WholeTale Tale Runs"
+FIELD_STATUS_CODE = "runStatus"
+VERSIONS_ROOT_DIR_NAME = "WholeTale Tale Versions"
 DEFAULT_IMAGE_ICON = (
     "https://raw.githubusercontent.com/whole-tale/dashboard/master/public/"
     "images/whole_tale_logo.png"
@@ -37,6 +40,11 @@ class PluginSettings:
     CONTACT_HREF = "wholetale.contact_href"
     BUG_HREF = "wholetale.bug_href"
     MOUNTS = "wholetale.mounts"
+    HOME_DIRS_ROOT = "wholetale.homes_root"
+    TALE_DIRS_ROOT = "wholetale.workspaces_root"
+    VERSIONS_DIRS_ROOT = "wholetale.versions_root"
+    RUNS_DIRS_ROOT = "wholetale.runs_root"
+    DAV_SERVER = "wholetale.dav_server"
 
 
 class SettingDefault:
@@ -146,6 +154,11 @@ class SettingDefault:
                 "location": "runs",
             },
         ],
+        PluginSettings.HOME_DIRS_ROOT: "/tmp/wt/home-dirs",
+        PluginSettings.TALE_DIRS_ROOT: "/tmp/wt/tale-dirs",
+        PluginSettings.RUNS_DIRS_ROOT: "/tmp/wt/runs-dirs",
+        PluginSettings.VERSIONS_DIRS_ROOT: "/tmp/wt/versions-dirs",
+        PluginSettings.DAV_SERVER: False,
     }
 
 
@@ -196,3 +209,25 @@ class TaleStatus(object):
     PREPARING = 0
     READY = 1
     ERROR = 2
+
+
+class RunState:
+    ALL = {}  # type: dict
+
+    def __init__(self, code: int, name: str):
+        self.code = code
+        self.name = name
+        RunState.ALL[code] = self
+
+
+class RunStatus:
+    UNKNOWN = RunState(0, "UNKNOWN")
+    STARTING = RunState(1, "STARTING")
+    RUNNING = RunState(2, "RUNNING")
+    COMPLETED = RunState(3, "COMPLETED")
+    FAILED = RunState(4, "FAILED")
+    CANCELLED = RunState(5, "CANCELLED")
+
+    @classmethod
+    def get(cls, code: int) -> RunState:
+        return RunState.ALL[code]
