@@ -709,6 +709,7 @@ class WholeTalePlugin(GirderPlugin):
     def load(self, info):
         getPlugin("oauth").load(info)
         getPlugin("jobs").load(info)
+        getPlugin("worker").load(info)
         getPlugin("girder_virtual_resources").load(info)
         info["apiRoot"].wholetale = wholeTale()
         info["apiRoot"].instance = Instance()
@@ -750,7 +751,7 @@ class WholeTalePlugin(GirderPlugin):
         events.bind("model.user.save.created", "wholetale", set_home_mapping)
         events.bind("model.tale.save.created", "wholetale", set_tale_dirs_mapping)
         events.bind("model.tale.remove", "wholetale", delete_tale_dirs)
-        events.bind("model.tale.copied", "wholetale", copy_versions_and_runs)
+        events.bind("wholetale.tale.copied", "wholetale", copy_versions_and_runs)
 
         info["apiRoot"].account = Account()
         info["apiRoot"].repository = Repository()

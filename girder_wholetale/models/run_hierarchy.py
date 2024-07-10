@@ -53,7 +53,8 @@ class RunHierarchyModel(AbstractHierarchyModel):
         root = self.getRootFromTale(tale, user=user, level=AccessType.WRITE)
         name = self.checkNameSanity(name, root, allow_rename=allowRename)
 
-        rootDir = get_tale_dir_root(tale, PluginSettings.RUNS_DIR_ROOT)
+        rootDir = get_tale_dir_root(tale, PluginSettings.RUNS_DIRS_ROOT)
+        version_root_dir = get_tale_dir_root(tale, PluginSettings.VERSIONS_DIRS_ROOT)
         runFolder = self.createSubdir(rootDir, root, name, user=user)
 
         runFolder["runVersionId"] = version["_id"]
@@ -67,11 +68,7 @@ class RunHierarchyModel(AbstractHierarchyModel):
         #  .stdout (created using stream() above)
         #  .stderr (-''-)
         runDir = Path(runFolder["fsPath"])
-        tale_id = runDir.parts[-2]
-        # TODO: a lot assumptions hardcoded below...
-        (runDir / "version").symlink_to(
-            f"../../../../versions/{tale_id[:2]}/{tale_id}/{version['_id']}", True
-        )
+        (runDir / "version").symlink_to(version_root_dir / str(version["_id"]), True)
         (runDir / "workspace").mkdir()
         self.snapshotRecursive(
             None, (runDir / "version" / "workspace"), (runDir / "workspace")

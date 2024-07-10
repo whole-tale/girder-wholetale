@@ -86,9 +86,13 @@ class Tale(AccessControlledModel):
                 "public",
                 "publishInfo",
                 "relatedIdentifiers",
+                "restoredFrom",
+                "runsRootId",
                 "status",
                 "title",
                 "updated",
+                "versionsRootId",
+                "workspaceId",
             }
         )
 
