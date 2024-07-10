@@ -311,7 +311,7 @@ class Tale(Resource):
             taleKwargs.setdefault("icon", image.get("icon", DEFAULT_IMAGE_ICON))
             taleKwargs.setdefault("illustration", DEFAULT_ILLUSTRATION)
 
-            tale = taleModel().createTale(
+            tale = TaleModel().createTale(
                 image,
                 [],
                 creator=user,
