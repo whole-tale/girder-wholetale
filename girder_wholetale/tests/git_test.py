@@ -1,260 +1,194 @@
+import os
+import shutil
+import tempfile
+import time
+from datetime import datetime
+
 import git
 import mock
-import os
 import pymongo
-import time
-import tempfile
-import shutil
-from datetime import datetime
-from tests import base
-from .tests_helpers import get_events
-
+import pytest
 from girder.models.folder import Folder
-from girder.models.user import User
+from girder_jobs.constants import JobStatus
+from girder_jobs.models.job import Job
+from pytest_girder.assertions import assertStatusOk
+
+from girder_wholetale.constants import InstanceStatus, TaleStatus
+from girder_wholetale.models.tale import Tale
+
+from .conftest import get_events
+
+GIT_FILE_NAME = "hello.txt"
+GIT_FILE_ON_BRANCH = "on_branch.txt"
 
 
-Tale = None
-Image = None
-Job = None
-JobStatus = None
-ImageStatus = None
+@pytest.fixture
+def git_repo_dir():
+    git_repo_dir = tempfile.mkdtemp()
+    r = git.Repo.init(git_repo_dir)
+    with open(os.path.join(git_repo_dir, GIT_FILE_NAME), "w") as fp:
+        fp.write("World!")
+    r.index.add([GIT_FILE_NAME])
+    r.index.commit("initial commit")
+    feature = r.create_head("feature")
+    r.head.reference = feature
+    with open(os.path.join(git_repo_dir, GIT_FILE_ON_BRANCH), "w") as fp:
+        fp.write("MAGIC!")
+    r.index.add([GIT_FILE_ON_BRANCH])
+    r.index.commit("Commit on a branch")
+    r.head.reference = r.refs["main"]
+    r.head.reset(index=True, working_tree=True)
+    yield git_repo_dir
+    shutil.rmtree(git_repo_dir, ignore_errors=True)
 
 
-def setUpModule():
-    base.enabledPlugins.append("wholetale")
-    base.enabledPlugins.append("wt_home_dir")
-    base.enabledPlugins.append("virtual_resources")
-    base.startServer()
+def _import_git_repo(server, user, tale, url):
+    resp = server.request(
+        path=f"/tale/{tale['_id']}/git",
+        method="PUT",
+        user=user,
+        params={"url": url},
+    )
+    assertStatusOk(resp)
 
-    global JobStatus, Tale, ImageStatus, Image, Job
-    from girder.plugins.jobs.constants import JobStatus
-    from girder.plugins.jobs.models.job import Job
-    from girder.plugins.wholetale.models.tale import Tale
-    from girder.plugins.wholetale.models.image import Image
-    from girder.plugins.wholetale.constants import ImageStatus
+    job = (
+        Job()
+        .find({"type": "wholetale.import_git_repo"})
+        .sort([("created", pymongo.DESCENDING)])
+        .limit(1)
+        .next()
+    )
+
+    for i in range(10):
+        time.sleep(0.5)
+        job = Job().load(job["_id"], force=True, includeLog=True)
+        if job["status"] >= JobStatus.SUCCESS:
+            break
+
+    return job
 
 
-def tearDownModule():
-    base.stopServer()
+def _import_from_git_repo(url, server, image, user):
+    resp = server.request(
+        path="/tale/import",
+        method="POST",
+        user=user,
+        params={
+            "url": url,
+            "git": True,
+            "imageId": str(image["_id"]),
+            "spawn": True,
+        },
+    )
+    assertStatusOk(resp)
+    tale = resp.json
 
+    job = (
+        Job()
+        .find({"type": "wholetale.import_git_repo"})
+        .sort([("created", pymongo.DESCENDING)])
+        .limit(1)
+        .next()
+    )
 
-class GitImportTestCase(base.TestCase):
-    def setUp(self):
-        super(GitImportTestCase, self).setUp()
-        users = (
-            {
-                "email": "root@dev.null",
-                "login": "admin",
-                "firstName": "Root",
-                "lastName": "van Klompf",
-                "password": "secret",
-            },
-            {
-                "email": "joe@dev.null",
-                "login": "joeregular",
-                "firstName": "Joe",
-                "lastName": "Regular",
-                "password": "secret",
-            },
-        )
+    for i in range(60):
+        time.sleep(0.5)
+        job = Job().load(job["_id"], force=True, includeLog=True)
+        if job["status"] >= JobStatus.SUCCESS:
+            break
+    tale = Tale().load(tale["_id"], user=user)
+    return tale, job
 
-        self.admin, self.user = [User().createUser(**user) for user in users]
-        self.image = Image().createImage(
-            name="test my name",
-            creator=self.user,
-            public=True,
-            config=dict(
-                template="base.tpl",
-                buildpack="SomeBuildPack",
-                user="someUser",
-                port=8888,
-                urlPath="",
-            ),
-        )
+@pytest.mark.xfail(reason="Local task needs to be ported to celery.")
+@pytest.mark.plugin("wholetale")
+def test_import_git_as_tale(server, user, image, git_repo_dir):
+    class fakeInstance(object):
+        _id = "123456789"
 
-        self.git_repo_dir = tempfile.mkdtemp()
-        self.git_file_name = "hello.txt"
-        self.git_file_on_branch = "on_branch.txt"
-        r = git.Repo.init(self.git_repo_dir)
-        with open(os.path.join(self.git_repo_dir, self.git_file_name), "w") as fp:
-            fp.write("World!")
-        r.index.add([self.git_file_name])
-        r.index.commit("initial commit")
-        feature = r.create_head("feature")
-        r.head.reference = feature
-        with open(os.path.join(self.git_repo_dir, self.git_file_on_branch), "w") as fp:
-            fp.write("MAGIC!")
-        r.index.add([self.git_file_on_branch])
-        r.index.commit("Commit on a branch")
-        r.head.reference = r.refs["master"]
-        r.head.reset(index=True, working_tree=True)
+        def createInstance(self, tale, user, /, *, spawn=False):
+            return {"_id": self._id, "status": InstanceStatus.LAUNCHING}
 
-    def _import_git_repo(self, tale, url):
-        resp = self.request(
-            path=f"/tale/{tale['_id']}/git",
-            method="PUT",
-            user=self.user,
-            params={"url": url},
-        )
-        self.assertStatusOk(resp)
+        def load(self, instance_id, user=None):
+            assert instance_id == self._id
+            return {"_id": self._id, "status": InstanceStatus.RUNNING}
 
-        job = (
-            Job()
-            .find({"type": "wholetale.import_git_repo"})
-            .sort([("created", pymongo.DESCENDING)])
-            .limit(1)
-            .next()
-        )
-
-        for i in range(10):
-            time.sleep(0.5)
-            job = Job().load(job["_id"], force=True, includeLog=True)
-            if job["status"] >= JobStatus.SUCCESS:
-                break
-
-        return job
-
-    def _import_from_git_repo(self, url):
-        resp = self.request(
-            path="/tale/import",
-            method="POST",
-            user=self.user,
-            params={
-                "url": url,
-                "git": True,
-                "imageId": str(self.image["_id"]),
-                "spawn": True,
-            },
-        )
-        self.assertStatusOk(resp)
-        tale = resp.json
-
-        job = (
-            Job()
-            .find({"type": "wholetale.import_git_repo"})
-            .sort([("created", pymongo.DESCENDING)])
-            .limit(1)
-            .next()
-        )
-
-        for i in range(60):
-            time.sleep(0.5)
-            job = Job().load(job["_id"], force=True, includeLog=True)
-            if job["status"] >= JobStatus.SUCCESS:
-                break
-        tale = Tale().load(tale["_id"], user=self.user)
-        return tale, job
-
-    def testImportGitAsTale(self):
-        from girder.plugins.wholetale.constants import InstanceStatus, TaleStatus
-
-        class fakeInstance(object):
-            _id = "123456789"
-
-            def createInstance(self, tale, user, /, *, spawn=False):
-                return {"_id": self._id, "status": InstanceStatus.LAUNCHING}
-
-            def load(self, instance_id, user=None):
-                assert instance_id == self._id
-                return {"_id": self._id, "status": InstanceStatus.RUNNING}
-
-        with mock.patch(
-            "girder.plugins.wholetale.tasks.import_git_repo.Instance", fakeInstance
-        ):
-            since = datetime.utcnow().isoformat()
-            # Custom branch
-            tale, job = self._import_from_git_repo(
-                f"file://{self.git_repo_dir}@feature"
-            )
-            workspace = Folder().load(tale["workspaceId"], force=True)
-            workspace_path = workspace["fsPath"]
-            self.assertEqual(job["status"], JobStatus.SUCCESS)
-            self.assertTrue(
-                os.path.isfile(os.path.join(workspace["fsPath"], self.git_file_name))
-            )
-            self.assertTrue(
-                os.path.isfile(
-                    os.path.join(workspace["fsPath"], self.git_file_on_branch)
-                )
-            )
-            # Confirm events
-            events = get_events(self, since)
-            self.assertEqual(len(events), 3)
-            self.assertEqual(events[0]['data']['event'], 'wt_tale_created')
-            self.assertEqual(events[1]['data']['event'], 'wt_import_started')
-            self.assertEqual(events[2]['data']['event'], 'wt_import_completed')
-            shutil.rmtree(workspace_path)
-            os.mkdir(workspace_path)
-            Tale().remove(tale)
-
-        # Invalid url
+    with mock.patch("girder_wholetale.tasks.import_git_repo.Instance", fakeInstance):
         since = datetime.utcnow().isoformat()
-        tale, job = self._import_from_git_repo("blah")
-        workspace = Folder().load(tale["workspaceId"], force=True)
-        workspace_path = workspace["fsPath"]
-        self.assertEqual(job["status"], JobStatus.ERROR)
-        self.assertTrue("does not appear to be a git repo" in job["log"][0])
-        self.assertEqual(tale["status"], TaleStatus.ERROR)
-        # Confirm events
-        events = get_events(self, since)
-        self.assertEqual(len(events), 3)
-        self.assertEqual(events[0]['data']['event'], 'wt_tale_created')
-        self.assertEqual(events[1]['data']['event'], 'wt_import_started')
-        self.assertEqual(events[2]['data']['event'], 'wt_import_failed')
-        Tale().remove(tale)
-
-    def testGitImport(self):
-        tale = Tale().createTale(self.image, [], creator=self.user, public=True)
-        workspace = Folder().load(tale["workspaceId"], force=True)
-        workspace_path = workspace["fsPath"]
-
-        # Invalid path
-        since = datetime.utcnow().isoformat()
-        job = self._import_git_repo(tale, "blah")
-        self.assertEqual(job["status"], JobStatus.ERROR)
-        self.assertTrue("does not appear to be a git repo" in job["log"][0])
-        if os.path.isdir(os.path.join(workspace_path, ".git")):
-            shutil.rmtree(os.path.join(workspace_path, ".git"))
-        # Confirm events
-        events = get_events(self, since)
-        self.assertEqual(len(events), 2)
-        self.assertEqual(events[0]['data']['event'], 'wt_import_started')
-        self.assertEqual(events[1]['data']['event'], 'wt_import_failed')
-
-        # Default branch (master)
-        since = datetime.utcnow().isoformat()
-        job = self._import_git_repo(tale, f"file://{self.git_repo_dir}")
-        self.assertEqual(job["status"], JobStatus.SUCCESS)
-        self.assertTrue(
-            os.path.isfile(os.path.join(workspace["fsPath"], self.git_file_name))
-        )
-        self.assertFalse(
-            os.path.isfile(os.path.join(workspace["fsPath"], self.git_file_on_branch))
-        )
-        # Confirm events
-        events = get_events(self, since)
-        self.assertEqual(len(events), 2)
-        self.assertEqual(events[0]['data']['event'], 'wt_import_started')
-        self.assertEqual(events[1]['data']['event'], 'wt_import_completed')
-        shutil.rmtree(workspace_path)
-        os.mkdir(workspace_path)
-
         # Custom branch
-        job = self._import_git_repo(tale, f"file://{self.git_repo_dir}@feature")
-        self.assertEqual(job["status"], JobStatus.SUCCESS)
-        self.assertTrue(
-            os.path.isfile(os.path.join(workspace["fsPath"], self.git_file_name))
+        tale, job = _import_from_git_repo(
+            f"file://{git_repo_dir}@feature", server, image, user
         )
-        self.assertTrue(
-            os.path.isfile(os.path.join(workspace["fsPath"], self.git_file_on_branch))
-        )
+        workspace = Folder().load(tale["workspaceId"], force=True)
+        workspace_path = workspace["fsPath"]
+        assert job["status"] == JobStatus.SUCCESS
+        assert os.path.isfile(os.path.join(workspace["fsPath"], GIT_FILE_NAME))
+        assert os.path.isfile(os.path.join(workspace["fsPath"], GIT_FILE_ON_BRANCH))
+        # Confirm events
+        events = get_events(server, since)
+        assert len(events) == 3
+        assert events[0]["data"]["event"] == "wt_tale_created"
+        assert events[1]["data"]["event"] == "wt_import_started"
+        assert events[2]["data"]["event"] == "wt_import_completed"
         shutil.rmtree(workspace_path)
         os.mkdir(workspace_path)
         Tale().remove(tale)
 
-    def tearDown(self):
-        User().remove(self.user)
-        User().remove(self.admin)
-        Image().remove(self.image)
-        shutil.rmtree(self.git_repo_dir)
-        super(GitImportTestCase, self).tearDown()
+    # Invalid url
+    since = datetime.utcnow().isoformat()
+    tale, job = _import_from_git_repo("blah", server, image, user)
+    workspace = Folder().load(tale["workspaceId"], force=True)
+    workspace_path = workspace["fsPath"]
+    assert job["status"] == JobStatus.ERROR
+    assert "does not appear to be a git repo" in job["log"][0]
+    assert tale["status"] == TaleStatus.ERROR
+    # Confirm events
+    events = get_events(server, since)
+    assert len(events) == 3
+    assert events[0]["data"]["event"] == "wt_tale_created"
+    assert events[1]["data"]["event"] == "wt_import_started"
+    assert events[2]["data"]["event"] == "wt_import_failed"
+    Tale().remove(tale)
+
+
+@pytest.mark.xfail(reason="Local task needs to be ported to celery.")
+@pytest.mark.plugin("wholetale")
+def test_git_import(server, user, image, git_repo_dir):
+    tale = Tale().createTale(image, [], creator=user, public=True)
+    workspace = Folder().load(tale["workspaceId"], force=True)
+    workspace_path = workspace["fsPath"]
+
+    # Invalid path
+    since = datetime.utcnow().isoformat()
+    job = _import_git_repo(server, user, tale, "blah")
+    assert job["status"] == JobStatus.ERROR
+    assert "does not appear to be a git repo" in job["log"][0]
+    if os.path.isdir(os.path.join(workspace_path, ".git")):
+        shutil.rmtree(os.path.join(workspace_path, ".git"))
+    # Confirm events
+    events = get_events(server, since)
+    assert len(events) == 2
+    assert events[0]["data"]["event"] == "wt_import_started"
+    assert events[1]["data"]["event"] == "wt_import_failed"
+
+    # Default branch (master)
+    since = datetime.utcnow().isoformat()
+    job = _import_git_repo(server, user, tale, f"file://{git_repo_dir}")
+    assert job["status"] == JobStatus.SUCCESS
+    assert os.path.isfile(os.path.join(workspace["fsPath"], GIT_FILE_NAME))
+    assert not os.path.isfile(os.path.join(workspace["fsPath"], GIT_FILE_ON_BRANCH))
+    # Confirm events
+    events = get_events(server, since)
+    assert len(events) == 2
+    assert events[0]["data"]["event"] == "wt_import_started"
+    assert events[1]["data"]["event"] == "wt_import_completed"
+    shutil.rmtree(workspace_path)
+    os.mkdir(workspace_path)
+
+    # Custom branch
+    job = _import_git_repo(server, user, tale, f"file://{git_repo_dir}@feature")
+    assert job["status"] == JobStatus.SUCCESS
+    assert os.path.isfile(os.path.join(workspace["fsPath"], GIT_FILE_NAME))
+    assert os.path.isfile(os.path.join(workspace["fsPath"], GIT_FILE_ON_BRANCH))
+    shutil.rmtree(workspace_path)
+    os.mkdir(workspace_path)
+    Tale().remove(tale)

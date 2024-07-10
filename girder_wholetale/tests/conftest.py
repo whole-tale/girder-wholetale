@@ -7,6 +7,26 @@ from girder.models.user import User
 from pytest_girder.assertions import assertStatusOk
 
 
+def get_events(server, since, user=None):
+    if not user:
+        user = User().findOne({"admin": False})
+
+    resp = server.request(
+        path="/notification", method="GET", user=user, params={"since": since}
+    )
+    assertStatusOk(resp)
+
+    return [event for event in resp.json if event["type"] == "wt_event"]
+
+
+def event_types(events, affected_resources):
+    return {
+        event["data"]["event"]
+        for event in events
+        if affected_resources == event["data"]["affectedResourceIds"]
+    }
+
+
 def _compare_tales(restored_tale, original_tale):
     # TODO: icon is a bug
     for key in restored_tale.keys():
