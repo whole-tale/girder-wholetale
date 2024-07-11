@@ -1,5 +1,5 @@
 # dependencies for tests
-mock
 pytest-vcr
+pytest-mock
 bdbag
 responses

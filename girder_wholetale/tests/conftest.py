@@ -1,10 +1,16 @@
 import json
+import httmock
 
 import pytest
 from bson.objectid import ObjectId
 from girder.models.folder import Folder
 from girder.models.user import User
 from pytest_girder.assertions import assertStatusOk
+
+
+@httmock.all_requests
+def mockOtherRequests(url, request):
+    raise Exception("Unexpected url %s" % str(request.url))
 
 
 def get_events(server, since, user=None):
