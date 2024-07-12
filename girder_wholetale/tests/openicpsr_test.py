@@ -4,21 +4,11 @@ import tempfile
 import time
 
 import httmock
-import vcr
 from bson import ObjectId
 from girder.exceptions import GirderException
 from girder.models.assetstore import Assetstore
 from girder.models.file import File
 from girder.models.user import User
-from tests import base
-
-DATA_PATH = os.path.join(
-    os.path.dirname(os.environ["GIRDER_TEST_DATA_PREFIX"]),
-    "data_src",
-    "plugins",
-    "wholetale",
-)
-
 
 def setUpModule():
     base.enabledPlugins.append("wholetale")
@@ -89,153 +79,110 @@ def fake_urlopen(url):
     return open(fname, "rb")
 
 
-class OpenICPSRHarversterTestCase(base.TestCase):
-    def setUp(self):
-        users = (
-            {
-                "email": "kowalikk@illinois.edu",
-                "login": "admin",
-                "firstName": "Root",
-                "lastName": "van Klompf",
-                "password": "secret",
-            },
-            {
-                "email": "joe@dev.null",
-                "login": "joeregular",
-                "firstName": "Joe",
-                "lastName": "Regular",
-                "password": "secret",
-            },
-        )
-        self.admin, self.user = [
-            self.model("user").createUser(**user) for user in users
-        ]
-        from girder.plugins.wholetale.models.image import Image
+def _testLookup(self):
+    resolved_lookup = {
+        "dataId": "https://www.openicpsr.org/openicpsr/project/132081/version/V1/view",
+        "doi": "doi:10.3886/E132081V1",
+        "name": (
+            "Data and Code for: Intrahousehold Consumption Allocation and Demand for Agency: "
+            "A Triple Experimental Investigation"
+        ),
+        "repository": "OpenICPSR",
+        "size": -1,
+        "tale": False,
+    }
+    resp = self.request(
+        path="/repository/lookup",
+        method="GET",
+        user=self.user,
+        params={"dataId": json.dumps(["doi:10.3886/E132081V1"])},
+    )
+    self.assertStatusOk(resp)
+    self.assertEqual(resp.json, [resolved_lookup])
 
-        self.image = Image().createImage(
-            name="Jupyter Classic",
-            creator=self.user,
-            public=True,
-            config=dict(
-                template="base.tpl",
-                buildpack="SomeBuildPack",
-                user="someUser",
-                port=8888,
-                urlPath="",
-            ),
-        )
+def _test_setting_password(self):
+    resp = self.request(
+        path="/account/icpsr/key",
+        method="POST",
+        user=self.user,
+        params={
+            "resource_server": "www.openicpsr.org",
+            "key": "definitely_not_a_password",
+            "key_type": "apikey",
+        },
+    )
+    self.assertStatus(resp, 400)
+    self.assertEqual(
+        resp.json, {"type": "rest", "message": "Invalid key/password for icpsr"}
+    )
 
-    @vcr.use_cassette(os.path.join(DATA_PATH, "openicpsr_lookup.txt"))
-    def testLookup(self):
-        resolved_lookup = {
-            "dataId": "https://www.openicpsr.org/openicpsr/project/132081/version/V1/view",
-            "doi": "doi:10.3886/E132081V1",
-            "name": (
-                "Data and Code for: Intrahousehold Consumption Allocation and Demand for Agency: "
-                "A Triple Experimental Investigation"
-            ),
-            "repository": "OpenICPSR",
-            "size": -1,
-            "tale": False,
+    resp = self.request(
+        path="/account/icpsr/key",
+        method="POST",
+        user=self.admin,
+        params={
+            "resource_server": "www.openicpsr.org",
+            "key": "realPassGoHere",
+            "key_type": "apikey",
+        },
+    )
+    self.assertStatusOk(resp)
+
+def _test_import_binder(self):
+    from girder.plugins.jobs.constants import JobStatus
+    from girder.plugins.jobs.models.job import Job
+    from girder.plugins.wholetale.models.tale import Tale
+
+    resp = self.request(
+        path="/tale/import",
+        method="POST",
+        user=self.admin,
+        params={
+            "git": False,
+            "url": "https://www.openicpsr.org/openicpsr/project/132081/version/V1/view",
+            "spawn": False,
+            "imageId": str(self.image["_id"]),
+        },
+    )
+    self.assertStatus(resp, 400)
+    self.assertEqual(
+        resp.json,
+        {
+            "type": "rest",
+            "message": "To register data from OpenICPSR you need to provide credentials.",
+        },
+    )
+
+    self.admin["otherTokens"] = [
+        {
+            "access_token": "5E0B060046B720165F1C3C92A7C50E1E",
+            "provider": "icpsr",
+            "resource_server": "www.openicpsr.org",
+            "token_type": "apikey",
         }
-        resp = self.request(
-            path="/repository/lookup",
-            method="GET",
-            user=self.user,
-            params={"dataId": json.dumps(["doi:10.3886/E132081V1"])},
-        )
-        self.assertStatusOk(resp)
-        self.assertEqual(resp.json, [resolved_lookup])
+    ]
+    self.admin = User().save(self.admin)
+    resp = self.request(
+        path="/tale/import",
+        method="POST",
+        user=self.admin,
+        params={
+            "git": False,
+            "url": "https://www.openicpsr.org/openicpsr/project/132081/version/V1/view",
+            "spawn": False,
+            "imageId": str(self.image["_id"]),
+        },
+    )
+    self.assertStatusOk(resp)
+    tale = resp.json
+    job = Job().findOne(
+        {"type": "wholetale.import_binder", "taleId": ObjectId(tale["_id"])}
+    )
+    for _ in range(600):
+        if job["status"] in {JobStatus.SUCCESS, JobStatus.ERROR}:
+            break
+        time.sleep(0.1)
+        job = Job().load(job["_id"], force=True)
+    self.assertEqual(job["status"], JobStatus.SUCCESS)
 
-    @vcr.use_cassette(os.path.join(DATA_PATH, "openicpsr_login_flow.txt"))
-    def test_setting_password(self):
-        resp = self.request(
-            path="/account/icpsr/key",
-            method="POST",
-            user=self.user,
-            params={
-                "resource_server": "www.openicpsr.org",
-                "key": "definitely_not_a_password",
-                "key_type": "apikey",
-            },
-        )
-        self.assertStatus(resp, 400)
-        self.assertEqual(
-            resp.json, {"type": "rest", "message": "Invalid key/password for icpsr"}
-        )
-
-        resp = self.request(
-            path="/account/icpsr/key",
-            method="POST",
-            user=self.admin,
-            params={
-                "resource_server": "www.openicpsr.org",
-                "key": "realPassGoHere",
-                "key_type": "apikey",
-            },
-        )
-        self.assertStatusOk(resp)
-
-    @vcr.use_cassette(os.path.join(DATA_PATH, "openicpsr_import.txt"))
-    def test_import_binder(self):
-        from girder.plugins.jobs.constants import JobStatus
-        from girder.plugins.jobs.models.job import Job
-        from girder.plugins.wholetale.models.tale import Tale
-
-        resp = self.request(
-            path="/tale/import",
-            method="POST",
-            user=self.admin,
-            params={
-                "git": False,
-                "url": "https://www.openicpsr.org/openicpsr/project/132081/version/V1/view",
-                "spawn": False,
-                "imageId": str(self.image["_id"]),
-            },
-        )
-        self.assertStatus(resp, 400)
-        self.assertEqual(
-            resp.json,
-            {
-                "type": "rest",
-                "message": "To register data from OpenICPSR you need to provide credentials.",
-            },
-        )
-
-        self.admin["otherTokens"] = [
-            {
-                "access_token": "5E0B060046B720165F1C3C92A7C50E1E",
-                "provider": "icpsr",
-                "resource_server": "www.openicpsr.org",
-                "token_type": "apikey",
-            }
-        ]
-        self.admin = User().save(self.admin)
-        resp = self.request(
-            path="/tale/import",
-            method="POST",
-            user=self.admin,
-            params={
-                "git": False,
-                "url": "https://www.openicpsr.org/openicpsr/project/132081/version/V1/view",
-                "spawn": False,
-                "imageId": str(self.image["_id"]),
-            },
-        )
-        self.assertStatusOk(resp)
-        tale = resp.json
-        job = Job().findOne(
-            {"type": "wholetale.import_binder", "taleId": ObjectId(tale["_id"])}
-        )
-        for _ in range(600):
-            if job["status"] in {JobStatus.SUCCESS, JobStatus.ERROR}:
-                break
-            time.sleep(0.1)
-            job = Job().load(job["_id"], force=True)
-        self.assertEqual(job["status"], JobStatus.SUCCESS)
-
-        Tale().remove(tale)
-
-    def tearDown(self):
-        self.model("user").remove(self.user)
-        self.model("user").remove(self.admin)
+    Tale().remove(tale)

@@ -1,170 +1,114 @@
 import json
-import time
 
 import mock
+import pytest
 from girder.constants import AccessType
-from tests import base
+from pytest_girder.assertions import assertStatus, assertStatusOk
+
+from girder_wholetale.models.instance import Instance
+from girder_wholetale.models.tale import Tale
 
 
-def setUpModule():
-    base.enabledPlugins.append("wholetale")
-    base.startServer()
+@pytest.fixture
+def simple_tale(server, admin, image):
+    tale = Tale().createTale(image, [], creator=admin, title="Some Title")
+    return tale
 
 
-def tearDownModule():
-    base.stopServer()
+@pytest.mark.plugin("wholetale")
+def test_tale_with_instance_delete(server, simple_tale, user, admin):
+    tale = simple_tale
+    tale = Tale().setUserAccess(tale, user=user, level=AccessType.WRITE, save=True)
+    instance = Instance().createInstance(
+        tale, user, name="instance_1", save=True, spawn=False
+    )
 
+    resp = server.request(
+        path="/tale/{_id}".format(**tale),
+        method="DELETE",
+        user=admin,
+        exception=True,
+    )
+    assertStatus(resp, 409)
 
-class SharingTestCase(base.TestCase):
-    def setUp(self):
-        super(SharingTestCase, self).setUp()
-
-        users = (
-            {
-                "email": "root@dev.null",
-                "login": "admin",
-                "firstName": "Root",
-                "lastName": "van Klompf",
-                "password": "secret",
-            },
-            {
-                "email": "joe@dev.null",
-                "login": "joeregular",
-                "firstName": "Joe",
-                "lastName": "Regular",
-                "password": "secret",
-            },
-        )
-        self.admin, self.user = [
-            self.model("user").createUser(**user) for user in users
-        ]
-
-        self.image = self.model("image", "wholetale").createImage(
-            name="image my name", creator=self.user, idleTimeout=0.25, public=True
-        )
-
-    def testTaleWithInstanceDelete(self):
-        tale_model = self.model("tale", "wholetale")
-        instance_model = self.model("instance", "wholetale")
-
-        tale = tale_model.createTale(
-            self.image, [], creator=self.admin, title="Some Title"
-        )
-
-        tale = tale_model.setUserAccess(
-            tale, user=self.user, level=AccessType.WRITE, save=True
-        )
-        instance = instance_model.createInstance(
-            tale, self.user, name="instance_1", save=True, spawn=False
-        )
-
-        resp = self.request(
+    with mock.patch.object(Instance, "deleteInstance") as delete_mocked:
+        delete_mocked.return_value = None
+        resp = server.request(
             path="/tale/{_id}".format(**tale),
+            params={"force": True},
             method="DELETE",
-            user=self.admin,
-            exception=True,
+            user=admin,
         )
-        self.assertStatus(resp, 409)
+        delete_mocked.assert_called_once()
+        call = delete_mocked.mock_calls[0]
+        assert call.args[0]["_id"] == instance["_id"]
+        assert call.args[1]["_id"] == user["_id"]
+        Instance().remove(instance)
+        assertStatusOk(resp)
 
-        from girder.plugins.wholetale.models.instance import Instance
 
-        with mock.patch.object(Instance, "deleteInstance") as delete_mocked:
-            delete_mocked.return_value = None
-            resp = self.request(
-                path="/tale/{_id}".format(**tale),
-                params={"force": True},
-                method="DELETE",
-                user=self.admin,
-            )
-            delete_mocked.assert_called_once()
-            call = delete_mocked.mock_calls[0]
-            self.assertEqual(call.args[0]["_id"], instance["_id"])
-            self.assertEqual(call.args[1]["_id"], self.user["_id"])
-            instance_model.remove(instance)
-            self.assertStatusOk(resp)
+@pytest.mark.plugin("wholetale")
+def testTaleWithInstanceUnshare(server, simple_tale, user, admin):
+    tale = simple_tale
+    tale = Tale().setUserAccess(tale, user=user, level=AccessType.WRITE, save=True)
+    instance = Instance().createInstance(
+        tale, user, name="instance_1", save=True, spawn=False
+    )
 
-    def testTaleWithInstanceUnshare(self):
-        tale_model = self.model("tale", "wholetale")
-        instance_model = self.model("instance", "wholetale")
+    resp = server.request(
+        path="/tale/{_id}/relinquish".format(**tale),
+        method="PUT",
+        user=user,
+        exception=True,
+        params={"level": 0},
+    )
+    assertStatus(resp, 409)
 
-        tale = tale_model.createTale(
-            self.image, [], creator=self.admin, title="Some Title"
-        )
-
-        tale = tale_model.setUserAccess(
-            tale, user=self.user, level=AccessType.WRITE, save=True
-        )
-        instance = instance_model.createInstance(
-            tale, self.user, name="instance_1", save=True, spawn=False
-        )
-
-        resp = self.request(
+    with mock.patch.object(Instance, "deleteInstance") as delete_mocked:
+        delete_mocked.return_value = None
+        resp = server.request(
             path="/tale/{_id}/relinquish".format(**tale),
             method="PUT",
-            user=self.user,
-            exception=True,
-            params={"level": 0},
+            user=user,
+            params={"level": 0, "force": True},
         )
-        self.assertStatus(resp, 409)
+        assertStatusOk(resp)
+        delete_mocked.assert_called_once()
+        call = delete_mocked.mock_calls[0]
+        assert call.args[0]["_id"] == instance["_id"]
+        assert call.args[1]["_id"] == user["_id"]
+        Instance().remove(instance)
+        assert resp.json["_id"] == str(tale["_id"])
+        assert resp.json["_accessLevel"] == 0
 
-        from girder.plugins.wholetale.models.instance import Instance
+    resp = server.request(path=f"/tale/{tale['_id']}/access", method="GET", user=admin)
+    assertStatusOk(resp)
+    orig_access = resp.json
 
-        with mock.patch.object(Instance, "deleteInstance") as delete_mocked:
-            delete_mocked.return_value = None
-            resp = self.request(
-                path="/tale/{_id}/relinquish".format(**tale),
-                method="PUT",
-                user=self.user,
-                params={"level": 0, "force": True},
-            )
-            self.assertStatusOk(resp)
-            delete_mocked.assert_called_once()
-            call = delete_mocked.mock_calls[0]
-            self.assertEqual(call.args[0]["_id"], instance["_id"])
-            self.assertEqual(call.args[1]["_id"], self.user["_id"])
-            instance_model.remove(instance)
-            self.assertEqual(resp.json["_id"], str(tale["_id"]))
-            self.assertEqual(resp.json["_accessLevel"], 0)
+    tale = Tale().setUserAccess(tale, user=user, level=AccessType.WRITE, save=True)
+    instance = Instance().createInstance(
+        tale, user, name="instance_1", save=True, spawn=False
+    )
 
-        resp = self.request(
-            path=f"/tale/{tale['_id']}/access", method="GET", user=self.admin
-        )
-        self.assertStatusOk(resp)
-        orig_access = resp.json
-
-        tale = tale_model.setUserAccess(
-            tale, user=self.user, level=AccessType.WRITE, save=True
-        )
-        instance = instance_model.createInstance(
-            tale, self.user, name="instance_1", save=True, spawn=False
-        )
-
-        resp = self.request(
+    resp = server.request(
+        path=f"/tale/{tale['_id']}/access",
+        params={"access": json.dumps(orig_access)},
+        method="PUT",
+        user=admin,
+        exception=True,
+    )
+    assertStatus(resp, 409)
+    with mock.patch.object(Instance, "deleteInstance") as delete_mocked:
+        delete_mocked.return_value = None
+        resp = server.request(
             path=f"/tale/{tale['_id']}/access",
-            params={"access": json.dumps(orig_access)},
             method="PUT",
-            user=self.admin,
-            exception=True,
+            user=admin,
+            params={"force": True, "access": json.dumps(orig_access)},
         )
-        self.assertStatus(resp, 409)
-        with mock.patch.object(Instance, "deleteInstance") as delete_mocked:
-            delete_mocked.return_value = None
-            resp = self.request(
-                path=f"/tale/{tale['_id']}/access",
-                method="PUT",
-                user=self.admin,
-                params={"force": True, "access": json.dumps(orig_access)},
-            )
-            self.assertStatusOk(resp)
-            delete_mocked.assert_called_once()
-            call = delete_mocked.mock_calls[0]
-            self.assertEqual(call.args[0]["_id"], instance["_id"])
-            self.assertEqual(call.args[1]["_id"], self.user["_id"])
-            instance_model.remove(instance)
-        tale_model.remove(tale)
-
-    def tearDown(self):
-        self.model("image", "wholetale").remove(self.image)
-        self.model("user").remove(self.user)
-        self.model("user").remove(self.admin)
-        super(SharingTestCase, self).tearDown()
+        assertStatusOk(resp)
+        delete_mocked.assert_called_once()
+        call = delete_mocked.mock_calls[0]
+        assert call.args[0]["_id"] == instance["_id"]
+        assert call.args[1]["_id"] == user["_id"]
+        Instance().remove(instance)

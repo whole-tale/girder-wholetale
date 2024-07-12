@@ -11,3 +11,4 @@ GitPython
 httpio>=0.3.0
 fs
 pathvalidate
+bdbag
