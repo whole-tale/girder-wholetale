@@ -1,98 +1,58 @@
 import json
-from tests import base
+
+import pytest
 from girder.models.user import User
-
-# TODO: for some reason vcr is stuck in a infinite loop
-
-
-def setUpModule():
-    base.enabledPlugins.append("wholetale")
-    base.startServer()
+from pytest_girder.assertions import assertStatus, assertStatusOk
 
 
-def tearDownModule():
-    base.stopServer()
-
-
-class RepositoryTestCase(base.TestCase):
-    def setUp(self):
-        super(RepositoryTestCase, self).setUp()
-        users = (
-            {
-                "email": "root@dev.null",
-                "login": "admin",
-                "firstName": "Root",
-                "lastName": "van Klompf",
-                "password": "secret",
-            },
-            {
-                "email": "joe@dev.null",
-                "login": "joeregular",
-                "firstName": "Joe",
-                "lastName": "Regular",
-                "password": "secret",
-            },
-        )
-        self.admin, self.user = [
-            self.model("user").createUser(**user) for user in users
-        ]
-
-    def _lookup(self, url, path):
-        return self.request(
+@pytest.mark.vcr
+@pytest.mark.plugin("wholetale")
+def test_error_handling(server, user):
+    def _lookup(url, path):
+        return server.request(
             path="/repository/" + path,
             method="GET",
+            user=user,
             params={"dataId": json.dumps([url])},
         )
 
-    def testErrorHandling(self):
-        for path in ("lookup", "listFiles"):
-            resp = self._lookup("https://doi.org/10.7910/DVN/blah", path)
-            self.assertStatus(resp, 400)
-            self.assertEqual(
-                resp.json,
-                {
-                    "message": 'Id "https://doi.org/10.7910/DVN/blah" was '
-                    "categorized as DOI, but its resolution failed.",
-                    "type": "rest",
-                },
-            )
+    for path in ("lookup", "listFiles"):
+        resp = _lookup("https://doi.org/10.7910/DVN/blah", path)
+        assertStatus(resp, 400)
+        assert resp.json == {
+            "message": 'Id "https://doi.org/10.7910/DVN/blah" was '
+            "categorized as DOI, but its resolution failed.",
+            "type": "rest",
+        }
 
-            resp = self._lookup("https://wrong.url", path)
-            self.assertStatus(resp, 400)
-            if path == "lookup":
-                self.assertTrue(
-                    resp.json["message"].startswith(
-                        'Lookup for "https://wrong.url" failed with:'
-                    )
-                )
-            else:
-                self.assertTrue(
-                    resp.json["message"].startswith(
-                        'Listing files at "https://wrong.url" failed with:'
-                    )
-                )
+        resp = _lookup("https://wrong.url", path)
+        assertStatus(resp, 400)
+        if path == "lookup":
+            msg = 'Lookup for "https://wrong.url" failed with:'
+        else:
+            msg = 'Listing files at "https://wrong.url" failed with:'
+        assert resp.json["message"].startswith(msg)
 
-    def testPublishers(self):
-        # This assumes some defaults that probably should be set here instead...
-        resp = self.request(path="/repository", method="GET")
-        self.assertStatusOk(resp)
-        self.assertEqual(resp.json, [])
-        # Pretend we have authorized with Zenodo
-        self.user["otherTokens"].append(
-            {
-                "provider": "zenodo",
-                "access_token": "zenodo_key",
-                "resource_server": "sandbox.zenodo.org",
-                "token_type": "apikey",
-            }
-        )
-        self.user = User().save(self.user)
 
-        resp = self.request(path="/repository", method="GET", user=self.user)
-        self.assertStatusOk(resp)
-        self.assertEqual(
-            resp.json,
-            [
-                {"name": "Zenodo Sandbox", "repository": "sandbox.zenodo.org"},
-            ],
-        )
+@pytest.mark.plugin("wholetale")
+def test_publishers(server, user):
+    # This assumes some defaults that probably should be set here instead...
+    resp = server.request(path="/repository", method="GET")
+    assertStatusOk(resp)
+    assert resp.json == []
+    # Pretend we have authorized with Zenodo
+    user["otherTokens"] = [
+        {
+            "provider": "zenodo",
+            "access_token": "zenodo_key",
+            "resource_server": "sandbox.zenodo.org",
+            "token_type": "apikey",
+        }
+    ]
+    user = User().save(user)
+
+    resp = server.request(path="/repository", method="GET", user=user)
+    assertStatusOk(resp)
+    assert resp.json == [
+        {"name": "Zenodo Sandbox", "repository": "sandbox.zenodo.org"},
+    ]
