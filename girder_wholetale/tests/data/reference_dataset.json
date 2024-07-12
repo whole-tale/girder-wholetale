@@ -4,6 +4,9 @@
     "schema:license": "CC-BY-4.0"
   },
   {
+    "uri": "./workspace/wt_quickstart.ipynb"
+  },
+  {
     "uri": "https://dataverse.harvard.edu/api/access/datafile/3644649?format=original",
     "bundledAs": {
       "folder": "./data/",

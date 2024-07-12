@@ -1,11 +1,154 @@
 import json
-import httmock
+import os
 
+import httmock
 import pytest
 from bson.objectid import ObjectId
+from girder.constants import AccessType
+from girder.models.collection import Collection
+from girder.models.file import File
 from girder.models.folder import Folder
+from girder.models.item import Item
 from girder.models.user import User
+from girder.utility.path import lookUpPath
 from pytest_girder.assertions import assertStatusOk
+from girder_wholetale.models.tale import Tale
+
+
+def restore_catalog(user, parent, current):
+    for folder in current["folders"]:
+        folderObj = Folder().createFolder(
+            parent,
+            folder["name"],
+            parentType="folder",
+            public=True,
+            reuseExisting=True,
+        )
+        if "meta" in folder:
+            Folder().setMetadata(folderObj, folder["meta"])
+        restore_catalog(user, folderObj, folder)
+
+    for obj in current["files"]:
+        if obj["linkUrl"].startswith("globus"):
+            continue
+        item = Item().createItem(obj["name"], user, parent, reuseExisting=True)
+        Item().setMetadata(item, obj["meta"])
+
+        File().createLinkFile(
+            obj["name"],
+            item,
+            "item",
+            obj["linkUrl"],
+            user,
+            size=obj["size"],
+            mimeType=obj["mimeType"],
+            reuseExisting=True,
+        )
+
+
+@pytest.fixture
+def mock_catalog(admin):
+    data_collection = Collection().createCollection(
+        "WholeTale Catalog", public=True, reuseExisting=True
+    )
+    catalog = Folder().createFolder(
+        data_collection,
+        "WholeTale Catalog",
+        parentType="collection",
+        public=True,
+        reuseExisting=True,
+    )
+    with open(
+        os.path.join(os.path.dirname(__file__), "data", "manifest_mock_catalog.json"),
+        "r",
+    ) as fp:
+        data = json.load(fp)
+        restore_catalog({"_id": ObjectId()}, catalog, data)
+
+    yield
+
+    Folder().remove(catalog)
+    Collection().remove(data_collection)
+
+
+@pytest.fixture
+def tale_info(mock_catalog, user, admin):
+    dataSet = []
+    data_paths = [
+        "Open Source at Harvard/data",  # Dataverse folder
+        (
+            "Replication Data for At-Large Elections and Minority "
+            "Representation in Local Government/panel_agg.csv"
+        ),  # Dataverse file
+        "raw.githubusercontent.com/gwosc-tutorial/LOSC_Event_tutorial/master/BBH_events_v3.json",  # HTTP file
+        "raw.githubusercontent.com/gwosc-tutorial/LOSC_Event_tutorial",  # HTTP folder
+    ]
+    root = "/collection/WholeTale Catalog/WholeTale Catalog"
+    for path in data_paths:
+        obj = lookUpPath(os.path.join(root, path))
+        dataSet.append(
+            {
+                "itemId": obj["document"]["_id"],
+                "mountPath": obj["document"]["name"],
+                "_modelType": obj["model"],
+            }
+        )
+    new_authors = [
+        {
+            "firstName": admin["firstName"],
+            "lastName": admin["lastName"],
+            "orcid": "https://orcid.org/1234",
+        },
+        {
+            "firstName": user["firstName"],
+            "lastName": user["lastName"],
+            "orcid": "https://orcid.org/9876",
+        },
+    ]
+
+    tale_info = {
+        "name": "Main Tale",
+        "description": "Tale Desc",
+        "authors": new_authors,
+        "creator": user,
+        "public": True,
+        "data": dataSet,
+        "illustration": "linkToImage",
+        "imageInfo": {
+            "digest": (
+                "registry.local.wholetale.org/5c8fe826da39aa00013e9609/1552934951@"
+                "sha256:4f604e6fab47f79e28251657347ca20ee89b737b4b1048c18ea5cf2fe9a9f098"
+            ),
+            "jobId": ObjectId("5c9009deda39aa0001d702b7"),
+            "last_build": 1552943449,
+            "repo2docker_version": "craigwillis/repo2docker:latest",
+        },
+    }
+    return tale_info
+
+
+@pytest.fixture
+def fancy_tale(server, user, tale_info, image):
+    tale = Tale().createTale(
+        image,
+        tale_info["data"],
+        creator=user,
+        title=tale_info["name"],
+        public=tale_info["public"],
+        description=tale_info["description"],
+        authors=tale_info["authors"],
+    )
+    tale = Tale().load(tale["_id"], force=True)  # to get aux dirs
+    assert "workspaceId" in tale
+
+    workspace = Folder().load(tale["workspaceId"], force=True)
+    nb_file = os.path.join(workspace["fsPath"], "wt_quickstart.ipynb")
+    with open(nb_file, "w") as fp:
+        fp.write("Some content")
+
+    tale["imageInfo"] = tale_info["imageInfo"]
+    tale = Tale().save(tale)
+    return Tale().load(tale["_id"], user=user, level=AccessType.WRITE)
 
 
 @httmock.all_requests
@@ -87,6 +230,7 @@ def image(user):
             user="someUser",
             port=8888,
             urlPath="",
+            targetMount="/mnt/whole-tale",
         ),
     )
     yield img

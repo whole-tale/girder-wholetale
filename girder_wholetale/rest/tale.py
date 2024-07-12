@@ -168,7 +168,7 @@ class Tale(Resource):
                 'tale': taleObj,
                 'user': self.getCurrentUser(),
             }
-            events.daemon.trigger('tale.update_citation', eventParams)
+            events.trigger('tale.update_citation', eventParams)
         return taleObj
 
     @access.user
