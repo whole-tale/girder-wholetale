@@ -1,39 +1,31 @@
-from tests import base
+import pytest
+
+from girder_wholetale.lib.license import WholeTaleLicense
 
 
-def setUpModule():
-    base.enabledPlugins.append('wholetale')
-    base.startServer()
+@pytest.mark.plugin("wholetale")
+def testGetLicenses(server):
+    resp = server.request(path="/license", method="GET", type="application/json")
+
+    # Make sure that we support CC0
+    is_supported = all(x for x in resp.json if (x["spdx"] == "CC0-1.0"))
+    assert is_supported
+    # Make sure that we support CC-BY
+    is_supported = all(x for x in resp.json if (x["spdx"] == "CC-BY-4.0"))
+    assert is_supported
 
 
-def tearDownModule():
-    base.stopServer()
-
-
-class LicenseTestCase(base.TestCase):
-
-    def setUp(self):
-        super(LicenseTestCase, self).setUp()
-
-    def testGetLicenses(self):
-        resp = self.request(
-            path='/license', method='GET',
-            type='application/json')
-
-        # Make sure that we support CC0
-        is_supported = all(x for x in resp.json if (x['spdx'] == 'CC0-1.0'))
-        self.assertTrue(is_supported)
-        # Make sure that we support CC-BY
-        is_supported = all(x for x in resp.json if (x['spdx'] == 'CC-BY-4.0'))
-        self.assertTrue(is_supported)
-
-    def testMinimumLicenses(self):
-        from server.lib.license import WholeTaleLicense
-        # Test that we're supporting a non-zero number of licenses
-        wholetale_license = WholeTaleLicense()
-        self.assertTrue(len(wholetale_license.get_defaults()) > 0)
-        self.assertTrue(len(wholetale_license.get_spdx() > 0))
-        self.assertTrue(len(WholeTaleLicense.default_spdx()) > 0)
-
-    def tearDown(self):
-        super(LicenseTestCase, self).tearDown()
+@pytest.mark.plugin("wholetale")
+def testMinimumLicenses():
+    # Test that we're supporting a non-zero number of licenses
+    wholetale_license = WholeTaleLicense()
+    assert len(wholetale_license.supported_licenses()) == 2
+    assert wholetale_license.supported_spdxes() == {"CC-BY-4.0", "CC0-1.0"}
+    assert wholetale_license.default_spdx() == "CC-BY-4.0"
+    assert "name" in wholetale_license.license_from_spdx("CC-BY-4.0")
+    assert "text" in wholetale_license.license_from_spdx("CC0-1.0")
+    assert wholetale_license.license_from_spdx("CC-BY-4.0")["spdx"] == "CC-BY-4.0"
+    assert (
+        wholetale_license.license_from_spdx("CC-BY-4.0")["name"]
+        == "Creative Commons Attribution 4.0 International"
+    )

@@ -5,6 +5,7 @@ from urllib.parse import quote
 
 from girder import events
 from girder.models.folder import Folder
+from girder.models.item import Item
 from girder.models.user import User
 from girder.models.token import Token
 from girder.utility import JsonEncoder
@@ -19,6 +20,7 @@ from gwvolman.r2d import ImageBuilder
 
 from .license import WholeTaleLicense
 from . import IMPORT_PROVIDERS
+from ..models.image import Image
 
 
 logger = logging.getLogger(__name__)
@@ -65,10 +67,6 @@ class Manifest:
         self.manifest = dict()
         # Create a set that represents any external data packages
         self.datasets = set()
-
-        self.imageModel = ModelImporter.model("image", "wholetale")
-        self.itemModel = ModelImporter.model('item')
-        self.userModel = ModelImporter.model('user')
 
         self.manifest.update(self.create_context())
         self.manifest.update(self.create_basic_attributes())
@@ -126,7 +124,7 @@ class Manifest:
         Adds basic information about the Tale author
         """
 
-        tale_user = self.userModel.load(self.tale['creatorId'],
+        tale_user = User().load(self.tale['creatorId'],
                                         user=self.user,
                                         force=True)
         self.manifest['createdBy'] = {
@@ -433,7 +431,7 @@ class Manifest:
                         ext_obj['size'] += f['size']
 
                 elif obj['_modelType'] == 'item':
-                    fileObj = self.itemModel.childFiles(doc)[0]
+                    fileObj = Item().childFiles(doc)[0]
                     ext_obj.update({
                         'name': fileObj['name'],
                         'uri': fileObj['linkUrl'],
@@ -489,7 +487,7 @@ class Manifest:
 
     def add_version_info(self):
         """Adds version metadata."""
-        user = self.userModel.load(self.version["creatorId"], force=True)
+        user = User().load(self.version["creatorId"], force=True)
         self.manifest["dct:hasVersion"] = {
             "@id": (
                 "https://data.wholetale.org/api/v1/"
@@ -544,12 +542,12 @@ class Manifest:
         )
 
     def get_environment(self):
-        image = self.imageModel.load(
+        image = Image().load(
             self.tale["imageId"], user=self.user, level=AccessType.READ
         )
         # Filter, but keep in mind it removes extra keywords, so we need to add
         # extra stuff like 'taleConfig' afterwards.
-        image = self.imageModel.filter(image, self.user)
+        image = Image().filter(image, self.user)
         image["taleConfig"] = self.tale.get("config", {})
         return image
 

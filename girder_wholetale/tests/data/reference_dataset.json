@@ -1,0 +1,68 @@
+[
+  {
+    "uri": "./LICENSE",
+    "schema:license": "CC-BY-4.0"
+  },
+  {
+    "uri": "https://dataverse.harvard.edu/api/access/datafile/3644649?format=original",
+    "bundledAs": {
+      "folder": "./data/",
+      "filename": "panel_agg.csv"
+    },
+    "schema:isPartOf": "doi:10.7910/DVN/0MXT0H",
+    "wt:size": 7380967,
+    "wt:identifier": "66914397caf69949b7697b7f",
+    "wt:md5": "c43082f634b99494fd58d996065efb0d"
+  },
+  {
+    "uri": "https://dataverse.harvard.edu/api/access/datafile/6867328",
+    "bundledAs": {
+      "folder": "./data/data/primary/",
+      "filename": "primary-data.zip"
+    },
+    "schema:isPartOf": "doi:10.7910/DVN/TJCLKP",
+    "wt:size": 283920,
+    "wt:identifier": "66914397caf69949b7697b6e",
+    "wt:md5": "a8f6fc3fc58f503cd48e23fa8b088694"
+  },
+  {
+    "uri": "https://dataverse.harvard.edu/api/access/datafile/6867331",
+    "bundledAs": {
+      "folder": "./data/data/",
+      "filename": "2023-01-03.tab"
+    },
+    "schema:isPartOf": "doi:10.7910/DVN/TJCLKP",
+    "wt:size": 21940,
+    "wt:identifier": "66914397caf69949b7697b70",
+    "wt:md5": "e494ce71c07ec0e5af710713724890e0"
+  },
+  {
+    "uri": "https://dataverse.harvard.edu/api/access/datafile/6867331?format=original",
+    "bundledAs": {
+      "folder": "./data/data/",
+      "filename": "2023-01-03.tsv"
+    },
+    "schema:isPartOf": "doi:10.7910/DVN/TJCLKP",
+    "wt:size": 21119,
+    "wt:identifier": "66914397caf69949b7697b72",
+    "wt:md5": "6fd497bf13dab9a06fe737ebc22f1917"
+  },
+  {
+    "uri": "https://raw.githubusercontent.com/gwosc-tutorial/LOSC_Event_tutorial/master/BBH_events_v3.json",
+    "bundledAs": {
+      "folder": "./data/",
+      "filename": "BBH_events_v3.json"
+    },
+    "wt:size": 2202,
+    "wt:identifier": "66914397caf69949b7697b78"
+  },
+  {
+    "uri": "https://raw.githubusercontent.com/gwosc-tutorial/LOSC_Event_tutorial/master/BBH_events_v3.json",
+    "bundledAs": {
+      "folder": "./data/LOSC_Event_tutorial/master/",
+      "filename": "BBH_events_v3.json"
+    },
+    "wt:size": 2202,
+    "wt:identifier": "66914397caf69949b7697b78"
+  }
+]
