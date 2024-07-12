@@ -24,7 +24,7 @@ class ZenodoImportProvider(ImportProvider):
         super().__init__("Zenodo")
         # TODO: add 'data.caltech.edu'
         # however it's totally different in terms of storing data...
-        self.base_targets = ["https://zenodo.org/record/"]
+        self.base_targets = ["https://zenodo.org/record"]
 
     def create_regex(self):
         urls = self.get_extra_hosts_setting() + self.base_targets

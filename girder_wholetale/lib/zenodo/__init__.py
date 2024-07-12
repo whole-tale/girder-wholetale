@@ -9,5 +9,5 @@ class ZenodoNotATaleError(Exception):
 
     def __init__(self, record, message="Zenodo record ({}) is not a Tale"):
         self.record = record
-        self.message = message.format(record["links"]["html"])
+        self.message = message.format(record["links"]["self_html"])
         super().__init__(self.message)
