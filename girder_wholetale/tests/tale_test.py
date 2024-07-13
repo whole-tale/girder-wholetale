@@ -33,9 +33,9 @@ from girder_wholetale.models.tale import Tale
 from .conftest import get_events, mockOtherRequests
 
 
-class FakeAsyncResult(object):
+class FakeInstanceResult(object):
     def __init__(self, tale_id=None):
-        self.task_id = "fake_id"
+        self.task_id = "fake_instance_id"
         self.tale_id = tale_id
 
     def get(self, timeout=None):
@@ -83,6 +83,7 @@ def authors():
 @pytest.fixture
 def mock_builder(mocker):
     mock_builder = mocker.patch("girder_wholetale.lib.manifest.ImageBuilder")
+    mock_builder.reset_mock()
     mock_builder.return_value.container_config.repo2docker_version = (
         "craigwillis/repo2docker:latest"
     )
@@ -676,7 +677,9 @@ def test_export(server, user, image, authors, mock_builder):
 
 
 @pytest.mark.plugin("wholetale")
-def test_image_build(server, user, image, mock_builder):
+def test_image_build(server, user, image, mock_builder, mocker):
+    mocker.stopall()
+    mocker.resetall()
     resp = server.request(
         path="/tale",
         method="POST",
@@ -714,47 +717,52 @@ def test_image_build(server, user, image, mock_builder):
     assert job["status"] == JobStatus.INACTIVE
 
     # Schedule the job, make sure it is sent to celery
-    with mock.patch("celery.Celery") as celeryMock:
-        celeryMock().AsyncResult.return_value = FakeAsyncResult(tale["_id"])
-        celeryMock().send_task.return_value = FakeAsyncResult(tale["_id"])
+    celeryMock = mocker.patch("celery.Celery")
+    celeryMock().send_task.return_value = FakeInstanceResult(tale["_id"])
+    celeryMock().AsyncResult.return_value = FakeInstanceResult(tale["_id"])
 
-        Job().scheduleJob(job)
-        for _ in range(20):
-            job = Job().load(job["_id"], force=True)
-            if job["status"] == JobStatus.QUEUED:
-                break
-            time.sleep(0.1)
-        assert job["status"] == JobStatus.QUEUED
+    gca = mocker.patch("girder_worker.girder_plugin.event_handlers.getCeleryApp")
+    gca.return_value = celeryMock()
+    gca_local = mocker.patch("girder_wholetale.lib.events.getCeleryApp")
+    gca_local.return_value = celeryMock()
 
-        tale = Tale().load(tale["_id"], force=True)
-        assert tale["imageInfo"]["status"] == ImageStatus.BUILDING
-
-        # Set status to RUNNING
+    Job().scheduleJob(job)
+    for _ in range(20):
         job = Job().load(job["_id"], force=True)
-        assert job["celeryTaskId"] == "fake_id"
-        Job().updateJob(job, log="job running", status=JobStatus.RUNNING)
+        if job["status"] == JobStatus.QUEUED:
+            break
+        time.sleep(0.1)
+    assert job["status"] == JobStatus.QUEUED
 
-        tale = Tale().load(tale["_id"], force=True)
-        assert tale["imageInfo"]["status"] == ImageStatus.BUILDING
+    tale = Tale().load(tale["_id"], force=True)
+    assert tale["imageInfo"]["status"] == ImageStatus.BUILDING
 
-        # Set status to SUCCESS
-        job = Job().load(job["_id"], force=True)
-        assert job["celeryTaskId"] == "fake_id"
-        Job().updateJob(job, log="job running", status=JobStatus.SUCCESS)
+    # Set status to RUNNING
+    job = Job().load(job["_id"], force=True)
+    assert job["celeryTaskId"] == "fake_instance_id"
+    Job().updateJob(job, log="job running", status=JobStatus.RUNNING)
 
-        tale = Tale().load(tale["_id"], force=True)
-        assert tale["imageInfo"]["status"] == ImageStatus.AVAILABLE
-        assert (
-            tale["imageInfo"]["digest"] == "registry.local.wholetale.org/tale/name:123"
-        )
+    tale = Tale().load(tale["_id"], force=True)
+    assert tale["imageInfo"]["status"] == ImageStatus.BUILDING
 
-        # Set status to ERROR
-        # job = Job().load(job['_id'], force=True)
-        # self.assertEqual(job['celeryTaskId'], 'fake_id')
-        # Job().updateJob(job, log='job running', status=JobStatus.ERROR)
+    # Set status to SUCCESS
+    job = Job().load(job["_id"], force=True)
+    assert job["celeryTaskId"] == "fake_instance_id"
+    Job().updateJob(job, log="job running", status=JobStatus.SUCCESS)
 
-        # tale = Tale().load(tale['_id'], force=True)
-        # self.assertEqual(tale['imageInfo']['status'], ImageStatus.INVALID)
+    tale = Tale().load(tale["_id"], force=True)
+    assert tale["imageInfo"]["status"] == ImageStatus.AVAILABLE
+    assert (
+        tale["imageInfo"]["digest"] == "registry.local.wholetale.org/tale/name:123"
+    )
+
+    # Set status to ERROR
+    # job = Job().load(job['_id'], force=True)
+    # self.assertEqual(job['celeryTaskId'], 'fake_id')
+    # Job().updateJob(job, log='job running', status=JobStatus.ERROR)
+
+    # tale = Tale().load(tale['_id'], force=True)
+    # self.assertEqual(tale['imageInfo']['status'], ImageStatus.INVALID)
 
 
 @pytest.mark.plugin("wholetale")

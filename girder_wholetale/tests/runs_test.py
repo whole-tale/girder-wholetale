@@ -22,19 +22,29 @@ class FakeAsyncResult(object):
         self.tale_id = tale_id
 
     def get(self, timeout=None):
-        return None
+        return {
+            "image_digest": "registry.local.wholetale.org/tale/name:123",
+            "repo2docker_version": 1,
+            "last_build": 123,
+        }
+
+
+@pytest.fixture
+def mock_builder(mocker):
+    mock_builder = mocker.patch("girder_wholetale.lib.manifest.ImageBuilder")
+    mock_builder.reset_mock()
+    mock_builder.return_value.container_config.repo2docker_version = (
+        "craigwillis/repo2docker:latest"
+    )
+    mock_builder.return_value.get_tag.return_value = (
+        "images.local.wholetale.org/tale/name:123"
+    )
+    return mock_builder
 
 
 @pytest.mark.plugin("wholetale")
 @pytest.mark.vcr
-def test_basic_runs_ops(server, register_datasets, dataset, tale, image, user):
-    patcher = mock.patch("girder_wholetale.lib.manifest.ImageBuilder")
-    mock_builder = patcher.start()
-    mock_builder.return_value.container_config.repo2docker_version = (
-        "craigwillis/repo2docker:latest"
-    )
-    mock_builder.return_value.get_tag.return_value = "some_image_digest"
-
+def test_basic_runs_ops(server, register_datasets, dataset, tale, image, user, mock_builder):
     workspace = Folder().load(tale["workspaceId"], force=True)
 
     file1_content = b"Hello World!"
@@ -180,14 +190,8 @@ def test_basic_runs_ops(server, register_datasets, dataset, tale, image, user):
 
 @pytest.mark.plugin("wholetale")
 @pytest.mark.vcr
-def test_recorded_run(server, register_datasets, tale, user):
+def test_recorded_run(server, register_datasets, tale, user, mock_builder):
     mock.patch("gwvolman.tasks.recorded_run").start()
-    patcher = mock.patch("girder_wholetale.lib.manifest.ImageBuilder")
-    mock_builder = patcher.start()
-    mock_builder.return_value.container_config.repo2docker_version = (
-        "craigwillis/repo2docker:latest"
-    )
-    mock_builder.return_value.get_tag.return_value = "some_image_digest"
     workspace = Folder().load(tale["workspaceId"], force=True)
 
     file1_content = b"#!/bin/bash\nmkdir output\ndate > output/date.txt"
@@ -265,6 +269,7 @@ def test_recorded_run(server, register_datasets, tale, user):
 
     with mock.patch("celery.Celery") as celeryMock:
         celeryMock().send_task.return_value = FakeAsyncResult(tale["_id"])
+        celeryMock().AsyncResult.return_value = FakeAsyncResult(tale["_id"])
         Job().scheduleJob(job)
 
         for _ in range(20):

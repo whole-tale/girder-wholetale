@@ -139,7 +139,7 @@ def enabledOrcidAuth():
 
 
 @pytest.mark.plugin("wholetale")
-def test_default_settings():
+def test_default_settings(db):
     from girder_wholetale.constants import PluginSettings, SettingDefault
 
     for key, error_msg in (
