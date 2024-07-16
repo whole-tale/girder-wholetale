@@ -6,7 +6,7 @@ import tempfile
 import time
 from girder.utility import JsonEncoder
 import zipfile
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import bagit
@@ -767,7 +767,7 @@ def test_image_build(server, user, image, mock_builder, mocker):
 
 @pytest.mark.plugin("wholetale")
 def test_tale_notifications(server, user, admin, image):
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     with httmock.HTTMock(mockOtherRequests):
         # Create a new tale from a user image
         resp = server.request(
@@ -809,7 +809,7 @@ def test_tale_notifications(server, user, admin, image):
         ],
         "groups": [],
     }
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
 
     resp = server.request(
         path="/tale/%s/access" % tale["_id"],
@@ -826,7 +826,7 @@ def test_tale_notifications(server, user, admin, image):
     assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
 
     # Update tale, confirm notifications
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     resp = server.request(
         path="/tale/{}".format(str(tale["_id"])),
         method="PUT",
@@ -867,7 +867,7 @@ def test_tale_notifications(server, user, admin, image):
         ],
         "groups": [],
     }
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
 
     resp = server.request(
         path="/tale/%s/access" % tale["_id"],
@@ -893,7 +893,7 @@ def test_tale_notifications(server, user, admin, image):
     assertStatusOk(resp)
 
     # Delete tale, test notification
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     resp = server.request(
         path="/tale/{_id}".format(**tale), method="DELETE", user=admin
     )

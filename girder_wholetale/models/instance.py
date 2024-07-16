@@ -125,7 +125,7 @@ class Instance(AccessControlledModel):
         :returns: The instance document that was edited.
         """
 
-        instance["updated"] = datetime.datetime.utcnow()
+        instance["updated"] = datetime.datetime.now(datetime.timezone.utc)
         return self.save(instance)
 
     def deleteInstance(self, instance, user):
@@ -190,7 +190,7 @@ class Instance(AccessControlledModel):
         if not name:
             name = tale.get("title", "")
 
-        now = datetime.datetime.utcnow()
+        now = datetime.datetime.now(datetime.timezone.utc)
         instance = {
             "created": now,
             "creatorId": user["_id"],

@@ -5,7 +5,7 @@ import tarfile
 import tempfile
 import time
 import zipfile
-from datetime import datetime
+from datetime import datetime, timezone
 
 import mock
 import pytest
@@ -140,7 +140,7 @@ def _testTaleImport(self):
             assert instance_id == self._id
             return {"_id": self._id, "status": InstanceStatus.RUNNING}
 
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     with mock.patch("girder.plugins.wholetale.models.instance.Instance", fakeInstance):
         resp = self.request(
             path="/tale/import",
@@ -207,7 +207,7 @@ def _testTaleImport(self):
 
 
 def _testTaleImportBinder(self):
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
 
     def before_record_cb(request):
         if request.host == "localhost":
@@ -319,7 +319,7 @@ def _testTaleImportZip(self, mock_builder):
         ),
     )
 
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     with open(os.path.join(DATA_PATH, "604126f45f6bb2c4c997e967.zip"), "rb") as fp:
         resp = self.request(
             path="/tale/import",
@@ -388,7 +388,7 @@ def _testTaleImportZipWithRuns(self, mock_builder):
         ),
     )
 
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     with open(os.path.join(DATA_PATH, "61f18414fdfd5791fbb61b7b.zip"), "rb") as fp:
         resp = self.request(
             path="/tale/import",

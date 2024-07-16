@@ -1,7 +1,7 @@
 import json
 import os
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import mock
 import pytest
@@ -265,7 +265,7 @@ def test_recorded_run(server, register_datasets, tale, user, mock_builder):
 
     token_id = job["jobInfoSpec"]["headers"]["Girder-Token"]
     token = Token().load(token_id, force=True, objectId=False)
-    assert token["expires"] > datetime.utcnow() + timedelta(days=59)
+    assert token["expires"] > datetime.now(timezone.utc) + timedelta(days=59)
 
     with mock.patch("celery.Celery") as celeryMock:
         celeryMock().send_task.return_value = FakeAsyncResult(tale["_id"])
@@ -294,7 +294,7 @@ def test_recorded_run(server, register_datasets, tale, user, mock_builder):
         assert rfolder[FIELD_STATUS_CODE] == RunStatus.COMPLETED.code
 
     token = Token().load(token_id, force=True, objectId=False)
-    assert token["expires"] < datetime.utcnow() + timedelta(hours=2)
+    assert token["expires"] < datetime.now(timezone.utc) + timedelta(hours=2)
 
 
 @pytest.mark.plugin("wholetale")

@@ -241,7 +241,7 @@ def cullIdleInstances(event):
     for image in images:
         idleTimeout = image.get("idleTimeout", DEFAULT_IDLE_TIMEOUT)
 
-        cullbefore = datetime.datetime.utcnow() - datetime.timedelta(
+        cullbefore = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(
             minutes=idleTimeout
         )
 

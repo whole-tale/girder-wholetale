@@ -75,7 +75,7 @@ class Account(Resource):
 
         Token().remove(token)
 
-        if token["expires"] < datetime.datetime.utcnow():
+        if token["expires"] < datetime.datetime.now(datetime.timezone.utc):
             raise RestException('Expired CSRF token (state="%s").' % state, code=403)
 
         if not redirect:

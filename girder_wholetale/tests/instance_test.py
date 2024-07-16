@@ -1,7 +1,7 @@
 import json
 import time
 import urllib.parse
-from datetime import datetime
+from datetime import datetime, timezone
 
 import httmock
 import mock
@@ -178,7 +178,7 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     mocker.patch("gwvolman.tasks.update_container")
     mocker.patch("gwvolman.tasks.shutdown_container")
     mocker.patch("gwvolman.tasks.remove_volume")
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     with mock.patch(
         "girder_worker.task.celery.Task.apply_async", spec=True
     ) as mock_apply_async:
@@ -239,7 +239,7 @@ def test_instance_flow(server, user, image, tale_one, mocker):
         assert job["celeryTaskId"] == "fake_id"
 
         Job().updateJob(job, log="job running", status=JobStatus.RUNNING)
-        since = datetime.utcnow().isoformat()
+        since = datetime.now(timezone.utc).isoformat()
         Job().updateJob(job, log="job ran", status=JobStatus.SUCCESS)
 
         resp = server.request(
@@ -481,7 +481,7 @@ def test_instance_flow(server, user, image, tale_one, mocker):
         assert instance["status"] == InstanceStatus.ERROR
 
     # Delete the instance
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     with mock.patch(
         "girder_worker.task.celery.Task.apply_async", spec=True
     ) as mock_apply_async:
@@ -632,7 +632,7 @@ def test_launch_fail(server, user, tale_one, notification):
     assert job["status"] == JobStatus.INACTIVE
     Job().updateJob(job, log="job queued", status=JobStatus.QUEUED)
     Job().updateJob(job, log="job running", status=JobStatus.RUNNING)
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     Job().updateJob(job, log="job failed", status=JobStatus.ERROR)
     instance = Instance().load(instance["_id"], force=True)
     assert instance["status"] == InstanceStatus.ERROR

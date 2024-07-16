@@ -205,7 +205,7 @@ class Tale(AccessControlledModel):
         # if illustration is None:
             # Get image from SILS
 
-        now = datetime.datetime.utcnow()
+        now = datetime.datetime.now(datetime.timezone.utc)
         tale = {
             'authors': authors,
             'category': category,
@@ -289,7 +289,7 @@ class Tale(AccessControlledModel):
         :type tale: dict
         :returns: The tale document that was edited.
         """
-        tale['updated'] = datetime.datetime.utcnow()
+        tale['updated'] = datetime.datetime.now(datetime.timezone.utc)
         ret = self.save(tale)
         users = [user['id'] for user in tale['access']['users']]
         notify_event(users, "wt_tale_updated", {"taleId": tale['_id']})

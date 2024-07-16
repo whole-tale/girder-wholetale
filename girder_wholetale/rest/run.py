@@ -327,7 +327,9 @@ class Run(AbstractVRResource):
             return
 
         if token := Token().load(token_id, force=True, objectId=False):
-            token["expires"] = datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+            token["expires"] = datetime.datetime.now(
+                datetime.timezone.utc
+            ) + datetime.timedelta(hours=1)
             Token().save(token)
 
     def updateRunStatus(self, event):

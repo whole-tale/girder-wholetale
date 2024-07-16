@@ -182,12 +182,11 @@ class Tale(Resource):
         .errorResponse("This Tale has running Instances.", 409)
     )
     def deleteTale(self, tale, force):
-        instances = Instance().find({"taleId": tale["_id"]})
-        if instances.count() > 0 and not force:
+        if Instance().findOne({"taleId": tale["_id"]}) is not None and not force:
             raise RestException("This Tale has running Instances.", 409)
 
         # Shutdown any running Instance
-        for instance in instances:
+        for instance in Instance().find({"taleId": tale["_id"]}):
             instance_creator = User().load(instance["creatorId"], force=True)
             Instance().deleteInstance(instance, instance_creator)
         self._model.remove(tale)

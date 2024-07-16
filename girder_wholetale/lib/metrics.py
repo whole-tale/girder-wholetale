@@ -26,7 +26,7 @@ class _MetricsHandler(logging.Handler):
                 "details": record.details,
                 "ip": cherrypy.request.remote.ip,
                 "userId": user_id,
-                "when": datetime.datetime.utcnow(),
+                "when": datetime.datetime.now(datetime.timezone.utc),
             },
             triggerEvents=False,
         )

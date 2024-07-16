@@ -101,15 +101,15 @@ def run(job):
             "dct:hasVersion",
             {
                 "schema:name": None,
-                "schema:dateModified": datetime.datetime.utcnow(),
-                "schema:dateCreated": datetime.datetime.utcnow(),
+                "schema:dateModified": datetime.datetime.now(datetime.timezone.utc),
+                "schema:dateCreated": datetime.datetime.now(datetime.timezone.utc),
             },
         )
         for date_key in ("schema:dateCreated", "schema:dateModified"):
             if isinstance(version_obj.get(date_key), str):
-                version_obj[date_key] = parseTimestamp(version_obj[date_key])
+                version_obj[date_key] = parseTimestamp(version_obj[date_key], naive=False)
             else:
-                version_obj[date_key] = datetime.datetime.utcnow()
+                version_obj[date_key] = datetime.datetime.now(datetime.timezone.utc)
         api_root = cherrypy.tree.apps["/api"]
         version_resource = api_root.root.v1.version
         setCurrentUser(user)
@@ -135,8 +135,8 @@ def run(job):
             dest_run_dir = pathlib.Path(run["fsPath"]) / "workspace"
             if orig_run_dir.is_dir():
                 copy_fs(OSFS(orig_run_dir), OSFS(dest_run_dir))
-            run["updated"] = parseTimestamp(run_obj["schema:dateModified"])
-            run["created"] = parseTimestamp(run_obj["schema:dateCreated"])
+            run["updated"] = parseTimestamp(run_obj["schema:dateModified"], naive=False)
+            run["created"] = parseTimestamp(run_obj["schema:dateCreated"], naive=False)
             # vv calls save()
             run_resource.setStatus(id=run["_id"], status=int(run_obj["wt:runStatus"]), params={})
 

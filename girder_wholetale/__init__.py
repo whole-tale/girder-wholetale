@@ -670,7 +670,7 @@ def authorize(self, instance):
 
         # Authorize can be called quite a lot. Therefore we only update db
         # once every 5 min.
-        now = datetime.datetime.utcnow()
+        now = datetime.datetime.now(datetime.timezone.utc)
         if inst["lastActivity"] + datetime.timedelta(minutes=5) < now:
             InstanceModel().update(
                 {"_id": inst["_id"]}, {"$set": {"lastActivity": now}}
@@ -689,7 +689,7 @@ def store_other_globus_tokens(event):
         else:
             user_tokens.append(token)
     user["otherTokens"] = user_tokens
-    user["lastLogin"] = datetime.datetime.utcnow()
+    user["lastLogin"] = datetime.datetime.now(datetime.timezone.utc)
     User().save(user)
     metricsLogger.info(
         "user.login",

@@ -2,7 +2,7 @@ import os
 import shutil
 import tempfile
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 
 import git
 import mock
@@ -99,6 +99,7 @@ def _import_from_git_repo(url, server, image, user):
     tale = Tale().load(tale["_id"], user=user)
     return tale, job
 
+
 @pytest.mark.xfail(reason="Local task needs to be ported to celery.")
 @pytest.mark.plugin("wholetale")
 def test_import_git_as_tale(server, user, image, git_repo_dir):
@@ -113,7 +114,7 @@ def test_import_git_as_tale(server, user, image, git_repo_dir):
             return {"_id": self._id, "status": InstanceStatus.RUNNING}
 
     with mock.patch("girder_wholetale.tasks.import_git_repo.Instance", fakeInstance):
-        since = datetime.utcnow().isoformat()
+        since = datetime.now(timezone.utc).isoformat()
         # Custom branch
         tale, job = _import_from_git_repo(
             f"file://{git_repo_dir}@feature", server, image, user
@@ -134,7 +135,7 @@ def test_import_git_as_tale(server, user, image, git_repo_dir):
         Tale().remove(tale)
 
     # Invalid url
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     tale, job = _import_from_git_repo("blah", server, image, user)
     workspace = Folder().load(tale["workspaceId"], force=True)
     workspace_path = workspace["fsPath"]
@@ -158,7 +159,7 @@ def test_git_import(server, user, image, git_repo_dir):
     workspace_path = workspace["fsPath"]
 
     # Invalid path
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     job = _import_git_repo(server, user, tale, "blah")
     assert job["status"] == JobStatus.ERROR
     assert "does not appear to be a git repo" in job["log"][0]
@@ -171,7 +172,7 @@ def test_git_import(server, user, image, git_repo_dir):
     assert events[1]["data"]["event"] == "wt_import_failed"
 
     # Default branch (master)
-    since = datetime.utcnow().isoformat()
+    since = datetime.now(timezone.utc).isoformat()
     job = _import_git_repo(server, user, tale, f"file://{git_repo_dir}")
     assert job["status"] == JobStatus.SUCCESS
     assert os.path.isfile(os.path.join(workspace["fsPath"], GIT_FILE_NAME))

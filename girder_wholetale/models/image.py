@@ -56,7 +56,7 @@ class Image(AccessControlledModel):
         if iframe is None or not isinstance(iframe, bool):
             iframe = False
 
-        now = datetime.datetime.utcnow()
+        now = datetime.datetime.now(datetime.timezone.utc)
         image = {
             'config': config,
             'created': now,
@@ -90,7 +90,7 @@ class Image(AccessControlledModel):
         :type image: dict
         :returns: The image document that was edited.
         """
-        image['updated'] = datetime.datetime.utcnow()
+        image['updated'] = datetime.datetime.now(datetime.timezone.utc)
         return self.save(image)
 
     def setAccessList(self, doc, access, save=False, user=None, force=False,

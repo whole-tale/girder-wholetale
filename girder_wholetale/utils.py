@@ -82,7 +82,7 @@ def init_progress(resource, user, title, message, total):
         "resourceName": "WT custom resource",
     }
 
-    expires = datetime.datetime.utcnow() + datetime.timedelta(
+    expires = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(
         hours=NOTIFICATION_EXP_HOURS
     )
 
