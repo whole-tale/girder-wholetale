@@ -1,12 +1,13 @@
-import HeaderUserView from '@girder/core/views/layout/HeaderUserView';
-import { getCurrentUser } from '@girder/core/auth';
-import { wrap } from '@girder/core/utilities/PluginUtils';
-import { restRequest, getApiRoot } from '@girder/core/rest';
-
 import HeaderLogoTemplate from '../templates/headerLogo.pug';
 import HeaderLinkTemplate from '../templates/headerLink.pug';
 import HeaderUserViewMenuTemplate from '../templates/headerUserViewMenu.pug';
 import '../stylesheets/header.styl';
+
+const $ = girder.$;
+const HeaderUserView = girder.views.layout.HeaderUserView;
+const { getCurrentUser } = girder.auth;
+const { restRequest, getApiRoot } = girder.rest;
+const { wrap } = girder.utilities.PluginUtils;
 
 /**
  * Customize the header view

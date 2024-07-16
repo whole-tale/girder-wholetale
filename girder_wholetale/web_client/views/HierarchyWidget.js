@@ -1,9 +1,9 @@
-import { wrap } from '@girder/core/utilities/PluginUtils';
-import { getCurrentUser } from '@girder/core/auth';
-
-import HierarchyWidget from '@girder/core/views/widgets/HierarchyWidget';
-
 import WholeTaleHierarchyWidget from '../templates/WholeTaleHierarchyWidget.pug';
+
+const $ = girder.$;
+const { wrap } = girder.utilities.PluginUtils;
+const { getCurrentUser } = girder.auth;
+const HierarchyWidget = girder.views.widgets.HierarchyWidget;
 
 wrap(HierarchyWidget, 'render', function (render) {
     var widget = this;

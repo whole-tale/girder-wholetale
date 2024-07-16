@@ -1,13 +1,12 @@
-import { wrap } from '@girder/core/utilities/PluginUtils';
-import CollectionsView from '@girder/core/views/body/CollectionsView';
-
 import CollectionsViewTemplate from '../templates/collectionsView.pug';
 
-import '@girder/core/stylesheets/body/plugins.styl';
 import 'bootstrap-switch'; // /dist/js/bootstrap-switch.js',
 import 'bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css';
 
 import '../stylesheets/collectionsView.styl';
+
+const CollectionsView = girder.views.body.CollectionsView;
+const { wrap } = girder.utilities.PluginUtils;
 
 var reFiltered = /^((?!(WholeTale)).)*$/;
 var enableHiddenCollections = false;
@@ -24,7 +23,6 @@ wrap(CollectionsView, 'initialize', function (initialize, ...args) {
 
 wrap(CollectionsView, 'render', function (render) {
     render.call(this);
-    console.log(this.settings);
     this.$('.g-collection-pagination').before(CollectionsViewTemplate());
     this.$('.g-plugin-switch')
         .bootstrapSwitch()

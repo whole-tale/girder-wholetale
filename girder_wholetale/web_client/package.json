@@ -1,23 +1,45 @@
 {
-    "name": "@girder/wholetale",
+    "name": "@girder/girder-plugin-wholetale",
     "version": "2.0.0",
     "description": "Core Whole Tale plugin for Girder",
+    "homepage": "https://github.com/Xarthisius/girder-wholetale",
+    "bugs": {
+        "url": "https://github.com/Xarthisius/girder-wholetale/issues"
+    },
     "license": "Apache-2.0",
-    "peerDepencencies": {
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Xarthisius/girder-wholetale.git"
+    },
+    "type": "module",
+    "files": [
+        "dist",
+        "package.json"
+    ],
+    "main": "./dist/girder-plugin-wholetale.umd.cjs",
+    "module": "./dist/girder-plugin-wholetale.js",
+    "exports": {
+        ".": {
+            "import": "./dist/girder-plugin-wholetale.js",
+            "require": "./dist/girder-plugin-wholetale.umd.cjs"
+        },
+        "./styles.css": "./dist/styles.css",
+        "./package.json": "./package.json"
+    },
+    "scripts": {
+      "build": "vite build",
+      "dev": "vite build --watch"
+    },
+    "author": "Kacper Kowalik",
+    "depencencies": {
         "@girder/core": "*",
         "@girder/jobs": "*"
     },
-    "bugs": {
-        "url": "https://github.com/whole-tale/girder_wholetale/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/whole-tale/girder_wholetale.git"
-    },
-    "dependencies": {},
-    "girderPlugin": {
-        "name": "wholetale",
-        "main": "./main.js",
-        "dependencies": ["jobs"]
+    "devDependencies": {
+        "pug": "^3.0.2",
+        "stylus": "^0.54.7",
+        "vite": "^4.3.9",
+        "vite-plugin-istanbul": "^4.1.0",
+        "@girder/jobs": "*"
     }
 }

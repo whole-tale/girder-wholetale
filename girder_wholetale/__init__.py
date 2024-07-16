@@ -24,7 +24,7 @@ from girder.models.folder import Folder
 from girder.models.model_base import AccessException, ValidationException
 from girder.models.notification import Notification, ProgressState
 from girder.models.user import User
-from girder.plugin import GirderPlugin, getPlugin
+from girder.plugin import GirderPlugin, getPlugin, registerPluginStaticContent
 from girder.utility import setting_utilities
 from girder.utility.model_importer import ModelImporter
 from girder_jobs.constants import JobStatus
@@ -813,3 +813,11 @@ class WholeTalePlugin(GirderPlugin):
         metricsLogger.setLevel(logging.INFO)
         metricsLogger.addHandler(_MetricsHandler())
         VersionHierarchyModel().resetCrashedCriticalSections()
+
+        registerPluginStaticContent(
+            plugin="wholetale",
+            css=["/style.css"],
+            js=["/girder-plugin-wholetale.umd.cjs"],
+            staticDir=os.path.join(os.path.dirname(__file__), "web_client", "dist"),
+            tree=info["serverRoot"],
+        )

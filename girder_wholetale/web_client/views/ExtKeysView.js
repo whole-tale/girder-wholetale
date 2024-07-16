@@ -1,14 +1,13 @@
-import $ from 'jquery';
-import _ from 'underscore';
-
-import View from '@girder/core/views/View';
-import { getCurrentToken, cookie } from '@girder/core/auth';
-import { restRequest } from '@girder/core/rest';
-import { splitRoute } from '@girder/core/misc';
-
 import ExtKeyView from './ExtKeyDialog';
 import ExtKeysViewTemplate from '../templates/extKeysView.pug';
 import '../stylesheets/extKeysView.styl';
+
+const $ = girder.$;
+const _ = girder._;
+const View = girder.views.View;
+const { getCurrentToken, cookie } = girder.auth;
+const { restRequest } = girder.rest;
+const { splitRoute } = girder.misc;
 
 const parseJwt = (token) => {
     try {
@@ -35,7 +34,6 @@ var ExtKeysView = View.extend({
         },
 
         'click .g-apikey-button': function (event) {
-            console.log('Button clicked');
             var container = $('#g-dialog-container');
             var providerId = $(event.currentTarget).attr('g-provider');
             this.addApiKeyView = new ExtKeyView({
@@ -47,7 +45,6 @@ var ExtKeysView = View.extend({
         },
 
         'click .g-key-provider-delete-button': function (event) {
-            console.log('Delete key');
             var provider = $(event.currentTarget).attr('g-provider');
             var resourceServer = $(event.currentTarget).attr('g-resource');
             restRequest({
@@ -78,7 +75,6 @@ var ExtKeysView = View.extend({
             }
         }).done((resp) => {
             this.providers = resp;
-            console.log(this.providers);
             if (this.providers === null) {
                 return this;
             }

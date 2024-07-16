@@ -1,4 +1,4 @@
-import _ from 'underscore';
+const _ = girder._;
 
 // The same instance status enum as the server.
 var InstanceStatus = {

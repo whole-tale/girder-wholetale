@@ -1,17 +1,17 @@
-import _ from 'underscore';
-
-import PaginateWidget from '@girder/core/views/widgets/PaginateWidget';
-import View from '@girder/core/views/View';
-import { defineFlags, formatDate, DATE_SECOND } from '@girder/core/misc';
-import eventStream from '@girder/core/utilities/EventStream';
-import { SORT_DESC } from '@girder/core/constants';
-import { restRequest } from '@girder/core/rest';
-
 import InstanceCollection from '../collections/InstanceCollection';
 import InstanceListWidgetTemplate from '../templates/InstanceListWidget.pug';
 import InstanceStatus from '../InstanceStatus';
 
 import '../stylesheets/instanceListWidget.styl';
+
+const $ = girder.$;
+const _ = girder._;
+const PaginateWidget = girder.views.widgets.PaginateWidget;
+const View = girder.views.View;
+const { defineFlags, formatDate, DATE_SECOND } = girder.misc;
+const eventStream = girder.utilities.EventStream;
+const { SORT_DESC } = girder.constants;
+const { restRequest } = girder.rest;
 
 var InstanceListWidget = View.extend({
     events: {

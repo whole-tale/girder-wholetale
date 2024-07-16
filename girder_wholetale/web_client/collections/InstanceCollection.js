@@ -1,6 +1,6 @@
-import Collection from '@girder/core/collections/Collection';
-
 import InstanceModel from '../models/InstanceModel';
+
+const Collection = girder.collections.Collection;
 
 var InstanceCollection = Collection.extend({
     resourceName: 'instance',

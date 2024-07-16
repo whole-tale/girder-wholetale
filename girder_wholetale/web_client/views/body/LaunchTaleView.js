@@ -1,18 +1,17 @@
-import $ from 'jquery';
-import _ from 'underscore';
-
-import eventStream from '@girder/core/utilities/EventStream';
-import router from '@girder/core/router';
-import View from '@girder/core/views/View';
-import { restRequest } from '@girder/core/rest';
-import JobModel from '@girder/jobs/models/JobModel';
-import JobStatus from '@girder/jobs/JobStatus';
-
 import LaunchTaleTemplate from '../../templates/body/LaunchTale.pug';
 import ImageCollection from '../../collections/ImageCollection';
 import '../../stylesheets/launchTaleView.styl';
 
-import '@girder/core/utilities/jquery/girderEnable';
+//import '@girder/core/utilities/jquery/girderEnable';
+
+const $ = girder.$;
+const _ = girder._;
+const eventStream = girder.utilities.EventStream;
+const router = girder.router;
+const View = girder.views.View;
+const { restRequest } = girder.rest;
+const JobModel = girder.plugins.jobs.models.JobModel;
+const JobStatus = girder.plugins.jobs.JobStatus;
 
 var LaunchTaleView = View.extend({
     events: {

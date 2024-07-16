@@ -1,9 +1,9 @@
-import FooterView from '@girder/core/views/layout/FooterView';
-import { restRequest, apiRoot } from '@girder/core/rest';
-import { wrap } from '@girder/core/utilities/PluginUtils';
-
 import LayoutFooterTemplate from '../templates/layoutFooter.pug';
-import '@girder/core/stylesheets/layout/footer.styl';
+// import '@girder/core/stylesheets/layout/footer.styl';
+
+const FooterView = girder.views.layout.FooterView;
+const { restRequest, apiRoot } = girder.rest;
+const { wrap } = girder.utilities.PluginUtils;
 
 wrap(FooterView, 'initialize', function (initialize, ...args) {
     this.aboutHref = 'https://wholetale.org/';

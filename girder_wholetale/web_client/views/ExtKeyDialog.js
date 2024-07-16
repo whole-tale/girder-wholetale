@@ -1,13 +1,8 @@
-import View from '@girder/core/views/View';
-import events from '@girder/core/events';
-import { restRequest } from '@girder/core/rest';
-
 import ExtKeyDialogTemplate from '../templates/extKeyDialog.pug';
 
-import 'girder/utilities/jquery/girderEnable';
-import 'girder/utilities/jquery/girderModal';
-
-import 'bootstrap/js/dropdown';
+const View = girder.views.View;
+const events = girder.events;
+const { restRequest } = girder.rest;
 
 /**
  * This view shows a modal dialog for resetting a forgotten password.
@@ -45,7 +40,6 @@ var ExtKeyView = View.extend({
 
         'click a.g-select-resource': function (e) {
             e.preventDefault();
-            console.log(e.target.innerText.trim());
             this.$('button.g-resource-server-button').text(e.target.innerText.trim());
         }
     },

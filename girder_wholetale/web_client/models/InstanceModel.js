@@ -1,4 +1,4 @@
-import AccessControlledModel from '@girder/core/models/AccessControlledModel';
+const AccessControlledModel = girder.models.AccessControlledModel;
 
 var InstanceModel = AccessControlledModel.extend({
     resourceName: 'instance'

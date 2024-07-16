@@ -1,6 +1,6 @@
-import Collection from '@girder/core/collections/Collection';
-
 import ImageModel from '../models/ImageModel';
+
+const Collection = girder.collections.Collection;
 
 var ImageCollection = Collection.extend({
     resourceName: 'image',
