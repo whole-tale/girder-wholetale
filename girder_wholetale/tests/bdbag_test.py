@@ -1,18 +1,18 @@
 import json
-import mock
 import os
 import re
-import responses
 import tempfile
 import time
 import zipfile
 from pathlib import Path
 
 import bdbag.bdbag_api as bdbag
+import mock
+import responses
 from girder import config
 from girder.models.folder import Folder
 from girder.models.item import Item
-
+from girder_jobs.constants import JobStatus
 
 os.environ["GIRDER_PORT"] = os.environ.get("GIRDER_TEST_PORT", "20200")
 config.loadConfig()  # Must reload config to pickup correct port
@@ -43,9 +43,7 @@ def setUp(self):
             "orcid": "https://orcid.org/000-000",
         },
     ]
-    self.admin, self.user = [
-        self.model("user").createUser(**user) for user in users
-    ]
+    self.admin, self.user = [self.model("user").createUser(**user) for user in users]
 
     self.image_admin = self.model("image", "wholetale").createImage(
         name="test admin image", creator=self.admin, public=True
@@ -61,7 +59,7 @@ def setUp(self):
             user="someUser",
             port=8888,
             urlPath="",
-            targetMount='/mount',
+            targetMount="/mount",
         ),
     )
 
@@ -78,6 +76,7 @@ def setUp(self):
     responses.add_passthru(re.compile("https://zenodo.org/\\w+"))
     responses.add_passthru(re.compile("https://gwosc.org/\\w+"))
     responses.add_passthru(re.compile("https://dvn-cloud.s3.amazonaws.com/\\w+"))
+
 
 @responses.activate
 def _testBDBagValidation(self):
@@ -144,17 +143,13 @@ def _testBDBagValidation(self):
         )
 
     # Fake imageInfo
-    imageInfo = {
-        "digest": "registry.local.wholetale.org/tale/foo:123"
-    }
+    imageInfo = {"digest": "registry.local.wholetale.org/tale/foo:123"}
 
     # Create tale (use model directly to set imageInfo)
     from girder.plugins.wholetale.models.tale import Tale
+
     tale = Tale().createTale(
-        image=self.image,
-        data=dataSet,
-        creator=self.user,
-        imageInfo=imageInfo
+        image=self.image, data=dataSet, creator=self.user, imageInfo=imageInfo
     )
 
     # "Upload" something to workspace
@@ -164,11 +159,15 @@ def _testBDBagValidation(self):
         fp.write("vim\n")
 
     # Export!
-    with mock.patch("girder.plugins.wholetale.lib.manifest.ImageBuilder") as mock_builder:
-        mock_builder.return_value.container_config.repo2docker_version = \
+    with mock.patch(
+        "girder.plugins.wholetale.lib.manifest.ImageBuilder"
+    ) as mock_builder:
+        mock_builder.return_value.container_config.repo2docker_version = (
             "craigwillis/repo2docker:latest"
-        mock_builder.return_value.get_tag.return_value = \
+        )
+        mock_builder.return_value.get_tag.return_value = (
             "images.local.wholetale.org/tale/foo:123"
+        )
         resp = self.request(
             path=f"/tale/{tale['_id']}/export",
             method="GET",
@@ -200,16 +199,17 @@ def _testBDBagValidation(self):
 
         # Confirm image digest.
         manifest_fs_path = os.path.join(bag_path, "metadata/manifest.json")
-        with open(manifest_fs_path, 'r') as fp:
+        with open(manifest_fs_path, "r") as fp:
             manifest_json = json.load(fp)
             self.assertEqual(
                 manifest_json["schema:hasPart"][1]["@id"],
-                "images.local.wholetale.org/tale/foo:123"
+                "images.local.wholetale.org/tale/foo:123",
             )
 
         from server.lib.manifest_parser import ManifestParser
+
         tale_fields = ManifestParser(manifest_fs_path).get_tale_fields()
         self.assertEqual(
             tale_fields["imageInfo"]["digest"],
-            "registry.local.wholetale.org/tale/foo:123"
+            "registry.local.wholetale.org/tale/foo:123",
         )

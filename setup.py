@@ -1,7 +1,14 @@
+from pathlib import Path
+
 from setuptools import find_packages, setup
+
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="girder-wholetale",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     version="2.0.0",
     description="Girder plugin implementing Whole Tale core functionality.",
     packages=find_packages(),
@@ -22,8 +29,10 @@ setup(
         "girder-jobs",
         "girder-worker",
         "girder-virtual-resources",
+        "girder-oauth",
         "rdflib",
         "celery[redis]",
+        "pathvalidate",
         "python-magic",
         "requests",
         "validators",
@@ -32,13 +41,8 @@ setup(
         "GitPython",
         "httpio>=0.3.0",
         "fs",
+        "gwvolman @ git+https://github.com/Xarthisius/gwvolman@master#egg=gwvolman",
     ],
-    entry_points={
-        "girder.plugin": ["wholetale = girder_wholetale:WholeTalePlugin"]
-    },
+    entry_points={"girder.plugin": ["wholetale = girder_wholetale:WholeTalePlugin"]},
     zip_safe=False,
 )
-
-
-#git+https://github.com/whole-tale/girderfs@master#egg=girderfs
-#git+https://github.com/whole-tale/gwvolman@master#egg=gwvolman

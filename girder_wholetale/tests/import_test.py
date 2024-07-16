@@ -13,15 +13,18 @@ import vcr
 from bson import ObjectId
 from fs.copy import copy_fs
 from fs.osfs import OSFS
+from girder_jobs.constants import JobStatus
 
 # from girder import config
 from girder.models.folder import Folder
 from girder.utility.path import lookUpPath
 
 from .conftest import event_types, get_events
+from girder_wholetale.models.tale import Tale
 
 ### NEEDS DATA_MANAGER
 
+DATA_PATH = os.path.join(os.path.dirname(__file__), "data")
 # DATA_PATH = os.path.join(
 #    os.path.dirname(os.environ["GIRDER_TEST_DATA_PREFIX"]),
 #    "data_src",
@@ -587,10 +590,3 @@ def _test_dsRootPath(self):
     )
     Tale().remove(tale)
     self.model("image", "wholetale").remove(image)
-
-
-def tearDown(self):
-    self.model("user").remove(self.user)
-    self.model("user").remove(self.admin)
-    self.model("image", "wholetale").remove(self.image)
-    super(ImportTaleTestCase, self).tearDown()

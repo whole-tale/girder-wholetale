@@ -1,5 +1,14 @@
 # dependencies for tests
+mock
+httmock
+pytest>=3.6
+pytest-cov
 pytest-vcr
 pytest-mock
+pytest-girder
+git+https://github.com/girder/girder.git@v4-integration#egg=girder
+git+https://github.com/girder/girder.git@v4-integration#egg=pytest-girder&subdirectory=pytest_girder
+git+https://github.com/girder/girder.git@v4-integration#egg=girder-jobs&subdirectory=plugins/jobs
+git+https://github.com/girder/girder_worker@girder-5#egg=girder_worker
 bdbag
 responses

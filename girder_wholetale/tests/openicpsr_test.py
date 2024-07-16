@@ -1,32 +1,12 @@
 import json
 import os
-import tempfile
 import time
 
 import httmock
 from bson import ObjectId
-from girder.exceptions import GirderException
-from girder.models.assetstore import Assetstore
-from girder.models.file import File
 from girder.models.user import User
 
-def setUpModule():
-    base.enabledPlugins.append("wholetale")
-    base.startServer()
-    try:
-        assetstore = Assetstore().getCurrent()
-    except GirderException:
-        assetstore = Assetstore().createFilesystemAssetstore("test", tempfile.mkdtemp())
-        assetstore["current"] = True
-        Assetstore().save(assetstore)
-
-
-def tearDownModule():
-    assetstore = Assetstore().getCurrent()
-    for fobj in File().find({"assetstoreId": assetstore["_id"]}):
-        File().remove(fobj)
-    Assetstore().remove(assetstore)
-    base.stopServer()
+DATA_PATH = os.path.join(os.path.dirname(__file__), "data")
 
 
 @httmock.all_requests
@@ -100,6 +80,7 @@ def _testLookup(self):
     self.assertStatusOk(resp)
     self.assertEqual(resp.json, [resolved_lookup])
 
+
 def _test_setting_password(self):
     resp = self.request(
         path="/account/icpsr/key",
@@ -127,6 +108,7 @@ def _test_setting_password(self):
         },
     )
     self.assertStatusOk(resp)
+
 
 def _test_import_binder(self):
     from girder.plugins.jobs.constants import JobStatus

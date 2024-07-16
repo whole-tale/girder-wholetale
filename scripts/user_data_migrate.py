@@ -12,11 +12,9 @@ Example:
 
 """
 
-import pprint
 from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.user import User
-from girder.plugins.wholetale.models.tale import Tale
 from girder.plugins.wholetale.utils import getOrCreateRootFolder
 from girder.plugins.wholetale.constants import CATALOG_NAME
 

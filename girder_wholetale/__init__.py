@@ -29,7 +29,9 @@ from girder.utility import setting_utilities
 from girder.utility.model_importer import ModelImporter
 from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job as JobModel
+from girder_oauth.providers import addProvider
 from girder_oauth.rest import OAuth as OAuthResource
+from girder_oauth.settings import PluginSettings as OAuthSettings
 from girder_worker.girder_plugin.celery import getCeleryApp
 from girder_worker.girder_plugin.status import CustomJobStatus
 from girder_worker.girder_plugin.utils import jobInfoSpec
@@ -45,6 +47,7 @@ from .lib.events import (
     set_tale_dirs_mapping,
 )
 from .lib.metrics import _MetricsHandler, metricsLogger
+from .lib.orcid import ORCID
 from .models.instance import Instance as InstanceModel
 from .models.version_hierarchy import VersionHierarchyModel
 from .rest.account import Account
@@ -702,15 +705,28 @@ def attachJobInfoSpec(event):
         )
 
 
+@setting_utilities.validator({"oauth.orcid_client_id", "oauth.orcid_client_secret"})
+def validateOrcidSettings(doc):
+    pass
+
+
+@setting_utilities.default({"oauth.orcid_client_id", "oauth.orcid_client_secret"})
+def defaultOrcidSettings():
+    return ""
+
+
 class WholeTalePlugin(GirderPlugin):
     DISPLAY_NAME = "WholeTale"
     CLIENT_SOURCE_PATH = "web_client"
 
     def load(self, info):
         getPlugin("oauth").load(info)
+        OAuthSettings.ORCID_CLIENT_ID = "oauth.orcid_client_id"
+        OAuthSettings.ORCID_CLIENT_SECRET = "oauth.orcid_client_secret"
+        addProvider(ORCID)
         getPlugin("jobs").load(info)
         getPlugin("worker").load(info)
-        getPlugin("girder_virtual_resources").load(info)
+        getPlugin("virtual_resources").load(info)
         info["apiRoot"].wholetale = wholeTale()
         info["apiRoot"].instance = Instance()
         tale = Tale()

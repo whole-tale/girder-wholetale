@@ -20,7 +20,6 @@ from girder.utility.progress import ProgressContext
 from girder.plugins.wholetale.models.tale import Tale
 from girder.plugins.wholetale.utils import getOrCreateRootFolder
 from girder.plugins.wholetale.constants import CATALOG_NAME
-from girder.plugins.wholetale.lib import IMPORT_PROVIDERS, pids_to_entities
 from girder.plugins.wholetale.lib.entity import Entity
 from girder.plugins.wholetale.lib.http_provider import HTTPImportProvider
 
