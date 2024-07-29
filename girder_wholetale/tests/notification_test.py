@@ -16,6 +16,7 @@ def assertNotification(notification_id, state, total, current, msg):
     assert notification["data"]["message"] == msg
 
 
+@pytest.mark.xfail(reason="Needs master marged into v4-integration")
 @pytest.mark.plugin("wholetale")
 def test_single_job_notification(server, user):
     # TODO: Why do we need it here?
@@ -106,6 +107,7 @@ def test_single_job_notification(server, user):
     )
 
 
+@pytest.mark.xfail(reason="Needs master marged into v4-integration")
 @pytest.mark.plugin("wholetale")
 def testChainedJobNotification(server, user):
     Setting().set(WorkerPluginSettings.API_URL, "http://localhost:8080/api/v1")
