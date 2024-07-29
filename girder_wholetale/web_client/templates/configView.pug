@@ -14,11 +14,14 @@ form#g-wholetale-config-form(role="form")
       placeholder=`Default: ${defaults['wholetale.dashboard_link_title'] || 'none'}`,
       title="Title for dashboard link in header.")
   .form-group
-    label(for="wholetale_enable_data_catalog")
-      input#wholetale_enable_data_catalog(
-          type="checkbox", checked=(
-            settings['wholetale.enable_data_catalog'] === null ? defaults['wholetale.enable_data_catalog'] : settings['wholetale.enable_data_catalog']))
-      | Enable Data Catalog
+    label Enable Data Catalog
+      p.
+        When enabled instead of registered datasets, the user will see a list of datasets from Girder.
+      input.g-setting-switch(
+        type="checkbox", checked="checked", data-size="mini", data-on-color="primary")
+      .access-widget-container
+      textarea#wholetale_enable_data_catalog.hide
+        = JSON.stringify(settings['wholetale.enable_data_catalog'])
   .form-group
     label.control-label(for="wholetale_catalog_link_title") Catalog Link Title
     input.input-sm.form-control#wholetale_catalog_link_title(
@@ -71,6 +74,41 @@ form#g-wholetale-config-form(role="form")
       placeholder=`Default: ${defaults['wholetale.publisher_repositories'] || '[]'}`,
       title="A mapping of publish repositories to auth providers. (JSON object {\"repository1\": \"authprovider1\", ...})")
         = JSON.stringify(settings['wholetale.publisher_repositories'] || defaults['wholetale.publisher_repositories'], null, 4)
+  .form-group
+    label.control-label(for="wholetale-homes-root") Home Directories Root
+    input.input-sm.form-control#wholetale-homes-root(
+      type="text", value=settings['wholetale.homes_root'] || null,
+      placeholder=`Default: ${defaults['wholetale.homes_root'] || 'none'}`,
+      title="Root directory for user home directories."
+    )
+    label.control-label(for="wholetale-workspaces-root") Workspaces Root
+    input.input-sm.form-control#wholetale-workspaces-root(
+      type="text", value=settings['wholetale.workspaces_root'] || null,
+      placeholder=`Default: ${defaults['wholetale.workspaces_root'] || 'none'}`,
+      title="Root directory for Tale workspaces."
+    )
+    label.control-label(for="wholetale-versions-root") Tale Versions Root
+    input.input-sm.form-control#wholetale-versions-root(
+      type="text", value=settings['wholetale.versions_root'] || null,
+      placeholder=`Default: ${defaults['wholetale.versions_root'] || 'none'}`,
+      title="Root directory for Tale versions."
+    )
+    label.control-label(for="wholetale-runs-root") Tale Runs Root
+    input.input-sm.form-control#wholetale-runs-root(
+      type="text", value=settings['wholetale.runs_root'] || null,
+      placeholder=`Default: ${defaults['wholetale.runs_root'] || 'none'}`,
+      title="Root directory for Tale runs."
+    )
+    .form-group
+      label Expose Home/Workspaces via WebDAV
+      br
+      span Needs a separate plugin
+      .checkbox
+        label(for="wholetale-enable-dav-server")
+          input#wholetale-enable-dav-server(
+            type="checkbox", checked=(
+              settings['wholetale.dav_server'] === null ? defaults['wholetale.dav_server'] : settings['wholetale.dav_server']))
+          | Enabled
   .form-group
     label Header logo
     .g-wholetale-logo-container

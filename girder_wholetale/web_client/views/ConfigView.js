@@ -1,6 +1,9 @@
 import ConfigViewTemplate from '../templates/configView.pug';
 import '../stylesheets/configView.styl';
 
+import 'bootstrap-switch'; // /dist/js/bootstrap-switch.js',
+import 'bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css';
+
 const _ = girder._;
 const { restRequest, getApiRoot } = girder.rest;
 const events = girder.events;
@@ -57,6 +60,21 @@ var ConfigView = View.extend({
             }, {
                 key: 'wholetale.publisher_repositories',
                 value: this.$('#wholetale_publisher_repositories').val().trim()
+            }, {
+                key: 'wholetale.homes_root',
+                value: this.$('#wholetale-homes-root').val().trim()
+            }, {
+                key: 'wholetale.workspaces_root',
+                value: this.$('#wholetale-workspaces-root').val().trim()
+            }, {
+                key: 'wholetale.versions_root',
+                value: this.$('#wholetale-versions-root').val().trim()
+            }, {
+                key: 'wholetale.runs_root',
+                value: this.$('#wholetale-runs-root').val().trim()
+            }, {
+                key: 'wholetale.dav_server',
+                value: this.$('#wholetale-enable-dav-server').is(':checked')
             }]);
         },
 
@@ -85,7 +103,12 @@ var ConfigView = View.extend({
             'wholetale.dataverse_extra_hosts',
             'wholetale.external_auth_providers',
             'wholetale.external_apikey_groups',
-            'wholetale.publisher_repositories'
+            'wholetale.publisher_repositories',
+            'wholetale.homes_root',
+            'wholetale.workspaces_root',
+            'wholetale.versions_root',
+            'wholetale.runs_root',
+            'wholetale.dav_server'
         ];
 
         restRequest({
@@ -152,27 +175,29 @@ var ConfigView = View.extend({
             .$el.appendTo(this.$('.g-wholetale-logo-upload-container'));
         this._updateLogoDisplay();
 
+        this.$('.g-setting-switch').bootstrapSwitch();
+
         return this;
     },
 
     _saveSettings: function (settings) {
         restRequest({
-            type: 'PUT',
+            method: 'PUT',
             url: 'system/setting',
             data: {
                 list: JSON.stringify(settings)
             },
             error: null
-        }).done(_.bind(function (resp) {
+        }).done(() => {
             events.trigger('g:alert', {
                 icon: 'ok',
                 text: 'Settings saved.',
                 type: 'success',
-                timeout: 4000
+                timeout: 3000
             });
-        }, this)).fail(_.bind(function (err) {
-            this.$('#g-wholetale-error-message').html(err.responseJSON.message);
-        }, this));
+        }).fail((resp) => {
+            this.$('#g-wholetale-error-message').text(resp.responseJSON.message);
+        });
     }
 });
 

@@ -169,7 +169,10 @@ def validateDashboardLinkTitle(doc):
     if not doc["value"]:
         doc["value"] = defaultDashboardLinkTitle()
     if not isinstance(doc["value"], six.string_types):
-        raise ValidationException("The setting is not a string", "value")
+        raise ValidationException(
+            f"The setting '{PluginSettings.DASHBOARD_LINK_TITLE}' is not a string",
+            "value",
+        )
 
 
 @setting_utilities.validator(PluginSettings.CATALOG_LINK_TITLE)
@@ -177,10 +180,15 @@ def validateCatalogLinkTitle(doc):
     if not doc["value"]:
         doc["value"] = defaultCatalogLinkTitle()
     if not isinstance(doc["value"], six.string_types):
-        raise ValidationException("The setting is not a string", "value")
+        raise ValidationException(
+            f"The setting '{PluginSettings.CATALOG_LINK_TITLE}' is not a string",
+            "value",
+        )
 
 
-@setting_utilities.validator(PluginSettings.ENABLE_DATA_CATALOG)
+@setting_utilities.validator(
+    {PluginSettings.ENABLE_DATA_CATALOG, PluginSettings.DAV_SERVER}
+)
 def validateEnableDataCatalog(doc):
     if not doc["value"]:
         doc["value"] = defaultEnableDataCatalog()
@@ -224,7 +232,7 @@ def validateHref(doc):
         PluginSettings.HOME_DIRS_ROOT,
         PluginSettings.TALE_DIRS_ROOT,
         PluginSettings.RUNS_DIRS_ROOT,
-        PluginSettings.DAV_SERVER,
+        PluginSettings.VERSIONS_DIRS_ROOT,
     }
 )
 def validateDirPaths(doc):
