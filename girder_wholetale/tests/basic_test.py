@@ -310,11 +310,14 @@ def testPluginSettings(server, admin, fsAssetstore):
     assertStatusOk(resp)
     assert resp.json == default_settings
 
+    def not_a_string(value):
+        return f"The setting '{value}' is not a string"
+
     # test validation
     test_settings = {
         PluginSettings.WEBSITE_URL: ("not_a_url", "Invalid  URL"),
-        PluginSettings.DASHBOARD_LINK_TITLE: (1, "The setting is not a string"),
-        PluginSettings.CATALOG_LINK_TITLE: (1, "The setting is not a string"),
+        PluginSettings.DASHBOARD_LINK_TITLE: (1, not_a_string(PluginSettings.DASHBOARD_LINK_TITLE)),
+        PluginSettings.CATALOG_LINK_TITLE: (1, not_a_string(PluginSettings.CATALOG_LINK_TITLE)),
         PluginSettings.ENABLE_DATA_CATALOG: (
             "not_a_boolean",
             "The setting is not a boolean",
