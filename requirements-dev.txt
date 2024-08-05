@@ -14,3 +14,4 @@ git+https://github.com/girder/girder.git@v4-integration#egg=girder-oauth&subdire
 git+https://github.com/girder/girder_worker@girder-5#egg=girder_worker
 bdbag
 responses
+validators
