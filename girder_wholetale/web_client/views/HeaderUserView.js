@@ -5,7 +5,7 @@ import '../stylesheets/header.styl';
 
 const $ = girder.$;
 const HeaderUserView = girder.views.layout.HeaderUserView;
-const { getCurrentUser } = girder.auth;
+const { getCurrentUser, getCurrentToken } = girder.auth;
 const { restRequest, getApiRoot } = girder.rest;
 const { wrap } = girder.utilities.PluginUtils;
 
@@ -25,7 +25,10 @@ wrap(HeaderUserView, 'render', function (render) {
             if (resp['wholetale.logo']) {
                 logoUrl = `${getApiRoot()}/${resp['wholetale.logo']}`;
             }
-            let dashboardUrl = resp['wholetale.dashboard_url'];
+            // parse the dashboard URL and append girderToken as a query parameter
+            let dashboardUrl = URL.parse(resp['wholetale.dashboard_url']);
+            dashboardUrl.searchParams.set('girderToken', getCurrentToken());
+
             let title = resp['wholetale.dashboard_link_title'];
             let bannerColor = resp['core.banner_color'];
 
@@ -34,7 +37,7 @@ wrap(HeaderUserView, 'render', function (render) {
             }
             if (!$('.g-dashboard-link').length) {
                 $('.g-quick-search-form').after(HeaderLinkTemplate({
-                    dashboardUrl: dashboardUrl,
+                    dashboardUrl: dashboardUrl.href,
                     title: title }));
                 document.getElementsByClassName('g-header-wrapper')[0].style.backgroundColor = bannerColor;
             }
