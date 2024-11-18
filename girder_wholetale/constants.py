@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from girder import events
+from girder.settings import SettingDefault
 
 API_VERSION = "2.1"
 CATALOG_NAME = "WholeTale Catalog"
@@ -45,10 +46,15 @@ class PluginSettings:
     VERSIONS_DIRS_ROOT = "wholetale.versions_root"
     RUNS_DIRS_ROOT = "wholetale.runs_root"
     DAV_SERVER = "wholetale.dav_server"
+    PRIVATE_STORAGE_PATH = "dm.private_storage_path"
+    PRIVATE_STORAGE_CAPACITY = "dm.private_storage_capacity"
+    GC_RUN_INTERVAL = "dm.gc_run_interval"
+    GC_COLLECT_START_FRACTION = "dm.gc_collect_start_fraction"
+    GC_COLLECT_END_FRACTION = "dm.gc_collect_end_fraction"
 
 
-class SettingDefault:
-    defaults = {
+SettingDefault.defaults.update(
+    {
         PluginSettings.DASHBOARD_TITLE: "Whole Tale",
         PluginSettings.HEADER_COLOR: "#132f43",
         PluginSettings.WEBSITE_URL: "http://wholetale.org",
@@ -160,6 +166,7 @@ class SettingDefault:
         PluginSettings.VERSIONS_DIRS_ROOT: "/tmp/wt/versions-dirs",
         PluginSettings.DAV_SERVER: False,
     }
+)
 
 
 # Constants representing the setting keys for this plugin
@@ -231,3 +238,12 @@ class RunStatus:
     @classmethod
     def get(cls, code: int) -> RunState:
         return RunState.ALL[code]
+
+
+class TransferStatus:
+    INITIALIZING = 0
+    QUEUED = 1
+    TRANSFERRING = 2
+    DONE = 3
+    FAILED = 4
+    FAILED_TEMPORARILY = 5

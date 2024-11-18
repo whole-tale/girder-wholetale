@@ -721,7 +721,7 @@ def test_image_build(server, user, image, mock_builder, mocker):
     celeryMock().send_task.return_value = FakeInstanceResult(tale["_id"])
     celeryMock().AsyncResult.return_value = FakeInstanceResult(tale["_id"])
 
-    gca = mocker.patch("girder_worker.girder_plugin.event_handlers.getCeleryApp")
+    gca = mocker.patch("girder_plugin_worker.event_handlers.getCeleryApp")
     gca.return_value = celeryMock()
     gca_local = mocker.patch("girder_wholetale.lib.events.getCeleryApp")
     gca_local.return_value = celeryMock()

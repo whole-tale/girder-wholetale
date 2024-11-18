@@ -7,7 +7,7 @@ from girder.models.folder import Folder
 from girder.models.token import Token
 from girder.models.user import User
 from girder_jobs.models.job import Job
-from girder_worker.girder_plugin.celery import getCeleryApp
+from girder_plugin_worker.celery import getCeleryApp
 from gwvolman.tasks import check_on_run, cleanup_run
 
 from ..constants import FIELD_STATUS_CODE, PluginSettings, RunState, RunStatus

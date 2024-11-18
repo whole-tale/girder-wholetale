@@ -14,7 +14,7 @@ from girder.models.setting import Setting
 from girder.utility import config
 from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job
-from girder_worker.girder_plugin.status import CustomJobStatus
+from girder_plugin_worker.status import CustomJobStatus
 from pytest_girder.assertions import assertStatus, assertStatusOk
 from pytest_girder.utils import getResponseBody
 
@@ -352,7 +352,7 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     ) as mock_apply_async:
         celeryMock.send_task.return_value = FakeAsyncResultForUpdate(instance["_id"])
         mocker.patch(
-            "girder_worker.girder_plugin.event_handlers.getCeleryApp",
+            "girder_plugin_worker.event_handlers.getCeleryApp",
             return_value=celeryMock,
         )
         resp = server.request(
@@ -434,7 +434,7 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     ) as mock_apply_async:
         celeryMock.send_task.return_value = FakeAsyncResultForUpdate(instance["_id"])
         mocker.patch(
-            "girder_worker.girder_plugin.event_handlers.getCeleryApp",
+            "girder_plugin_worker.event_handlers.getCeleryApp",
             return_value=celeryMock,
         )
         # PUT /instance/:id (currently a no-op)

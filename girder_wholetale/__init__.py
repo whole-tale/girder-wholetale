@@ -23,6 +23,7 @@ from girder.models.file import File
 from girder.models.folder import Folder
 from girder.models.model_base import AccessException, ValidationException
 from girder.models.notification import Notification, ProgressState
+from girder.models.setting import Setting
 from girder.models.user import User
 from girder.plugin import GirderPlugin, getPlugin, registerPluginStaticContent
 from girder.utility import setting_utilities
@@ -32,9 +33,9 @@ from girder_jobs.models.job import Job as JobModel
 from girder_oauth.providers import addProvider
 from girder_oauth.rest import OAuth as OAuthResource
 from girder_oauth.settings import PluginSettings as OAuthSettings
-from girder_worker.girder_plugin.celery import getCeleryApp
-from girder_worker.girder_plugin.status import CustomJobStatus
-from girder_worker.girder_plugin.utils import jobInfoSpec
+from girder_plugin_worker.celery import getCeleryApp
+from girder_plugin_worker.status import CustomJobStatus
+from girder_plugin_worker.utils import jobInfoSpec
 
 from .constants import FIELD_STATUS_CODE, PluginSettings, SettingDefault
 from .lib import update_citation
@@ -48,18 +49,27 @@ from .lib.events import (
 )
 from .lib.metrics import _MetricsHandler, metricsLogger
 from .lib.orcid import ORCID
+from .lib.path_mapper import PathMapper
 from .models.instance import Instance as InstanceModel
+from .models.lock import Lock as LockModel
 from .models.version_hierarchy import VersionHierarchyModel
+from .models.session import Session as SessionModel
+from .models.transfer import Transfer as TransferModel
 from .rest.account import Account
 from .rest.dataset import Dataset
+from .rest.dm import DM
+from .rest.fs import FS
 from .rest.harvester import listImportedData
 from .rest.image import Image
 from .rest.instance import Instance
 from .rest.integration import Integration
 from .rest.license import License
+from .rest.lock import Lock
 from .rest.repository import Repository
 from .rest.run import Run
+from .rest.session import Session
 from .rest.tale import Tale
+from .rest.transfer import Transfer
 from .rest.version import Version
 from .rest.wholetale import wholeTale
 from .schema.misc import (
@@ -93,7 +103,7 @@ def validateExternalApikeyGroups(doc):
 
 
 @setting_utilities.validator(PluginSettings.EXTERNAL_AUTH_PROVIDERS)
-def validateOtherSettings(doc):
+def validateExternalAuthProviders(doc):
     try:
         jsonschema.validate(doc["value"], external_auth_providers_schema)
     except jsonschema.ValidationError as e:
@@ -332,6 +342,19 @@ def defaultRunsDirsRoot():
 @setting_utilities.default(PluginSettings.VERSIONS_DIRS_ROOT)
 def defaultVersionsDirsRoot():
     return SettingDefault.defaults[PluginSettings.VERSIONS_DIRS_ROOT]
+
+
+@setting_utilities.validator(
+    {
+        PluginSettings.PRIVATE_STORAGE_PATH,
+        PluginSettings.PRIVATE_STORAGE_CAPACITY,
+        PluginSettings.GC_RUN_INTERVAL,
+        PluginSettings.GC_COLLECT_START_FRACTION,
+        PluginSettings.GC_COLLECT_END_FRACTION,
+    }
+)
+def validateOtherSettings(event):
+    pass
 
 
 @access.public(scope=TokenScope.DATA_READ)
@@ -728,6 +751,16 @@ class WholeTalePlugin(GirderPlugin):
     CLIENT_SOURCE_PATH = "web_client"
 
     def load(self, info):
+        KB = 1024
+        MB = 1024 * KB
+        GB = 1024 * MB
+
+        SettingDefault.defaults[PluginSettings.PRIVATE_STORAGE_PATH] = "/tmp/ps"
+        SettingDefault.defaults[PluginSettings.PRIVATE_STORAGE_CAPACITY] = 100 * GB
+        SettingDefault.defaults[PluginSettings.GC_RUN_INTERVAL] = 10 * 60
+        SettingDefault.defaults[PluginSettings.GC_COLLECT_START_FRACTION] = 0.5
+        SettingDefault.defaults[PluginSettings.GC_COLLECT_END_FRACTION] = 0.5
+
         getPlugin("oauth").load(info)
         OAuthSettings.ORCID_CLIENT_ID = "oauth.orcid_client_id"
         OAuthSettings.ORCID_CLIENT_SECRET = "oauth.orcid_client_secret"
@@ -760,9 +793,118 @@ class WholeTalePlugin(GirderPlugin):
         ModelImporter.registerModel("instance", InstanceModel, "wholetale")
         ModelImporter.registerModel("image", ImageModel, "wholetale")
         ModelImporter.registerModel("tale", TaleModel, "wholetale")
+        ModelImporter.registerModel("session", SessionModel, "wholetale")
+        ModelImporter.registerModel("transfer", TransferModel, "wholetale")
+        ModelImporter.registerModel("lock", LockModel, "wholetale")
 
         info["apiRoot"].dataset = Dataset()
         info["apiRoot"].image = Image()
+
+        session = Session()
+        lock = Lock()
+        transfer = Transfer()
+        fs = FS()
+
+        pathMapper = PathMapper()
+        from .lib.transfer_manager import SimpleTransferManager
+        transferManager = SimpleTransferManager(pathMapper)
+
+        # a GC that does nothing
+        # fileGC = file_gc.DummyFileGC(pathMapper)
+        from .lib.file_gc import (
+            CollectionStrategy,
+            FractionalCollectionThresholds,
+            LRUSortingScheme,
+            PeriodicFileGC,
+        )
+
+        fileGC = PeriodicFileGC(
+            pathMapper,
+            CollectionStrategy(
+                FractionalCollectionThresholds(),
+                LRUSortingScheme(),
+            ),
+        )
+        from .lib.cache_manager import SimpleCacheManager  # Needs models to be registered
+        cacheManager = SimpleCacheManager(
+            Setting(), transferManager, fileGC, pathMapper
+        )
+        dm = DM(cacheManager)
+        info["apiRoot"].dm = dm
+        info["apiRoot"].dm.route("GET", ("session",), session.listSessions)
+        info["apiRoot"].dm.route(
+            "GET",
+            (
+                "session",
+                ":id",
+            ),
+            session.getSession,
+        )
+        info["apiRoot"].dm.route("POST", ("session",), session.createSession)
+        info["apiRoot"].dm.route(
+            "PUT",
+            (
+                "session",
+                ":id",
+            ),
+            session.modifySession,
+        )
+        info["apiRoot"].dm.route("DELETE", ("session", ":id"), session.removeSession)
+
+        info["apiRoot"].dm.route("POST", ("lock",), lock.acquireLock)
+        info["apiRoot"].dm.route("DELETE", ("lock", ":id"), lock.releaseLock)
+        info["apiRoot"].dm.route("GET", ("lock", ":id"), lock.getLock)
+        info["apiRoot"].dm.route("GET", ("lock",), lock.listLocks)
+        info["apiRoot"].dm.route("GET", ("lock", ":id", "download"), lock.downloadItem)
+
+        info["apiRoot"].dm.route("GET", ("session", ":id", "object"), session.getObject)
+        info["apiRoot"].dm.route(
+            "GET",
+            (
+                "session",
+                ":id",
+                "lock",
+            ),
+            lock.listLocksForSession,
+        )
+        info["apiRoot"].dm.route(
+            "GET", ("session", ":id", "transfer"), transfer.listTransfersForSession
+        )
+
+        info["apiRoot"].dm.route("GET", ("transfer",), transfer.listTransfers)
+
+        info["apiRoot"].dm.route("GET", ("fs", "item", ":itemId"), fs.getItemUnfiltered)
+        info["apiRoot"].dm.route("GET", ("fs", ":id", "raw"), fs.getRawObject)
+        info["apiRoot"].dm.route(
+            "PUT", ("fs", ":id", "setProperties"), fs.setProperties
+        )
+        info["apiRoot"].dm.route("GET", ("fs", ":id", "listing"), fs.getListing)
+        info["apiRoot"].dm.route("GET", ("fs", ":id", "evict"), lock.evict)
+
+        info["apiRoot"].dm.route("PUT", ("clearCache",), dm.clearCache)
+
+        def itemLocked(event):
+            dict = event.info
+            cacheManager.itemLocked(dict["user"], dict["itemId"], dict["sessionId"])
+
+        def itemUnlocked(event):
+            cacheManager.itemUnlocked(event.info)
+
+        def fileDownloaded(event):
+            cacheManager.fileDownloaded(event.info)
+
+        def sessionCreated(event):
+            cacheManager.sessionCreated(event.info)
+
+        def sessionDeleted(event):
+            cacheManager.sessionDeleted(event.info)
+
+        events.bind("dm.itemLocked", "wholetale", itemLocked)
+        events.bind("dm.itemUnlocked", "wholetale", itemUnlocked)
+        events.bind("dm.fileDownloaded", "wholetale", fileDownloaded)
+        events.bind("dm.sessionCreated", "wholetale", sessionCreated)
+        events.bind("dm.sessionDeleted", "wholetale", sessionDeleted)
+
         events.bind("jobs.job.update.after", "wholetale", job_update_after_handler)
         events.bind("jobs.job.update", "wholetale", updateNotification)
         events.bind("model.file.validate", "wholetale", validateFileLink)
@@ -804,6 +946,7 @@ class WholeTalePlugin(GirderPlugin):
         ModelImporter.model("folder").exposeFields(
             level=AccessType.READ, fields=("runVersionId", FIELD_STATUS_CODE)
         )
+        ModelImporter.model("item").exposeFields(level=AccessType.READ, fields=("dm",))
 
         events.bind("tale.update_citation", "wholetale", update_citation)
         path_to_assets = os.path.join(

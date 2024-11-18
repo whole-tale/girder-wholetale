@@ -15,8 +15,8 @@ from girder.models.setting import Setting
 from girder.models.token import Token
 from girder.models.user import User
 from girder_jobs.constants import JobStatus
-from girder_worker.girder_plugin.celery import getCeleryApp
-from girder_worker.girder_plugin.status import CustomJobStatus
+from girder_plugin_worker.celery import getCeleryApp
+from girder_plugin_worker.status import CustomJobStatus
 
 from ..constants import (
     RUNS_ROOT_DIR_NAME,
