@@ -1,0 +1,7 @@
+prune girder_wholetale/web_client
+include girder_wholetale/web_client/dist/girder-plugin-wholetale.umd.cjs
+include girder_wholetale/web_client/dist/style.css
+prune girder_wholetale/tests
+exclude girder_wholetalet/tests
+global-prune *.yaml
+global-exclude *.yaml

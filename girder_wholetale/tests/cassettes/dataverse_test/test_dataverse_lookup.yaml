@@ -1,0 +1,2053 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://doi.org/10.7910/DVN/RLMYMR
+  response:
+    body:
+      string: ''
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8a11e0c85eb361e0-ORD
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '233'
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:54 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=mkkbKjfUYseKInThoxWOvBlCcKMi%2BAW4rVLISOIFy9l%2FAkYG7iaVGgBnk1mrrkVIeojDB4eCIeQg5Vk0gOEHAwjPvo8ai%2FlB81NJZWpCNFzNURO19APi73M%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      alt-svc:
+      - h3=":443"; ma=86400
+      expires:
+      - Wed, 10 Jul 2024 17:08:45 GMT
+      location:
+      - https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/RLMYMR
+      permissions-policy:
+      - interest-cohort=(),browsing-topics=()
+      vary:
+      - Accept
+    status:
+      code: 302
+      message: Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/RLMYMR
+  response:
+    body:
+      string: ''
+    headers:
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en-US
+      Content-Type:
+      - text/html;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:54 GMT
+      Location:
+      - https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/RLMYMR
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=ArUuYQp1vSd56/cD1XiLw/Qf/D6h6mx64wf75RKHhIQnhGRaRx8t93rO4pkbf6TUreP8DN81Nd/Zj4BT/FLm5iPSDx1Ew7msBm4J6qt4uNUoD2CzLAS1ZiPXInlS;
+        Expires=Wed, 17 Jul 2024 16:19:54 GMT; Path=/
+      - AWSALBCORS=ArUuYQp1vSd56/cD1XiLw/Qf/D6h6mx64wf75RKHhIQnhGRaRx8t93rO4pkbf6TUreP8DN81Nd/Zj4BT/FLm5iPSDx1Ew7msBm4J6qt4uNUoD2CzLAS1ZiPXInlS;
+        Expires=Wed, 17 Jul 2024 16:19:54 GMT; Path=/; SameSite=None; Secure
+    status:
+      code: 302
+      message: Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - AWSALB=ArUuYQp1vSd56/cD1XiLw/Qf/D6h6mx64wf75RKHhIQnhGRaRx8t93rO4pkbf6TUreP8DN81Nd/Zj4BT/FLm5iPSDx1Ew7msBm4J6qt4uNUoD2CzLAS1ZiPXInlS;
+        AWSALBCORS=ArUuYQp1vSd56/cD1XiLw/Qf/D6h6mx64wf75RKHhIQnhGRaRx8t93rO4pkbf6TUreP8DN81Nd/Zj4BT/FLm5iPSDx1Ew7msBm4J6qt4uNUoD2CzLAS1ZiPXInlS
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/RLMYMR
+  response:
+    body:
+      string: ''
+    headers:
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - frame-ancestors 'none'
+      Content-Type:
+      - text/html;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:55 GMT
+      Link:
+      - <https://doi.org/10.7910/DVN/RLMYMR>;rel="cite-as", <https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/RLMYMR/UKYKS9>;rel="item";type="application/pdf",<https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/RLMYMR/WNKD3W>;rel="item";type="text/tab-separated-values",
+        <https://doi.org/10.7910/DVN/RLMYMR>;rel="describedby";type="application/vnd.citationstyles.csl+json",<https://dataverse.harvard.edu/api/datasets/export?exporter=schema.org&persistentId=doi:10.7910/DVN/RLMYMR>;rel="describedby";type="application/ld+json",
+        <https://schema.org/AboutPage>;rel="type",<https://schema.org/Dataset>;rel="type",
+        <https://dataverse.harvard.edu/api/datasets/:persistentId/versions/2.0/customlicense?persistentId=doi:10.7910/DVN/RLMYMR>;rel="license",
+        <https://dataverse.harvard.edu/api/datasets/:persistentId/versions/2.0/linkset?persistentId=doi:10.7910/DVN/RLMYMR>
+        ; rel="linkset";type="application/linkset+json"
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=EPBExJjyRHtkicA1E2uo5Nb3I2nuNtXhWTRGj7Lag3FX4b1yknbfK0nE+fcYdhw8VvieAEHLqu+IJblE8PEN7BCIV6hC+a/371O24EbLvepg78GnTrLuZ3GVBzAz;
+        Expires=Wed, 17 Jul 2024 16:19:55 GMT; Path=/
+      - AWSALBCORS=EPBExJjyRHtkicA1E2uo5Nb3I2nuNtXhWTRGj7Lag3FX4b1yknbfK0nE+fcYdhw8VvieAEHLqu+IJblE8PEN7BCIV6hC+a/371O24EbLvepg78GnTrLuZ3GVBzAz;
+        Expires=Wed, 17 Jul 2024 16:19:55 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71bc13ef72b26b1d6efc5256b18; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/datasets/:persistentId?persistentId=doi:10.7910/DVN/RLMYMR
+  response:
+    body:
+      string: '{"status":"OK","data":{"id":2966297,"identifier":"DVN/RLMYMR","persistentUrl":"https://doi.org/10.7910/DVN/RLMYMR","protocol":"doi","authority":"10.7910","publisher":"Harvard
+        Dataverse","publicationDate":"2016-12-20","storageIdentifier":"s3://10.7910/DVN/RLMYMR","latestVersion":{"id":147203,"datasetId":2966297,"datasetPersistentId":"doi:10.7910/DVN/RLMYMR","storageIdentifier":"s3://10.7910/DVN/RLMYMR","versionNumber":2,"versionMinorNumber":0,"versionState":"RELEASED","UNF":"UNF:6:wBvSbRl2RTVRfu9kpjgnrw==","lastUpdateTime":"2018-11-15T16:04:00Z","releaseTime":"2018-11-15T16:04:00Z","createTime":"2018-11-15T16:00:10Z","publicationDate":"2016-12-20","citationDate":"2016-12-20","termsOfUse":"Attribution
+        is required","disclaimer":"These datasets are provided \"as is\" and in no
+        event shall Bioversity International be liable for any damages resulting from
+        use of the data. While great effort was taken to obtain high quality data,
+        the accuracy or reliability of the data is not gua ranteed or warranted in
+        any way. Bioversity International encourages the use of these datasets, but
+        emphasizes that many of them contain \"raw data\" files. When applicable,
+        all information which would allow individuals to be identified has been deleted
+        from the files. For some of the datasets, the user will need to take care
+        in handling missing observations, outlier values and violations of logical
+        consistency. ","fileAccessRequest":false,"metadataBlocks":{"citation":{"displayName":"Citation
+        Metadata","name":"citation","fields":[{"typeName":"title","multiple":false,"typeClass":"primitive","value":"Karnataka
+        Diet Diversity and Food Security for Agricultural Biodiversity Assessment"},{"typeName":"author","multiple":true,"typeClass":"compound","value":[{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Ntandou-Bouzitou,
+        G.D."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Kennedy,
+        G."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Bellon,
+        M.R."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Mathur,
+        P."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Dandin,
+        S."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Patil,
+        H.B. "},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Horticulture
+        Research Station, Vijayapura, Karnataka"}}]},{"typeName":"datasetContact","multiple":true,"typeClass":"compound","value":[{"datasetContactName":{"typeName":"datasetContactName","multiple":false,"typeClass":"primitive","value":"Mauricio
+        Bellon"},"datasetContactAffiliation":{"typeName":"datasetContactAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"},"datasetContactEmail":{"typeName":"datasetContactEmail","multiple":false,"typeClass":"primitive","value":"mrbellon@yahoo.com"}},{"datasetContactName":{"typeName":"datasetContactName","multiple":false,"typeClass":"primitive","value":"Bioversity-Dataverse"},"datasetContactAffiliation":{"typeName":"datasetContactAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"},"datasetContactEmail":{"typeName":"datasetContactEmail","multiple":false,"typeClass":"primitive","value":"bioversity-dataverse@groups.cgiar.org"}}]},{"typeName":"dsDescription","multiple":true,"typeClass":"compound","value":[{"dsDescriptionValue":{"typeName":"dsDescriptionValue","multiple":false,"typeClass":"primitive","value":"The
+        questionnaire elicited information on foods consumed and their sources for
+        selected mothers and children of the households interviewed for the ABD-Assessment
+        (24-hour recall); information on young and child feeding practices; and on
+        household food secuirty, and risk preferences of mother.\r\nIn the same households
+        selected for the ABD-Assessment, one woman per household was selected. The
+        first choice of respondent was a woman that had a child between 6 and 59 months
+        old; if no woman was available with a child between 6 and 59 months, the interview
+        was perfomred with the woman that usually takes care of the food preparation
+        in the household. In case there were more women with children between 6 and
+        59 months living in the household,one of them was selected randomly .  The
+        same procedure was done if more than one child of the selected woman is eligible
+        to participate in the study.\r\nFor the food consumed by mother and child,
+        the period was the previous 24 hours. Interviews took place between the 25
+        of  August and 30 September 2014 (2 cases 30, 31 of October). For the household
+        food security data refer to the previous 30 days of the day of the interview.
+        For the infant and child feeding practices, they are in general.\r\nThree
+        villages in the Bijapur District: Mannur, Nandyal, Balaganur were surveyed."}}]},{"typeName":"subject","multiple":true,"typeClass":"controlledVocabulary","value":["Agricultural
+        Sciences","Social Sciences"]},{"typeName":"keyword","multiple":true,"typeClass":"compound","value":[{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"DIET"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"DIVERSIFICATION"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"FOOD
+        SECURITY"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"FEEDING
+        HABITS"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"HOUSEHOLDS"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"CHILDREN"}}]},{"typeName":"topicClassification","multiple":true,"typeClass":"compound","value":[{"topicClassValue":{"typeName":"topicClassValue","multiple":false,"typeClass":"primitive","value":"SURVEYS"},"topicClassVocab":{"typeName":"topicClassVocab","multiple":false,"typeClass":"primitive","value":"AGROVOC"},"topicClassVocabURI":{"typeName":"topicClassVocabURI","multiple":false,"typeClass":"primitive","value":"http://aims.fao.org/aos/agrovoc/c_7537"}}]},{"typeName":"language","multiple":true,"typeClass":"controlledVocabulary","value":["English"]},{"typeName":"distributor","multiple":true,"typeClass":"compound","value":[{"distributorName":{"typeName":"distributorName","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"},"distributorURL":{"typeName":"distributorURL","multiple":false,"typeClass":"primitive","value":"http://www.bioversityinternational.org/"}}]},{"typeName":"depositor","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"},{"typeName":"dateOfDeposit","multiple":false,"typeClass":"primitive","value":"2016-12-20"},{"typeName":"timePeriodCovered","multiple":true,"typeClass":"compound","value":[{"timePeriodCoveredStart":{"typeName":"timePeriodCoveredStart","multiple":false,"typeClass":"primitive","value":"2014-08"},"timePeriodCoveredEnd":{"typeName":"timePeriodCoveredEnd","multiple":false,"typeClass":"primitive","value":"2014-10"}}]},{"typeName":"dateOfCollection","multiple":true,"typeClass":"compound","value":[{"dateOfCollectionStart":{"typeName":"dateOfCollectionStart","multiple":false,"typeClass":"primitive","value":"2014-08"},"dateOfCollectionEnd":{"typeName":"dateOfCollectionEnd","multiple":false,"typeClass":"primitive","value":"2014-10"}}]},{"typeName":"kindOfData","multiple":true,"typeClass":"primitive","value":["Household/Survey
+        data"]},{"typeName":"otherReferences","multiple":true,"typeClass":"primitive","value":["CRP
+        1.1: CGIAR Research Program on Dryland Agricultural Production Systems"]}]},"geospatial":{"displayName":"Geospatial
+        Metadata","name":"geospatial","fields":[{"typeName":"geographicCoverage","multiple":true,"typeClass":"compound","value":[{"country":{"typeName":"country","multiple":false,"typeClass":"controlledVocabulary","value":"India"},"state":{"typeName":"state","multiple":false,"typeClass":"primitive","value":"Karnataka"},"otherGeographicCoverage":{"typeName":"otherGeographicCoverage","multiple":false,"typeClass":"primitive","value":"Bijapur
+        District"}}]}]}},"files":[{"description":"Data","label":"Karnataka_DD&FS_Data-1.tab","restricted":false,"version":2,"datasetVersionId":147203,"dataFile":{"id":3315157,"persistentId":"doi:10.7910/DVN/RLMYMR/WNKD3W","pidURL":"https://doi.org/10.7910/DVN/RLMYMR/WNKD3W","filename":"Karnataka_DD&FS_Data-1.tab","contentType":"text/tab-separated-values","friendlyType":"Tab-Delimited","filesize":2321,"description":"Data","storageIdentifier":"s3://dvn-cloud:167181b3a0e-b7e18f26cfad","originalFileFormat":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","originalFormatLabel":"MS
+        Excel Spreadsheet","originalFileSize":700840,"originalFileName":"Karnataka_DD&FS_Data-1.xlsx","UNF":"UNF:6:wBvSbRl2RTVRfu9kpjgnrw==","rootDataFileId":2966302,"previousDataFileId":2966302,"md5":"ca9dea905295ac52db4ea3c7c8bf00e9","checksum":{"type":"MD5","value":"ca9dea905295ac52db4ea3c7c8bf00e9"},"tabularData":true,"creationDate":"2018-11-15","publicationDate":"2018-11-15","fileAccessRequest":false}},{"label":"Karnataka_DD&FS_Questionnaire.pdf","restricted":false,"version":1,"datasetVersionId":147203,"dataFile":{"id":2966301,"persistentId":"doi:10.7910/DVN/RLMYMR/UKYKS9","pidURL":"https://doi.org/10.7910/DVN/RLMYMR/UKYKS9","filename":"Karnataka_DD&FS_Questionnaire.pdf","contentType":"application/pdf","friendlyType":"Adobe
+        PDF","filesize":493564,"storageIdentifier":"s3://dvn-cloud:1591ccfc017-1eeea525e902","rootDataFileId":-1,"md5":"d9de390c8f132916b4bb97d6ea0c8ed6","checksum":{"type":"MD5","value":"d9de390c8f132916b4bb97d6ea0c8ed6"},"tabularData":false,"creationDate":"2016-12-20","publicationDate":"2016-12-20","fileAccessRequest":false}}]}}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:56 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=9tSaGrkdJDeZsAdZWuiUC9yb840g0Y3MliLZ2pLelvTToOKg1XntndfloJZ4ZSPSxki+Hmn0LeInOT1eepKKrK+VZ9m/jYE4KaqUi8l3iH031qNPCUTiAd28JmAB;
+        Expires=Wed, 17 Jul 2024 16:19:56 GMT; Path=/
+      - AWSALBCORS=9tSaGrkdJDeZsAdZWuiUC9yb840g0Y3MliLZ2pLelvTToOKg1XntndfloJZ4ZSPSxki+Hmn0LeInOT1eepKKrK+VZ9m/jYE4KaqUi8l3iH031qNPCUTiAd28JmAB;
+        Expires=Wed, 17 Jul 2024 16:19:56 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71c1096b4456a614c8478327cf5; Path=/; Secure
+      Transfer-Encoding:
+      - chunked
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://doi.org/10.7910/DVN/RLMYMR/WNKD3W
+  response:
+    body:
+      string: ''
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8a11e0d699d06338-ORD
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '251'
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:56 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=MJx8AaGdenOe6X2%2Fh7ohwi2truzn%2FConFKfX3H5%2FCvx6YZxdY3FuT1NDkX%2FNO0GIvUoLvwR8NLZ3Q4%2BYRRg75UN3I0f4aIUy5ZzT0fDqMGrvaGuB%2FXn8xQU%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      alt-svc:
+      - h3=":443"; ma=86400
+      expires:
+      - Wed, 10 Jul 2024 16:28:14 GMT
+      location:
+      - https://dataverse.harvard.edu/file.xhtml?persistentId=doi:10.7910/DVN/RLMYMR/WNKD3W
+      permissions-policy:
+      - interest-cohort=(),browsing-topics=()
+      vary:
+      - Accept
+    status:
+      code: 302
+      message: Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/file.xhtml?persistentId=doi:10.7910/DVN/RLMYMR/WNKD3W
+  response:
+    body:
+      string: ''
+    headers:
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - frame-ancestors 'none'
+      Content-Type:
+      - text/html;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:57 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=6bm5Qq5Fah91rAX3M+RyDmv/EQtU7U9zv0PsX7Z2/nRLLB0ITlNdcTPVCuS3wdXYwciHdYWBd3kB6CMzFBrRal/PaGbx1kDqctXfqDH/kVGJZFKGRLlN0Q06MaNH;
+        Expires=Wed, 17 Jul 2024 16:19:56 GMT; Path=/
+      - AWSALBCORS=6bm5Qq5Fah91rAX3M+RyDmv/EQtU7U9zv0PsX7Z2/nRLLB0ITlNdcTPVCuS3wdXYwciHdYWBd3kB6CMzFBrRal/PaGbx1kDqctXfqDH/kVGJZFKGRLlN0Q06MaNH;
+        Expires=Wed, 17 Jul 2024 16:19:56 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71c3b9e23ee6351c2ad8d70acca; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/search?q=filePersistentId:WNKD3W
+  response:
+    body:
+      string: '{"status":"OK","data":{"q":"filePersistentId:WNKD3W","total_count":1,"start":0,"spelling_alternatives":{},"items":[{"name":"Karnataka_DD&FS_Data-1.tab","type":"file","url":"https://dataverse.harvard.edu/api/access/datafile/3315157","file_id":"3315157","description":"Data","published_at":"2018-11-15T11:04:00Z","file_type":"Tab-Delimited","file_content_type":"text/tab-separated-values","size_in_bytes":2321,"md5":"ca9dea905295ac52db4ea3c7c8bf00e9","checksum":{"type":"MD5","value":"ca9dea905295ac52db4ea3c7c8bf00e9"},"unf":"UNF:6:wBvSbRl2RTVRfu9kpjgnrw==","file_persistent_id":"doi:10.7910/DVN/RLMYMR/WNKD3W","dataset_name":"Karnataka
+        Diet Diversity and Food Security for Agricultural Biodiversity Assessment","dataset_id":"2966297","dataset_persistent_id":"doi:10.7910/DVN/RLMYMR","dataset_citation":"Ntandou-Bouzitou,
+        G.D.; Kennedy, G.; Bellon, M.R.; Mathur, P.; Dandin, S.; Patil, H.B., 2016,
+        \"Karnataka Diet Diversity and Food Security for Agricultural Biodiversity
+        Assessment\", https://doi.org/10.7910/DVN/RLMYMR, Harvard Dataverse, V2, UNF:6:wBvSbRl2RTVRfu9kpjgnrw==
+        [fileUNF]"}],"count_in_response":1}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1112'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:57 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=BQTstRRUG2osYR0qK26R6c+lWQxqSTZmSYqo6efD+WVMP6LI9tgnssBU3P6kZiB2FFP6tJOYlbsQZOmg3k+E5HLQsSf5iYU0mVP0/BGNXxASaCkY0HLD2YmeDUzf;
+        Expires=Wed, 17 Jul 2024 16:19:57 GMT; Path=/
+      - AWSALBCORS=BQTstRRUG2osYR0qK26R6c+lWQxqSTZmSYqo6efD+WVMP6LI9tgnssBU3P6kZiB2FFP6tJOYlbsQZOmg3k+E5HLQsSf5iYU0mVP0/BGNXxASaCkY0HLD2YmeDUzf;
+        Expires=Wed, 17 Jul 2024 16:19:57 GMT; Path=/; SameSite=None; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://doi.org/10.7910/DVN/RLMYMR
+  response:
+    body:
+      string: ''
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8a11e0dd9faa2cf5-ORD
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '233'
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:57 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=PZb94Z06tBzZzHYkKL8UXDJnKf3CEZM0AsB4KR%2B%2Bx%2BmxPzfI5Sh15qY2t7E6Kz0nj5AtzX%2FXka29jV%2Fwmzt2afTyunj%2BFh28qKu6OCXyHp2RbI9Ez7oEpxk%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      alt-svc:
+      - h3=":443"; ma=86400
+      expires:
+      - Wed, 10 Jul 2024 17:08:45 GMT
+      location:
+      - https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/RLMYMR
+      permissions-policy:
+      - interest-cohort=(),browsing-topics=()
+      vary:
+      - Accept
+    status:
+      code: 302
+      message: Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/RLMYMR
+  response:
+    body:
+      string: ''
+    headers:
+      Connection:
+      - keep-alive
+      Content-Language:
+      - en-US
+      Content-Type:
+      - text/html;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:57 GMT
+      Location:
+      - https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/RLMYMR
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=9qeVHdeNJdzzdkivNtF8GzUFd+2rs8z3K2cKgA4Ebtr5dFtpOfBmWK5s9Zbv18yEEV3sCQNx3PkeU2bIN70l4G3HRwojgtrQCSPoNYUkBN0LYTV3gCiz1V2bv6jI;
+        Expires=Wed, 17 Jul 2024 16:19:57 GMT; Path=/
+      - AWSALBCORS=9qeVHdeNJdzzdkivNtF8GzUFd+2rs8z3K2cKgA4Ebtr5dFtpOfBmWK5s9Zbv18yEEV3sCQNx3PkeU2bIN70l4G3HRwojgtrQCSPoNYUkBN0LYTV3gCiz1V2bv6jI;
+        Expires=Wed, 17 Jul 2024 16:19:57 GMT; Path=/; SameSite=None; Secure
+    status:
+      code: 302
+      message: Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - AWSALB=9qeVHdeNJdzzdkivNtF8GzUFd+2rs8z3K2cKgA4Ebtr5dFtpOfBmWK5s9Zbv18yEEV3sCQNx3PkeU2bIN70l4G3HRwojgtrQCSPoNYUkBN0LYTV3gCiz1V2bv6jI;
+        AWSALBCORS=9qeVHdeNJdzzdkivNtF8GzUFd+2rs8z3K2cKgA4Ebtr5dFtpOfBmWK5s9Zbv18yEEV3sCQNx3PkeU2bIN70l4G3HRwojgtrQCSPoNYUkBN0LYTV3gCiz1V2bv6jI
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/RLMYMR
+  response:
+    body:
+      string: ''
+    headers:
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - frame-ancestors 'none'
+      Content-Type:
+      - text/html;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:59 GMT
+      Link:
+      - <https://doi.org/10.7910/DVN/RLMYMR>;rel="cite-as", <https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/RLMYMR/UKYKS9>;rel="item";type="application/pdf",<https://dataverse.harvard.edu/api/access/datafile/:persistentId?persistentId=doi:10.7910/DVN/RLMYMR/WNKD3W>;rel="item";type="text/tab-separated-values",
+        <https://doi.org/10.7910/DVN/RLMYMR>;rel="describedby";type="application/vnd.citationstyles.csl+json",<https://dataverse.harvard.edu/api/datasets/export?exporter=schema.org&persistentId=doi:10.7910/DVN/RLMYMR>;rel="describedby";type="application/ld+json",
+        <https://schema.org/AboutPage>;rel="type",<https://schema.org/Dataset>;rel="type",
+        <https://dataverse.harvard.edu/api/datasets/:persistentId/versions/2.0/customlicense?persistentId=doi:10.7910/DVN/RLMYMR>;rel="license",
+        <https://dataverse.harvard.edu/api/datasets/:persistentId/versions/2.0/linkset?persistentId=doi:10.7910/DVN/RLMYMR>
+        ; rel="linkset";type="application/linkset+json"
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=FEdj+Nv43L3GE2lqdd8YcOTPuMCgSFXMAhkLOaXQqZWlkEoRNT81SU+rdHQmIZO2bc8uTAqWPKUqM80sxidqL2cQy+hDp0dgQ/8IRSM/8I6TSydVrube8yWHkqPh;
+        Expires=Wed, 17 Jul 2024 16:19:58 GMT; Path=/
+      - AWSALBCORS=FEdj+Nv43L3GE2lqdd8YcOTPuMCgSFXMAhkLOaXQqZWlkEoRNT81SU+rdHQmIZO2bc8uTAqWPKUqM80sxidqL2cQy+hDp0dgQ/8IRSM/8I6TSydVrube8yWHkqPh;
+        Expires=Wed, 17 Jul 2024 16:19:58 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71c8ad7544e7d4e1278184c1759; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/datasets/:persistentId?persistentId=doi:10.7910/DVN/RLMYMR
+  response:
+    body:
+      string: '{"status":"OK","data":{"id":2966297,"identifier":"DVN/RLMYMR","persistentUrl":"https://doi.org/10.7910/DVN/RLMYMR","protocol":"doi","authority":"10.7910","publisher":"Harvard
+        Dataverse","publicationDate":"2016-12-20","storageIdentifier":"s3://10.7910/DVN/RLMYMR","latestVersion":{"id":147203,"datasetId":2966297,"datasetPersistentId":"doi:10.7910/DVN/RLMYMR","storageIdentifier":"s3://10.7910/DVN/RLMYMR","versionNumber":2,"versionMinorNumber":0,"versionState":"RELEASED","UNF":"UNF:6:wBvSbRl2RTVRfu9kpjgnrw==","lastUpdateTime":"2018-11-15T16:04:00Z","releaseTime":"2018-11-15T16:04:00Z","createTime":"2018-11-15T16:00:10Z","publicationDate":"2016-12-20","citationDate":"2016-12-20","termsOfUse":"Attribution
+        is required","disclaimer":"These datasets are provided \"as is\" and in no
+        event shall Bioversity International be liable for any damages resulting from
+        use of the data. While great effort was taken to obtain high quality data,
+        the accuracy or reliability of the data is not gua ranteed or warranted in
+        any way. Bioversity International encourages the use of these datasets, but
+        emphasizes that many of them contain \"raw data\" files. When applicable,
+        all information which would allow individuals to be identified has been deleted
+        from the files. For some of the datasets, the user will need to take care
+        in handling missing observations, outlier values and violations of logical
+        consistency. ","fileAccessRequest":false,"metadataBlocks":{"citation":{"displayName":"Citation
+        Metadata","name":"citation","fields":[{"typeName":"title","multiple":false,"typeClass":"primitive","value":"Karnataka
+        Diet Diversity and Food Security for Agricultural Biodiversity Assessment"},{"typeName":"author","multiple":true,"typeClass":"compound","value":[{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Ntandou-Bouzitou,
+        G.D."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Kennedy,
+        G."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Bellon,
+        M.R."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Mathur,
+        P."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Dandin,
+        S."},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"}},{"authorName":{"typeName":"authorName","multiple":false,"typeClass":"primitive","value":"Patil,
+        H.B. "},"authorAffiliation":{"typeName":"authorAffiliation","multiple":false,"typeClass":"primitive","value":"Horticulture
+        Research Station, Vijayapura, Karnataka"}}]},{"typeName":"datasetContact","multiple":true,"typeClass":"compound","value":[{"datasetContactName":{"typeName":"datasetContactName","multiple":false,"typeClass":"primitive","value":"Mauricio
+        Bellon"},"datasetContactAffiliation":{"typeName":"datasetContactAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"},"datasetContactEmail":{"typeName":"datasetContactEmail","multiple":false,"typeClass":"primitive","value":"mrbellon@yahoo.com"}},{"datasetContactName":{"typeName":"datasetContactName","multiple":false,"typeClass":"primitive","value":"Bioversity-Dataverse"},"datasetContactAffiliation":{"typeName":"datasetContactAffiliation","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"},"datasetContactEmail":{"typeName":"datasetContactEmail","multiple":false,"typeClass":"primitive","value":"bioversity-dataverse@groups.cgiar.org"}}]},{"typeName":"dsDescription","multiple":true,"typeClass":"compound","value":[{"dsDescriptionValue":{"typeName":"dsDescriptionValue","multiple":false,"typeClass":"primitive","value":"The
+        questionnaire elicited information on foods consumed and their sources for
+        selected mothers and children of the households interviewed for the ABD-Assessment
+        (24-hour recall); information on young and child feeding practices; and on
+        household food secuirty, and risk preferences of mother.\r\nIn the same households
+        selected for the ABD-Assessment, one woman per household was selected. The
+        first choice of respondent was a woman that had a child between 6 and 59 months
+        old; if no woman was available with a child between 6 and 59 months, the interview
+        was perfomred with the woman that usually takes care of the food preparation
+        in the household. In case there were more women with children between 6 and
+        59 months living in the household,one of them was selected randomly .  The
+        same procedure was done if more than one child of the selected woman is eligible
+        to participate in the study.\r\nFor the food consumed by mother and child,
+        the period was the previous 24 hours. Interviews took place between the 25
+        of  August and 30 September 2014 (2 cases 30, 31 of October). For the household
+        food security data refer to the previous 30 days of the day of the interview.
+        For the infant and child feeding practices, they are in general.\r\nThree
+        villages in the Bijapur District: Mannur, Nandyal, Balaganur were surveyed."}}]},{"typeName":"subject","multiple":true,"typeClass":"controlledVocabulary","value":["Agricultural
+        Sciences","Social Sciences"]},{"typeName":"keyword","multiple":true,"typeClass":"compound","value":[{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"DIET"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"DIVERSIFICATION"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"FOOD
+        SECURITY"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"FEEDING
+        HABITS"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"HOUSEHOLDS"}},{"keywordValue":{"typeName":"keywordValue","multiple":false,"typeClass":"primitive","value":"CHILDREN"}}]},{"typeName":"topicClassification","multiple":true,"typeClass":"compound","value":[{"topicClassValue":{"typeName":"topicClassValue","multiple":false,"typeClass":"primitive","value":"SURVEYS"},"topicClassVocab":{"typeName":"topicClassVocab","multiple":false,"typeClass":"primitive","value":"AGROVOC"},"topicClassVocabURI":{"typeName":"topicClassVocabURI","multiple":false,"typeClass":"primitive","value":"http://aims.fao.org/aos/agrovoc/c_7537"}}]},{"typeName":"language","multiple":true,"typeClass":"controlledVocabulary","value":["English"]},{"typeName":"distributor","multiple":true,"typeClass":"compound","value":[{"distributorName":{"typeName":"distributorName","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"},"distributorURL":{"typeName":"distributorURL","multiple":false,"typeClass":"primitive","value":"http://www.bioversityinternational.org/"}}]},{"typeName":"depositor","multiple":false,"typeClass":"primitive","value":"Bioversity
+        International"},{"typeName":"dateOfDeposit","multiple":false,"typeClass":"primitive","value":"2016-12-20"},{"typeName":"timePeriodCovered","multiple":true,"typeClass":"compound","value":[{"timePeriodCoveredStart":{"typeName":"timePeriodCoveredStart","multiple":false,"typeClass":"primitive","value":"2014-08"},"timePeriodCoveredEnd":{"typeName":"timePeriodCoveredEnd","multiple":false,"typeClass":"primitive","value":"2014-10"}}]},{"typeName":"dateOfCollection","multiple":true,"typeClass":"compound","value":[{"dateOfCollectionStart":{"typeName":"dateOfCollectionStart","multiple":false,"typeClass":"primitive","value":"2014-08"},"dateOfCollectionEnd":{"typeName":"dateOfCollectionEnd","multiple":false,"typeClass":"primitive","value":"2014-10"}}]},{"typeName":"kindOfData","multiple":true,"typeClass":"primitive","value":["Household/Survey
+        data"]},{"typeName":"otherReferences","multiple":true,"typeClass":"primitive","value":["CRP
+        1.1: CGIAR Research Program on Dryland Agricultural Production Systems"]}]},"geospatial":{"displayName":"Geospatial
+        Metadata","name":"geospatial","fields":[{"typeName":"geographicCoverage","multiple":true,"typeClass":"compound","value":[{"country":{"typeName":"country","multiple":false,"typeClass":"controlledVocabulary","value":"India"},"state":{"typeName":"state","multiple":false,"typeClass":"primitive","value":"Karnataka"},"otherGeographicCoverage":{"typeName":"otherGeographicCoverage","multiple":false,"typeClass":"primitive","value":"Bijapur
+        District"}}]}]}},"files":[{"description":"Data","label":"Karnataka_DD&FS_Data-1.tab","restricted":false,"version":2,"datasetVersionId":147203,"dataFile":{"id":3315157,"persistentId":"doi:10.7910/DVN/RLMYMR/WNKD3W","pidURL":"https://doi.org/10.7910/DVN/RLMYMR/WNKD3W","filename":"Karnataka_DD&FS_Data-1.tab","contentType":"text/tab-separated-values","friendlyType":"Tab-Delimited","filesize":2321,"description":"Data","storageIdentifier":"s3://dvn-cloud:167181b3a0e-b7e18f26cfad","originalFileFormat":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","originalFormatLabel":"MS
+        Excel Spreadsheet","originalFileSize":700840,"originalFileName":"Karnataka_DD&FS_Data-1.xlsx","UNF":"UNF:6:wBvSbRl2RTVRfu9kpjgnrw==","rootDataFileId":2966302,"previousDataFileId":2966302,"md5":"ca9dea905295ac52db4ea3c7c8bf00e9","checksum":{"type":"MD5","value":"ca9dea905295ac52db4ea3c7c8bf00e9"},"tabularData":true,"creationDate":"2018-11-15","publicationDate":"2018-11-15","fileAccessRequest":false}},{"label":"Karnataka_DD&FS_Questionnaire.pdf","restricted":false,"version":1,"datasetVersionId":147203,"dataFile":{"id":2966301,"persistentId":"doi:10.7910/DVN/RLMYMR/UKYKS9","pidURL":"https://doi.org/10.7910/DVN/RLMYMR/UKYKS9","filename":"Karnataka_DD&FS_Questionnaire.pdf","contentType":"application/pdf","friendlyType":"Adobe
+        PDF","filesize":493564,"storageIdentifier":"s3://dvn-cloud:1591ccfc017-1eeea525e902","rootDataFileId":-1,"md5":"d9de390c8f132916b4bb97d6ea0c8ed6","checksum":{"type":"MD5","value":"d9de390c8f132916b4bb97d6ea0c8ed6"},"tabularData":false,"creationDate":"2016-12-20","publicationDate":"2016-12-20","fileAccessRequest":false}}]}}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:59 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=BCZKAFfW6iyPzPwK5iqZ2dpJa26We71iQQmde8ncDiz4H0t/4yJ1RvoATdTElDPicyXwdfaOnB1dGD3R1NSDtc9KdSKi2O3ztqe+m4BY36b5/up41ywRLGB7mNtM;
+        Expires=Wed, 17 Jul 2024 16:19:59 GMT; Path=/
+      - AWSALBCORS=BCZKAFfW6iyPzPwK5iqZ2dpJa26We71iQQmde8ncDiz4H0t/4yJ1RvoATdTElDPicyXwdfaOnB1dGD3R1NSDtc9KdSKi2O3ztqe+m4BY36b5/up41ywRLGB7mNtM;
+        Expires=Wed, 17 Jul 2024 16:19:59 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71cd4327296412514e6735e9bce; Path=/; Secure
+      Transfer-Encoding:
+      - chunked
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:19:59 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T161959Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=6f683ed179fa8efece4542e3e3adfa6de187ece53e0804b22550d96ed422c19e
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=UM2qP47Qlf4SdAzJUa4EurV31w1lki8fHjVqyzT31SqsHOvq/EaaLiYQxrp8EMRoVyZRqtY9Wm3kbHrUULEg/n+QTtDF7YmfDXwQiipW8TGyTeJ9+g10ZFtEYK5C;
+        Expires=Wed, 17 Jul 2024 16:19:59 GMT; Path=/
+      - AWSALBCORS=UM2qP47Qlf4SdAzJUa4EurV31w1lki8fHjVqyzT31SqsHOvq/EaaLiYQxrp8EMRoVyZRqtY9Wm3kbHrUULEg/n+QTtDF7YmfDXwQiipW8TGyTeJ9+g10ZFtEYK5C;
+        Expires=Wed, 17 Jul 2024 16:19:59 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71cec3fe00796c58d4c9e4220f6; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T161959Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=6f683ed179fa8efece4542e3e3adfa6de187ece53e0804b22550d96ed422c19e
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Wed, 10 Jul 2024 16:19:59 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - pnV8j+dbsKqQhMiloBmwL+qyoz6QjWQmF9nsr5DN7qTMoqr5Up8Y6Z2XdAiRmJRzQOxnlIoKOEc=
+      x-amz-request-id:
+      - NCHFEFJTV00TRZ39
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 10 Jul 2024 16:20:00 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162000Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=b4d5a3e8971cb22f905674600e78d7f693c83e1ff8b1ab19d6881fccfecb2085
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=rQ0snBGGMDmJRyEvFehRQlemnohgg6wqtjpu3gBtuWmjS1ZlfkLNN10g7E6wplYI84DkyABAZ0JwI47yn2ShFLlwWt9iS8lB4hBETy+7epleM/ilsJg0xXQzY2WL;
+        Expires=Wed, 17 Jul 2024 16:20:00 GMT; Path=/
+      - AWSALBCORS=rQ0snBGGMDmJRyEvFehRQlemnohgg6wqtjpu3gBtuWmjS1ZlfkLNN10g7E6wplYI84DkyABAZ0JwI47yn2ShFLlwWt9iS8lB4hBETy+7epleM/ilsJg0xXQzY2WL;
+        Expires=Wed, 17 Jul 2024 16:20:00 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71d0e5d0dabc842f07f5c88b13a; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162000Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=b4d5a3e8971cb22f905674600e78d7f693c83e1ff8b1ab19d6881fccfecb2085
+  response:
+    body:
+      string: !!binary |
+        UEsDBBQABgAIAAAAIQDA14IQxQEAAMUKAAATAL4BW0NvbnRlbnRfVHlwZXNdLnhtbCCiugEooAAC
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''Karnataka_DD%26FS_Data-1.xlsx
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/700840
+      Content-Type:
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      Date:
+      - Wed, 10 Jul 2024 16:20:01 GMT
+      ETag:
+      - '"ca9dea905295ac52db4ea3c7c8bf00e9"'
+      Last-Modified:
+      - Thu, 15 Nov 2018 16:01:47 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - PWNzwUB9Cy+iOvBq3dn584hmRQOha1HOg0CkhlS0JUefGWM3r655ZTdfo/Io5P4n0ZgzUrtzN3k=
+      x-amz-replication-status:
+      - COMPLETED
+      x-amz-request-id:
+      - NCH06J06NZZZ4ZGC
+      x-amz-version-id:
+      - 8Uv3Yrd.dfBXa57kWF6KNDwyWs06bgpF
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:20:01 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162001Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=82671282ad1fd8f47e6cc7fb1ee5eb8425433ca21072ccc2fcab3d13afca210a
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=xMhkEQEt74wrgRvhOkHo5s5Dhr6gUs8z5GfmZ7aNoZq7b2HPf82OxeXseweYUXx/QByoGgDiQyHG7BJOfEnc6RUFVZRA2JlpKiqJiSw8xXBTkSi3grmGU/9rtEJR;
+        Expires=Wed, 17 Jul 2024 16:20:01 GMT; Path=/
+      - AWSALBCORS=xMhkEQEt74wrgRvhOkHo5s5Dhr6gUs8z5GfmZ7aNoZq7b2HPf82OxeXseweYUXx/QByoGgDiQyHG7BJOfEnc6RUFVZRA2JlpKiqJiSw8xXBTkSi3grmGU/9rtEJR;
+        Expires=Wed, 17 Jul 2024 16:20:01 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71d397ac8af084d357634095e88; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162001Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=82671282ad1fd8f47e6cc7fb1ee5eb8425433ca21072ccc2fcab3d13afca210a
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Wed, 10 Jul 2024 16:20:00 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - B2gEjYazXlwWoIuHz6XSDT6ZvAQlHC9OcJOog3qT2f3qVUrhT/wilcCdfU7OySNQCHEfqEhomROQwN1H78bQcdalrhf25bjcWc/fIOk5DgE=
+      x-amz-request-id:
+      - RX8RG8KQGVCRNPXX
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 10 Jul 2024 16:20:01 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162001Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=82671282ad1fd8f47e6cc7fb1ee5eb8425433ca21072ccc2fcab3d13afca210a
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=wuVq5qKDBSZzH+hHIXlwW4/9umsJ2dbNOzm/YIHGIUlo+jVVDdO+KqZASUnlk1TymfScSZ502jjCuAo3zwonphrl1S6ZHMAEfsiL4Xj32iUrCH/WoEHKQzUy1yS6;
+        Expires=Wed, 17 Jul 2024 16:20:01 GMT; Path=/
+      - AWSALBCORS=wuVq5qKDBSZzH+hHIXlwW4/9umsJ2dbNOzm/YIHGIUlo+jVVDdO+KqZASUnlk1TymfScSZ502jjCuAo3zwonphrl1S6ZHMAEfsiL4Xj32iUrCH/WoEHKQzUy1yS6;
+        Expires=Wed, 17 Jul 2024 16:20:01 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71d5660fd1ad26cadb775ba5797; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162001Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=82671282ad1fd8f47e6cc7fb1ee5eb8425433ca21072ccc2fcab3d13afca210a
+  response:
+    body:
+      string: !!binary |
+        UEsDBBQABgAIAAAAIQDA14IQxQEAAMUKAAATAL4BW0NvbnRlbnRfVHlwZXNdLnhtbCCiugEooAAC
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''Karnataka_DD%26FS_Data-1.xlsx
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/700840
+      Content-Type:
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      Date:
+      - Wed, 10 Jul 2024 16:20:02 GMT
+      ETag:
+      - '"ca9dea905295ac52db4ea3c7c8bf00e9"'
+      Last-Modified:
+      - Thu, 15 Nov 2018 16:01:47 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - c+rVKl7SToNugv2UqhD48kDXQitnbJrSSBkBSLLfv3S48gWP5TNJZ5dUC7n/ENlfrsr3qr40IDs=
+      x-amz-replication-status:
+      - COMPLETED
+      x-amz-request-id:
+      - RX8YASFXQEA9HAYJ
+      x-amz-version-id:
+      - 8Uv3Yrd.dfBXa57kWF6KNDwyWs06bgpF
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157
+  response:
+    body:
+      string: "Datasetname\tKarnatakaDietDiversityandFoodSecurityforAgriculturalBiodiversityAssessment\n\"Description\"\t\"The
+        questionnaire elicited information on foods consumed and their sources for
+        selected mothers and children of the households interviewed for the ABD-Assessment
+        (24-hour recall); information on young and child feeding practices; and on
+        household food secuirty, and risk preferences of mother. In the same households
+        selected for the ABD-Assessment, one woman per household was selected. The
+        first choice of respondent was a woman that had a child between 6 and 59 months
+        old; if no woman was available with a child between 6 and 59 months, the interview
+        was perfomred with the woman that usually takes care of the food preparation
+        in the household. In case there were more women with children between 6 and
+        59 months living in the household,one of them was selected randomly . The
+        same procedure was done if more than one child of the selected woman is eligible
+        to participate in the study. For the food consumed by mother and child, the
+        period was the previous 24 hours. Interviews took place between the 25 of
+        August and 30 September 2014 (2 cases 30, 31 of October). For the household
+        food security data refer to the previous 30 days of the day of the interview.
+        For the infant and child feeding practices, they are in general. Three villages
+        in the Bijapur District: Mannur, Nandyal, Balaganur were surveyed.\"\n\"Primary
+        contributors\"\t\"Ntandou-Bouzitou G.D., Kennedy G., Bellon M.R., Mathur P.,
+        Dandin S. (all Bioversity International), Patil H.B. (Hort. Research Station
+        Vijayapura, Karnataka)\"\n\"Contact person\"\t\"Bellon M.(mrbellon@yahoo.com),
+        Bioversity-Dataverse (bioversity-dataverse@groups.cgiar.org)\"\n\"Dataset
+        published at\"\t\"Bioversity Dataverse (https://dataverse.harvard.edu/dataverse/Bioversity)\"\n\"Dataset
+        UID\"\t\"https://doi.org/10.7910/DVN/RLMYMR\"\n\"Last updated\"\t\"43419\"\n\"Update
+        description\"\t\"Added ReadMe, added ontology term ID's to variables.\"\n\"Worksheet\"\t\"Description\"\n\"ReadMe\"\t\"General
+        information. \"\n\"Codes\"\t\"Description of variables used\"\n\"Example\"\t\"Example\"\n\"General
+        Information\"\t\"Data on survey (location, time, household)\"\n\"I. Women
+        Dietary Diversity\"\t\"Data on dietary diversity women\"\n\"I. Child Dietary
+        Diversity\"\t\"Data on dietary diversity child\"\n\"II Child Feeding Practices\"\t\"Data
+        on feeding practices child\"\n\"III. Food Security & Risk\"\t\"Data on food
+        security and risk management\"\n"
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2408'
+      Content-Type:
+      - text/tab-separated-values; name="Karnataka_DD%26FS_Data-1.tab";charset=UTF-8
+      Content-disposition:
+      - attachment; filename="Karnataka_DD%26FS_Data-1.tab"
+      Date:
+      - Wed, 10 Jul 2024 16:20:02 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=XyIsI+jVE6xsuru3ICrpgTUKdzX7KghRKM+JYdNsrIzusKsz6FwTTb5bq/KYH1sIsFXf6w1/LrpD531uenerMRfFkhgPtqg37kRCmjWISt9ZiGnr0LLddw+Yv9Ku;
+        Expires=Wed, 17 Jul 2024 16:20:02 GMT; Path=/
+      - AWSALBCORS=XyIsI+jVE6xsuru3ICrpgTUKdzX7KghRKM+JYdNsrIzusKsz6FwTTb5bq/KYH1sIsFXf6w1/LrpD531uenerMRfFkhgPtqg37kRCmjWISt9ZiGnr0LLddw+Yv9Ku;
+        Expires=Wed, 17 Jul 2024 16:20:02 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71d7e83460528e759d28b675e3b; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://doi.org/10.7910/DVN/RLMYMR/WNKD3W
+  response:
+    body:
+      string: ''
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8a11e0faffb3e108-ORD
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '251'
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Wed, 10 Jul 2024 16:20:02 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=eevyYryKF4cVv69OjJKvJ8SWGn4HV%2Ffv0TdURTO0w8DDWXZ5VQvjVq46YXrq%2FxKKhX%2Fugu14ulw%2Bkz36oDHySeJ3GFi2zwH0vWTWLMZijkkAP1Gf0zRfFWE%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      alt-svc:
+      - h3=":443"; ma=86400
+      expires:
+      - Wed, 10 Jul 2024 16:43:46 GMT
+      location:
+      - https://dataverse.harvard.edu/file.xhtml?persistentId=doi:10.7910/DVN/RLMYMR/WNKD3W
+      permissions-policy:
+      - interest-cohort=(),browsing-topics=()
+      vary:
+      - Accept
+    status:
+      code: 302
+      message: Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/file.xhtml?persistentId=doi:10.7910/DVN/RLMYMR/WNKD3W
+  response:
+    body:
+      string: ''
+    headers:
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - frame-ancestors 'none'
+      Content-Type:
+      - text/html;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:20:02 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=JCgcGXgEv44sAuzr8x0hoy0+fmq1dPDof6zdZpofKgbCKz32UKVl4LG3lpv9gmTWxAR8AFYgreFDMCQSwkzyql413gUB3f4CejwtAX0jERyFMkA/QNycGDWsbU34;
+        Expires=Wed, 17 Jul 2024 16:20:02 GMT; Path=/
+      - AWSALBCORS=JCgcGXgEv44sAuzr8x0hoy0+fmq1dPDof6zdZpofKgbCKz32UKVl4LG3lpv9gmTWxAR8AFYgreFDMCQSwkzyql413gUB3f4CejwtAX0jERyFMkA/QNycGDWsbU34;
+        Expires=Wed, 17 Jul 2024 16:20:02 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71d9eaa0cbf116575d2e44f2ac4; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/search?q=filePersistentId:WNKD3W
+  response:
+    body:
+      string: '{"status":"OK","data":{"q":"filePersistentId:WNKD3W","total_count":1,"start":0,"spelling_alternatives":{},"items":[{"name":"Karnataka_DD&FS_Data-1.tab","type":"file","url":"https://dataverse.harvard.edu/api/access/datafile/3315157","file_id":"3315157","description":"Data","published_at":"2018-11-15T11:04:00Z","file_type":"Tab-Delimited","file_content_type":"text/tab-separated-values","size_in_bytes":2321,"md5":"ca9dea905295ac52db4ea3c7c8bf00e9","checksum":{"type":"MD5","value":"ca9dea905295ac52db4ea3c7c8bf00e9"},"unf":"UNF:6:wBvSbRl2RTVRfu9kpjgnrw==","file_persistent_id":"doi:10.7910/DVN/RLMYMR/WNKD3W","dataset_name":"Karnataka
+        Diet Diversity and Food Security for Agricultural Biodiversity Assessment","dataset_id":"2966297","dataset_persistent_id":"doi:10.7910/DVN/RLMYMR","dataset_citation":"Ntandou-Bouzitou,
+        G.D.; Kennedy, G.; Bellon, M.R.; Mathur, P.; Dandin, S.; Patil, H.B., 2016,
+        \"Karnataka Diet Diversity and Food Security for Agricultural Biodiversity
+        Assessment\", https://doi.org/10.7910/DVN/RLMYMR, Harvard Dataverse, V2, UNF:6:wBvSbRl2RTVRfu9kpjgnrw==
+        [fileUNF]"}],"count_in_response":1}}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1112'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:20:03 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=eL7wryQAO7ZfyQbn5QX7fZZxGd2ecmzrN+A+d+WD0sOSdv0F/wrmPkEvgfOfyqVAfDlxTJec9WgfC1FtfFMWxv+RO7otxAhqJfraf/TpOfKuMexJ0FCO/uHGDFWL;
+        Expires=Wed, 17 Jul 2024 16:20:03 GMT; Path=/
+      - AWSALBCORS=eL7wryQAO7ZfyQbn5QX7fZZxGd2ecmzrN+A+d+WD0sOSdv0F/wrmPkEvgfOfyqVAfDlxTJec9WgfC1FtfFMWxv+RO7otxAhqJfraf/TpOfKuMexJ0FCO/uHGDFWL;
+        Expires=Wed, 17 Jul 2024 16:20:03 GMT; Path=/; SameSite=None; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:20:03 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162003Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=c0967be9fe8a329e9296ed177ffdc74a3a42a3e365300de73561b45ec1ebb18a
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=5vydKJgN3Xd5axbuapmNp1Zz1vBtebtyY+HdmMZYTHSsUdHzP8x8+iPTg6p69z+bm2nvngA53Ame0QuaIjNwMv6ojBj7SLWTmg0LITqgjkT1E6oLsbHGA8UhUSXs;
+        Expires=Wed, 17 Jul 2024 16:20:03 GMT; Path=/
+      - AWSALBCORS=5vydKJgN3Xd5axbuapmNp1Zz1vBtebtyY+HdmMZYTHSsUdHzP8x8+iPTg6p69z+bm2nvngA53Ame0QuaIjNwMv6ojBj7SLWTmg0LITqgjkT1E6oLsbHGA8UhUSXs;
+        Expires=Wed, 17 Jul 2024 16:20:03 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71dd8c47aab22affe4a19ad85e3; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162003Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=c0967be9fe8a329e9296ed177ffdc74a3a42a3e365300de73561b45ec1ebb18a
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Wed, 10 Jul 2024 16:20:03 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - aa+4o360wy8ivoq/FL7YZ6TvlvkAANNSGlpnZXcSgWQPmr07VKBNgyHJfmgX0GHIf0oeR4ZWVnk=
+      x-amz-request-id:
+      - KR5Y1PPNS9MP5D39
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 10 Jul 2024 16:20:04 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162004Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d9a9aff65465d20a02ecef03d9c84e8515067d863f133d5597094956cf07fa59
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=LyO9/mpPC5l6BTdmueROGIPElF4CoOWuUr8U7u7CfcjNkW1RNuvzGmU2zcOpMBS5LXLiZuXsFV96ZL/m5AVJzxM+HH5s0s3Jk3OFUznm+CS6Ml2Lr8cPsmHbzF4u;
+        Expires=Wed, 17 Jul 2024 16:20:04 GMT; Path=/
+      - AWSALBCORS=LyO9/mpPC5l6BTdmueROGIPElF4CoOWuUr8U7u7CfcjNkW1RNuvzGmU2zcOpMBS5LXLiZuXsFV96ZL/m5AVJzxM+HH5s0s3Jk3OFUznm+CS6Ml2Lr8cPsmHbzF4u;
+        Expires=Wed, 17 Jul 2024 16:20:04 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71e033c8aee559c98491e3bfb8e; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162004Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d9a9aff65465d20a02ecef03d9c84e8515067d863f133d5597094956cf07fa59
+  response:
+    body:
+      string: !!binary |
+        UEsDBBQABgAIAAAAIQDA14IQxQEAAMUKAAATAL4BW0NvbnRlbnRfVHlwZXNdLnhtbCCiugEooAAC
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''Karnataka_DD%26FS_Data-1.xlsx
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/700840
+      Content-Type:
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      Date:
+      - Wed, 10 Jul 2024 16:20:05 GMT
+      ETag:
+      - '"ca9dea905295ac52db4ea3c7c8bf00e9"'
+      Last-Modified:
+      - Thu, 15 Nov 2018 16:01:47 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - GFk8hep4wArqX5kF578zt4ronb9pILUN18eB2Bvu4KMHM0vtImpRPdg43XsYmZS5L9FxjxN281AgPgl6KvcILfo8lkQCj5xwG0dEGmtqRqc=
+      x-amz-replication-status:
+      - COMPLETED
+      x-amz-request-id:
+      - C7YJEB1125W2351J
+      x-amz-version-id:
+      - 8Uv3Yrd.dfBXa57kWF6KNDwyWs06bgpF
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:20:04 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162004Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d9a9aff65465d20a02ecef03d9c84e8515067d863f133d5597094956cf07fa59
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=DEqBugkCofOe/z2V9aCrHrES4qUQrag3+ChSi79eSk9fId8pe1oU+Fus8QqJiOV3aBqZSmdDywnP/YfIW23Xtqx+vTYDEl75TuwiwQtWR1vQyVLg5GOkEW84eIjE;
+        Expires=Wed, 17 Jul 2024 16:20:04 GMT; Path=/
+      - AWSALBCORS=DEqBugkCofOe/z2V9aCrHrES4qUQrag3+ChSi79eSk9fId8pe1oU+Fus8QqJiOV3aBqZSmdDywnP/YfIW23Xtqx+vTYDEl75TuwiwQtWR1vQyVLg5GOkEW84eIjE;
+        Expires=Wed, 17 Jul 2024 16:20:04 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71e27b5d25188136bdee0bb0a81; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162004Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d9a9aff65465d20a02ecef03d9c84e8515067d863f133d5597094956cf07fa59
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Wed, 10 Jul 2024 16:20:04 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - DmuiH1GCDN2b1+DH7/QQB02DaZKaAkHnL1U5qa+a6vi59qEOHFESnaUtf+njgG4/h64VCQdJcVg=
+      x-amz-request-id:
+      - PPX9QQD6QYF2NMT0
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 10 Jul 2024 16:20:05 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162005Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9a31908ec212dfa60587c536d5af248a518c3f1e15a70da114dd0a3f922c304c
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=MuBEhEHI6iK6buOtJBecvhv/MIK92Mh0U/kZP4FQqAjdSwUzCUwQomKYRXmop9ejviK1F3RaIE5C6fowfE0gNh91Iuk115xmhKCI5FIISAo/oZ12cdhblQoJoEyB;
+        Expires=Wed, 17 Jul 2024 16:20:05 GMT; Path=/
+      - AWSALBCORS=MuBEhEHI6iK6buOtJBecvhv/MIK92Mh0U/kZP4FQqAjdSwUzCUwQomKYRXmop9ejviK1F3RaIE5C6fowfE0gNh91Iuk115xmhKCI5FIISAo/oZ12cdhblQoJoEyB;
+        Expires=Wed, 17 Jul 2024 16:20:05 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71e480595ba4639c4d5a3fb88a8; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/RLMYMR/167181b3a0e-b7e18f26cfad.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Karnataka_DD%2526FS_Data-1.xlsx&response-content-type=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162005Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9a31908ec212dfa60587c536d5af248a518c3f1e15a70da114dd0a3f922c304c
+  response:
+    body:
+      string: !!binary |
+        UEsDBBQABgAIAAAAIQDA14IQxQEAAMUKAAATAL4BW0NvbnRlbnRfVHlwZXNdLnhtbCCiugEooAAC
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''Karnataka_DD%26FS_Data-1.xlsx
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/700840
+      Content-Type:
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      Date:
+      - Wed, 10 Jul 2024 16:20:06 GMT
+      ETag:
+      - '"ca9dea905295ac52db4ea3c7c8bf00e9"'
+      Last-Modified:
+      - Thu, 15 Nov 2018 16:01:47 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - xnlS3yWgaXLWSV5iFF90PPqmr8Rglg2t2Pryq8VVpOv2OEliMmWs0Pa0Wup1bh3gkx4tPJZHGQo=
+      x-amz-replication-status:
+      - COMPLETED
+      x-amz-request-id:
+      - PPX7KSJ1JW0RPJ6E
+      x-amz-version-id:
+      - 8Uv3Yrd.dfBXa57kWF6KNDwyWs06bgpF
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3315157
+  response:
+    body:
+      string: "Datasetname\tKarnatakaDietDiversityandFoodSecurityforAgriculturalBiodiversityAssessment\n\"Description\"\t\"The
+        questionnaire elicited information on foods consumed and their sources for
+        selected mothers and children of the households interviewed for the ABD-Assessment
+        (24-hour recall); information on young and child feeding practices; and on
+        household food secuirty, and risk preferences of mother. In the same households
+        selected for the ABD-Assessment, one woman per household was selected. The
+        first choice of respondent was a woman that had a child between 6 and 59 months
+        old; if no woman was available with a child between 6 and 59 months, the interview
+        was perfomred with the woman that usually takes care of the food preparation
+        in the household. In case there were more women with children between 6 and
+        59 months living in the household,one of them was selected randomly . The
+        same procedure was done if more than one child of the selected woman is eligible
+        to participate in the study. For the food consumed by mother and child, the
+        period was the previous 24 hours. Interviews took place between the 25 of
+        August and 30 September 2014 (2 cases 30, 31 of October). For the household
+        food security data refer to the previous 30 days of the day of the interview.
+        For the infant and child feeding practices, they are in general. Three villages
+        in the Bijapur District: Mannur, Nandyal, Balaganur were surveyed.\"\n\"Primary
+        contributors\"\t\"Ntandou-Bouzitou G.D., Kennedy G., Bellon M.R., Mathur P.,
+        Dandin S. (all Bioversity International), Patil H.B. (Hort. Research Station
+        Vijayapura, Karnataka)\"\n\"Contact person\"\t\"Bellon M.(mrbellon@yahoo.com),
+        Bioversity-Dataverse (bioversity-dataverse@groups.cgiar.org)\"\n\"Dataset
+        published at\"\t\"Bioversity Dataverse (https://dataverse.harvard.edu/dataverse/Bioversity)\"\n\"Dataset
+        UID\"\t\"https://doi.org/10.7910/DVN/RLMYMR\"\n\"Last updated\"\t\"43419\"\n\"Update
+        description\"\t\"Added ReadMe, added ontology term ID's to variables.\"\n\"Worksheet\"\t\"Description\"\n\"ReadMe\"\t\"General
+        information. \"\n\"Codes\"\t\"Description of variables used\"\n\"Example\"\t\"Example\"\n\"General
+        Information\"\t\"Data on survey (location, time, household)\"\n\"I. Women
+        Dietary Diversity\"\t\"Data on dietary diversity women\"\n\"I. Child Dietary
+        Diversity\"\t\"Data on dietary diversity child\"\n\"II Child Feeding Practices\"\t\"Data
+        on feeding practices child\"\n\"III. Food Security & Risk\"\t\"Data on food
+        security and risk management\"\n"
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2408'
+      Content-Type:
+      - text/tab-separated-values; name="Karnataka_DD%26FS_Data-1.tab";charset=UTF-8
+      Content-disposition:
+      - attachment; filename="Karnataka_DD%26FS_Data-1.tab"
+      Date:
+      - Wed, 10 Jul 2024 16:20:05 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=Knue6WeBgfgt2JN2rOMVu3DEaxQobCeZjmiJpD3Zh7FiFEhIGhk4ukxn3+cwakxo9ksPQibBj98JyCL8vtzMVSbbNx6c/PssKV/M/lfcYp+4IOSaxAGZU9HIe789;
+        Expires=Wed, 17 Jul 2024 16:20:05 GMT; Path=/
+      - AWSALBCORS=Knue6WeBgfgt2JN2rOMVu3DEaxQobCeZjmiJpD3Zh7FiFEhIGhk4ukxn3+cwakxo9ksPQibBj98JyCL8vtzMVSbbNx6c/PssKV/M/lfcYp+4IOSaxAGZU9HIe789;
+        Expires=Wed, 17 Jul 2024 16:20:05 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71e66855d07d50fa166a568cb99; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/api/access/datafile/3040230?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:20:06 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/15d9aaf2757-ed846fe49d13.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272017-07-31.csv&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162006Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ca128589a366713ffbaa47f03054f82308ae8b6e26bf5c6ad7e2cab7408b2d3f
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=jcQBEf98FX8tzYS9hBcbx3PPlu8waMI2VJ0QmMIPvOa2It1y1BLqjH5sjqsxHrqh1Cyr6jaRZvcqD8MefKN/XZYmo0AJ9Mt2nBrqJKluDObzC8Quh99J3tPyLwbo;
+        Expires=Wed, 17 Jul 2024 16:20:06 GMT; Path=/
+      - AWSALBCORS=jcQBEf98FX8tzYS9hBcbx3PPlu8waMI2VJ0QmMIPvOa2It1y1BLqjH5sjqsxHrqh1Cyr6jaRZvcqD8MefKN/XZYmo0AJ9Mt2nBrqJKluDObzC8Quh99J3tPyLwbo;
+        Expires=Wed, 17 Jul 2024 16:20:06 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71e7b215da5c7dc75a2db6647b4; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/15d9aaf2757-ed846fe49d13.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272017-07-31.csv&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162006Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ca128589a366713ffbaa47f03054f82308ae8b6e26bf5c6ad7e2cab7408b2d3f
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Wed, 10 Jul 2024 16:20:05 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - 94B30zGnIe1ou8SITy3TaZCRz0vtemjiCR9BFBS7ieDQR4yIQICSObRb0grnAaIMuop995cUfw3IFTe4g/4AbLhbDnx2Nzv98npG0xRF9Ow=
+      x-amz-request-id:
+      - JSS33XNPC2TP5XKP
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3040230?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 10 Jul 2024 16:20:06 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/15d9aaf2757-ed846fe49d13.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272017-07-31.csv&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162006Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ca128589a366713ffbaa47f03054f82308ae8b6e26bf5c6ad7e2cab7408b2d3f
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=oBLWVJMZ5T0azlSw3FaRdD69CYhFWfTqCJ/Q03jlI7No3a/yxesDgt/HgGir2LgmWN54cRcsRqpreUXFzVvL+DfV0jLuQpliqA7Vf448/sYC6HayZ6kvxfUZQlcA;
+        Expires=Wed, 17 Jul 2024 16:20:06 GMT; Path=/
+      - AWSALBCORS=oBLWVJMZ5T0azlSw3FaRdD69CYhFWfTqCJ/Q03jlI7No3a/yxesDgt/HgGir2LgmWN54cRcsRqpreUXFzVvL+DfV0jLuQpliqA7Vf448/sYC6HayZ6kvxfUZQlcA;
+        Expires=Wed, 17 Jul 2024 16:20:06 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71e9c47f94064c733a12a3c63fd; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/15d9aaf2757-ed846fe49d13.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272017-07-31.csv&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162006Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ca128589a366713ffbaa47f03054f82308ae8b6e26bf5c6ad7e2cab7408b2d3f
+  response:
+    body:
+      string: 'stars,language,updated,issues,size,forks,watchers,repo,created,description
+
+        196,Java,2017-07-31,692,53'
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''2017-07-31.csv
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/11684
+      Content-Type:
+      - text/csv
+      Date:
+      - Wed, 10 Jul 2024 16:20:07 GMT
+      ETag:
+      - '"e7dd2f725941b978d45fed3f33ff640c"'
+      Last-Modified:
+      - Tue, 13 Feb 2018 10:29:39 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - 9RboO/6jvKXYCp0PRETqJPHUI+8P4hazvQygFUpamd/pJftZ2/43v6AbpRWv8kiP7B85kHbzlpzCnw6DKCWOmzhDbpNbt6Cn
+      x-amz-meta-touched:
+      - 'true'
+      x-amz-replication-status:
+      - COMPLETED
+      x-amz-request-id:
+      - JSS8Y2MZPWH7RRNN
+      x-amz-version-id:
+      - a21WUb4tKN1QOmLladm_DSqEFmWTanqm
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dataverse.harvard.edu/api/access/datafile/3040230?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/xml;charset=UTF-8
+      Date:
+      - Wed, 10 Jul 2024 16:20:07 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/15d9aaf2757-ed846fe49d13.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272017-07-31.csv&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162007Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=cc101d3e063374a95769948aa7a637b19c0d55a89f5a3db314eee326826dc412
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=kWIM2QfxD4BylPuDbztB+D9fjwecwSojsMDxpIA0WyMZJ9n3Hs9jOkCgkUogPfeVDYAeMAjYVnkBP9zUFnZLhlSgqgiHUcMjODAPUEPYjucB8kz+hHfuJ+CerHhx;
+        Expires=Wed, 17 Jul 2024 16:20:07 GMT; Path=/
+      - AWSALBCORS=kWIM2QfxD4BylPuDbztB+D9fjwecwSojsMDxpIA0WyMZJ9n3Hs9jOkCgkUogPfeVDYAeMAjYVnkBP9zUFnZLhlSgqgiHUcMjODAPUEPYjucB8kz+hHfuJ+CerHhx;
+        Expires=Wed, 17 Jul 2024 16:20:07 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71ec4e4edd01d518094bbcb26c9; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/15d9aaf2757-ed846fe49d13.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272017-07-31.csv&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162007Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=cc101d3e063374a95769948aa7a637b19c0d55a89f5a3db314eee326826dc412
+  response:
+    body:
+      string: ''
+    headers:
+      Content-Type:
+      - application/xml
+      Date:
+      - Wed, 10 Jul 2024 16:20:07 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - 93tRPZdxHYH7BoAvu9iphHUQv6GkvnOk0bO1NWg1rcHB3q30ZmL/BW5/iKsSN6ReBotx20Osc44=
+      x-amz-request-id:
+      - QA9F0W3J0EKB0C3D
+    status:
+      code: 403
+      message: Forbidden
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3040230?format=original
+  response:
+    body:
+      string: ''
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 10 Jul 2024 16:20:07 GMT
+      Location:
+      - https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/15d9aaf2757-ed846fe49d13.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272017-07-31.csv&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162007Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=cc101d3e063374a95769948aa7a637b19c0d55a89f5a3db314eee326826dc412
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=A2LmTnd12KqzhCo7TllG8i7WtBDKckUEhfmylBeJ+D83vI0kr4QtwN6kvjMGbElCcb1SY4POa8YYFn8iGjYoedYUcNkKvPKp0QLEpgaD2Ewdb7CPTQfoPwtxZDi3;
+        Expires=Wed, 17 Jul 2024 16:20:07 GMT; Path=/
+      - AWSALBCORS=A2LmTnd12KqzhCo7TllG8i7WtBDKckUEhfmylBeJ+D83vI0kr4QtwN6kvjMGbElCcb1SY4POa8YYFn8iGjYoedYUcNkKvPKp0QLEpgaD2Ewdb7CPTQfoPwtxZDi3;
+        Expires=Wed, 17 Jul 2024 16:20:07 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71ee6c6234ab7f622fadf8ed972; Path=/; Secure
+    status:
+      code: 303
+      message: See Other
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Range:
+      - bytes=0-100
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dvn-cloud.s3.amazonaws.com/10.7910/DVN/TJCLKP/15d9aaf2757-ed846fe49d13.orig?response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%272017-07-31.csv&response-content-type=text%2Fcsv&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240710T162007Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Credential=AKIAIEJ3NV7UYCSRJC7A%2F20240710%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=cc101d3e063374a95769948aa7a637b19c0d55a89f5a3db314eee326826dc412
+  response:
+    body:
+      string: 'stars,language,updated,issues,size,forks,watchers,repo,created,description
+
+        196,Java,2017-07-31,692,53'
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment; filename*=UTF-8''2017-07-31.csv
+      Content-Length:
+      - '101'
+      Content-Range:
+      - bytes 0-100/11684
+      Content-Type:
+      - text/csv
+      Date:
+      - Wed, 10 Jul 2024 16:20:09 GMT
+      ETag:
+      - '"e7dd2f725941b978d45fed3f33ff640c"'
+      Last-Modified:
+      - Tue, 13 Feb 2018 10:29:39 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - IXuhIL8Ym0uNPJcpUr9aO4JJ4lhohGs63gR7Vj45YaQ+C0NWNx3wGDw+UEr8fB3ZY+B7pDpb2E9JbmLcgWLYKXlWHDkCrOZkMSWducODuJQ=
+      x-amz-meta-touched:
+      - 'true'
+      x-amz-replication-status:
+      - COMPLETED
+      x-amz-request-id:
+      - 2RZ9PQW1Z3Y4DY5C
+      x-amz-version-id:
+      - a21WUb4tKN1QOmLladm_DSqEFmWTanqm
+    status:
+      code: 206
+      message: Partial Content
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://dataverse.harvard.edu/api/access/datafile/3040230
+  response:
+    body:
+      string: "stars\tlanguage\tupdated\tissues\tsize\tforks\twatchers\trepo\tcreated\tdescription\n196\t\"Java\"\t2017-07-31\t692\t53468\t105\t196\t\"https://github.com/IQSS/dataverse\"\t2013-11-01\t\"A
+        data repository framework to share and publish research data.\"\n185\t\"PHP\"\t2017-07-31\t296\t186638\t95\t185\t\"https://github.com/openscholar/openscholar\"\t2011-03-04\t\"OpenScholar
+        project \"\n116\t\"JavaScript\"\t2016-02-05\t6\t3601\t16\t116\t\"https://github.com/HBRGTech/daisy\"\t2014-11-16\t\"daisy
+        is a vagrant and grunt-powered Pattern Lab, derivative work from hbr.org's
+        2014 redesign.\"\n94\t\"JavaScript\"\t2017-07-19\t155\t41680\t31\t94\t\"https://github.com/harvard-lil/perma\"\t2013-05-06\t\"Indelible
+        links\"\n82\t\"C\"\t2017-06-01\t1\t135\t2\t82\t\"https://github.com/HarvardPL/shill\"\t2014-10-04\t\"Scripting
+        with Least Privilege\"\n78\t\"Ruby\"\t2016-11-12\t7\t180\t11\t78\t\"https://github.com/berkmancenter/namae\"\t2012-05-21\t\"Namae
+        (\u540D\u524D) parses personal names and splits them into their component
+        parts.\"\n78\t\"JavaScript\"\t2017-06-16\t73\t182121\t23\t78\t\"https://github.com/cga-harvard/cga-worldmap\"\t2010-11-01\t\"Harvard
+        WorldMap is a heavily modified fork of GeoNode 1.x, soon to be migrated to
+        GeoNode 2.x.  WorldMap is being made available by Harvard's Center for Geographic
+        Analysis to lower the barrier for scholars and others who wish to explore,
+        visualize, edit, collaborate with, and publish geospatial information.\"\n75\t\"JavaScript\"\t2017-07-31\t294\t74956\t10\t75\t\"https://github.com/refinery-platform/refinery-platform\"\t2011-11-23\t\"The
+        Refinery Platform is a data management, analysis and visualization system
+        for bioinformatics and computational biology applications. The platforms consists
+        of three major components: a data repository with rich metadata capabilities,
+        a workflow engine based on the popular Galaxy system, and visualization tools
+        to support the exploration and interpretation of results at all stages of
+        the analysis process.\"\n62\t\"Perl\"\t2017-07-27\t54\t247679\t23\t62\t\"https://github.com/berkmancenter/mediacloud\"\t2013-06-26\t\"Media
+        Cloud is an open source, open data platform that allows researchers to answer
+        quantitative questions about the content of online media.\"\n52\t\"R\"\t2017-07-29\t24\t109429\t28\t52\t\"https://github.com/IQSS/Zelig\"\t2013-12-05\t\"A
+        statistical framework that serves as a common interface to a large range of
+        models\"\n44\t\"Ruby\"\t2017-07-06\t0\t6107\t16\t44\t\"https://github.com/berkmancenter/tagteam\"\t2011-07-12\t\"Enhanced
+        Social Tagging for Academic Communities\"\n38\t\"Java\"\t2017-07-06\t30\t499854\t36\t38\t\"https://github.com/harvard-lts/fits\"\t2013-03-02\t\"File
+        Information Tool Set\"\n37\t\"Ruby\"\t2017-07-31\t1\t17211\t33\t37\t\"https://github.com/berkmancenter/lumendatabase\"\t2012-04-16\t\"The
+        Lumen Database collects and analyzes legal complaints and requests for removal
+        of online materials.\"\n25\t\"JavaScript\"\t2017-07-10\t66\t2800\t16\t25\t\"https://github.com/cga-harvard/HHypermap\"\t2015-12-17\t\"HHypermap
+        (Harvard Hypermap) Registry is an application that manages OWS, Esri REST,
+        and other types of map service harvesting, and maintains uptime statistics
+        for services and layers. HHypermap Registry will publish to HHypermap Search
+        (based on Lucene) which provides a fast search and visualization environment
+        for spatio-temporal materials.\"\n23\t\"JavaScript\"\t2017-06-30\t32\t20092\t11\t23\t\"https://github.com/IQSS/TwoRavens\"\t2013-07-02\t\"A
+        web application for data exploration, statistical analysis, model construction
+        and meta analysis tools, that integrates with Zelig and Dataverse. \"\n21\t\"PHP\"\t2016-10-04\t5\t3001\t7\t21\t\"https://github.com/berkmancenter/amber_wordpress\"\t2014-02-11\t\"Amber
+        plugin for Wordpress\"\n19\t\"Python\"\t2015-08-05\t1\t628\t8\t19\t\"https://github.com/IQSS/redmine2github\"\t2014-07-01\t\"Scripts
+        to migrate redmine tickets to github issues\"\n18\t\"JavaScript\"\t2017-07-17\t17\t1794\t11\t18\t\"https://github.com/berkmancenter/dotplot\"\t2015-02-19\t\"Telling
+        a story through dots\"\n16\t\"Shell\"\t2017-07-24\t2\t89516\t5\t16\t\"https://github.com/fasrc/helmod\"\t2013-12-16\t\"Harvard
+        Extensions for Lmod deployment\"\n13\t\"Ruby\"\t2017-07-31\t71\t3894\t19\t13\t\"https://github.com/berkmancenter/bookanook\"\t2015-07-01\t\"\"\n11\t\"Python\"\t2017-05-23\t5\t80\t14\t11\t\"https://github.com/Harvard-University-iCommons/django-auth-lti\"\t2013-11-22\t\"\"\n9\t\"Python\"\t2017-03-27\t4\t2222\t3\t9\t\"https://github.com/penzance/canvas_python_sdk\"\t2014-06-18\t\"Canvas
+        Python SDK\"\n9\t\"HTML\"\t2017-05-26\t0\t16522\t4\t9\t\"https://github.com/cga-harvard/hhypermap-bop\"\t2016-05-31\t\"HHypermap
+        BOP -- Harvard Hypermap, Billion Object Platform (using Apache Solr)\"\n9\t\"JavaScript\"\t2017-05-17\t1\t8373\t15\t9\t\"https://github.com/berkmancenter/question_tool\"\t2015-06-15\t\"A
+        web application to propose and vote on questions on a particular subject.\"\n9\t\"\"\t2017-01-06\t2\t532\t2\t9\t\"https://github.com/berkmancenter/amber_drupal\"\t2014-02-11\t\"Amber
+        module for Drupal\"\n9\t\"JavaScript\"\t2017-07-31\t4\t26582\t9\t9\t\"https://github.com/cid-harvard/atlas-subnational-frontend\"\t2015-04-21\t\"\"\n7\t\"Java\"\t2017-06-30\t1\t71949\t1\t7\t\"https://github.com/harvard-library/librarycloud\"\t2014-04-07\t\"Harvard
+        University Library Cloud API\"\n7\t\"HTML\"\t2017-06-30\t0\t19557\t10\t7\t\"https://github.com/berkmancenter/internet_monitor\"\t2013-08-05\t\"The
+        Internet Monitor is a research project to evaluate, describe, and summarize
+        the means, mechanisms, and extent of Internet content controls and Internet
+        activity around the world.\"\n6\t\"HTML\"\t2017-07-09\t63\t32981\t8\t6\t\"https://github.com/IQSS/DataTaggingLibrary\"\t2013-08-22\t\"Language
+        tools for DataTags (Decision graph variant). Including the embeddable runtime
+        engine\"\n6\t\"HTML\"\t2016-10-04\t1\t1584\t4\t6\t\"https://github.com/berkmancenter/amber_common\"\t2014-05-09\t\"Common
+        code and documentation for the Amber project\"\n5\t\"JavaScript\"\t2016-11-14\t0\t1596\t2\t5\t\"https://github.com/berkmancenter/redmine_app_tracker\"\t2010-05-24\t\"Redmine
+        extension for tracking jobs, applicants, and job applications.\"\n4\t\"C\"\t2015-11-17\t2\t52\t1\t4\t\"https://github.com/berkmancenter/amber_apache\"\t2014-02-11\t\"Amber
+        module for Apache\"\n4\t\"Java\"\t2017-07-18\t0\t3751\t1\t4\t\"https://github.com/penzance/harvard-data-tools\"\t2016-02-09\t\"\"\n4\t\"JavaScript\"\t2017-07-07\t0\t6926\t1\t4\t\"https://github.com/harvard-library/metadata_server\"\t2015-02-11\t\"Django/Elasticsearch
+        IIIF Metadata server\"\n3\t\"JavaScript\"\t2016-10-31\t1\t2646\t4\t3\t\"https://github.com/berkmancenter/fair_use_tool\"\t2010-07-14\t\"Creative
+        Rights fair use tool for determining copyright usage.\"\n3\t\"JavaScript\"\t2016-12-09\t0\t332\t0\t3\t\"https://github.com/berkmancenter/tmulk\"\t2016-10-29\t\"Twitter
+        mass bulk download\"\n3\t\"C\"\t2017-03-16\t0\t52824\t1\t3\t\"https://github.com/berkmancenter/curarium\"\t2014-05-06\t\"The
+        Curarium is a collection of collections. It is a platform which leverages
+        the power of the crowd in order to annotate, curate, and augment works within
+        and beyond their respective collections, with the aim of constructing sharable,
+        media-rich stories and elaborate arguments about individual items as well
+        as groups of items in our corpora.\"\n3\t\"Java\"\t2016-09-15\t0\t108590\t5\t3\t\"https://github.com/harvard-lts/FITSservlet\"\t2015-06-22\t\"A
+        web application to expose FITS as a service.\"\n3\t\"C\"\t2015-08-14\t1\t543\t1\t3\t\"https://github.com/berkmancenter/amber_nginx\"\t2014-02-11\t\"Amber
+        module for Nginx\"\n3\t\"PHP\"\t2017-07-14\t0\t22392\t1\t3\t\"https://github.com/harvard-library/acorn\"\t2017-01-24\t\"A
+        COnservation Records Network\"\n2\t\"JavaScript\"\t2017-07-27\t0\t1576\t1\t2\t\"https://github.com/Harvard-University-iCommons/canvas_account_admin_tools\"\t2015-09-28\t\"\"\n2\t\"Python\"\t2017-07-28\t1\t81\t1\t2\t\"https://github.com/Harvard-Open-Data-Project/propublica-data\"\t2017-05-31\t\"Python
+        script that uses the Propublica API to retrieve data (in csv format) on any
+        list of organizations.\"\n2\t\"Ruby\"\t2014-09-02\t0\t711\t3\t2\t\"https://github.com/berkmancenter/hei\"\t2012-06-25\t\"A
+        tag heavy development project registry.\"\n2\t\"XSLT\"\t2016-01-14\t1\t75\t1\t2\t\"https://github.com/harvard-library/schematronium\"\t2015-07-28\t\"A
+        library for running schematrons over XML files\"\n2\t\"Ruby\"\t2014-08-11\t0\t295\t3\t2\t\"https://github.com/berkmancenter/brkmn\"\t2012-03-20\t\"The
+        dirt-simple URL shortener at brk.mn\"\n2\t\"JavaScript\"\t2017-07-13\t2\t1857\t3\t2\t\"https://github.com/harvard-library/aspace-import-excel\"\t2017-01-19\t\"Import
+        resources, archival objects, etc. into ArchivesSpace using Excel spreadsheet
+        files\"\n1\t\"Ruby\"\t2016-04-18\t4\t1628\t0\t1\t\"https://github.com/harvard-library/inscriptio\"\t2013-11-18\t\"An
+        app to help manage the reservation of carrels and other reservable library
+        resources\"\n1\t\"Ruby\"\t2017-02-17\t1\t1561\t2\t1\t\"https://github.com/harvard-library/archivesspace-checker\"\t2015-08-11\t\"A
+        small website for checking EADs against local standards via schematron\"\n1\t\"Ruby\"\t2017-05-11\t0\t552\t3\t1\t\"https://github.com/harvard-library/archivesspace-preprocessor\"\t2015-12-11\t\"Preprocessor
+        for EAD files to prepare them for ingest into Archivesspace\"\n1\t\"Ruby\"\t2017-06-14\t2\t7120\t1\t1\t\"https://github.com/harvard-library/ClassRequestTool\"\t2014-04-10\t\"An
+        application for scheduling class visits to archives and special collections.\"\n1\t\"Java\"\t2016-06-15\t3\t232\t2\t1\t\"https://github.com/IQSS/UNF\"\t2014-08-17\t\"Universal
+        Numerical Fingerprint\"\n1\t\"PHP\"\t2013-07-23\t0\t226\t1\t1\t\"https://github.com/berkmancenter/blog_network_stats\"\t2013-03-04\t\"A
+        wordpress plugin to aggregate data about blogs into a single table.\"\n1\t\"Ruby\"\t2017-06-24\t1\t181\t2\t1\t\"https://github.com/berkmancenter/feed-abstract\"\t2011-08-19\t\"RSS
+        Feed abstraction library using ruby standard lib classes.\"\n1\t\"PHP\"\t2017-07-26\t0\t97\t4\t1\t\"https://github.com/berkmancenter/category_subscriptions\"\t2011-04-05\t\"A
+        wordpress plugin that allows for per-user category subscriptions.\"\n1\t\"Ruby\"\t2017-07-31\t0\t84\t0\t1\t\"https://github.com/harvard-library/spotlight-oaipmh-resources\"\t2017-05-30\t\"An
+        OAI-PMH harvester plugin for Spotlight\"\n1\t\"HTML\"\t2017-07-21\t8\t102019\t1\t1\t\"https://github.com/farhat-lab/gentb-site\"\t2015-10-06\t\"The
+        genTB project, the Django site, variant calling and prediciton pipeline, and
+        mapping pipeline wiht hooks to two ravens\"\n1\t\"Ruby\"\t2016-11-16\t0\t82\t0\t1\t\"https://github.com/berkmancenter/classifurlr\"\t2016-05-11\t\"Given
+        request & response data, attempts to determine likelihood that page is available
+        vs. down or blocked.\"\n0\t\"Ruby\"\t2016-07-28\t0\t543\t0\t0\t\"https://github.com/harvard-library/linkomatic\"\t2015-01-12\t\"Automatically
+        adds NRS links to digitized records in EAD\"\n0\t\"Ruby\"\t2017-07-19\t1\t4162\t0\t0\t\"https://github.com/harvard-library/list_view\"\t2014-10-08\t\"A
+        tool for displaying ordered lists of links.\"\n0\t\"Ruby\"\t2016-07-21\t2\t453\t0\t0\t\"https://github.com/harvard-library/lts-lti-reserves\"\t2015-06-11\t\"The
+        Reserves Tool as seen/used via Canvas\"\n0\t\"Ruby\"\t2016-06-06\t0\t62655\t0\t0\t\"https://github.com/berkmancenter/eda\"\t2014-07-03\t\"Emily
+        Dickinson Archive platform\"\n0\t\"Python\"\t2017-03-15\t0\t9\t2\t0\t\"https://github.com/harvard-lil/lil-nudgebot\"\t2016-06-17\t\"\"\n0\t\"Ruby\"\t2016-12-02\t0\t9\t1\t0\t\"https://github.com/harvard-library/harvard-ead-importer\"\t2016-09-30\t\"ArchivesSpace
+        plugin overriding EAD Importer to implement specific fixes.\"\n0\t\"Ruby\"\t2017-07-31\t15\t34451\t3\t0\t\"https://github.com/harvard-lil/h2o\"\t2015-09-01\t\"\"\n0\t\"Ruby\"\t2014-10-09\t0\t1265\t0\t0\t\"https://github.com/harvard-library/geosearch_solr_prep\"\t2014-08-06\t\"geosearch_solr_prep\"\n0\t\"Python\"\t2017-07-05\t0\t26\t1\t0\t\"https://github.com/harvard-lil/perma-payments\"\t2017-06-07\t\"\"\n0\t\"Ruby\"\t2015-12-18\t0\t24\t0\t0\t\"https://github.com/harvard-library/devise_harvard_auth_proxy\"\t2014-05-01\t\"Devise
+        plugin to use the Harvard authentication proxy.\"\n0\t\"PHP\"\t2017-06-12\t0\t26\t0\t0\t\"https://github.com/DRSC-FG/gene2function\"\t2017-06-09\t\"\"\n0\t\"Ruby\"\t2017-07-04\t0\t17\t2\t0\t\"https://github.com/harvard-library/aspace-utils\"\t2016-08-19\t\"Bulk
+        ingest script for ArchivesSpace, analysis script that processes logs from
+        afforementioned.\"\n0\t\"\"\t2016-04-15\t0\t183\t0\t0\t\"https://github.com/onnela-lab/HX_python_for_research\"\t2016-04-13\t\"\"\n0\t\"Ruby\"\t2017-06-14\t0\t34\t0\t0\t\"https://github.com/harvard-library/aspace-linkomatic\"\t2017-02-21\t\"A
+        plugin to help automate the insertion of links to digitized records into Archives
+        Space.\"\n0\t\"Python\"\t2017-07-16\t0\t12278\t0\t0\t\"https://github.com/cbdb-project/crop_books_by_lines\"\t2017-03-06\t\"crop
+        books by lines or blanks\"\n0\t\"PHP\"\t2015-03-11\t0\t191\t1\t0\t\"https://github.com/berkmancenter/wiki-uturn\"\t2012-09-20\t\"Wiki
+        Reversion Tool\"\n0\t\"C++\"\t2017-07-03\t0\t347\t0\t0\t\"https://github.com/cbdb-project/reg-cpp\"\t2017-07-03\t\"regular
+        expression replacer\"\n"
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Content-Type, X-Dataverse-Key, Range
+      Access-Control-Allow-Methods:
+      - PUT, GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - Accept-Ranges, Content-Range, Content-Encoding
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '12100'
+      Content-Type:
+      - text/tab-separated-values; name="2017-07-31.tab";charset=UTF-8
+      Content-disposition:
+      - attachment; filename="2017-07-31.tab"
+      Date:
+      - Wed, 10 Jul 2024 16:20:08 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - AWSALB=9mrfshZOt41rp8DpTK54AiBtH36AS/dFmzx/Pou+gvBu7oduMT1GGw+uMpOlMdeMGFWnMZ+hoEqzSNW4Y5Uy/GsRtxrUzoLqQU7/mKst4dg10rnsPxSCmrs1G+/g;
+        Expires=Wed, 17 Jul 2024 16:20:08 GMT; Path=/
+      - AWSALBCORS=9mrfshZOt41rp8DpTK54AiBtH36AS/dFmzx/Pou+gvBu7oduMT1GGw+uMpOlMdeMGFWnMZ+hoEqzSNW4Y5Uy/GsRtxrUzoLqQU7/mKst4dg10rnsPxSCmrs1G+/g;
+        Expires=Wed, 17 Jul 2024 16:20:08 GMT; Path=/; SameSite=None; Secure
+      - JSESSIONID=d71f0da24e421c2bb4fce4967819; Path=/; Secure
+    status:
+      code: 200
+      message: OK
+version: 1

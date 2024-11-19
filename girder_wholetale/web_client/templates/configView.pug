@@ -1,0 +1,123 @@
+.g-config-breadcrumb-container
+p.g-wholetale-description
+  | Configure Whole Tale plugin
+form#g-wholetale-config-form(role="form")
+  .form-group
+    label.control-label(for="wholetale_website_url") Dashboard website URL
+    input.input-sm.form-control#wholetale_website_url(
+      type="text", value=settings['wholetale.website_url'] || null,
+      placeholder=`Default: ${defaults['wholetale.website_url'] || 'none'}`,
+      title="Website url used for header link.")
+    label.control-label(for="wholetale_dashboard_link_title") Dashboard Link Title
+    input.input-sm.form-control#wholetale_dashboard_link_title(
+      type="text", value=settings['wholetale.dashboard_link_title'] || null,
+      placeholder=`Default: ${defaults['wholetale.dashboard_link_title'] || 'none'}`,
+      title="Title for dashboard link in header.")
+  .form-group
+    label Enable Data Catalog
+      p.
+        When enabled instead of registered datasets, the user will see a list of datasets from Girder.
+      input.g-setting-switch(
+        type="checkbox", checked="checked", data-size="mini", data-on-color="primary")
+      .access-widget-container
+      textarea#wholetale_enable_data_catalog.hide
+        = JSON.stringify(settings['wholetale.enable_data_catalog'])
+  .form-group
+    label.control-label(for="wholetale_catalog_link_title") Catalog Link Title
+    input.input-sm.form-control#wholetale_catalog_link_title(
+      type="text", value=settings['wholetale.catalog_link_title'] || null,
+      placeholder=`Default: ${defaults['wholetale.catalog_link_title'] || 'none'}`,
+      title="Title for catalog link in header.")
+    label.control-label(for="wholetale_about_href") About href
+    input.input-sm.form-control#wholetale_about_href(
+      type="text", value=settings['wholetale.about_href'] || null,
+      placeholder=`Default: ${defaults['wholetale.about_href'] || 'none'}`,
+      title="About link in the footer.")
+    label.control-label(for="wholetale_contact_href") Contact href
+    input.input-sm.form-control#wholetale_contact_href(
+      type="text", value=settings['wholetale.contact_href'] || null,
+      placeholder=`Default: ${defaults['wholetale.contact_href'] || 'none'}`,
+      title="Contact link in the footer.")
+    label.control-label(for="wholetale_bug_href") Report a Bug href
+    input.input-sm.form-control#wholetale_bug_href(
+      type="text", value=settings['wholetale.bug_href'] || null,
+      placeholder=`Default: ${defaults['wholetale.bug_href'] || 'none'}`,
+      title="Report a Bug link in the footer.")
+  .form-group
+    label.control-label(for="wholetale_instance_cap") Instance Cap
+    input.input-sm.form-control#wholetale_instance_cap(
+      type="text", value=settings['wholetale.instance_cap'] || null,
+      placeholder=`Default: ${defaults['wholetale.instance_cap'] || 'none'}`,
+      title="Number of instances that user can run concurrently.")
+    label.control-label(for="wholetale_dataverse_url") Dataverse Installations Map
+    input.input-sm.form-control#wholetale_dataverse_url(
+      type="text", value=settings['wholetale.dataverse_url'] || null,
+      placeholder=`Default: ${defaults['wholetale.dataverse_url'] || 'none'}`,
+      title="Location of a map of dataverse installations.")
+    label.control-label(for="wholetale_extra_hosts") Extra Dataverse Installations
+    textarea#wholetale_extra_hosts.form-control(
+      placeholder=`Default: ${defaults['wholetale.dataverse_extra_hosts'] || '[]'}`,
+      title="Additional supported Dataverse installations. (JSON array [\"domain1\", \"domain2\", ...])")
+        = JSON.stringify(settings['wholetale.dataverse_extra_hosts'] || defaults['wholetale.dataverse_extra_hosts'], null, 4)
+    label.control-label(for="wholetale_external_auth_providers") Supported external integrations
+    textarea#wholetale_external_auth_providers.form-control(
+      placeholder=`Default: ${defaults['wholetale.external_auth_providers'] || '[]'}`,
+      title="Supported external auth providers. (JSON object {\"provider1\": , \"provider2\":, ...})")
+        = JSON.stringify(settings['wholetale.external_auth_providers'] || defaults['wholetale.external_auth_providers'], null, 4)
+    label.control-label(for="wholetale_external_apikey_groups") Custom targets for API key providers
+    textarea#wholetale_external_apikey_groups.form-control(
+      placeholder=`Default: ${defaults['wholetale.external_apikey_groups'] || '[]'}`,
+      title="Supported external auth providers. (JSON object {\"provider1\": [\"target1\", \"target2\"], ...})")
+        = JSON.stringify(settings['wholetale.external_apikey_groups'] || defaults['wholetale.external_apikey_groups'], null, 4)
+    label.control-label(for="wholetale_publisher_repositories") Custom targets for API key providers
+    textarea#wholetale_publisher_repositories.form-control(
+      placeholder=`Default: ${defaults['wholetale.publisher_repositories'] || '[]'}`,
+      title="A mapping of publish repositories to auth providers. (JSON object {\"repository1\": \"authprovider1\", ...})")
+        = JSON.stringify(settings['wholetale.publisher_repositories'] || defaults['wholetale.publisher_repositories'], null, 4)
+  .form-group
+    label.control-label(for="wholetale-homes-root") Home Directories Root
+    input.input-sm.form-control#wholetale-homes-root(
+      type="text", value=settings['wholetale.homes_root'] || null,
+      placeholder=`Default: ${defaults['wholetale.homes_root'] || 'none'}`,
+      title="Root directory for user home directories."
+    )
+    label.control-label(for="wholetale-workspaces-root") Workspaces Root
+    input.input-sm.form-control#wholetale-workspaces-root(
+      type="text", value=settings['wholetale.workspaces_root'] || null,
+      placeholder=`Default: ${defaults['wholetale.workspaces_root'] || 'none'}`,
+      title="Root directory for Tale workspaces."
+    )
+    label.control-label(for="wholetale-versions-root") Tale Versions Root
+    input.input-sm.form-control#wholetale-versions-root(
+      type="text", value=settings['wholetale.versions_root'] || null,
+      placeholder=`Default: ${defaults['wholetale.versions_root'] || 'none'}`,
+      title="Root directory for Tale versions."
+    )
+    label.control-label(for="wholetale-runs-root") Tale Runs Root
+    input.input-sm.form-control#wholetale-runs-root(
+      type="text", value=settings['wholetale.runs_root'] || null,
+      placeholder=`Default: ${defaults['wholetale.runs_root'] || 'none'}`,
+      title="Root directory for Tale runs."
+    )
+    .form-group
+      label Expose Home/Workspaces via WebDAV
+      br
+      span Needs a separate plugin
+      .checkbox
+        label(for="wholetale-enable-dav-server")
+          input#wholetale-enable-dav-server(
+            type="checkbox", checked=(
+              settings['wholetale.dav_server'] === null ? defaults['wholetale.dav_server'] : settings['wholetale.dav_server']))
+          | Enabled
+  .form-group
+    label Header logo
+    .g-wholetale-logo-container
+      .g-wholetale-logo-preview-container
+        .g-wholetale-logo-preview
+          img(alt="Logo")
+        button#g-wholetale-logo-reset.btn.btn-sm.btn-default(
+            type="button", title="Reset default logo") Use default
+      .g-wholetale-logo-upload-container
+
+  p#g-wholetale-error-message.g-validation-failed-message
+  input.btn.btn-sm.btn-primary(type="submit", value="Save")

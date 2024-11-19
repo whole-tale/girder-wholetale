@@ -1,0 +1,1258 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://doi.org/10.7910/DVN/blah
+  response:
+    body:
+      string: ''
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8a2281f10a187317-ORD
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Fri, 12 Jul 2024 16:46:08 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=oERAQcK%2B3DJRe1OxqzV%2FXP3qFvIX3hC%2BGAMt%2FZxPDcHKPuaVKPbtUrvoBMchO6wAb4bB%2Bgts3lsJgT5yoohHY%2B9hvRkSiXnrQ2kEve6Tpps5G1etJtADAq0%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      alt-svc:
+      - h3=":443"; ma=86400
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://iqss.github.io/dataverse-installations/data/data.json
+  response:
+    body:
+      string: "{\n  \"installations\": [\n    {\n      \"name\": \"Abacus\",\n      \"description\":
+        \"Open for researchers associated with British Columbia universities to deposit
+        data.\",\n      \"lat\": 49.259982,\n      \"lng\": -123.250212,\n      \"hostname\":
+        \"abacus.library.ubc.ca\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2014\",\n      \"country\": \"Canada\",\n      \"continent\": \"North America\",\n
+        \     \"harvesting_sets\": [\n        \"abacus_open\"\n      ],\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"\\u2415\",\n      \"contact_email\": \"abacus.support@ubc.ca\"\n
+        \   },\n    {\n      \"name\": \"ACSS Dataverse\",\n      \"description\":
+        \"The ACSS Dataverse is an initiative of the Arab Council for the Social Sciences,
+        in collaboration with the Odum Institute for Research in Social Science at
+        the University of North Carolina at Chapel Hill. The ACSS Dataverse contains
+        social science datasets produced in Arab countries, with the goal of making
+        data available for research in the region and preserving data for future generations
+        of researchers. There is no charge for access to datasets in the ACSS Dataverse,
+        although users are requested to register in order to download data. The ACSS
+        Dataverse encourages social scientists who study the Arab region to participate
+        in this initiative by depositing data.\",\n      \"lat\": 33.899798,\n      \"lng\":
+        35.485184,\n      \"hostname\": \"dataverse.theacss.org\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2019\",\n      \"country\": \"Lebanon\",\n
+        \     \"continent\": \"Asia\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.25825\",\n      \"contact_email\": \"dataverse@theacss.org\"\n    },\n
+        \   {\n      \"name\": \"ADA Dataverse\",\n      \"description\": \"The Australian
+        Data Archive provides a national service for collecting, preserving, publishing
+        and accessing digital research data.\",\n      \"lat\": -35.343784,\n      \"lng\":
+        149.082977,\n      \"hostname\": \"dataverse.ada.edu.au\",\n      \"launch_year\":
+        \"2017\",\n      \"country\": \"Australia\",\n      \"continent\": \"Australia\",\n
+        \     \"about_url\": \"https://ada.edu.au\",\n      \"gdcc_member\": true,\n
+        \     \"core_trust_seals\": [\n        \"https://www.coretrustseal.org/wp-content/uploads/2018/02/Australian-Data-Archive.pdf\"\n
+        \     ],\n      \"doi_authority\": \"10.26193\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/17\",\n
+        \     \"contact_email\": \"ada@anu.edu.au\"\n    },\n    {\n      \"name\":
+        \"Arca Dados\",\n      \"description\": \"Arca Dados is Fiocruz's official
+        repository to archive, publish, disseminate, preserve and share digital research
+        data produced by the Fiocruz community or in partnership with other research
+        institutes or bodies, with the objective of promoting new research, ensuring
+        the reproducibility or replicability of existing research, and promoting Open
+        and Citizen Science. Its objective is to stimulate the wide circulation of
+        scientific knowledge, strengthening the institutional commitment to Open Science
+        and the free access of information in health, in addition to providing transparency
+        and fostering collaboration between researchers, educators, academics, managers,
+        graduate students, for the advancement of knowledge and the creation of solutions
+        that meet society's demands. For more information, email dataabertos@fiocruz.br\",\n
+        \     \"lat\": -22.874936,\n      \"lng\": -43.245379,\n      \"hostname\":
+        \"dadosdepesquisa.fiocruz.br\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2020\",\n      \"country\": \"Brazil\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.35078\",\n      \"contact_email\":
+        \"dadosabertos@fiocruz.br\"\n    },\n    {\n      \"name\": \"ARP\",\n      \"description\":
+        \"The repository was originally created as Concorda, an ad-hoc initiative
+        for data exchange during the Covid-19 pandemic by HUN-REN Institute for Computer
+        Science and Control (SZTAKI) and HUN-REN Wigner Research Centre for Physics
+        (WIGNER). Since then, the repository was significantly expanded with additional
+        disk space and other resources donated by SZTAKI and WIGNER institutes, and
+        accepts data from all Hungarian researchers (with some storage constraints).
+        In 2021, the ARP project started to build research data infrastructure for
+        the Hungarian Research Network, and chose it as the main repository component
+        to be integrated, while also significantly expanding its storage capacity.
+        \ See also: https://researchdata.hu/ https://fairsharing.org/4585 https://www.re3data.org/repository/r3d100014109
+        https://v2.sherpa.ac.uk/id/repository/10638 https://wigner.hu/ https://sztaki.hu/\",\n
+        \     \"lat\": 47.47834443,\n      \"lng\": 19.05210423,\n      \"hostname\":
+        \"repo.researchdata.hu\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2020\",\n      \"country\": \"Hungary\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false,\n      \"contact_email\": \"support@researchdata.hu\"\n
+        \   },\n    {\n      \"name\": \"ASU Library Research Data Repository\",\n
+        \     \"description\": \"ASU Library's research data repository (powered by
+        Harvard\\u2019s Dataverse software) helps ASU affiliated researchers share,
+        store, preserve, cite, explore, and make research data accessible and discoverable.
+        Dataverse is a dedicated research data management service platform that serves
+        in the publication and reuse phase of the research data lifecycle and works
+        in concert with the ASU Digital Repository ecosystem to present a more complete
+        picture of ASU\\u2019s scholarly activities.\",\n      \"lat\": 33.425437,\n
+        \     \"lng\": -111.928163,\n      \"hostname\": \"dataverse.asu.edu\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2020\",\n      \"country\":
+        \"USA\",\n      \"continent\": \"North America\",\n      \"gdcc_member\":
+        true,\n      \"doi_authority\": \"10.48349\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/30\",\n
+        \     \"contact_email\": \"dataverse@asu.edu\"\n    },\n    {\n      \"name\":
+        \"AUSSDA Dataverse\",\n      \"description\": \"AUSSDA - The Austrian Social
+        Science Data Archive makes social science data accessible, creating opportunities
+        for research and data reuse, benefitting science and society. AUSSDA serves
+        as the Austrian representative in the Consortium of European Social Science
+        Data Archives (CESSDA ERIC).\",\n      \"lat\": 48.210033,\n      \"lng\":
+        16.363449,\n      \"hostname\": \"data.aussda.at\",\n      \"metrics\": true,\n
+        \     \"launch_year\": \"2017\",\n      \"country\": \"Austria\",\n      \"continent\":
+        \"Europe\",\n      \"about_url\": \"http://aussda.at\",\n      \"harvesting_sets\":
+        [\n        \"all_published\"\n      ],\n      \"gdcc_member\": false,\n      \"core_trust_seals\":
+        [\n        \"https://www.coretrustseal.org/wp-content/uploads/2020/07/AUSSDA-The-Austrian-Social-Science-Data-Archive.pdf\"\n
+        \     ],\n      \"doi_authority\": \"10.11587\",\n      \"contact_email\":
+        \"info@aussda.at\"\n    },\n    {\n      \"name\": \"awf.rodbuk.pl\",\n      \"description\":
+        \"\",\n      \"lat\": 50.07272998,\n      \"lng\": 20.00123847,\n      \"hostname\":
+        \"awf.rodbuk.pl\",\n      \"metrics\": true,\n      \"launch_year\": \"2023\",\n
+        \     \"country\": \"Poland\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false\n    },\n    {\n      \"name\": \"BioData.pt Data Management Portal
+        (DMPortal)\",\n      \"description\": \"DMPortal is offered by BioData.pt,
+        the Portuguese biological data infrastructure and national node of ELIXIR.
+        The portal aims to support the national life sciences research community by
+        enabling FAIR research practices. DMPortal is open to all life sciences fields,
+        but has traditionally been more focused in supporting research in COVID-19,
+        human health, and plant sciences.\",\n      \"lat\": 38.736667,\n      \"lng\":
+        -9.138889,\n      \"hostname\": \"dmportal.biodata.pt\",\n      \"launch_year\":
+        \"2020\",\n      \"country\": \"Portugal\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.34636\"\n    },\n
+        \   {\n      \"name\": \"bonndata\",\n      \"description\": \"bonndata is
+        a state-of-the-art, cross-disciplinary research data repository designed for
+        scientists at the University of Bonn. The repository is an integral part of
+        the University of Bonn's research infrastructure and it is maintained by the
+        Research Data Service Center, which offers a range of services to help researchers
+        manage their data throughout the research lifecycle.\",\n      \"lat\": 50.72894416,\n
+        \     \"lng\": 7.088606727,\n      \"hostname\": \"bonndata.uni-bonn.de\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2023\",\n      \"country\":
+        \"Germany\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n
+        \     \"contact_email\": \"szerr@uni-bonn.de\"\n    },\n    {\n      \"name\":
+        \"Borealis\",\n      \"description\": \"Open for researchers and organizations
+        associated with subscribing Canadian universities to deposit data.\",\n      \"lat\":
+        43.6532,\n      \"lng\": -79.3832,\n      \"hostname\": \"borealisdata.ca\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2012\",\n      \"country\":
+        \"Canada\",\n      \"continent\": \"North America\",\n      \"about_url\":
+        \"https://borealisdata.ca/about/\",\n      \"harvesting_sets\": [\n        \"sp_dataverse\"\n
+        \     ],\n      \"gdcc_member\": true,\n      \"doi_authority\": \"10.5683\",\n
+        \     \"board\": \"https://github.com/orgs/IQSS/projects/8\",\n      \"contact_email\":
+        \"dataverse@scholarsportal.info\"\n    },\n    {\n      \"name\": \"Botswana
+        Harvard Data\",\n      \"description\": \"The Botswana Harvard AIDS Institute
+        Partneship is a world-renowned educational institution of excellence in research
+        and education pertinent to HIV/AIDS and other emerging public health challenges.
+        Established in 1996, the Botswana Harvard AIDS Institute Partnership (BHP)
+        is a collaborative research and training initiative between Botswana\\u2019s
+        Ministry of Health and Wellness and the Harvard T.H. Chan School of Public
+        Health AIDS Initiative. The BHP Dataverse is a data repository for all the
+        research done at BHP. Raw data, anonymised data and final analysis data for
+        every research. This repository will achieve and also easy data sharing within
+        the organisation and outside.\",\n      \"lat\": -24.653257,\n      \"lng\":
+        25.906792,\n      \"hostname\": \"dataverse.bhp.org.bw\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2019\",\n      \"country\": \"Botswana\",\n
+        \     \"continent\": \"Africa\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"\\u2205\"\n    },\n    {\n      \"name\": \"BRIN Dataverse\",\n      \"description\":
+        \"The Repositori Ilmiah Nasional (RIN) is a means to share, preserve, cite,
+        explore, and analyze research data. RIN increases data availability and allows
+        others to reproduce research more easily. Researchers, data authors, publishers,
+        data distributors, and affiliate institutions all receive academic credit
+        and web visibility. Researchers, agencies, and funders have full control over
+        research data.\",\n      \"lat\": -6.228771,\n      \"lng\": 106.818082,\n
+        \     \"hostname\": \"data.brin.go.id\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2018\",\n      \"country\": \"Indonesia\",\n      \"continent\": \"Asia\",\n
+        \     \"gdcc_member\": false,\n      \"contact_email\": \"rin@brin.go.id\"\n
+        \   },\n    {\n      \"name\": \"Centro Brasileiro de Pesquisas F\\u00edsicas
+        - CBPF\",\n      \"description\": \"Brazilian Center for Research in Physics\",\n
+        \     \"lat\": -22.954204,\n      \"lng\": -43.1734987,\n      \"hostname\":
+        \"dataverse.cbpf.br\",\n      \"launch_year\": \"2021\",\n      \"country\":
+        \"Brazil\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.8037\",\n      \"contact_email\": \"lab3i@cbpf.br\"\n
+        \   },\n    {\n      \"name\": \"CESA | Repositorio de datos acad\\u00e9micos\",\n
+        \     \"description\": \"Discover the data on entrepreneurship projects, innovation
+        plans, digital transformation proposals, consumers, and financial markets.
+        Also, explore research on business, management, and entrepreneurship research
+        development at our Business school.\",\n      \"lat\": 4.621920153,\n      \"lng\":
+        -74.06522592,\n      \"hostname\": \"opendata.cesa.edu.co\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2023\",\n      \"country\": \"Colombia\",\n
+        \     \"continent\": \"South America\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.5713\",\n      \"contact_email\": \"biblioteca@cesa.edu.co\"\n    },\n
+        \   {\n      \"name\": \"CIDACS\",\n      \"description\": \"Fiocruz-BA data
+        repository publishes epidemiological data and research from all over Brazil\",\n
+        \     \"lat\": -12.922964,\n      \"lng\": -38.387918,\n      \"hostname\":
+        \"dataverse.cidacs.org\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2020\",\n      \"country\": \"Brazil\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"contact_email\": \"curadoriadata@gmail.com\"\n
+        \   },\n    {\n      \"name\": \"CIFOR\",\n      \"description\": \"Center
+        for International Forestry Research (CIFOR) Dataverse\",\n      \"lat\": -6.594293,\n
+        \     \"lng\": 106.806,\n      \"hostname\": \"data.cifor.org\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2015\",\n      \"country\": \"Indonesia\",\n
+        \     \"continent\": \"Asia\",\n      \"harvesting_sets\": [\n        \"cifor_general\"\n
+        \     ],\n      \"gdcc_member\": false,\n      \"doi_authority\": \"10.17528\",\n
+        \     \"contact_email\": \"cifor-rdm-support@cgiar.org\"\n    },\n    {\n
+        \     \"name\": \"CIMMYT Research Data\",\n      \"description\": \"Free,
+        open access repository of research data and software produced and developed
+        by CIMMYT scientists.\",\n      \"lat\": 19.531535,\n      \"lng\": -98.846064,\n
+        \     \"hostname\": \"data.cimmyt.org\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2016\",\n      \"country\": \"Mexico\",\n      \"continent\": \"North America\",\n
+        \     \"harvesting_sets\": [\n        \"cimmytdatadvn\",\n        \"cimmytswdvn\",\n
+        \       \"iwypdvn\"\n      ],\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"\\u2415\",\n      \"contact_email\": \"J.HERRERA@cgiar.org\"\n    },\n    {\n
+        \     \"name\": \"CIRAD Dataverse\",\n      \"description\": \"Organisme fran\\u00e7ais
+        de recherche agronomique et de coop\\u00e9ration internationale pour le d\\u00e9veloppement
+        durable des r\\u00e9gions tropicales et m\\u00e9diterran\\u00e9ennes, les
+        activit\\u00e9s du CIRAD rel\\u00e8vent des sciences du vivant, des sciences
+        sociales et des sciences de l\\u2019ing\\u00e9nieur appliqu\\u00e9es \\u00e0
+        l\\u2019agriculture, \\u00e0 l\\u2019alimentFrench agricultural research and
+        international cooperation organization working for the sustainable development
+        of tropical and Mediterranean regions, CIRAD's activities concern the life
+        sciences, social sciences and engineering sciences, applied to agriculture,
+        the environment and territorial management.\",\n      \"lat\": 43.650089,\n
+        \     \"lng\": 3.869122,\n      \"hostname\": \"dataverse.cirad.fr\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2018\",\n      \"country\": \"France\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.18167\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/29\",\n
+        \     \"contact_email\": \"dataverse@cirad.fr\"\n    },\n    {\n      \"name\":
+        \"CORA. Research Data Repository (RDR)\",\n      \"description\": \"CORA.
+        Research Data Repository (RDR) is a federated and multidisciplinary data repository
+        that allows Catalan universities, CERCA research centers and other entities
+        that carry out research to publish research datasets in FAIR mode and following
+        the EOSC guidelines. The objectives of the RDR are to increase the efficiency
+        and transparency of research through the rapid dissemination of datasets and
+        to facilitate their reuse.\",\n      \"lat\": 41.38745982,\n      \"lng\":
+        2.112077304,\n      \"hostname\": \"dataverse.csuc.cat\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2021\",\n      \"country\": \"Spain\",\n      \"continent\":
+        \"Europe\",\n      \"about_url\": \"https://dataverse.csuc.cat/about.xhtml\",\n
+        \     \"gdcc_member\": true,\n      \"doi_authority\": \"10.3481\",\n      \"contact_email\":
+        \"rdr-contacte@csuc.cat\"\n    },\n    {\n      \"name\": \"CoronaWhy Dataverse\",\n
+        \     \"description\": \"Research data repository of the CoronaWhy, globally
+        distributed, volunteer-powered research organisation, trying to assist the
+        medical community\\u2019s ability to answer key questions related to COVID-19
+        and Monkeypox.\",\n      \"lat\": 52.0705,\n      \"lng\": 4.3007,\n      \"hostname\":
+        \"datasets.coronawhy.org\",\n      \"launch_year\": \"2020\",\n      \"country\":
+        \"Netherlands\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"contact_email\": \"team@coronawhy.org\"\n    },\n    {\n      \"name\":
+        \"CROSSDA\",\n      \"description\": \"The Croatian Social Science Data Archive
+        (CROSSDA) is a national infrastructure public service whose role is to ensure
+        the long-term preservation and dissemination of social science research data.\",\n
+        \     \"lat\": 45.79641,\n      \"lng\": 15.97162,\n      \"hostname\": \"data.crossda.hr\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2020\",\n      \"country\":
+        \"Croatia\",\n      \"continent\": \"Europe\",\n      \"about_url\": \"https://www.crossda.hr/\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.23669\",\n      \"contact_email\":
+        \"mglavica@ffzg.hr\"\n    },\n    {\n      \"name\": \"CUHK Research Data
+        Repository\",\n      \"description\": \"The CUHK Research Data Repository
+        serves as an institutional research data repository for The Chinese University
+        of Hong Kong (CUHK). It facilitates CUHK researchers to deposit their research
+        data and for the worldwide to explore the research data outputs at CUHK.\",\n
+        \     \"lat\": 22.41984318,\n      \"lng\": 114.2067606,\n      \"hostname\":
+        \"researchdata.cuhk.edu.hk\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2021\",\n      \"country\": \"Hong Kong\",\n      \"continent\": \"Asia\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.48668\",\n      \"contact_email\":
+        \"data@cuhk.edu.hk\"\n    },\n    {\n      \"name\": \"DADOS IPB\",\n      \"description\":
+        \"The data repository of the Instituto Polit\\u00e9cnico de Bragan\\u00e7a
+        aims to store, preserve, share and manage research data generated by the academic
+        community.\",\n      \"lat\": 41.79757745,\n      \"lng\": -6.767712402,\n
+        \     \"hostname\": \"dados.ipb.pt\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2022\",\n      \"country\": \"Portugal\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false,\n      \"contact_email\": \"dados@ipb.pt\"\n
+        \   },\n    {\n      \"name\": \"DANS Data Station Archaeology\",\n      \"description\":
+        \"DANS has launched the Data Station Archeology for the Dutch archaeological
+        research community interested in storing, finding, sharing and publishing
+        their data online. iggest advantages: the large amount of easily searchable
+        data, support for all Creative Commons licenses, the possibility of version
+        control, working with living data and sharing with others.\",\n      \"lat\":
+        52.0705,\n      \"lng\": 4.3007,\n      \"hostname\": \"archaeology.datastations.nl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2022\",\n      \"country\":
+        \"Netherlands\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"contact_email\": \"info@dataverse.nl\"\n    },\n    {\n      \"name\":
+        \"DANS Data Station Life Sciences\",\n      \"description\": \"Domain-specific
+        data repository for the Life Sciences, covering all disciplines from the health,
+        medical as well as the green life sciences. This repository primarily serves
+        research communities in The Netherlands, but is open to international researchers
+        and projects that carry a connection to The Netherlands or Dutch research
+        institutes and programmes.\",\n      \"lat\": 52.08083,\n      \"lng\": 4.345672,\n
+        \     \"hostname\": \"lifesciences.datastations.nl\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2023\",\n      \"country\": \"Netherlands\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.17026\",\n      \"contact_email\": \"info@dans.knaw.nl\"\n    },\n    {\n
+        \     \"name\": \"DANS Data Station Physical and Technical Sciences\",\n      \"description\":
+        \"Domain-specific data repository for research data from the Physical and
+        Technical sciences. This repository focuses on the Dutch research community,
+        offering repository services to organisations and individuals that have no
+        (direct) acces to an institutional repository, or have a preference for the
+        multi-disciplinary data services provided by DANS.\",\n      \"lat\": 52.0705,\n
+        \     \"lng\": 4.3007,\n      \"hostname\": \"phys-techsciences.datastations.nl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2023\",\n      \"country\":
+        \"Netherlands\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.17026\",\n      \"contact_email\": \"
+        info@dans.knaw.nl\"\n    },\n    {\n      \"name\": \"DANS Data Station Social
+        Sciences and Humanities\",\n      \"description\": \"The Data Station Social
+        Sciences and Humanities is a service of DANS. It allows you to deposit and
+        search for data within the social sciences and humanities.\",\n      \"lat\":
+        52.0705,\n      \"lng\": 4.3007,\n      \"hostname\": \"ssh.datastations.nl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2023\",\n      \"country\":
+        \"Netherlands\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.17026\",\n      \"contact_email\": \"info@dans.knaw.nl\"\n
+        \   },\n    {\n      \"name\": \"dare\",\n      \"description\": \"/dare/
+        (short for data repository) is the central institutional repository for research
+        data at the Carl von Ossietzky University of Oldenburg. It serves as a platform
+        for research data generated at the University or created in its context. All
+        users affiliated with the University are welcome to upload their research
+        data here.\",\n      \"lat\": 53.1468491,\n      \"lng\": 8.183134727,\n      \"hostname\":
+        \"dare.uol.de\",\n      \"metrics\": true,\n      \"launch_year\": \"2022\",\n
+        \     \"country\": \"Germany\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.57782\",\n      \"contact_email\": \"fdm-support@uol.de\"\n
+        \   },\n    {\n      \"name\": \"Dartmouth Dataverse\",\n      \"description\":
+        \"\",\n      \"lat\": 43.704448,\n      \"lng\": -72.288715,\n      \"hostname\":
+        \"dataverse.dartmouth.edu\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2020\",\n      \"country\": \"USA\",\n      \"continent\": \"North America\",\n
+        \     \"gdcc_member\": false\n    },\n    {\n      \"name\": \"DaRUS\",\n
+        \     \"description\": \"DaRUS, the data repository of the University of Stuttgart,
+        offers a secure location for research data and codes of members or partners
+        of the University of Stuttgart. DaRUS is used not only for publishing finished
+        data, but also for managing and exchanging data at all stages of the lifecycle.\",\n
+        \     \"lat\": 48.781647,\n      \"lng\": 9.172552,\n      \"hostname\": \"darus.uni-stuttgart.de\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2019\",\n      \"country\":
+        \"Germany\",\n      \"continent\": \"Europe\",\n      \"about_url\": \"https://www.izus.uni-stuttgart.de/en/fokus/darus/\",\n
+        \     \"gdcc_member\": true,\n      \"doi_authority\": \"10.18419\",\n      \"contact_email\":
+        \"fokus@izus.uni-stuttgart.de\"\n    },\n    {\n      \"name\": \"Data Suds\",\n
+        \     \"description\": \"Hosted by IRD, a french public research institution,
+        who defends an original model of equitable scientific partnership with the
+        countries of the South and an interdisciplinary and citizen science, committed
+        to the achievement of the Sustainable Development Goals.\",\n      \"lat\":
+        43.309873,\n      \"lng\": 5.368818,\n      \"hostname\": \"dataverse.ird.fr\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2019\",\n      \"country\":
+        \"France\",\n      \"continent\": \"Europe\",\n      \"about_url\": \"https://data.ird.fr\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.23708\",\n      \"board\":
+        \"https://github.com/orgs/IQSS/projects/20\",\n      \"contact_email\": \"data@ird.fr\"\n
+        \   },\n    {\n      \"name\": \"data.sciencespo\",\n      \"description\":
+        \"Open for researchers and organizations associated with French universities
+        to deposit data. Hosted by the Center for Socio-Political Data (Sciences Po
+        and CNRS).\",\n      \"lat\": 48.854027,\n      \"lng\": 2.328351,\n      \"hostname\":
+        \"data.sciencespo.fr\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2016\",\n      \"country\": \"France\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.2141\",\n      \"board\":
+        \"https://github.com/orgs/IQSS/projects/12\",\n      \"contact_email\": \"data@sciencespo.fr\"\n
+        \   },\n    {\n      \"name\": \"dataportal.ing.pan.pl\",\n      \"description\":
+        \"IGS PAS Data Portal is an open data repository of Institute of Geological
+        Sciences Polish Academy of Sciences. This portal is used to collect and share
+        data, taking into account access to the data from external repositories. IGS
+        PAS data are open and provided for free use for non-commercial purposes under
+        applicable laws on data sharing public and publicly funded. In the case of
+        using data by external entities, the data source must be cited following the
+        guidelines (information on how to cite data is included in the Cite Dataset
+        field).\",\n      \"lat\": 52.22835613,\n      \"lng\": 20.99329514,\n      \"hostname\":
+        \"dataportal.ing.pan.pl\",\n      \"launch_year\": \"2024\",\n      \"country\":
+        \"Poland\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n
+        \     \"doi_authority\": \"10.60871\"\n    },\n    {\n      \"name\": \"DataRepositoriUM\",\n
+        \     \"description\": \"Institutional Data Repository of the University of
+        Minho. Share, publish and manage research data from UMinho research units.\",\n
+        \     \"lat\": 41.561246,\n      \"lng\": -8.39628,\n      \"hostname\": \"datarepositorium.sdum.uminho.pt\",\n
+        \     \"launch_year\": \"2019\",\n      \"country\": \"Portugal\",\n      \"continent\":
+        \"Europe\",\n      \"about_url\": \"https://datarepositorium.uminho.pt/\",\n
+        \     \"gdcc_member\": true,\n      \"doi_authority\": \"10.34622\",\n      \"contact_email\":
+        \"datarepositorium@usdb.uminho.pt\"\n    },\n    {\n      \"name\": \"DataSpace@HKUST\",\n
+        \     \"description\": \"\",\n      \"lat\": 22.336281,\n      \"lng\": 114.266721,\n
+        \     \"hostname\": \"dataspace.ust.hk\",\n      \"launch_year\": \"2016\",\n
+        \     \"country\": \"Hong Kong\",\n      \"continent\": \"Asia\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.14711\"\n    },\n    {\n      \"name\":
+        \"Dataverse e-cienciaDatos\",\n      \"description\": \"e-cienciaDatos is
+        a multidisciplinary data repository that houses the scientific datasets of
+        researchers from the public universities of the Community of Madrid and the
+        UNED, members of the Consorcio Madro\\u00f1o, in order to give visibility
+        to these data, to ensure its preservation and facilitate their access and
+        reuse. e-cienciaDatos is structured as a system constituted by different communities
+        dataverse that collects datasets of each of the individual universities. e-cienciaDatos
+        es un repositorio de datos multidisciplinar que alberga datasets cient\\u00edficos
+        de las univesidades p\\u00fablicas de la Comunidad de Madrid y la UNED - miembros
+        del Consorcio Madro\\u00f1o- para dar visibilidad a estos datos, asegurar
+        su preservaci\\u00f3n y facilitar tanto su acceso como reulitilaci\\u00f3n.
+        e-cienciaDatos tiene una comunidad dataverse por universidad con los datasets
+        de dicha universidad.\",\n      \"lat\": 40.416775,\n      \"lng\": -3.7492,\n
+        \     \"hostname\": \"edatos.consorciomadrono.es\",\n      \"metrics\": true,\n
+        \     \"launch_year\": \"2017\",\n      \"country\": \"Spain\",\n      \"continent\":
+        \"Europe\",\n      \"about_url\": \"http://www.consorciomadrono.es/docs/eCienciaDatosTechnicalDescription.pdf\",\n
+        \     \"harvesting_sets\": [\n        \"openaire_data\"\n      ],\n      \"gdcc_member\":
+        true,\n      \"core_trust_seals\": [\n        \"https://ctscertificationbucket.s3.amazonaws.com/2023/4/2023-04-18-Consorcio-Madro\\u00f1o-e-cienciaDatos_final.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4ZTNLHN3BLBCAFWX%2F20230926%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20230926T171521Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0e5e9439dc59b8f87b7ac839fd4093325996669ef6ff66236eaa0dd10ab65ca8\"\n
+        \     ],\n      \"doi_authority\": \"10.2195\",\n      \"contact_email\":
+        \"eciencia@consorciomadrono.es\"\n    },\n    {\n      \"name\": \"DataverseNL\",\n
+        \     \"description\": \"DataverseNL is a data repository hosted by DANS.
+        Researchers associated with the DataverseNL partners (Several universities,
+        higher education and research institutes) are able to deposit data. \",\n
+        \     \"lat\": 52.08083,\n      \"lng\": 4.345672,\n      \"hostname\": \"dataverse.nl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2013\",\n      \"country\":
+        \"Netherlands\",\n      \"continent\": \"Europe\",\n      \"about_url\": \"https://dans.knaw.nl/en/data-services/dataversenl/\",\n
+        \     \"gdcc_member\": true,\n      \"core_trust_seals\": [\n        \"https://www.coretrustseal.org/wp-content/uploads/2018/04/Tilburg-University-Dataverse.pdf\"\n
+        \     ],\n      \"doi_authority\": \"\\u2415\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/22\",\n
+        \     \"contact_email\": \"info@dataverse.nl\"\n    },\n    {\n      \"name\":
+        \"DataverseNO\",\n      \"description\": \"DataverseNO (https://dataverse.no/)
+        is a national, generic repository for open research data from researchers
+        from Norwegian research institutions. Some collections within DataverseNO
+        also accept data from researchers from other institutions.\",\n      \"lat\":
+        69.649208,\n      \"lng\": 18.955324,\n      \"hostname\": \"dataverse.no\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2017\",\n      \"country\":
+        \"Norway\",\n      \"continent\": \"Europe\",\n      \"about_url\": \"https://site.uit.no/dataverseno/about/\",\n
+        \     \"harvesting_sets\": [\n        \"dataverseno\"\n      ],\n      \"gdcc_member\":
+        true,\n      \"core_trust_seals\": [\n        \"https://www.coretrustseal.org/wp-content/uploads/2020/03/DataverseNO.pdf\"\n
+        \     ],\n      \"doi_authority\": \"10.1871\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/14\",\n
+        \     \"contact_email\": \"support@dataverse.no\"\n    },\n    {\n      \"name\":
+        \"DataverseUA\",\n      \"description\": \"Development of the Open Data Repository
+        \\\"DataverseUA\\\" for the National Academy of Sciences of Ukraine carried
+        out within the framework of the scientific and technical project of the NAS
+        of Ukraine \\\"Development and implementation of open science infrastructure
+        in the NAS of Ukraine (OPENS)\\\" for 2023-2024. The Open Data Repository
+        \\\"DataverseUA\\\" provides the storing of research data, including documents
+        in digital form, which are obtained in scientific research activities are
+        used as evidence in the research process, and are necessary to confirm conclusions
+        and research results in scientific publications.\",\n      \"lat\": 50.44528717,\n
+        \     \"lng\": 30.51258431,\n      \"hostname\": \"opendata.nas.gov.ua\",\n
+        \     \"launch_year\": \"2024\",\n      \"country\": \"Ukraine\",\n      \"continent\":
+        \"Europe\",\n      \"gdcc_member\": false,\n      \"contact_email\": \"adminDataverseUA@bitp.kyiv.ua\"\n
+        \   },\n    {\n      \"name\": \"DATICE\",\n      \"description\": \"DATICE
+        is a data service and archive for Icelandic social science research data\",\n
+        \     \"lat\": 64.14042,\n      \"lng\": -21.9493,\n      \"hostname\": \"dataverse.rhi.hi.is\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2020\",\n      \"country\":
+        \"Iceland\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n
+        \     \"doi_authority\": \"10.34881\",\n      \"contact_email\": \"felagsvisindastofnun@hi.is\"\n
+        \   },\n    {\n      \"name\": \"DOREL\",\n      \"description\": \"The institutional
+        data repository DOREL - DOnn\\u00e9es de REcherche Lorraines - is a tool for
+        referencing the scientific production of the University of Lorraine as well
+        as a space for publishing data sets produced within its research units. The
+        repository is managed by a transversal team composed of coworkers from the
+        University Libraries, the Research services, the IT services and the MSH Lorraine
+        (Maison des Sciences de l'Homme). It is a multidisciplinary repository, developed
+        with the Dataverse software.\",\n      \"lat\": 48.69637516,\n      \"lng\":
+        6.176537898,\n      \"hostname\": \"dorel.univ-lorraine.fr\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2021\",\n      \"country\": \"France\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"contact_email\":
+        \"donnees-recherche@univ-lorraine.fr\"\n    },\n    {\n      \"name\": \"DR-NTU
+        (Data)\",\n      \"description\": \"The institutional open access research
+        data repository for Nanyang Technological University (NTU). NTU researchers
+        are encouraged to use DR-NTU (Data) to deposit, publish and archive their
+        final research data in order to make their research data discoverable, accessible
+        and reusable.\",\n      \"lat\": 1.348668,\n      \"lng\": 103.683104,\n      \"hostname\":
+        \"researchdata.ntu.edu.sg\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2017\",\n      \"country\": \"Singapore\",\n      \"continent\": \"Asia\",\n
+        \     \"about_url\": \"https://blogs.ntu.edu.sg/lib-datamanagement/about-dr-ntu-data/\",\n
+        \     \"gdcc_member\": true,\n      \"doi_authority\": \"10.21979\",\n      \"contact_email\":
+        \"library@ntu.edu.sg\"\n    },\n    {\n      \"name\": \"DUnAs\",\n      \"description\":
+        \"DUnAs is the institutional research data repository of the University of
+        Aveiro. This repository is intended to share, archive, preserve, cite, access,
+        and explore research data produced in the university scientific research activities\",\n
+        \     \"lat\": 40.63078158,\n      \"lng\": -8.657462548,\n      \"hostname\":
+        \"dunas.ua.pt\",\n      \"metrics\": true,\n      \"launch_year\": \"2022\",\n
+        \     \"country\": \"Portugal\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.48527\",\n      \"contact_email\": \"sbidm-dunas@ua.pt\"\n
+        \   },\n    {\n      \"name\": \"Edmond\",\n      \"description\": \"Edmond
+        is a research data repository for Max Planck researchers. It is the place
+        to store completed datasets of research data with open access. Edmond serves
+        the publication of research data from all disciplines and offers scientists
+        the ability to create citable research objects.\",\n      \"lat\": 48.137222,\n
+        \     \"lng\": 11.575556,\n      \"hostname\": \"edmond.mpdl.mpg.de\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2022\",\n      \"country\": \"Germany\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"contact_email\":
+        \"edmond@mpdl.mpg.de\"\n    },\n    {\n      \"name\": \"FGV Dataverse\",\n
+        \     \"description\": \"\",\n      \"lat\": -22.94095725,\n      \"lng\":
+        -43.18013239,\n      \"hostname\": \"dataverse.fgv.br\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2021\",\n      \"country\": \"Brazil\",\n
+        \     \"continent\": \"South America\",\n      \"gdcc_member\": false,\n      \"contact_email\":
+        \"infra.acad@fgv.br, biblioteca.digital@fgv.br\"\n    },\n    {\n      \"name\":
+        \"Florida International University Research Data Portal\",\n      \"description\":
+        \"The FIU Research Data Portal serves as an inter-disciplinary data archive
+        to support access and reuse of research data produced at FIU.\",\n      \"lat\":
+        25.75389,\n      \"lng\": -80.3945539,\n      \"hostname\": \"dataverse.fiu.edu\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2020\",\n      \"country\":
+        \"USA\",\n      \"continent\": \"North America\",\n      \"gdcc_member\":
+        false,\n      \"contact_email\": \"rdm@fiu.edu\"\n    },\n    {\n      \"name\":
+        \"Fudan University\",\n      \"description\": \"Open for Fudan University
+        affiliated researchers to deposit data.\",\n      \"lat\": 31.298531,\n      \"lng\":
+        121.501446,\n      \"hostname\": \"dvn.fudan.edu.cn\",\n      \"launch_year\":
+        \"2014\",\n      \"country\": \"China\",\n      \"continent\": \"Asia\",\n
+        \     \"gdcc_member\": true,\n      \"doi_authority\": \"\\u2205\",\n      \"contact_email\":
+        \"dvn@fudan.edu.cn\"\n    },\n    {\n      \"name\": \"George Mason University
+        Dataverse\",\n      \"description\": \"George Mason University Libraries Dataverse
+        publishes, shares, and preserves data of enduring value produced by George
+        Mason faculty, staff, and students.\",\n      \"lat\": 38.8306,\n      \"lng\":
+        -77.3078,\n      \"hostname\": \"dataverse.orc.gmu.edu\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2021\",\n      \"country\": \"USA\",\n      \"continent\":
+        \"North America\",\n      \"about_url\": \"https://library.gmu.edu/dataverse\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.13021\",\n      \"contact_email\":
+        \"datahelp@gmu.edu\"\n    },\n    {\n      \"name\": \"Gustave Eiffel University
+        Dataverse\",\n      \"description\": \"Les donn\\u00e9es de recherche de l'Universit\\u00e9
+        Gustave Eiffel\",\n      \"lat\": 48.84300627,\n      \"lng\": 2.587602512,\n
+        \     \"hostname\": \"data.univ-gustave-eiffel.fr\",\n      \"launch_year\":
+        \"2017\",\n      \"country\": \"France\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false\n    },\n    {\n      \"name\": \"G\\u00f6ttingen
+        Research Online\",\n      \"description\": \"G\\u00f6ttingen Research Online
+        is an institutional repository for the publication of research data at the
+        G\\u00f6ttingen Campus. It is managed by the G\\u00f6ttingen eResearch Alliance,
+        a joint group of the G\\u00f6ttingen State and University Library and Gesellschaft
+        f\\u00fcr wissenschaftliche Datenverarbeitung mbH G\\u00f6ttingen.\",\n      \"lat\":
+        51.533713,\n      \"lng\": 9.932198,\n      \"hostname\": \"data.goettingen-research-online.de\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2019\",\n      \"country\":
+        \"Germany\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": true,\n
+        \     \"doi_authority\": \"10.25625\",\n      \"contact_email\": \"info@eresearch.uni-goettingen.de\"\n
+        \   },\n    {\n      \"name\": \"Harvard Dataverse\",\n      \"description\":
+        \"Share, archive, and get credit for your data. Find and cite data across
+        all research fields.\",\n      \"lat\": 42.375646,\n      \"lng\": -71.113212,\n
+        \     \"hostname\": \"dataverse.harvard.edu\",\n      \"metrics\": true,\n
+        \     \"launch_year\": \"2008\",\n      \"country\": \"USA\",\n      \"continent\":
+        \"North America\",\n      \"harvesting_sets\": [\n        \"IQSS\"\n      ],\n
+        \     \"gdcc_member\": true,\n      \"doi_authority\": \"10.791\",\n      \"board\":
+        \"https://github.com/orgs/IQSS/projects/19\",\n      \"contact_email\": \"support@dataverse.harvard.edu\"\n
+        \   },\n    {\n      \"name\": \"HeiDATA\",\n      \"description\": \"Open
+        for Heidelberg University affiliated researchers to deposit data.\",\n      \"lat\":
+        49.39875,\n      \"lng\": 8.672434,\n      \"hostname\": \"heidata.uni-heidelberg.de\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2014\",\n      \"country\":
+        \"Germany\",\n      \"continent\": \"Europe\",\n      \"harvesting_sets\":
+        [\n        \"heidata\"\n      ],\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.11588\",\n      \"contact_email\": \"data@uni-heidelberg.de\"\n    },\n
+        \   {\n      \"name\": \"IBICT\",\n      \"description\": \"The network Cariniana,
+        cariniana.ibict.br,  is funded entirely by the Brazilian government and in
+        particular by MCTI (Minist\\u00e9rio da Ci\\u00eancia, Tecnologia e Inova\\u00e7\\u00e3o).
+        It is a project for long-term preservation of scientific publications in Brazil.\",\n
+        \     \"lat\": -15.805842,\n      \"lng\": -47.881369,\n      \"hostname\":
+        \"repositoriopesquisas.ibict.br\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2015\",\n      \"country\": \"Brazil\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.5072\"\n    },\n
+        \   {\n      \"name\": \"ICRISAT\",\n      \"description\": \"International
+        Crops Research Institute for the Semi-Arid Tropics.  Free open data repository
+        of ICRISAT research data including Social science, Phenotypic, Genotypic,
+        Spatial and Soil & Weather data which are linked with open publications.\",\n
+        \     \"lat\": 17.385,\n      \"lng\": 78.4867,\n      \"hostname\": \"dataverse.icrisat.org\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2012\",\n      \"country\":
+        \"India\",\n      \"continent\": \"Asia\",\n      \"harvesting_sets\": [\n
+        \       \"icrisat\"\n      ],\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.21421\",\n      \"contact_email\": \"dataverse.biu@gmail.com; a.rathore@cgiar.org\"\n
+        \   },\n    {\n      \"name\": \"ICWSM\",\n      \"description\": \"Datasets
+        from the International AAAI Conference on Web and Social Media (ICWSM).\",\n
+        \     \"lat\": 37.432057,\n      \"lng\": -122.175297,\n      \"hostname\":
+        \"dataverse.mpi-sws.org\",\n      \"launch_year\": \"2018\",\n      \"country\":
+        \"Germany\",\n      \"continent\": \"Europe\",\n      \"about_url\": \"http://guides.dataverse.org/en/4.8.5/user\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.5072\"\n    },\n
+        \   {\n      \"name\": \"IDSC Dataverse\",\n      \"description\": \"The IDSC
+        Dataverse is the Data Repository of the IDSC - International Data Service
+        Center of IZA - Institute of Labor Economics. It was created as part of a
+        project sponsored by the German Federal Ministry of Education and Research
+        whose aim was to produce building blocks for research data trustees. The purpose
+        of the IDSC Dataverse is to serve the needs of researchers and entities associated
+        with IZA and make datasets available for replication, secondary research and
+        teaching purposes. It adheres to the FAIR data principles.\",\n      \"lat\":
+        50.7300529,\n      \"lng\": 7.109468,\n      \"hostname\": \"dataverse.iza.org\",\n
+        \     \"launch_year\": \"2024\",\n      \"country\": \"Germany\",\n      \"continent\":
+        \"Europe\",\n      \"about_url\": \"https://idsc.iza.org\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.15185\",\n      \"contact_email\": \"idsc@iza.org\"\n
+        \   },\n    {\n      \"name\": \"IFDC Dataverse\",\n      \"description\":
+        \"Over the years, IFDC has conducted numerous research and demonstration trials
+        across its global programs and projects. Looking to avoid poor documentation,
+        loss of data, and to boost the efficiency of data usage and decision-making
+        abilities, IFDC has implemented a center-wide initiative to collect all research
+        and development data in standard accessible formats, collate all data and
+        analyses, and to make it available through IFDC solutions. The Dataverse came
+        to corroborate with the IFDC idea to implement the FAIR principles and make
+        the data easily findable, accessible, interoperable, and reusable.\",\n      \"lat\":
+        34.76992466,\n      \"lng\": -87.6541439,\n      \"hostname\": \"dataverse.ifdc.org\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2021\",\n      \"country\":
+        \"USA\",\n      \"continent\": \"North America\",\n      \"gdcc_member\":
+        false,\n      \"contact_email\": \"wpavan@ifdc.org\"\n    },\n    {\n      \"name\":
+        \"IISH Dataverse\",\n      \"description\": \"The IISH Dataverse contains
+        micro-, meso-, and macro-level datasets on social and economic history.\",\n
+        \     \"lat\": 52.369021,\n      \"lng\": 4.939226,\n      \"hostname\": \"datasets.iisg.amsterdam\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2015\",\n      \"country\":
+        \"Netherlands\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10622\",\n      \"contact_email\": \"info@iisg.nl\"\n
+        \   },\n    {\n      \"name\": \"Indata\",\n      \"description\": \"CEDIA's
+        Research Data Repository preserves, disseminates and gives access to research
+        data generated by its academics and researchers. In order to grant visibility,
+        this repository guarantees its conservation and makes easier its access and
+        reuse. Researchers, journals, data authors, publishers, data distributors,
+        and affiliated institutions receive academic credit and visibility on the
+        web.\",\n      \"lat\": -2.90791,\n      \"lng\": -79.0108,\n      \"hostname\":
+        \"indata.cedia.edu.ec\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2020\",\n      \"country\": \"Ecuador\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.23667\",\n      \"contact_email\":
+        \"neg@cedia.org.ec\"\n    },\n    {\n      \"name\": \"Institute of Russian
+        Literature Dataverse\",\n      \"description\": \"An institutional repository
+        hosted by the Institute of Russian Literature (Pushkinskij Dom) of the Russian
+        Academy of Sciences at Saint Petersburg. It is meant to serve as a public
+        platform to publish and host open data on Russian Literature and folklore.
+        The repository will host data created in the Institute and by the wider research
+        community.\",\n      \"lat\": 59.944883,\n      \"lng\": 30.301463,\n      \"hostname\":
+        \"dataverse.pushdom.ru\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2020\",\n      \"country\": \"Russia\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.3186\"\n    },\n
+        \   {\n      \"name\": \"International Potato Center\",\n      \"description\":
+        \"Centro Internacional De La Papa (International Potato Center) is a member
+        of the CGIAR Consortium, an international organization made up of 15 centers
+        engaged in research for a food secure future.\",\n      \"lat\": -12.077791,\n
+        \     \"lng\": -76.946888,\n      \"hostname\": \"data.cipotato.org\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2019\",\n      \"country\": \"Peru\",\n      \"continent\":
+        \"South America\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.21223\",\n      \"contact_email\": \"CIP-RIU@cgiar.org\"\n    },\n    {\n
+        \     \"name\": \"IPGP Research Collection\",\n      \"description\": \"A
+        repository for sharing and preserving research data and documents produced,
+        collected and curated at the Institut de physique du globe de Paris (IPGP).\",\n
+        \     \"lat\": 48.844925,\n      \"lng\": 2.356274,\n      \"hostname\": \"dataverse.ipgp.fr\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2022\",\n      \"country\":
+        \"France\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n
+        \     \"doi_authority\": \"10.18715\",\n      \"contact_email\": \"rc-support@ipgp.fr\"\n
+        \   },\n    {\n      \"name\": \"Italian Institute of Technology (IIT)\",\n
+        \     \"description\": \"IIT Dataverse is the research data repository of
+        Istituto Italiano di Tecnologia and has been launched in May 2021. IIT\\u2019s
+        research activity is focused on cutting-edge science in four Research Domains
+        (Computational Sciences, LifeTech, Nanomaterials, and Robotics) and promotes
+        excellence in basic and applied research. IIT Dataverse offers long-term storage
+        and preservation to research data of IIT-affiliated researchers. IIT is also
+        member of the Global Dataverse Community Consortium\",\n      \"lat\": 44.475,\n
+        \     \"lng\": 8.9062,\n      \"hostname\": \"dataverse.iit.it\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2021\",\n      \"country\": \"Italy\",\n      \"continent\":
+        \"Europe\",\n      \"gdcc_member\": false,\n      \"contact_email\": \"rdm@iit.it\"\n
+        \   },\n    {\n      \"name\": \"Johns Hopkins Research Data Repository\",\n
+        \     \"description\": \"The Johns Hopkins Research Data Repository is an
+        open access repository for Johns Hopkins researchers to share their research
+        data. It is administered by professional curators at JHU Data Services, who
+        will work with depositors to enable future discovery and reuse of your data.\",\n
+        \     \"lat\": 39.329055,\n      \"lng\": -76.620335,\n      \"hostname\":
+        \"archive.data.jhu.edu\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2013\",\n      \"country\": \"USA\",\n      \"continent\": \"North America\",\n
+        \     \"harvesting_sets\": [\n        \"jhuda_all\"\n      ],\n      \"gdcc_member\":
+        true,\n      \"doi_authority\": \"10.7281\",\n      \"contact_email\": \"datamanagement@jhu.edu\"\n
+        \   },\n    {\n      \"name\": \"JPL Open Repository\",\n      \"description\":
+        \"The JPL Open Repository (JOR), replaces the JPL Technical Report Server
+        (TRS) in 2023, is a repository for digital copies of technical publications
+        authored by JPL employees. It includes journal articles (the Final Accepted
+        Version), meeting papers, presentations, and other publications cleared for
+        external distribution from 1992 to the present. It also include research datasets
+        from 2022 on.\",\n      \"lat\": 34.201815,\n      \"lng\": -118.172889,\n
+        \     \"hostname\": \"dataverse.jpl.nasa.gov\",\n      \"metrics\": true,\n
+        \     \"launch_year\": \"2022\",\n      \"country\": \"USA\",\n      \"continent\":
+        \"North America\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.48577\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/42\",\n
+        \     \"contact_email\": \"library@jpl.nasa.gov\"\n    },\n    {\n      \"name\":
+        \"J\\u00fclich DATA\",\n      \"description\": \"J\\u00fclich DATA is the
+        institutional research data repositorium made at Forschungszentrum J\\u00fclich.
+        Featuring metadata focus and running on Kubernetes.\",\n      \"lat\": 50.90683,\n
+        \     \"lng\": 6.41026,\n      \"hostname\": \"data.fz-juelich.de\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2020\",\n      \"country\": \"Germany\",\n
+        \     \"continent\": \"Europe\",\n      \"about_url\": \"https://www.fz-juelich.de/zb/rdm\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.26165\",\n      \"board\":
+        \"https://github.com/orgs/IQSS/projects/4\",\n      \"contact_email\": \"forschungsdaten@fz-juelich.de\"\n
+        \   },\n    {\n      \"name\": \"KEEN Data Management Platform\",\n      \"description\":
+        \"The KEEN Data Management Platform is a common central Data Management and
+        Storage Platform for KEEN project. (KEEN Project Link : http://keen-plattform.de)\",\n
+        \     \"lat\": 51.03412406,\n      \"lng\": 13.71038,\n      \"hostname\":
+        \"keen.zih.tu-dresden.de\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2021\",\n      \"country\": \"Germany\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.57826\",\n      \"contact_email\":
+        \"lincoln.sherpa@tu-dresden.de\"\n    },\n    {\n      \"name\": \"KU Leuven
+        RDR\",\n      \"description\": \"RDR is the institutional research data repository
+        created by KU Leuven in collaboration with LIBIS and Dataverse to help its
+        researchers publish and share their research data.\",\n      \"lat\": 50.87905722,\n
+        \     \"lng\": 4.701788999,\n      \"hostname\": \"rdr.kuleuven.be\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2022\",\n      \"country\": \"Belgium\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"board\":
+        \"https://github.com/orgs/IQSS/projects/39\",\n      \"contact_email\": \"rdr@kuleuven.be\"\n
+        \   },\n    {\n      \"name\": \"Libra Data\",\n      \"description\": \"LibraData
+        is a place for UVA researchers to share data publicly, and is part of the
+        Libra Scholarly Repository suite of services which includes works of UVA scholarship
+        such as articles, books, theses, and data.\",\n      \"lat\": 38.034578,\n
+        \     \"lng\": -78.507394,\n      \"hostname\": \"dataverse.lib.virginia.edu\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2016\",\n      \"country\":
+        \"USA\",\n      \"continent\": \"North America\",\n      \"about_url\": \"http://www.library.virginia.edu/libra/datasets/\",\n
+        \     \"harvesting_sets\": [\n        \"UVA-Libra-Data\"\n      ],\n      \"gdcc_member\":
+        true,\n      \"doi_authority\": \"10.1813\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/10\",\n
+        \     \"contact_email\": \"libra@virginia.edu\"\n    },\n    {\n      \"name\":
+        \"Lithuanian Data Archive for Social Sciences and Humanities (LiDA)\",\n      \"description\":
+        \"Lithuanian Data Archive for Social Sciences and Humanities (LiDA) is a virtual
+        digital infrastructure for data acquisition, long-term preservation and dissemination.
+        It provides access to more than 700 datasets. All the international and national
+        data resources are documented in both Lithuanian and English. Access to the
+        data is provided via this Dataverse repository (not all the datasets are available,
+        as in 2019-2021 a migration project from the old infrastructure is being implemented).
+        LiDA curates most of the data collected conducting the most important international
+        social surveys in Lithuania \\u2013 the European Social Survey, European Values
+        Studies, European Election Studies and the International Social Research Program.
+        LiDA is hosted by the Centre for Data Analysis and Archiving of Kaunas University
+        of Technology (data.ktu.edu).\",\n      \"lat\": 54.89910355,\n      \"lng\":
+        23.91710186,\n      \"hostname\": \"lida.dataverse.lt\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2021\",\n      \"country\": \"Lithuania\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"contact_email\":
+        \"data@ktu.lt\"\n    },\n    {\n      \"name\": \"Maine Dataverse Network\",\n
+        \     \"description\": \"A service brought to you by the ACG@UMaine. The way
+        Supercomputing should be!\",\n      \"lat\": 44.901349,\n      \"lng\": -68.671815,\n
+        \     \"hostname\": \"dataverse.acg.maine.edu/dvn\",\n      \"launch_year\":
+        \"2013\",\n      \"country\": \"USA\",\n      \"continent\": \"North America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"\\u2415\",\n      \"contact_email\":
+        \"chris.wilson@maine.edu\"\n    },\n    {\n      \"name\": \"MELDATA\",\n
+        \     \"description\": \"The Dataverse portal of the International Center
+        for Agricultural Research in Dry Ares.\",\n      \"lat\": 33.88863,\n      \"lng\":
+        35.49548,\n      \"hostname\": \"data.mel.cgiar.org\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2019\",\n      \"country\": \"Lebanon\",\n
+        \     \"continent\": \"Asia\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"\\u2415\",\n      \"contact_email\": \"mel-support@cgiar.org\"\n    },\n
+        \   {\n      \"name\": \"NIE Data Repository\",\n      \"description\": \"NIE
+        Data Repository is the institutional open access research data repository
+        for National Institute of Education, Singapore. NIE researchers are encouraged
+        to use NIE Data Repository to deposit, publish and archive their final research
+        data in order to make their research data discoverable, accessible and reusable.\",\n
+        \     \"lat\": 1.349115,\n      \"lng\": 103.678829,\n      \"hostname\":
+        \"researchdata.nie.edu.sg\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2019\",\n      \"country\": \"Singapore\",\n      \"continent\": \"Asia\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.2534\",\n      \"contact_email\":
+        \"libscomm@nie.edu.sg\"\n    },\n    {\n      \"name\": \"NIOZ Dataverse\",\n
+        \     \"description\": \"Open access repository for marine research data collected,
+        processed and published by the Royal Netherlands Institute for Sea Research\",\n
+        \     \"lat\": 53.003259,\n      \"lng\": 4.785834,\n      \"hostname\": \"dataverse.nioz.nl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2020\",\n      \"country\":
+        \"Netherlands\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"contact_email\": \"taco.de.bruin@nioz.nl\"\n    },\n    {\n
+        \     \"name\": \"NYCU Dataverse\",\n      \"description\": \"NYCU Dataverse
+        is the institutional research data repository of the National Yang Ming Chiao
+        Tung University. This repository is aimed to share, archive, preserve, cite,
+        access, and explore research data produced in the university. Datasets deposited
+        to the NYCU Dataverse and published are automatically given a citation and
+        a persistent link, increasing the researcher's impact, and visibility of research.\",\n
+        \     \"lat\": 24.7867714,\n      \"lng\": 120.9984256,\n      \"hostname\":
+        \"dataverse.lib.nycu.edu.tw\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2022\",\n      \"country\": \"Taiwan (ROC)\",\n      \"continent\": \"Asia\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.5777\",\n      \"contact_email\":
+        \"RDM@lib.nycu.edu.tw\"\n    },\n    {\n      \"name\": \"ODISSEI Portal\",\n
+        \     \"description\": \"ODISSEI (Open Data Infrastructure for Social Science
+        and Economic Innovations) is the Dutch national research infrastructure for
+        the social sciences in the Netherlands. ODISSEI brings together researchers
+        with the necessary data, expertise and resources to conduct ground-breaking
+        research and embrace the computational turn in social enquiry.\",\n      \"lat\":
+        52.369021,\n      \"lng\": 4.939226,\n      \"hostname\": \"portal.odissei.nl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2022\",\n      \"country\":
+        \"Netherlands\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\":
+        false,\n      \"contact_email\": \"info@odissei-data.nl\"\n    },\n    {\n
+        \     \"name\": \"Open Data @ UCLouvain\",\n      \"description\": \"Universit\\u00e9
+        catholique de Louvain - Belgium\",\n      \"lat\": 50.669868,\n      \"lng\":
+        4.615608,\n      \"hostname\": \"dataverse.uclouvain.be\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2019\",\n      \"country\": \"Belgium\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.14428\",\n      \"contact_email\": \"patrick.vranckx@uclouvain.be\"\n
+        \   },\n    {\n      \"name\": \"Open Forest Data\",\n      \"description\":
+        \"Podlasie digital repository of natural science data\",\n      \"lat\": 52.70329227,\n
+        \     \"lng\": 23.86781611,\n      \"hostname\": \"dataverse.openforestdata.pl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2020\",\n      \"country\":
+        \"Poland\",\n      \"continent\": \"Europe\",\n      \"about_url\": \"https://openforestdata.pl/\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.4837\",\n      \"contact_email\":
+        \"jlapinska@ibs.bialowieza.pl\"\n    },\n    {\n      \"name\": \"osnaData\",\n
+        \     \"description\": \"osnaData, the institutional research data repository
+        of the Osnabr\\u00fcck University. osnaData offers all members of the university
+        the possibility to publish their scientific research data according to the
+        FAIR principles (Findable, Accessible, Interoperable, Reusable), thus making
+        them visible, validatable and reusable worldwide. The research data repository
+        osnaData is committed to the idea of Open Access as well as Open Science.
+        Research data of all types and formats are published.\",\n      \"lat\": 52.27329055,\n
+        \     \"lng\": 8.045669207,\n      \"hostname\": \"osnadata.ub.uni-osnabrueck.de\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2021\",\n      \"country\":
+        \"Germany\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n
+        \     \"doi_authority\": \"10.26249\",\n      \"contact_email\": \"osnadata@ub.uni-osnabrueck.de\"\n
+        \   },\n    {\n      \"name\": \"PAPYRUS\",\n      \"description\": \"Papyrus
+        is a multidisciplinary data repository, which houses the scientific data sets
+        of research projects carried out by the Colombian institutions belonging to
+        the Colombia Consortium, whose purpose is to give the data visibility, guarantee
+        their preservation and facilitate their access, retrieval and reuse through
+        centralized custody and management.\",\n      \"lat\": 4.5709,\n      \"lng\":
+        -74.2973,\n      \"hostname\": \"papyrus-datos.co\",\n      \"metrics\": true,\n
+        \     \"launch_year\": \"2022\",\n      \"country\": \"Colombia\",\n      \"continent\":
+        \"South America\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.57924\",\n      \"contact_email\": \"consortia@papyrus-datos.com\"\n
+        \   },\n    {\n      \"name\": \"Peking University\",\n      \"description\":
+        \"Peking University Open Research Data Platform\",\n      \"lat\": 39.993923,\n
+        \     \"lng\": 116.306539,\n      \"hostname\": \"opendata.pku.edu.cn\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2014\",\n      \"country\":
+        \"China\",\n      \"continent\": \"Asia\",\n      \"about_url\": \"http://opendata.pku.edu.cn/about.xhtml\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.1817\",\n      \"contact_email\":
+        \"luopc@lib.pku.edu.cn; opendata@lib.pku.edu.cn\"\n    },\n    {\n      \"name\":
+        \"Pontificia Universidad Cat\\u00f3lica del Per\\u00fa\",\n      \"description\":
+        \"El Instituto de Opini\\u00f3n P\\u00fablica de la Pontificia Universidad
+        Cat\\u00f3lica del Per\\u00fa (IOP) se cre\\u00f3 a finales del 2005 con la
+        finalidad de generar un mayor conocimiento acerca de los fen\\u00f3menos que
+        interesan, preocupan y afectan a la sociedad peruana. Teniendo como eje metodol\\u00f3gico
+        el estudio de la opini\\u00f3n p\\u00fablica, el IOP investiga las creencias,
+        actitudes y sentimientos que configuran las din\\u00e1micas sociales en el
+        Per\\u00fa.\",\n      \"lat\": -12.068924,\n      \"lng\": -77.079338,\n      \"hostname\":
+        \"datos.pucp.edu.pe\",\n      \"metrics\": true,\n      \"launch_year\": \"2019\",\n
+        \     \"country\": \"Peru\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"\\u2415\",\n      \"contact_email\": \"raul.sifuentes@pucp.pe\"\n
+        \   },\n    {\n      \"name\": \"QDR Main Collection\",\n      \"description\":
+        \"QDR curates, stores, preserves, publishes, and enables the download of digital
+        data generated through qualitative and multi-method research in the social
+        sciences. The repository develops and disseminates guidance for managing,
+        sharing, citing, and reusing qualitative data, and contributes to the generation
+        of common standards for doing so. QDR\\u2019s overarching goals are to make
+        sharing qualitative data customary in the social sciences, to broaden access
+        to social science data, and to strengthen qualitative and multi-method research.\",\n
+        \     \"lat\": 43.038013,\n      \"lng\": -76.135566,\n      \"hostname\":
+        \"data.qdr.syr.edu\",\n      \"metrics\": true,\n      \"launch_year\": \"2018\",\n
+        \     \"country\": \"USA\",\n      \"continent\": \"North America\",\n      \"about_url\":
+        \"https://qdr.syr.edu/about\",\n      \"harvesting_sets\": [\n        \"qdr_whole\"\n
+        \     ],\n      \"gdcc_member\": true,\n      \"core_trust_seals\": [\n        \"https://www.coretrustseal.org/wp-content/uploads/2018/11/Qualitative-Data-Repository.pdf\"\n
+        \     ],\n      \"doi_authority\": \"10.5064\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/6\",\n
+        \     \"contact_email\": \"qdr@syr.edu\"\n    },\n    {\n      \"name\": \"Recherche
+        Data Gouv\",\n      \"description\": \"The Research Data Gouv platform is
+        the national federated platform for open and shared research data serving
+        the national scientific community. This platform was an integral part of the
+        Second National Plan for Open Science (PNSO) and offers a multidisciplinary
+        data repository, a registry which reports data hosted in other repositories
+        and a web portal. The multidisciplinary repository is a sovereign publishing
+        solution for sharing and opening up data for communities which are yet to
+        set up their own recognised thematic repository.\",\n      \"lat\": 48.801407,\n
+        \     \"lng\": 2.130122,\n      \"hostname\": \"entrepot.recherche.data.gouv.fr\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2022\",\n      \"country\":
+        \"France\",\n      \"continent\": \"Europe\",\n      \"about_url\": \"https://recherche.data.gouv.fr\",\n
+        \     \"harvesting_sets\": [\n        \"ALL\"\n      ],\n      \"gdcc_member\":
+        false,\n      \"board\": \"https://github.com/orgs/IQSS/projects/15\",\n      \"contact_email\":
+        \"admin-recherchedatagouv@inrae.fr\"\n    },\n    {\n      \"name\": \"Redape
+        - Reposit\\u00f3rio de Dados de Pesquisa da Embrapa\",\n      \"description\":
+        \"Redape - Embrapa Research Data Repository is an institutional data repository
+        that aims to preserve and facilitate the retrieval of scientific data produced
+        by the Brazilian Agricultural Research Corporation. It allows the organization,
+        management and publication of data according to the principles that guide
+        scientific data management around the world, including accessibility, interoperability,
+        reproducibility and reuse.\",\n      \"lat\": -22.888889,\n      \"lng\":
+        -47.077778,\n      \"hostname\": \"redape.dados.embrapa.br\",\n      \"launch_year\":
+        \"2022\",\n      \"country\": \"Brazil\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.48432\",\n      \"contact_email\":
+        \"redape@embrapa.br\"\n    },\n    {\n      \"name\": \"Repositorio de Datos
+        Abiertos de Investigaci\\u00f3n (Redata)\",\n      \"description\": \"El Repositorio
+        de Datos Abiertos de Investigaci\\u00f3n de Uruguay (Redata) busca incentivar
+        la publicaci\\u00f3n y reutilizaci\\u00f3n de los resultados de datos de investigaciones
+        nacionales de cualquier \\u00e1rea o disciplina. Es un proyecto de la Agencia
+        Nacional de Investigaci\\u00f3n e Innovaci\\u00f3n (ANII) de Uruguay y forma
+        parte del Sistema Nacional de Repositorios Digitales Abiertos de ciencia y
+        tecnolog\\u00eda (SILO), una red de repositorios de acceso abierto interoperables,
+        conformada por instituciones del sistema cient\\u00edfico y tecnol\\u00f3gico
+        uruguayo, que promueve el acceso, la preservaci\\u00f3n y visibilidad de la
+        producci\\u00f3n nacional en ciencia y tecnolog\\u00eda\",\n      \"lat\":
+        -34.8781547,\n      \"lng\": -56.07650597,\n      \"hostname\": \"redata.anii.org.uy\",\n
+        \     \"launch_year\": \"2024\",\n      \"country\": \"Uruguay\",\n      \"continent\":
+        \"South America\",\n      \"gdcc_member\": true,\n      \"doi_authority\":
+        \"10.60895\",\n      \"contact_email\": \"redata@anii.org.uy\"\n    },\n    {\n
+        \     \"name\": \"Repositorio de Datos Acad\\u00e9micos RDA-UNR\",\n      \"description\":
+        \"El Repositorio de Datos Acad\\u00e9micos UNR (RDA-UNR) permite compartir,
+        archivar, acceder, explorar y citar los datos de investigaci\\u00f3n gestionados
+        por los docentes, investigadores y alumnos de la UNR, con el fin de dar visibilidad
+        a los datos, potenciando su acceso, su reutilizaci\\u00f3n y garantizando
+        su preservaci\\u00f3n a largo plazo. Es un repositorio de auto publicaci\\u00f3n,
+        en el cual los usuarios cargan, organizan, describen y publican sus datos.
+        Cuentan para hacerlo con la ayuda de un equipo de curadores, gu\\u00edas y
+        sesiones de entrenamiento. The Academic Data Repository of the National University
+        of Rosario (RDA- UNR) allows for sharing, storing, accessing, exploring, and
+        citing research data managed by UNR professors, researchers and students so
+        as to make these data visible and promote its use and reutilization, ensuring
+        its long-term preservation. It is a self-publishing repository, i.e. users
+        upload, organize, describe and publish their own data with the assistance
+        of a team of curators, user guides and training sessions.\",\n      \"lat\":
+        -32.95019324,\n      \"lng\": -60.63599687,\n      \"hostname\": \"dataverse.unr.edu.ar\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2022\",\n      \"country\":
+        \"Argentina\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.57715\",\n      \"contact_email\": \"repositoriodatos@unr.edu.ar\"\n
+        \   },\n    {\n      \"name\": \"Repositorio de datos de investigaci\\u00f3n
+        de la Universidad de Chile\",\n      \"description\": \"El Repositorio de
+        datos de investigaci\\u00f3n de la Universidad de Chile conserva, difunde
+        y proporciona acceso a los datos de investigaci\\u00f3n generadas por sus
+        acad\\u00e9micos e investigadores, con el fin de dar visibilidad a dichos
+        datos, garantizar su preservaci\\u00f3n y facilitar su acceso y reutilizaci\\u00f3n.\",\n
+        \     \"lat\": -33.45,\n      \"lng\": -70.666667,\n      \"hostname\": \"datos.uchile.cl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2019\",\n      \"country\":
+        \"Chile\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"contact_email\": \"sisib@uchile.cl\"\n    },\n    {\n      \"name\":
+        \"Repositorio de Datos de Investigaci\\u00f3n de la Universidad Nacional de
+        La Plata\",\n      \"description\": \"El Repositorio de Datos de Investigaci\\u00f3n
+        de la Universidad Nacional de La Plata es una plataforma en l\\u00ednea dedicada
+        a la organizaci\\u00f3n y difusi\\u00f3n de datos de investigaci\\u00f3n para
+        toda la comunidad acad\\u00e9mica de la UNLP. El objetivo de esta plataforma
+        es reunir y dar acceso a los datos generados desde todos los \\u00e1mbitos
+        de la UNLP para garantizar su preservaci\\u00f3n, fomentar el reuso y maximizar
+        el impacto de los mismos. El proyecto surge como respuesta de la UNLP a las
+        obligaciones planteadas en la ley 26.899 y a numerosos requerimientos institucionales
+        de resguardo y difusi\\u00f3n de conjuntos de datos de gran valor acad\\u00e9mico.
+        El Repositorio de Datos de Investigaci\\u00f3n se integra al conjunto de servicios
+        brindados desde la UNLP orientados a optimizar la gesti\\u00f3n, maximizar
+        la difusi\\u00f3n y preservar toda la producci\\u00f3n intelectual de la Universidad.\",\n
+        \     \"lat\": -34.90724904,\n      \"lng\": -57.94223174,\n      \"hostname\":
+        \"datos.unlp.edu.ar\",\n      \"launch_year\": \"2023\",\n      \"country\":
+        \"Argentina\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.35537\",\n      \"contact_email\": \"datos@sedici.unlp.edu.ar\"\n
+        \   },\n    {\n      \"name\": \"Repositorio de Datos de Investigaci\\u00f3n
+        Universidad del Rosario\",\n      \"description\": \"Explore research data
+        from Universidad del Rosario affiliated researchers.\",\n      \"lat\": 4.600598,\n
+        \     \"lng\": -74.073352,\n      \"hostname\": \"research-data.urosario.edu.co\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2019\",\n      \"country\":
+        \"Colombia\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.34848\",\n      \"contact_email\": \"researchdata@urosario.edu.co\"\n
+        \   },\n    {\n      \"name\": \"Repositorio de datos de la Universidad de
+        Concepci\\u00f3n\",\n      \"description\": \"El repositorio de Datos de la
+        Universidad de Concepci\\u00f3n, tiene como objetivo conservar, visibilizar
+        y poner a disposici\\u00f3n los datos y/o complementos de informaci\\u00f3n
+        utilizada en los proyectos de investigaci\\u00f3n por nuestros acad\\u00e9micos
+        y/o investigadores.\",\n      \"lat\": -36.83226768,\n      \"lng\": -73.03503217,\n
+        \     \"hostname\": \"datav.udec.cl\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2022\",\n      \"country\": \"Chile\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.48665\",\n      \"contact_email\":
+        \"bibliotecas@udec.cl\"\n    },\n    {\n      \"name\": \"Repositorio de Datos
+        Pontificia Universidad Javeriana\",\n      \"description\": \"Pontificia Universidad
+        Javeriana's Research Data Repository preserves, disseminates and gives access
+        to research data generated by its academics and researchers. In order to grant
+        visibility, this repository guarantees its conservation and makes easier its
+        access and reuse. Researchers, journals, data authors, publishers, data distributors,
+        and affiliated institutions receive academic credit and visibility on the
+        web.\",\n      \"lat\": 4.628582604,\n      \"lng\": -74.06465321,\n      \"hostname\":
+        \"dataverse.javeriana.edu.co\",\n      \"launch_year\": \"2024\",\n      \"country\":
+        \"Colombia\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"contact_email\": \"durangouf@javeriana.edu.co\"\n    },\n
+        \   {\n      \"name\": \"Repositorio TECdatos\",\n      \"description\": \"El
+        Repositorio de Datos de Investigaci\\u00f3n del Tecnol\\u00f3gico de Costa
+        Rica, se ha implementado con el prop\\u00f3sito de preservar, difundir y proporcionar
+        acceso a los datos de investigaci\\u00f3n generados por los acad\\u00e9micos,
+        investigadores y estudiantes de la Universidad. La iniciativa se enfoca en
+        aumentar la visibilidad de los datos de investigaci\\u00f3n, asegurando su
+        preservaci\\u00f3n a largo plazo y facilitando su acceso y reutilizaci\\u00f3n
+        por parte de la comunidad cient\\u00edfica y el p\\u00fablico en general.
+        El repositorio tambi\\u00e9n fomenta la transparencia y la integridad de la
+        investigaci\\u00f3n al ofrecer un acceso libre y abierto a los datos, lo que
+        permite una mayor colaboraci\\u00f3n y un avance mas r\\u00e1pido en el conocimiento
+        cient\\u00edfico.\",\n      \"lat\": 9.854961731,\n      \"lng\": -83.91238269,\n
+        \     \"hostname\": \"dataverse.tec.ac.cr\",\n      \"launch_year\": \"2024\",\n
+        \     \"country\": \"Costa Rica\",\n      \"continent\": \"North America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.18845\",\n      \"contact_email\":
+        \"datatec@itcr.ac.cr\"\n    },\n    {\n      \"name\": \"Reposit\\u00f3rio
+        de Dados de Pesquisa\",\n      \"description\": \"Reposit\\u00f3rio de dados
+        de pesquisa Unifesp\",\n      \"lat\": -23.53763,\n      \"lng\": -46.788869,\n
+        \     \"hostname\": \"repositoriodedados.unifesp.br\",\n      \"launch_year\":
+        \"2019\",\n      \"country\": \"Brazil\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"contact_email\": \"repositoriodedados@unifesp.br\"\n
+        \   },\n    {\n      \"name\": \"Reposit\\u00f3rio de Dados de Pesquisa da
+        UFABC\",\n      \"description\": \"\",\n      \"lat\": -23.643807,\n      \"lng\":
+        -46.528304,\n      \"hostname\": \"dataverse.ufabc.edu.br\",\n      \"launch_year\":
+        \"2018\",\n      \"country\": \"Brazil\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.5072\",\n      \"contact_email\":
+        \"biblioteca@ufabc.edu.br\"\n    },\n    {\n      \"name\": \"Reposit\\u00f3rio
+        de Dados de Pesquisa do ILEEL\",\n      \"description\": \"Research data repository
+        of Institute of Linguistics and Literature / Federal University of Uberlandia\",\n
+        \     \"lat\": -18.908702,\n      \"lng\": -48.291944,\n      \"hostname\":
+        \"dataverse.ileel.ufu.br\",\n      \"launch_year\": \"2019\",\n      \"country\":
+        \"Brazil\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"\\u2205\"\n    },\n    {\n      \"name\":
+        \"Reposit\\u00f3rio Polen\",\n      \"description\": \"Reposit\\u00f3rio Polen,
+        is maintained by the FCT through its Scientific Computation Unit (FCCN). It
+        aims to serve the Portuguese Scientific Community, providing it with a repository
+        to hold their research data.\",\n      \"lat\": 38.7592697,\n      \"lng\":
+        -9.142404541,\n      \"hostname\": \"repositorio.polen.fccn.pt\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2022\",\n      \"country\": \"Portugal\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.57979\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/38\",\n
+        \     \"contact_email\": \"polen@fccn.pt\"\n    },\n    {\n      \"name\":
+        \"Reposit\\u00f3rios Piloto da Rede Nacional de Ensino e Pesquisa\",\n      \"description\":
+        \"\",\n      \"lat\": -22.957167,\n      \"lng\": -43.176211,\n      \"hostname\":
+        \"dadosabertos.rnp.br\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2019\",\n      \"country\": \"Brazil\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false\n    },\n    {\n      \"name\": \"Repos\\u00edtorio
+        SoilData\",\n      \"description\": \"SoilData is the largest Brazilian soil
+        data repository! Here you will find data on various soil properties from numerous
+        locations in the country. You can also publish soil data that you have produced.\",\n
+        \     \"lat\": -24.85870956,\n      \"lng\": -54.33449022,\n      \"hostname\":
+        \"soildata.mapbiomas.org/\",\n      \"launch_year\": \"2023\",\n      \"country\":
+        \"Brazil\",\n      \"continent\": \"South America\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.60502\",\n      \"contact_email\": \"ciencia@mapbiomas.org\"\n
+        \   },\n    {\n      \"name\": \"RODBUK\",\n      \"description\": \"RODBUK
+        Cracow Open Research Data Repository was founded on the initiative of Board
+        of Directors of the Cracow Library Group. The purpose of RODBUK is to collect,
+        develop, archive and make available in open access all types of research data
+        created by researchers, PhD candidates and students in the course of scientific
+        activity. RODBUK is co-created by six Cracow universities:AGH University of
+        Science and Technology, University of Physical Education in Krakow, Cracow
+        University of Technology, Krakow University of Economics, Jagiellonian University
+        in Krak\\u00f3w, Pedagogical University of Krakow.\",\n      \"lat\": 50.06909616,\n
+        \     \"lng\": 19.90931184,\n      \"hostname\": \"rodbuk.pl\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2023\",\n      \"country\": \"Poland\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false\n    },\n    {\n
+        \     \"name\": \"RODBUK AGH\",\n      \"description\": \"RODBUK Cracow Open
+        Research Data Repository enables AGH University of Krakow researchers, doctoral
+        students and postdoctoral fellows pursuing research projects to deposit, archive
+        and make publicly available data from various disciplines and in various formats.
+        Each dataset that is deposited in the repository will be automatically assigned
+        a DOI identifier. Use of RODBUK for users is fully free of charge.\",\n      \"lat\":
+        50.06563519,\n      \"lng\": 19.92166498,\n      \"hostname\": \"agh.rodbuk.pl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2023\",\n      \"country\":
+        \"Poland\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": false\n
+        \   },\n    {\n      \"name\": \"RODBUK PK\",\n      \"description\": \"RODBUK
+        Cracow Open Research Data Repository of Cracow University of Technology is
+        used to collect, store and publicly share research data created during scientific
+        works and research projects carried out by the CUT scientific staff. RODBUK
+        is open to all scientific units interested in depositing and sharing their
+        research data. RODBUK usage is free of charge.\",\n      \"lat\": 50.07103793,\n
+        \     \"lng\": 19.94238993,\n      \"hostname\": \"pk.rodbuk.pl\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2023\",\n      \"country\": \"Poland\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false\n    },\n    {\n
+        \     \"name\": \"RODBUK UEK\",\n      \"description\": \"RODBUK Cracow Open
+        Research Data Repository of the Krakow University of Economics collects, archives
+        and makes available in open access research data created during scientific
+        works and research projects carried out by research staff and doctoral students
+        of KUE. Each dataset placed in the Repository will be automatically assigned
+        a DOI identifier. All published metadata will meet the guidelines provided
+        by OpenAIRE. FAIR principles are applied in the Repository. The use of the
+        Repository is free of charge.\",\n      \"lat\": 50.06870903,\n      \"lng\":
+        19.95618875,\n      \"hostname\": \"uek.rodbuk.pl\",\n      \"metrics\": true,\n
+        \     \"launch_year\": \"2023\",\n      \"country\": \"Poland\",\n      \"continent\":
+        \"Europe\",\n      \"gdcc_member\": false\n    },\n    {\n      \"name\":
+        \"RODBUK UJ\",\n      \"description\": \"RODBUK Cracow Open Research Data
+        Repository enables Jagiellonian University researchers, doctoral students
+        and postdoctoral fellows pursuing research projects to deposit, archive and
+        make publicly available data from various disciplines and in various formats.
+        Each dataset that is deposited in the repository will be automatically assigned
+        a DOI identifier. Use of RODBUK for users is fully free of charge.\",\n      \"lat\":
+        50.06154726,\n      \"lng\": 19.92251074,\n      \"hostname\": \"uj.rodbuk.pl\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2023\",\n      \"country\":
+        \"Poland\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": false\n
+        \   },\n    {\n      \"name\": \"RSU Dataverse\",\n      \"description\":
+        \"The Riga Stradins University Research Data Repository preserves, disseminates,
+        and provides access to research data generated by its RSU scholars and researchers,
+        in order to give visibility to such data, ensure its preservation and facilitate
+        its access and reuse and comply with FAIR principles.\",\n      \"lat\": 56.95435221,\n
+        \     \"lng\": 24.05501028,\n      \"hostname\": \"dataverse.rsu.lv\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2020\",\n      \"country\": \"Latvia\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.4851\"\n    },\n    {\n      \"name\": \"SciELO Data\",\n      \"description\":
+        \"SciELO Data is a multidisciplinary repository for deposition, preservation
+        and dissemination of research data from articles submitted and approved for
+        publication, already published in SciELO Network journals or deposited in
+        SciELO Preprints.\",\n      \"lat\": -23.595747,\n      \"lng\": -46.647352,\n
+        \     \"hostname\": \"data.scielo.org\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2020\",\n      \"country\": \"Brazil\",\n      \"continent\": \"South America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.48331\",\n      \"contact_email\":
+        \"data@scielo.org\"\n    },\n    {\n      \"name\": \"SODHA\",\n      \"description\":
+        \"The federal Belgian data archive for social sciences and the (digital) humanities!
+        SODHA is the Belgian service provider in the Consortium of European Social
+        Science Data Archives (CESSDA ERIC) and is hosted by the State Archives of
+        Belgium. SODHA was built with the help of DEMO (UCLouvain) and Interface Demography
+        (VUB).\",\n      \"lat\": 50.84241,\n      \"lng\": 4.356423,\n      \"hostname\":
+        \"sodha.be\",\n      \"launch_year\": \"2019\",\n      \"country\": \"Belgium\",\n
+        \     \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.34934\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/21\",\n
+        \     \"contact_email\": \"sodha@arch.be\"\n    },\n    {\n      \"name\":
+        \"Tecnol\\u00f3gico de Monterrey Data Hub\",\n      \"description\": \"The
+        Tecnol\\u00f3gico de Monterrey's Data Hub offers Open Data generated by our
+        researchers and other initiatives. This initiative is sponsored by both the
+        Living Lab & Data Hub of the Institute for the Future of Education (IFE and
+        the Tecnologico de Monterrey's Research Office. This repository is organized
+        by Institutes and Schools.\",\n      \"lat\": 25.6515649,\n      \"lng\":
+        -100.28954,\n      \"hostname\": \"datahub.tec.mx\",\n      \"metrics\": true,\n
+        \     \"launch_year\": \"2021\",\n      \"country\": \"Mexico\",\n      \"continent\":
+        \"North America\",\n      \"gdcc_member\": false,\n      \"doi_authority\":
+        \"10.57687\",\n      \"contact_email\": \"research.datahub@servicios.tec.mx\"\n
+        \   },\n    {\n      \"name\": \"Texas Data Repository Dataverse\",\n      \"description\":
+        \"A statewide archive of research data from Texas Digital Library (TDL) member
+        institutions.\",\n      \"lat\": 30.307182,\n      \"lng\": -97.755996,\n
+        \     \"hostname\": \"dataverse.tdl.org\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2016\",\n      \"country\": \"USA\",\n      \"continent\": \"North America\",\n
+        \     \"about_url\": \"http://data.tdl.org/about\",\n      \"harvesting_sets\":
+        [\n        \"TDR\"\n      ],\n      \"gdcc_member\": true,\n      \"doi_authority\":
+        \"10.18738\",\n      \"contact_email\": \"support@tdl.org\"\n    },\n    {\n
+        \     \"name\": \"TRR170-DB\",\n      \"description\": \"The TRR170-DB was
+        set up to manage data products of the collaborative research center TRR 170
+        'Late Accretion onto Terrestrial Planets' (https://www.trr170-lateaccretion.de/).
+        The repository also stores data by other institutions and researchers. Data
+        include laboratory and other instrumental data on planetary samples, remote
+        sensing data, geological maps and model simulations.\",\n      \"lat\": 52.42691139,\n
+        \     \"lng\": 13.35657449,\n      \"hostname\": \"planetary-data-portal.org\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2020\",\n      \"country\":
+        \"Germany\",\n      \"continent\": \"Europe\",\n      \"gdcc_member\": false,\n
+        \     \"doi_authority\": \"10.35003\"\n    },\n    {\n      \"name\": \"UCLA
+        Dataverse\",\n      \"description\": \"\",\n      \"lat\": 34.0689,\n      \"lng\":
+        -118.4452,\n      \"hostname\": \"dataverse.ucla.edu\",\n      \"metrics\":
+        true,\n      \"launch_year\": \"2019\",\n      \"country\": \"USA\",\n      \"continent\":
+        \"North America\",\n      \"gdcc_member\": true,\n      \"doi_authority\":
+        \"10.25346\",\n      \"contact_email\": \"datascience@ucla.edu\"\n    },\n
+        \   {\n      \"name\": \"uken.rodbuk.pl\",\n      \"description\": \"RODBUK
+        Cracow Open Research Data Repository enables University of the National Education
+        Commission researchers and doctoral students pursuing research projects to
+        deposit, archive and make publicly available data from various disciplines
+        and in various formats. Each dataset that is deposited in the repository will
+        be automatically assigned a DOI identifier. Use of RODBUK for users is fully
+        free of charge.\",\n      \"lat\": 50.07383503,\n      \"lng\": 19.90838435,\n
+        \     \"hostname\": \"uken.rodbuk.pl\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2023\",\n      \"country\": \"Poland\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.24917\"\n    },\n
+        \   {\n      \"name\": \"UNB Libraries Dataverse\",\n      \"description\":
+        \"UNB Dataverse is repository for research data collected by researchers and
+        organizations primarily affiliated with the University of New Brunswick.\",\n
+        \     \"lat\": 45.964993,\n      \"lng\": -66.646332,\n      \"hostname\":
+        \"dataverse.lib.unb.ca\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2017\",\n      \"country\": \"Canada\",\n      \"continent\": \"North America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.25545\",\n      \"contact_email\":
+        \"rdm.services@unb.ca\"\n    },\n    {\n      \"name\": \"UNC Dataverse\",\n
+        \     \"description\": \"Open for all researchers worldwide from all disciplines
+        to deposit data. The Odum Institute also offers multiple data curation service
+        levels.\",\n      \"lat\": 35.905022,\n      \"lng\": -79.050851,\n      \"hostname\":
+        \"dataverse.unc.edu\",\n      \"metrics\": true,\n      \"launch_year\": \"2008\",\n
+        \     \"country\": \"USA\",\n      \"continent\": \"North America\",\n      \"about_url\":
+        \"https://odum.unc.edu/archive/\",\n      \"harvesting_sets\": [\n        \"odum_all\"\n
+        \     ],\n      \"gdcc_member\": true,\n      \"core_trust_seals\": [\n        \"https://www.coretrustseal.org/wp-content/uploads/2020/10/Odum-Institute-Data-Archive.pdf\"\n
+        \     ],\n      \"doi_authority\": \"10.15139\",\n      \"board\": \"https://github.com/orgs/IQSS/projects/5\",\n
+        \     \"contact_email\": \"odumarchive@unc.edu\"\n    },\n    {\n      \"name\":
+        \"University of Manitoba Dataverse\",\n      \"description\": \"\",\n      \"lat\":
+        49.895077,\n      \"lng\": -97.138451,\n      \"hostname\": \"dataverse.lib.umanitoba.ca\",\n
+        \     \"metrics\": true,\n      \"launch_year\": \"2017\",\n      \"country\":
+        \"Canada\",\n      \"continent\": \"North America\",\n      \"gdcc_member\":
+        false,\n      \"doi_authority\": \"10.5203\",\n      \"contact_email\": \"Dataverse@umanitoba.ca\"\n
+        \   },\n    {\n      \"name\": \"Universit\\u00e0 degli Studi di Milano\",\n
+        \     \"description\": \"The University of Milan is home to important research
+        teams operating in the university's extremely rich variety of scientific-disciplinary
+        sectors. Besides taking part in the most relevant national and international
+        research programs, the University is also very active in the field of technology
+        transfer and developing applications for scientific research results. dataverse.unimi.it
+        is the repository for research data offered to all researchers in disciplines
+        from health sciences to laws, from economics to hard sciences, from humanities
+        to mathematics.\",\n      \"lat\": 45.4601,\n      \"lng\": 9.1946,\n      \"hostname\":
+        \"dataverse.unimi.it\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2019\",\n      \"country\": \"Italy\",\n      \"continent\": \"Europe\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.1313\",\n      \"contact_email\":
+        \"rdm@unimi.it\"\n    },\n    {\n      \"name\": \"VTTI\",\n      \"description\":
+        \"Transportation data repository maintained by the Virginia Tech Transportation
+        Institute.\",\n      \"lat\": 37.190102,\n      \"lng\": -80.396776,\n      \"hostname\":
+        \"dataverse.vtti.vt.edu\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2016\",\n      \"country\": \"USA\",\n      \"continent\": \"North America\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.15787\",\n      \"board\":
+        \"https://github.com/orgs/IQSS/projects/18\"\n    },\n    {\n      \"name\":
+        \"World Agroforestry - Research Data Repository\",\n      \"description\":
+        \"\",\n      \"lat\": -1.229425,\n      \"lng\": 36.8135,\n      \"hostname\":
+        \"data.worldagroforestry.org\",\n      \"metrics\": true,\n      \"launch_year\":
+        \"2019\",\n      \"country\": \"Kenya\",\n      \"continent\": \"Africa\",\n
+        \     \"gdcc_member\": false,\n      \"doi_authority\": \"10.34725\",\n      \"board\":
+        \"https://github.com/orgs/IQSS/projects/37\",\n      \"contact_email\": \"a.tenorio@cgiar.org\"\n
+        \   }\n  ]\n}"
+    headers:
+      Accept-Ranges:
+      - bytes
+      Access-Control-Allow-Origin:
+      - '*'
+      Age:
+      - '133'
+      Cache-Control:
+      - max-age=600
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '20542'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 12 Jul 2024 16:46:08 GMT
+      ETag:
+      - W/"6674442f-1477e"
+      Last-Modified:
+      - Thu, 20 Jun 2024 15:01:03 GMT
+      Server:
+      - GitHub.com
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 varnish
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '0'
+      X-Fastly-Request-ID:
+      - 2c2f10d0b488eb531ef38b5a48f51ac0def4a0f9
+      X-GitHub-Request-Id:
+      - DF07:1442E6:45ECE5:50266C:6691395E
+      X-Served-By:
+      - cache-chi-kigq8000032-CHI
+      X-Timer:
+      - S1720802768.443597,VS0,VE2
+      expires:
+      - Fri, 12 Jul 2024 14:20:38 GMT
+      permissions-policy:
+      - interest-cohort=()
+      x-hosts-log-append:
+      - 'pages_hosts_ips:'
+      x-proxy-cache:
+      - MISS
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: HEAD
+    uri: https://doi.org/10.7910/DVN/blah
+  response:
+    body:
+      string: ''
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 8a2281f99acc6207-ORD
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - text/html;charset=utf-8
+      Date:
+      - Fri, 12 Jul 2024 16:46:09 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=lp0fb2TV8D%2FFKrzmmiFgpkL5EJBpuXSHrGCegJuuwX3jbOgmxi4JavWoGvEJZFeoEiY1%2FF728C%2B1rqLWEMhvIopfW5gu4E0wCFSL7HUqbKuG0nd3VpsF15c%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      alt-svc:
+      - h3=":443"; ma=86400
+    status:
+      code: 404
+      message: Not Found
+version: 1

@@ -1,4 +1,17 @@
 # dependencies for tests
-vcrpy
+mock
+httmock
+pytest>=3.6
+pytest-cov
+pytest-recording
+pytest-xdist
+pytest-mock
+pytest-girder>=5.0.0a5.dev0
+girder>=5.0.0a5.dev0
+girder-jobs>=5.0.0a5.dev0
+girder-plugin-worker>=5.0.0a5.dev0
+girder-oauth>=5.0.0a5.dev0
+girder-virtual-resources>=2.0.0
 bdbag
 responses
+validators
