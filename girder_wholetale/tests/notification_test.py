@@ -3,7 +3,7 @@ from girder.models.notification import Notification, ProgressState
 from girder.models.setting import Setting
 from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job
-from girder_worker.girder_plugin.constants import PluginSettings as WorkerPluginSettings
+from girder_plugin_worker.constants import PluginSettings as WorkerPluginSettings
 
 from girder_wholetale.utils import init_progress
 
