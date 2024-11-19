@@ -7,6 +7,8 @@ from girder.api.describe import Description, describeRoute
 from girder.api.rest import Resource, filtermodel, loadmodel
 from girder.constants import AccessType
 
+from ..models.transfer import Transfer as TransferModel
+
 
 class Transfer(Resource):
     def initialize(self):
@@ -59,9 +61,7 @@ class Transfer(Resource):
         if "discardOld" in params:
             discardOld = params["discardOld"] != "false"
         return list(
-            self.model("transfer", "wholetale").list(
-                user=user, sessionId=sessionId, discardOld=discardOld
-            )
+            TransferModel().list(user=user, sessionId=sessionId, discardOld=discardOld)
         )
 
     @access.user
@@ -70,8 +70,4 @@ class Transfer(Resource):
     @describeRoute(Description("List transfers for a given user and session."))
     def listTransfersForSession(self, session, params):
         user = self.getCurrentUser()
-        return list(
-            self.model("transfer", "wholetale").list(
-                user=user, sessionId=session["_id"]
-            )
-        )
+        return list(TransferModel().list(user=user, sessionId=session["_id"]))

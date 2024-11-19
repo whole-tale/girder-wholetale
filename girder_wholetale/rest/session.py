@@ -122,9 +122,7 @@ class Session(Resource):
     @filtermodel(model="session", plugin="wholetale")
     def modifySession(self, session, dataSet):
         user = self.getCurrentUser()
-        return self.model("session", "wholetale").modifySession(
-            user, session, dataSet
-        )
+        return SessionModel().modifySession(user, session, dataSet)
 
     @access.user
     @autoDescribeRoute(
