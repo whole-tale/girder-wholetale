@@ -41,7 +41,7 @@ setup(
         "GitPython",
         "httpio>=0.3.0",
         "fs",
-        "gwvolman @ git+https://github.com/Xarthisius/gwvolman@master#egg=gwvolman",
+        "gwvolman @ git+https://github.com/Xarthisius/gwvolman@main#egg=gwvolman",
     ],
     entry_points={"girder.plugin": ["wholetale = girder_wholetale:WholeTalePlugin"]},
     zip_safe=False,
