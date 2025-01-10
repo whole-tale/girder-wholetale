@@ -12,7 +12,7 @@ import cherrypy
 import jsonschema
 import six
 import validators
-from girder import events
+from girder import auditLogger, events
 from girder.api import access
 from girder.api.describe import Description, autoDescribeRoute, describeRoute
 from girder.api.rest import RestException, boundHandler, loadmodel
@@ -52,9 +52,9 @@ from .lib.orcid import ORCID
 from .lib.path_mapper import PathMapper
 from .models.instance import Instance as InstanceModel
 from .models.lock import Lock as LockModel
-from .models.version_hierarchy import VersionHierarchyModel
 from .models.session import Session as SessionModel
 from .models.transfer import Transfer as TransferModel
+from .models.version_hierarchy import VersionHierarchyModel
 from .rest.account import Account
 from .rest.dataset import Dataset
 from .rest.dm import DM
@@ -77,6 +77,7 @@ from .schema.misc import (
     external_auth_providers_schema,
     repository_to_provider_schema,
 )
+from .utils import add_influx_handler
 
 logger = logging.getLogger(__name__)
 
@@ -231,6 +232,10 @@ def _validateLogo(doc):
         PluginSettings.CONTACT_HREF,
         PluginSettings.BUG_HREF,
         PluginSettings.MOUNTS,
+        PluginSettings.INFLUXDB_URL,
+        PluginSettings.INFLUXDB_TOKEN,
+        PluginSettings.INFLUXDB_ORG,
+        PluginSettings.INFLUXDB_BUCKET,
     }
 )
 def validateHref(doc):
@@ -807,6 +812,7 @@ class WholeTalePlugin(GirderPlugin):
 
         pathMapper = PathMapper()
         from .lib.transfer_manager import SimpleTransferManager
+
         transferManager = SimpleTransferManager(pathMapper)
 
         # a GC that does nothing
@@ -825,7 +831,10 @@ class WholeTalePlugin(GirderPlugin):
                 LRUSortingScheme(),
             ),
         )
-        from .lib.cache_manager import SimpleCacheManager  # Needs models to be registered
+        from .lib.cache_manager import (
+            SimpleCacheManager,
+        )
+
         cacheManager = SimpleCacheManager(
             Setting(), transferManager, fileGC, pathMapper
         )
@@ -964,7 +973,11 @@ class WholeTalePlugin(GirderPlugin):
         metricsLogger.setLevel(logging.INFO)
         metricsLogger.addHandler(_MetricsHandler())
         VersionHierarchyModel().resetCrashedCriticalSections()
-
+        if Setting().get(PluginSettings.INFLUXDB_BUCKET):
+            add_influx_handler(
+                auditLogger,
+                Setting().get(PluginSettings.INFLUXDB_BUCKET),
+            )
         registerPluginStaticContent(
             plugin="wholetale",
             css=["/style.css"],

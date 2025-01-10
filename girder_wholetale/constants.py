@@ -51,6 +51,10 @@ class PluginSettings:
     GC_RUN_INTERVAL = "dm.gc_run_interval"
     GC_COLLECT_START_FRACTION = "dm.gc_collect_start_fraction"
     GC_COLLECT_END_FRACTION = "dm.gc_collect_end_fraction"
+    INFLUXDB_URL = "wholetale.influxdb_url"
+    INFLUXDB_TOKEN = "wholetale.influxdb_token"
+    INFLUXDB_ORG = "wholetale.influxdb_org"
+    INFLUXDB_BUCKET = "wholetale.influxdb_bucket"
 
 
 SettingDefault.defaults.update(
@@ -165,6 +169,10 @@ SettingDefault.defaults.update(
         PluginSettings.RUNS_DIRS_ROOT: "/tmp/wt/runs-dirs",
         PluginSettings.VERSIONS_DIRS_ROOT: "/tmp/wt/versions-dirs",
         PluginSettings.DAV_SERVER: False,
+        PluginSettings.INFLUXDB_URL: "http://images.local.xarthisius.xyz:8086",
+        PluginSettings.INFLUXDB_TOKEN: "",
+        PluginSettings.INFLUXDB_ORG: "my_org",
+        PluginSettings.INFLUXDB_BUCKET: "",
     }
 )
 
