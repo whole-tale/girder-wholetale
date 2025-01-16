@@ -33,6 +33,7 @@ setup(
         "rdflib",
         "celery[redis]",
         "pathvalidate",
+        "influxdb-client",
         "python-magic",
         "requests",
         "validators",
