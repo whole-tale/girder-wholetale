@@ -1,8 +1,0 @@
-name: WholeTale
-description: WholeTale plugin for Girder
-version: "1.3.dev0"
-dependencies:
-    - jobs
-    - worker
-    - virtual_resources
-    - globus_handler
