@@ -2,7 +2,7 @@ import LayoutFooterTemplate from '../templates/layoutFooter.pug';
 // import '@girder/core/stylesheets/layout/footer.styl';
 
 const FooterView = girder.views.layout.FooterView;
-const { restRequest, apiRoot } = girder.rest;
+const { getApiRoot, restRequest } = girder.rest;
 const { wrap } = girder.utilities.PluginUtils;
 
 wrap(FooterView, 'initialize', function (initialize, ...args) {
@@ -26,6 +26,10 @@ wrap(FooterView, 'initialize', function (initialize, ...args) {
 });
 
 wrap(FooterView, 'render', function (render) {
+    let apiRoot = getApiRoot();
+    if (apiRoot.substring(0, 1) !== '/') {
+        apiRoot = '/' + apiRoot;
+    }
     this.$el.html(LayoutFooterTemplate({
         apiRoot: apiRoot,
         aboutHref: this.aboutHref,

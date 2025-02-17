@@ -9,7 +9,7 @@ setup(
     name="girder-wholetale",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    version="2.0.1",
+    version="2.0.2",
     description="Girder plugin implementing Whole Tale core functionality.",
     packages=find_packages(),
     include_package_data=True,
