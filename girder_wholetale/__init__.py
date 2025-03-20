@@ -33,9 +33,9 @@ from girder_jobs.models.job import Job as JobModel
 from girder_oauth.providers import addProvider
 from girder_oauth.rest import OAuth as OAuthResource
 from girder_oauth.settings import PluginSettings as OAuthSettings
-from girder_plugin_worker.celery import getCeleryApp
 from girder_plugin_worker.status import CustomJobStatus
 from girder_plugin_worker.utils import jobInfoSpec
+from girder_worker.app import app
 
 from .constants import FIELD_STATUS_CODE, PluginSettings, SettingDefault
 from .lib import update_citation
@@ -656,7 +656,7 @@ def getJobResult(self, job):
         return
     if job["status"] != JobStatus.SUCCESS:
         logger.warn("Job '{}' hasn't completed sucessfully.".format(job["_id"]))
-    asyncResult = getCeleryApp().AsyncResult(celeryTaskId)
+    asyncResult = app.AsyncResult(celeryTaskId)
     try:
         result = asyncResult.get()
     except Exception as ex:
