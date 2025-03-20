@@ -15,8 +15,8 @@ from girder.models.setting import Setting
 from girder.models.token import Token
 from girder.models.user import User
 from girder_jobs.constants import JobStatus
-from girder_plugin_worker.celery import getCeleryApp
 from girder_plugin_worker.status import CustomJobStatus
+from girder_worker.app import app
 
 from ..constants import (
     RUNS_ROOT_DIR_NAME,
@@ -74,7 +74,7 @@ def update_build_status(event):
             pass
 
         if status == JobStatus.SUCCESS:
-            result = getCeleryApp().AsyncResult(job["celeryTaskId"]).get()
+            result = app.AsyncResult(job["celeryTaskId"]).get()
             tale["imageInfo"]["digest"] = result["image_digest"]
             tale["imageInfo"]["imageId"] = tale["imageId"]
             tale["imageInfo"]["repo2docker_version"] = result["repo2docker_version"]
@@ -110,7 +110,7 @@ def update_publish_status(event):
     job = event.info["job"]
     if not (job["title"] == "Publish Tale" and job.get("status") == JobStatus.SUCCESS):
         return
-    publication_info = getCeleryApp().AsyncResult(job["celeryTaskId"]).get()
+    publication_info = app.AsyncResult(job["celeryTaskId"]).get()
 
     metricsLogger.info(
         "tale.publish",
@@ -133,7 +133,7 @@ def update_instance_status(event):
     instance = Instance().load(job["args"][0], force=True)
 
     if status == JobStatus.SUCCESS:
-        result = getCeleryApp().AsyncResult(job["celeryTaskId"]).get()
+        result = app.AsyncResult(job["celeryTaskId"]).get()
         instance["containerInfo"].update(result)
         instance["status"] = InstanceStatus.RUNNING
     elif status == JobStatus.ERROR:
@@ -171,7 +171,7 @@ def finalize_instance(event):
             and instance["status"] == InstanceStatus.LAUNCHING  # noqa
         ):
             # Get a url to the container
-            service = getCeleryApp().AsyncResult(job["celeryTaskId"]).get()
+            service = app.AsyncResult(job["celeryTaskId"]).get()
             url = service.get("url", "https://girder.hub.yt/")
 
             # Generate the containerInfo

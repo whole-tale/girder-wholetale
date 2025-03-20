@@ -7,7 +7,7 @@ from girder.models.folder import Folder
 from girder.models.token import Token
 from girder.models.user import User
 from girder_jobs.models.job import Job
-from girder_plugin_worker.celery import getCeleryApp
+from girder_worker.app import app
 from gwvolman.tasks import check_on_run, cleanup_run
 
 from ..constants import FIELD_STATUS_CODE, PluginSettings, RunState, RunStatus
@@ -96,7 +96,7 @@ class RunHierarchyModel(AbstractHierarchyModel):
         VersionHierarchyModel().decrementReferenceCount(version)
 
     def run_heartbeat(self, event):
-        celery_inspector = getCeleryApp().control.inspect()
+        celery_inspector = app.control.inspect()
         try:
             active_queues = list(celery_inspector.active_queues().keys())
         except AttributeError:  # everything is dead

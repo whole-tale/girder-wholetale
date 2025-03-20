@@ -267,9 +267,9 @@ def test_recorded_run(server, register_datasets, tale, user, mock_builder):
     token = Token().load(token_id, force=True, objectId=False)
     assert token["expires"] > datetime.now(timezone.utc) + timedelta(days=59)
 
-    with mock.patch("celery.Celery") as celeryMock:
-        celeryMock().send_task.return_value = FakeAsyncResult(tale["_id"])
-        celeryMock().AsyncResult.return_value = FakeAsyncResult(tale["_id"])
+    with mock.patch("girder_plugin_worker.event_handlers.app") as celeryMock:
+        celeryMock.send_task.return_value = FakeAsyncResult(tale["_id"])
+        celeryMock.AsyncResult.return_value = FakeAsyncResult(tale["_id"])
         Job().scheduleJob(job)
 
         for _ in range(20):
@@ -314,11 +314,11 @@ def test_run_heartbeat_no_active_queues(user):
     with mock.patch.object(
         RunHierarchyModel(), "setStatus"
     ) as mock_setStatus, mock.patch(
-        "girder_wholetale.models.run_hierarchy.getCeleryApp"
+        "girder_wholetale.models.run_hierarchy.app"
     ) as mock_celery, mock.patch.object(Folder(), "find", return_value=active_runs):
         mock_inspect = mock.MagicMock()
         mock_inspect.active_queues.return_value = None
-        mock_celery.return_value.control.inspect.return_value = mock_inspect
+        mock_celery.control.inspect.return_value = mock_inspect
 
         RunHierarchyModel().run_heartbeat(None)
 
@@ -350,12 +350,12 @@ def test_run_heartbeat_unknown_run(user):
     ) as mock_job_load, mock.patch.object(
         Folder(), "find", return_value=active_runs
     ), mock.patch(
-        "girder_wholetale.models.run_hierarchy.getCeleryApp"
+        "girder_wholetale.models.run_hierarchy.app"
     ) as mock_celery:
         mock_inspect = mock.MagicMock()
         mock_inspect.active_queues.return_value = {"celery@my_node": {}}
         mock_inspect.active.return_value = {"celery@my_node": []}
-        mock_celery.return_value.control.inspect.return_value = mock_inspect
+        mock_celery.control.inspect.return_value = mock_inspect
 
         RunHierarchyModel().run_heartbeat(None)
 
@@ -396,12 +396,12 @@ def _test_run_heartbeat_container_dead(user):
     ) as mock_cleanup_run, mock.patch.object(
         Job(), "load", return_value={"celeryTaskId": "my_task_id"}
     ), mock.patch.object(Folder(), "find", return_value=active_runs), mock.patch(
-        "girder_wholetale.models.run_hierarchy.getCeleryApp"
+        "girder_wholetale.models.run_hierarchy.app"
     ) as mock_celery:
         mock_inspect = mock.MagicMock()
         mock_inspect.active_queues.return_value = {"celery@my_node": {}}
         mock_inspect.active.return_value = {"celery@my_node": [{"id": "my_task_id"}]}
-        mock_celery.return_value.control.inspect.return_value = mock_inspect
+        mock_celery.control.inspect.return_value = mock_inspect
         mock_check_on_run.signature.return_value.apply_async.return_value.get.return_value = False
 
         RunHierarchyModel().run_heartbeat(None)

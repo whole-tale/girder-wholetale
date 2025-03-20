@@ -207,9 +207,13 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     assert job["status"] == JobStatus.INACTIVE
 
     # Schedule the job, make sure it is sent to celery
-    with mock.patch("celery.Celery") as celeryMock:
-        celeryMock().AsyncResult.return_value = FakeAsyncResult(instance["_id"])
-        celeryMock().send_task.return_value = FakeAsyncResult(instance["_id"])
+    with mock.patch("girder_plugin_worker.event_handlers.app") as celeryMock, mock.patch(
+        "girder_wholetale.lib.events.app"
+    ) as mock_app, mock.patch("girder_wholetale.app") as mock_appb:
+        celeryMock.AsyncResult.return_value = FakeAsyncResult(instance["_id"])
+        celeryMock.send_task.return_value = FakeAsyncResult(instance["_id"])
+        mock_app.AsyncResult.return_value = FakeAsyncResult(instance["_id"])
+        mock_appb.AsyncResult.return_value = FakeAsyncResult(instance["_id"])
 
         Job().scheduleJob(job)
         for _ in range(20):
@@ -226,7 +230,7 @@ def test_instance_flow(server, user, image, tale_one, mocker):
         assert instance["status"] == InstanceStatus.LAUNCHING
 
         # Make sure we sent the job to celery
-        sendTaskCalls = celeryMock.return_value.send_task.mock_calls
+        sendTaskCalls = celeryMock.send_task.mock_calls
 
         assert len(sendTaskCalls) == 1
         assert sendTaskCalls[0][1] == ("girder_worker.run", job["args"], job["kwargs"])
@@ -347,14 +351,11 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     )
     job = Job().save(job)
     assert job["status"] == JobStatus.INACTIVE
-    with mock.patch("celery.Celery") as celeryMock, mock.patch(
+    with mock.patch("girder_plugin_worker.event_handlers.app") as celeryMock, mock.patch(
         "girder_worker.task.celery.Task.apply_async", spec=True
-    ) as mock_apply_async:
+    ) as mock_apply_async, mock.patch("girder_wholetale.lib.events.app") as mock_app:
         celeryMock.send_task.return_value = FakeAsyncResultForUpdate(instance["_id"])
-        mocker.patch(
-            "girder_plugin_worker.event_handlers.getCeleryApp",
-            return_value=celeryMock,
-        )
+        mock_app.AsyncResult.return_value = FakeAsyncResultForUpdate(instance["_id"])
         resp = server.request(
             path="/instance/{_id}".format(**instance),
             method="PUT",
@@ -429,14 +430,10 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     )
     job = Job().save(job)
     assert job["status"] == JobStatus.INACTIVE
-    with mock.patch("celery.Celery") as celeryMock, mock.patch(
+    with mock.patch("girder_plugin_worker.event_handlers.app") as celeryMock, mock.patch(
         "girder_worker.task.celery.Task.apply_async", spec=True
     ) as mock_apply_async:
         celeryMock.send_task.return_value = FakeAsyncResultForUpdate(instance["_id"])
-        mocker.patch(
-            "girder_plugin_worker.event_handlers.getCeleryApp",
-            return_value=celeryMock,
-        )
         # PUT /instance/:id (currently a no-op)
         resp = server.request(
             path="/instance/{_id}".format(**instance),
@@ -712,6 +709,7 @@ def test_instance_logs(server, user, tale_one, image):
         assert getResponseBody(resp) == "blah"
 
     Instance().remove(instance)
+
 
 @pytest.mark.plugin("wholetale")
 def test_logger_setting(db):

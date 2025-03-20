@@ -1,4 +1,5 @@
 # dependencies for tests
+setuptools<=77
 mock
 httmock
 pytest>=3.6
