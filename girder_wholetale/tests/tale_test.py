@@ -754,9 +754,7 @@ def test_image_build(server, user, image, mock_builder, mocker):
 
     tale = Tale().load(tale["_id"], force=True)
     assert tale["imageInfo"]["status"] == ImageStatus.AVAILABLE
-    assert (
-        tale["imageInfo"]["digest"] == "registry.local.wholetale.org/tale/name:123"
-    )
+    assert tale["imageInfo"]["digest"] == "registry.local.wholetale.org/tale/name:123"
 
     # Set status to ERROR
     # job = Job().load(job['_id'], force=True)
@@ -1118,6 +1116,23 @@ def test_tale_defaults(server, image, user):
 
     assert tale["description"] is not None
     assert tale["description"].startswith("This Tale")
+
+    resp = server.request(
+        path="/resource",
+        method="GET",
+        user=user,
+        params={
+            "resources": json.dumps(
+                {
+                    "wholetale.tale": [str(tale["_id"])],
+                    "nonexistent.tale": ["random_id"],
+                }
+            )
+        },
+    )
+    assertStatusOk(resp)
+    assert resp.json["wholetale.tale"][0]["_id"] == str(tale["_id"])
+    assert "nonexistent.tale" not in resp.json
 
 
 @pytest.mark.plugin("wholetale")

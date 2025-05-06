@@ -522,6 +522,13 @@ def signIn(self, redirect):
         "[(folder id 1)]}.",
         requireObject=True,
     )
+    .jsonParam(
+        "filters",
+        "A JSON-encoded set of filters to apply to the resources. "
+        'For example: {"item": [{"name": "1"}, {"description": "-1"}]}',
+        required=False,
+        requireObject=True,
+    )
     .errorResponse("Unsupport or unknown resource type.")
     .errorResponse("Invalid resources format.")
     .errorResponse("Resource type not supported.")
@@ -530,18 +537,36 @@ def signIn(self, redirect):
     .errorResponse("ID was invalid.")
 )
 @boundHandler()
-def listResources(self, resources, params):
+def listResources(self, resources, filters):
     user = self.getCurrentUser()
     result = {}
-    for kind in resources:
+    filters = filters or {}
+    for resource in resources:
+        if "." in resource:
+            plugin, kind = resource.split(".")
+        else:
+            plugin = "_core"
+            kind = resource
         try:
-            model = ModelImporter.model(kind)
-            result[kind] = [
-                model.load(id=id, user=user, level=AccessType.READ, exc=True)
-                for id in resources[kind]
-            ]
-        except ImportError:
-            pass
+            model = ModelImporter.model(kind, plugin=plugin)
+        except Exception:
+            logger.error(
+                "Error loading model for resource type %s.%s" % (plugin, kind)
+            )
+            continue
+        result[resource] = [
+            model.filter(
+                model.load(
+                    id=_id,
+                    user=user,
+                    level=AccessType.READ,
+                    exc=True,
+                    fields=filters.get(resource),
+                ),
+                user,
+            )
+            for _id in resources[resource]
+        ]
     return result
 
 
