@@ -550,9 +550,7 @@ def listResources(self, resources, filters):
         try:
             model = ModelImporter.model(kind, plugin=plugin)
         except Exception:
-            logger.error(
-                "Error loading model for resource type %s.%s" % (plugin, kind)
-            )
+            logger.error("Error loading model for resource type %s.%s" % (plugin, kind))
             continue
         result[resource] = [
             model.filter(
@@ -1007,6 +1005,6 @@ class WholeTalePlugin(GirderPlugin):
             plugin="wholetale",
             css=["/style.css"],
             js=["/girder-plugin-wholetale.umd.cjs"],
-            staticDir=os.path.join(os.path.dirname(__file__), "web_client", "dist"),
+            staticDir=pathlib.Path(__file__).parent / "web_client" / "dist",
             tree=info["serverRoot"],
         )
