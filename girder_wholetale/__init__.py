@@ -236,6 +236,7 @@ def _validateLogo(doc):
         PluginSettings.INFLUXDB_TOKEN,
         PluginSettings.INFLUXDB_ORG,
         PluginSettings.INFLUXDB_BUCKET,
+        PluginSettings.MAINTENANCE_BANNER,
     }
 )
 def validateHref(doc):
@@ -774,6 +775,15 @@ def defaultOrcidSettings():
     return ""
 
 
+@access.public()
+@describeRoute(Description("Return the content of a maintenance banner, if set."))
+@boundHandler()
+def maintenance_banner(self, params):
+    """Return the content of a maintenance banner, if set."""
+    msg = Setting().get(PluginSettings.MAINTENANCE_BANNER) or ""
+    return {"text": msg, "level": "info"}
+
+
 class WholeTalePlugin(GirderPlugin):
     DISPLAY_NAME = "WholeTale"
     CLIENT_SOURCE_PATH = "web_client"
@@ -960,6 +970,7 @@ class WholeTalePlugin(GirderPlugin):
         info["apiRoot"].folder.route("GET", (":id", "dataset"), getDataSet)
         info["apiRoot"].job.route("GET", (":id", "result"), getJobResult)
         info["apiRoot"].resource.route("GET", (), listResources)
+        info["apiRoot"].system.route("GET", ("banner",), maintenance_banner)
 
         info["apiRoot"].user.route("PUT", ("settings",), setUserMetadata)
         info["apiRoot"].user.route("GET", ("settings",), getUserMetadata)

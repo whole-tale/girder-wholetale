@@ -55,6 +55,7 @@ class PluginSettings:
     INFLUXDB_TOKEN = "wholetale.influxdb_token"
     INFLUXDB_ORG = "wholetale.influxdb_org"
     INFLUXDB_BUCKET = "wholetale.influxdb_bucket"
+    MAINTENANCE_BANNER = "wholetale.maintenance_banner"  # text content for a banner
 
 
 SettingDefault.defaults.update(
@@ -173,6 +174,7 @@ SettingDefault.defaults.update(
         PluginSettings.INFLUXDB_TOKEN: "",
         PluginSettings.INFLUXDB_ORG: "my_org",
         PluginSettings.INFLUXDB_BUCKET: "",
+        PluginSettings.MAINTENANCE_BANNER: "",
     }
 )
 
