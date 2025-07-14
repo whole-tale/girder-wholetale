@@ -31,6 +31,9 @@ var ConfigView = View.extend({
                 key: 'wholetale.enable_data_catalog',
                 value: this.$('#wholetale_enable_data_catalog').is(':checked')
             }, {
+                key: 'wholetale.maintenance_banner',
+                value: this.$('#wholetale_banner').val()
+            }, {
                 key: 'wholetale.about_href',
                 value: this.$('#wholetale_about_href').val()
             }, {
@@ -108,7 +111,8 @@ var ConfigView = View.extend({
             'wholetale.workspaces_root',
             'wholetale.versions_root',
             'wholetale.runs_root',
-            'wholetale.dav_server'
+            'wholetale.dav_server',
+            'wholetale.maintenance_banner'
         ];
 
         restRequest({

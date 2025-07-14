@@ -13,6 +13,7 @@ from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.setting import Setting
 from girder.models.upload import Upload
+from girder_wholetale.constants import PluginSettings
 from girder_oauth.settings import PluginSettings as OAuthPluginSettings
 from pytest_girder.assertions import assertStatus, assertStatusOk
 
@@ -173,6 +174,28 @@ def testListingResources(server, admin):
     assert {_["mountPath"] for _ in resp.json} == {"/i1", "/i2", "/f3"}
 
 
+@pytest.mark.plugin("wholetale")
+def test_system_banner_endpoint(server):
+    Setting().set(PluginSettings.MAINTENANCE_BANNER, "")
+
+    resp = server.request(
+        path="/system/banner",
+        method="GET",
+    )
+    assertStatusOk(resp)
+    assert resp.json == {"text": "", "level": "info"}
+
+    Setting().set(PluginSettings.MAINTENANCE_BANNER, "blah")
+
+    resp = server.request(
+        path="/system/banner",
+        method="GET",
+    )
+    assertStatusOk(resp)
+    assert resp.json == {"text": "blah", "level": "info"}
+    Setting().set(PluginSettings.MAINTENANCE_BANNER, "")
+
+
 @pytest.fixture
 def enabledGlobusAuth():
     """
@@ -316,8 +339,14 @@ def testPluginSettings(server, admin, fsAssetstore):
     # test validation
     test_settings = {
         PluginSettings.WEBSITE_URL: ("not_a_url", "Invalid  URL"),
-        PluginSettings.DASHBOARD_LINK_TITLE: (1, not_a_string(PluginSettings.DASHBOARD_LINK_TITLE)),
-        PluginSettings.CATALOG_LINK_TITLE: (1, not_a_string(PluginSettings.CATALOG_LINK_TITLE)),
+        PluginSettings.DASHBOARD_LINK_TITLE: (
+            1,
+            not_a_string(PluginSettings.DASHBOARD_LINK_TITLE),
+        ),
+        PluginSettings.CATALOG_LINK_TITLE: (
+            1,
+            not_a_string(PluginSettings.CATALOG_LINK_TITLE),
+        ),
         PluginSettings.ENABLE_DATA_CATALOG: (
             "not_a_boolean",
             "The setting is not a boolean",
