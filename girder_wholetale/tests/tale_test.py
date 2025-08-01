@@ -4,9 +4,7 @@ import re
 import shutil
 import tempfile
 import time
-from girder.utility import JsonEncoder
 import zipfile
-from datetime import datetime, timezone
 from pathlib import Path
 
 import bagit
@@ -20,6 +18,7 @@ from girder.constants import AccessType
 from girder.exceptions import ValidationException
 from girder.models.folder import Folder
 from girder.models.item import Item
+from girder.utility import JsonEncoder
 from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job
 from pytest_girder.assertions import assertStatus, assertStatusOk
@@ -766,8 +765,9 @@ def test_image_build(server, user, image, mock_builder, mocker):
 
 
 @pytest.mark.plugin("wholetale")
-def test_tale_notifications(server, user, admin, image):
-    since = datetime.now(timezone.utc).isoformat()
+def test_tale_notifications(
+    server, user, admin, image, notifications_client, notifications_client_admin
+):
     with httmock.HTTMock(mockOtherRequests):
         # Create a new tale from a user image
         resp = server.request(
@@ -783,7 +783,7 @@ def test_tale_notifications(server, user, admin, image):
         tale = resp.json
 
     # Confirm events
-    events = get_events(server, since, user=user)
+    events = get_events("wt_event", user, notifications_client)
     assert len(events) == 1
     assert events[0]["data"]["event"] == "wt_tale_created"
     assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
@@ -809,7 +809,6 @@ def test_tale_notifications(server, user, admin, image):
         ],
         "groups": [],
     }
-    since = datetime.now(timezone.utc).isoformat()
 
     resp = server.request(
         path="/tale/%s/access" % tale["_id"],
@@ -820,13 +819,12 @@ def test_tale_notifications(server, user, admin, image):
     assertStatusOk(resp)
 
     # Confirm notification
-    events = get_events(server, since, user=admin)
+    events = get_events("wt_event", admin, notifications_client_admin)
     assert len(events) == 1
     assert events[0]["data"]["event"] == "wt_tale_shared"
     assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
 
     # Update tale, confirm notifications
-    since = datetime.now(timezone.utc).isoformat()
     resp = server.request(
         path="/tale/{}".format(str(tale["_id"])),
         method="PUT",
@@ -844,15 +842,15 @@ def test_tale_notifications(server, user, admin, image):
     assertStatus(resp, 200)
 
     # Confirm notifications
-    events = get_events(server, since, user=user)
-    # self.assertEqual(len(events), 2)
-    assert events[-1]["data"]["event"] == "wt_tale_updated"
-    assert events[-1]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
+    events = get_events("wt_event", user, notifications_client)
+    assert len(events) == 1
+    assert events[0]["data"]["event"] == "wt_tale_updated"
+    assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
 
-    events = get_events(server, since, user=admin)
-    # self.assertEqual(len(events), 2)
-    assert events[-1]["data"]["event"] == "wt_tale_updated"
-    assert events[-1]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
+    events = get_events("wt_event", admin, notifications_client_admin)
+    assert len(events) == 1
+    assert events[0]["data"]["event"] == "wt_tale_updated"
+    assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
 
     # Remove admin and confirm notification
     input_tale_access = {
@@ -867,7 +865,6 @@ def test_tale_notifications(server, user, admin, image):
         ],
         "groups": [],
     }
-    since = datetime.now(timezone.utc).isoformat()
 
     resp = server.request(
         path="/tale/%s/access" % tale["_id"],
@@ -878,10 +875,10 @@ def test_tale_notifications(server, user, admin, image):
     assertStatusOk(resp)
 
     # Confirm notification
-    events = get_events(server, since, user=admin)
-    # self.assertEqual(len(events), 3)
-    assert events[-1]["data"]["event"] == "wt_tale_unshared"
-    assert events[-1]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
+    events = get_events("wt_event", admin, notifications_client_admin)
+    assert len(events) == 1
+    assert events[0]["data"]["event"] == "wt_tale_unshared"
+    assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
 
     # Re-add admin user to test delete notification
     resp = server.request(
@@ -891,24 +888,27 @@ def test_tale_notifications(server, user, admin, image):
         params={"access": json.dumps(input_tale_access_with_admin)},
     )
     assertStatusOk(resp)
+    events = get_events("wt_event", admin, notifications_client_admin)
+    assert len(events) == 1
+    assert events[0]["data"]["event"] == "wt_tale_shared"
+    assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
 
     # Delete tale, test notification
-    since = datetime.now(timezone.utc).isoformat()
     resp = server.request(
         path="/tale/{_id}".format(**tale), method="DELETE", user=admin
     )
     assertStatusOk(resp)
 
     # Confirm notification
-    events = get_events(server, since, user=user)
-    # self.assertEqual(len(events), 3)
-    assert events[-1]["data"]["event"] == "wt_tale_removed"
-    assert events[-1]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
+    events = get_events("wt_event", user, notifications_client)
+    assert len(events) == 1
+    assert events[0]["data"]["event"] == "wt_tale_removed"
+    assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
 
-    events = get_events(server, since, user=admin)
-    # self.assertEqual(len(events), 5)
-    assert events[-1]["data"]["event"] == "wt_tale_removed"
-    assert events[-1]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
+    events = get_events("wt_event", admin, notifications_client_admin)
+    assert len(events) == 1
+    assert events[0]["data"]["event"] == "wt_tale_removed"
+    assert events[0]["data"]["affectedResourceIds"]["taleId"] == tale["_id"]
 
 
 @pytest.mark.plugin("wholetale")

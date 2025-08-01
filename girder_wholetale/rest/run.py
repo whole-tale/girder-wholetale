@@ -10,13 +10,11 @@ from girder.models.folder import Folder
 from girder.models.token import Token
 from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job
-from gwvolman.constants import RECORDED_RUN_STEP_TOTAL
 from gwvolman.tasks import recorded_run
 
 from ..constants import FIELD_STATUS_CODE, RUNS_ROOT_DIR_NAME, RunState, RunStatus
 from ..models.run_hierarchy import RunHierarchyModel
 from ..models.tale import Tale
-from ..utils import init_progress
 from .abstract_resource import AbstractVRResource
 
 
@@ -291,24 +289,12 @@ class Run(AbstractVRResource):
 
         runRoot = Folder().load(run["parentId"], user=user, level=AccessType.WRITE)
         tale = Tale().load(runRoot["meta"]["taleId"], user=user, level=AccessType.READ)
-
-        resource = {
-            "type": "wt_recorded_run",
-            "tale_id": tale["_id"],
-            "tale_title": tale["title"],
-        }
-
         # Recorded run can run for a long time. Should we set a limit?
         token = Token().createToken(user=user, days=60)
-
-        notification = init_progress(
-            resource, user, "Recorded run", "Initializing", RECORDED_RUN_STEP_TOTAL
-        )
 
         rrTask = recorded_run.signature(
             args=[str(run["_id"]), str(tale["_id"]), entrypoint],
             girder_job_other_fields={
-                "wt_notification_id": str(notification["_id"]),
                 "token": token["_id"],
             },
             girder_client_token=token["_id"],

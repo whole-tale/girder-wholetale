@@ -16,3 +16,4 @@ girder-virtual-resources>=2.0.0
 bdbag
 responses
 validators
+httpx

@@ -31,7 +31,7 @@ from ..lib import pids_to_entities, IMPORT_PROVIDERS
 from ..lib.manifest import Manifest
 from ..lib.exporters.bag import BagTaleExporter
 from ..lib.exporters.native import NativeTaleExporter
-from ..utils import notify_event, init_progress
+from ..utils import notify_event
 
 
 from ..constants import TaleStatus, PluginSettings, \
@@ -321,16 +321,6 @@ class Tale(Resource):
             )
 
             if not git:
-                resource = {
-                    "type": "wt_import_binder",
-                    "tale_id": tale["_id"],
-                    "tale_title": tale["title"]
-                }
-                total = 2 + int(spawn)
-                notification = init_progress(
-                    resource, user, "Importing Tale", "Initializing", total
-                )
-
                 job = Job().createLocalJob(
                     title="Import Tale from external dataset",
                     user=user,
@@ -347,7 +337,6 @@ class Tale(Resource):
                     },
                     otherFields={
                         "taleId": tale["_id"],
-                        "wt_notification_id": str(notification["_id"]),
                     }
                 )
                 Job().scheduleJob(job)

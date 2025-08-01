@@ -22,6 +22,10 @@ jobs:
         image: mongo:4.0
         ports:
           - 27017:27017
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
     steps:
     - name: Set up Python
       uses: actions/setup-python@v5

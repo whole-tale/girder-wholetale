@@ -15,16 +15,10 @@ from girder_jobs.constants import REST_CREATE_JOB_TOKEN_SCOPE
 from gwvolman.tasks import \
     create_volume, launch_container, update_container, shutdown_container, \
     remove_volume, build_tale_image
-from gwvolman.tasks_base import BUILD_TALE_IMAGE_STEP_TOTAL
-from gwvolman.tasks_docker import (
-    CREATE_VOLUME_STEP_TOTAL,
-    LAUNCH_CONTAINER_STEP_TOTAL,
-    UPDATE_CONTAINER_STEP_TOTAL,
-)
 
 from ..constants import InstanceStatus, PluginSettings
 from ..lib.metrics import metricsLogger
-from ..utils import init_progress, notify_event
+from ..utils import notify_event
 
 
 TASK_TIMEOUT = 15.0
@@ -97,21 +91,9 @@ class Instance(AccessControlledModel):
 
         digest = tale["imageInfo"]["digest"]
 
-        resource = {
-            "type": "wt_update_instance",
-            "instance_id": instance["_id"],
-            "tale_title": tale["title"],
-        }
-        total = UPDATE_CONTAINER_STEP_TOTAL
-
-        notification = init_progress(
-            resource, user, "Updating instance", "Initializing", total
-        )
-
         update_container.signature(
             args=[str(instance["_id"])],
             queue="manager",
-            girder_job_other_fields={"wt_notification_id": str(notification["_id"])},
             girder_client_token=str(token["_id"]),
             kwargs={"digest": digest},
         ).apply_async()
@@ -213,29 +195,11 @@ class Instance(AccessControlledModel):
                 scope=(TokenScope.USER_AUTH, REST_CREATE_JOB_TOKEN_SCOPE),
             )
 
-            resource = {
-                "type": "wt_create_instance",
-                "tale_id": tale["_id"],
-                "instance_id": instance["_id"],
-                "tale_title": tale["title"],
-            }
-
-            total = (
-                BUILD_TALE_IMAGE_STEP_TOTAL
-                + CREATE_VOLUME_STEP_TOTAL
-                + LAUNCH_CONTAINER_STEP_TOTAL
-            )
-
-            notification = init_progress(
-                resource, user, "Creating instance", "Initializing", total
-            )
-
             user = json.loads(json.dumps(user, cls=JsonEncoder))
 
             buildTask = build_tale_image.signature(
                 args=[str(tale["_id"]), False],
                 girder_job_other_fields={
-                    "wt_notification_id": str(notification["_id"]),
                     "instance_id": str(instance["_id"]),
                 },
                 girder_client_token=str(token["_id"]),
@@ -245,7 +209,6 @@ class Instance(AccessControlledModel):
             volumeTask = create_volume.signature(
                 args=[str(instance["_id"]), Setting().get(PluginSettings.MOUNTS)],
                 girder_job_other_fields={
-                    "wt_notification_id": str(notification["_id"]),
                     "instance_id": str(instance["_id"]),
                 },
                 girder_client_token=str(token["_id"]),
@@ -254,7 +217,6 @@ class Instance(AccessControlledModel):
             )
             serviceTask = launch_container.signature(
                 girder_job_other_fields={
-                    "wt_notification_id": str(notification["_id"]),
                     "instance_id": str(instance["_id"]),
                 },
                 girder_client_token=str(token["_id"]),

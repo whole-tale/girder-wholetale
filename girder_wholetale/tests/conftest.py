@@ -9,10 +9,50 @@ from girder.models.collection import Collection
 from girder.models.file import File
 from girder.models.folder import Folder
 from girder.models.item import Item
+from girder.models.token import Token
 from girder.models.user import User
+from girder.notification import Notification
 from girder.utility.path import lookUpPath
 from pytest_girder.assertions import assertStatusOk
+from starlette.testclient import TestClient
+
 from girder_wholetale.models.tale import Tale
+
+
+@pytest.fixture
+def notifications_client(server, db, user):
+    from girder.asgi import app as girder_app
+
+    client = TestClient(girder_app)
+    token = Token().createToken(user)
+    with client.websocket_connect(
+        "/notifications/me?token={}".format(token["_id"])
+    ) as ws:
+        yield ws
+
+
+@pytest.fixture
+def notifications_client_admin(server, db, admin):
+    from girder.asgi import app as girder_app
+
+    client = TestClient(girder_app)
+    token = Token().createToken(admin)
+    with client.websocket_connect(
+        "/notifications/me?token={}".format(token["_id"])
+    ) as ws:
+        yield ws
+
+
+def get_events(even_type, girder_user, websocket):
+    Notification(type="end_connection", data={}, user=girder_user).flush()
+    result = []
+    while True:
+        event = websocket.receive_json()
+        if event.get("type") == even_type:
+            result.append(event)
+        if event.get("type") == "end_connection":
+            break
+    return result
 
 
 def restore_catalog(user, parent, current):
@@ -154,18 +194,6 @@ def fancy_tale(server, user, tale_info, image):
 @httmock.all_requests
 def mockOtherRequests(url, request):
     raise Exception("Unexpected url %s" % str(request.url))
-
-
-def get_events(server, since, user=None):
-    if not user:
-        user = User().findOne({"admin": False})
-
-    resp = server.request(
-        path="/notification", method="GET", user=user, params={"since": since}
-    )
-    assertStatusOk(resp)
-
-    return [event for event in resp.json if event["type"] == "wt_event"]
 
 
 def event_types(events, affected_resources):
