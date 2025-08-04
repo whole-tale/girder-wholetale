@@ -1,7 +1,6 @@
 import json
 import time
 import urllib.parse
-from datetime import datetime, timezone
 
 import httmock
 import mock
@@ -9,7 +8,6 @@ import pytest
 from bson import ObjectId
 from girder.exceptions import ValidationException
 from girder.models.folder import Folder
-from girder.models.notification import Notification
 from girder.models.setting import Setting
 from girder.utility import config
 from girder_jobs.constants import JobStatus
@@ -27,7 +25,6 @@ from girder_wholetale.constants import (
 from girder_wholetale.models.instance import Instance
 from girder_wholetale.models.tale import Tale
 from girder_wholetale.rest.instance import instanceCapErrMsg
-from girder_wholetale.utils import init_progress
 
 from .conftest import get_events, mockOtherRequests
 
@@ -121,13 +118,6 @@ def tale_one(user, image):
     Tale().remove(tale)
 
 
-@pytest.fixture
-def notification(user):
-    notification = init_progress({}, user, "Fake", ".", 5)
-    yield notification
-    Notification().remove(notification)
-
-
 @pytest.mark.plugin("wholetale")
 def test_instance_cap(server, user, admin, tale_one):
     with pytest.raises(
@@ -172,13 +162,12 @@ def test_instance_cap(server, user, admin, tale_one):
 
 
 @pytest.mark.plugin("wholetale")
-def test_instance_flow(server, user, image, tale_one, mocker):
+def test_instance_flow(server, user, image, tale_one, mocker, notifications_client):
     mocker.patch("gwvolman.tasks.create_volume")
     mocker.patch("gwvolman.tasks.launch_container")
     mocker.patch("gwvolman.tasks.update_container")
     mocker.patch("gwvolman.tasks.shutdown_container")
     mocker.patch("gwvolman.tasks.remove_volume")
-    since = datetime.now(timezone.utc).isoformat()
     with mock.patch(
         "girder_worker.task.celery.Task.apply_async", spec=True
     ) as mock_apply_async:
@@ -207,7 +196,9 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     assert job["status"] == JobStatus.INACTIVE
 
     # Schedule the job, make sure it is sent to celery
-    with mock.patch("girder_plugin_worker.event_handlers.app") as celeryMock, mock.patch(
+    with mock.patch(
+        "girder_plugin_worker.event_handlers.app"
+    ) as celeryMock, mock.patch(
         "girder_wholetale.lib.events.app"
     ) as mock_app, mock.patch("girder_wholetale.app") as mock_appb:
         celeryMock.AsyncResult.return_value = FakeAsyncResult(instance["_id"])
@@ -222,7 +213,7 @@ def test_instance_flow(server, user, image, tale_one, mocker):
                 break
             time.sleep(0.1)
         assert job["status"] == JobStatus.QUEUED
-        events = get_events(server, since, user=user)
+        events = get_events("wt_event", user, notifications_client)
         assert len(events) == 1
         assert events[0]["data"]["event"] == "wt_instance_launching"
 
@@ -243,7 +234,6 @@ def test_instance_flow(server, user, image, tale_one, mocker):
         assert job["celeryTaskId"] == "fake_id"
 
         Job().updateJob(job, log="job running", status=JobStatus.RUNNING)
-        since = datetime.now(timezone.utc).isoformat()
         Job().updateJob(job, log="job ran", status=JobStatus.SUCCESS)
 
         resp = server.request(
@@ -253,7 +243,7 @@ def test_instance_flow(server, user, image, tale_one, mocker):
         assert resp.json["nodeId"] == "123456"
 
         # Confirm event
-        events = get_events(server, since, user=user)
+        events = get_events("wt_event", user, notifications_client)
         assert len(events) == 1
         assert events[0]["data"]["event"] == "wt_instance_running"
 
@@ -351,7 +341,9 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     )
     job = Job().save(job)
     assert job["status"] == JobStatus.INACTIVE
-    with mock.patch("girder_plugin_worker.event_handlers.app") as celeryMock, mock.patch(
+    with mock.patch(
+        "girder_plugin_worker.event_handlers.app"
+    ) as celeryMock, mock.patch(
         "girder_worker.task.celery.Task.apply_async", spec=True
     ) as mock_apply_async, mock.patch("girder_wholetale.lib.events.app") as mock_app:
         celeryMock.send_task.return_value = FakeAsyncResultForUpdate(instance["_id"])
@@ -430,7 +422,9 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     )
     job = Job().save(job)
     assert job["status"] == JobStatus.INACTIVE
-    with mock.patch("girder_plugin_worker.event_handlers.app") as celeryMock, mock.patch(
+    with mock.patch(
+        "girder_plugin_worker.event_handlers.app"
+    ) as celeryMock, mock.patch(
         "girder_worker.task.celery.Task.apply_async", spec=True
     ) as mock_apply_async:
         celeryMock.send_task.return_value = FakeAsyncResultForUpdate(instance["_id"])
@@ -478,7 +472,6 @@ def test_instance_flow(server, user, image, tale_one, mocker):
         assert instance["status"] == InstanceStatus.ERROR
 
     # Delete the instance
-    since = datetime.now(timezone.utc).isoformat()
     with mock.patch(
         "girder_worker.task.celery.Task.apply_async", spec=True
     ) as mock_apply_async:
@@ -495,15 +488,14 @@ def test_instance_flow(server, user, image, tale_one, mocker):
     )
     assertStatus(resp, 400)
 
-    # Confirm notifications
-    events = get_events(server, since, user=user)
+    events = get_events("wt_event", user, notifications_client)
     assert len(events) == 2
     assert events[0]["data"]["event"] == "wt_instance_deleting"
     assert events[1]["data"]["event"] == "wt_instance_deleted"
 
 
 @pytest.mark.plugin("wholetale")
-def test_build_fail(server, user, tale_one, notification):
+def test_build_fail(server, user, tale_one):
     resp = server.request(
         path="/instance",
         method="POST",
@@ -527,7 +519,6 @@ def test_build_fail(server, user, tale_one, notification):
         args=[str(tale_one["_id"]), False],
         kwargs={},
         otherFields={
-            "wt_notification_id": str(notification["_id"]),
             "instance_id": instance["_id"],
         },
     )
@@ -544,7 +535,7 @@ def test_build_fail(server, user, tale_one, notification):
 
 
 @pytest.mark.plugin("wholetale")
-def test_build_cancel(server, user, tale_one, notification):
+def test_build_cancel(server, user, tale_one):
     resp = server.request(
         path="/instance",
         method="POST",
@@ -568,7 +559,6 @@ def test_build_cancel(server, user, tale_one, notification):
         args=[str(tale_one["_id"]), False],
         kwargs={},
         otherFields={
-            "wt_notification_id": str(notification["_id"]),
             "instance_id": instance["_id"],
         },
     )
@@ -597,7 +587,7 @@ def test_build_cancel(server, user, tale_one, notification):
 
 
 @pytest.mark.plugin("wholetale")
-def test_launch_fail(server, user, tale_one, notification):
+def test_launch_fail(server, user, tale_one, notifications_client):
     resp = server.request(
         path="/instance",
         method="POST",
@@ -620,7 +610,6 @@ def test_launch_fail(server, user, tale_one, notification):
         args=[{"instanceId": instance["_id"]}],
         kwargs={},
         otherFields={
-            "wt_notification_id": str(notification["_id"]),
             "instance_id": instance["_id"],
         },
     )
@@ -629,11 +618,10 @@ def test_launch_fail(server, user, tale_one, notification):
     assert job["status"] == JobStatus.INACTIVE
     Job().updateJob(job, log="job queued", status=JobStatus.QUEUED)
     Job().updateJob(job, log="job running", status=JobStatus.RUNNING)
-    since = datetime.now(timezone.utc).isoformat()
     Job().updateJob(job, log="job failed", status=JobStatus.ERROR)
     instance = Instance().load(instance["_id"], force=True)
     assert instance["status"] == InstanceStatus.ERROR
-    events = get_events(server, since, user=user)
+    events = get_events("wt_event", user, notifications_client)
     assert len(events) == 1
     assert events[0]["data"]["event"] == "wt_instance_error"
 

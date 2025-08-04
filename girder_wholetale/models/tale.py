@@ -18,7 +18,6 @@ from girder.models.user import User
 from girder.models.token import Token
 from girder_jobs.models.job import Job
 from girder.utility import assetstore_utilities
-from gwvolman.constants import BUILD_TALE_IMAGE_STEP_TOTAL
 from gwvolman.tasks import build_tale_image
 
 from ..constants import TaleStatus
@@ -26,7 +25,7 @@ from ..lib.license import WholeTaleLicense
 from ..lib.manifest_parser import ManifestParser
 from ..lib.metrics import metricsLogger
 from ..schema.misc import dataSetSchema, related_identifiers_schema
-from ..utils import diff_access, getOrCreateRootFolder, init_progress, notify_event
+from ..utils import diff_access, getOrCreateRootFolder, notify_event
 from .image import Image as imageModel
 
 # Whenever the Tale object schema is modified (e.g. fields are added or
@@ -374,24 +373,10 @@ class Tale(AccessControlledModel):
         """
         Build the image for the tale
         """
-
-        resource = {
-            'type': 'wt_build_image',
-            'tale_id': tale['_id'],
-            'tale_title': tale['title']
-        }
-
         token = Token().createToken(user=user, days=0.5)
-
-        notification = init_progress(
-            resource, user, 'Building image',
-            'Initializing', BUILD_TALE_IMAGE_STEP_TOTAL)
 
         buildTask = build_tale_image.signature(
             args=[str(tale['_id']), force],
-            girder_job_other_fields={
-                'wt_notification_id': str(notification['_id']),
-            },
             girder_client_token=str(token['_id']),
         ).apply_async()
 
@@ -486,15 +471,6 @@ class Tale(AccessControlledModel):
             **new_tale
         )
 
-        resource = {
-            "type": "wt_zip_import",
-            "tale_id": tale["_id"],
-            "tale_title": tale["title"]
-        }
-        notification = init_progress(
-            resource, user, "Importing Tale", "Initializing", 3
-        )
-
         job = Job().createLocalJob(
             title='Import Tale from zip', user=user,
             type='wholetale.import_tale', public=False, asynchronous=True,
@@ -503,22 +479,12 @@ class Tale(AccessControlledModel):
             kwargs={'taleId': tale["_id"]},
             otherFields={
                 "taleId": tale["_id"],
-                "wt_notification_id": str(notification["_id"])
             },
         )
         Job().scheduleJob(job)
         return tale
 
     def addGitRepo(self, tale, url, user=None, spawn=False, change_status=False, title=None):
-        resource = {
-            "type": "wt_git_import",
-            "tale_id": tale["_id"],
-            "tale_title": tale["title"]
-        }
-        notification = init_progress(
-            resource, user, "Importing from Git", "Initializing", 1
-        )
-
         job = Job().createLocalJob(
             title="Import a git repository as a Tale",
             user=user,
@@ -534,7 +500,6 @@ class Tale(AccessControlledModel):
             },
             otherFields={
                 "taleId": tale["_id"],
-                "wt_notification_id": str(notification["_id"])
             },
         )
         Job().scheduleJob(job)

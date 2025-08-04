@@ -131,7 +131,7 @@ class Transfer(AccessControlledModel):
                     {"endTime": {"$exists": False}},
                     {
                         "endTime": {
-                            "$gte": datetime.datetime.utcnow()
+                            "$gte": datetime.datetime.now(datetime.UTC)
                             - Transfer.OLD_TRANSFER_LIMIT
                         }
                     },

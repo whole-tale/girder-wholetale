@@ -22,7 +22,6 @@ from girder.models.assetstore import Assetstore
 from girder.models.file import File
 from girder.models.folder import Folder
 from girder.models.model_base import AccessException, ValidationException
-from girder.models.notification import Notification, ProgressState
 from girder.models.setting import Setting
 from girder.models.user import User
 from girder.plugin import GirderPlugin, getPlugin, registerPluginStaticContent
@@ -33,7 +32,6 @@ from girder_jobs.models.job import Job as JobModel
 from girder_oauth.providers import addProvider
 from girder_oauth.rest import OAuth as OAuthResource
 from girder_oauth.settings import PluginSettings as OAuthSettings
-from girder_plugin_worker.status import CustomJobStatus
 from girder_plugin_worker.utils import jobInfoSpec
 from girder_worker.app import app
 
@@ -590,71 +588,6 @@ def validateFileLink(event):
     event.preventDefault().addResponse(doc)
 
 
-def updateNotification(event):
-    """
-    Update the Whole Tale task notification for a job, if present.
-    """
-
-    job = event.info["job"]
-    params = event.info["params"]
-    if "wt_notification_id" in job and (
-        notification := Notification().load(job["wt_notification_id"])
-    ):
-        resource = notification["data"]["resource"]
-
-        # Add job IDs to the resource
-        if "jobs" not in notification["data"]["resource"]:
-            resource["jobs"] = []
-
-        if job["_id"] not in notification["data"]["resource"]["jobs"]:
-            resource["jobs"].append(job["_id"])
-
-        if job["_id"] != resource["jobs"][-1]:
-            return  # ignore previous jobs' out of order notifications
-
-        # reset current job counter for a new job
-        if resource["jobId"] != resource["jobs"][-1]:
-            resource["jobCurrent"] = 0
-            resource["jobId"] = resource["jobs"][-1]
-
-        if not params.get("progressCurrent"):
-            increment = 0
-        else:
-            try:
-                increment = params["progressCurrent"] - job["progress"]["current"]
-            except (KeyError, TypeError):
-                increment = params["progressCurrent"] - resource["jobCurrent"]
-
-        resource["jobCurrent"] += increment
-
-        # For multi-job tasks, ignore success for intermediate events
-        would_be_last = (
-            int(notification["data"]["total"])
-            == int(notification["data"]["current"]) + increment
-        )
-        job_status = params["status"] or job["status"]
-        if job_status == JobStatus.CANCELED:
-            # ProgressState is not a real enum, but just a collection of strings..
-            # as a result it can be an arbitrary value!
-            state = "canceled"
-        elif job_status == CustomJobStatus.CANCELING:
-            state = "canceling"
-        else:
-            state = JobStatus.toNotificationStatus(int(job_status))
-        if state == ProgressState.SUCCESS and not would_be_last:
-            state = ProgressState.ACTIVE
-
-        # Note, if expires parameter is not provided, updateProgress resets to 1 hour
-        Notification().updateProgress(
-            notification,
-            state=state,
-            expires=notification["expires"],
-            message=params["progressMessage"] or notification["data"]["message"],
-            increment=int(increment),
-            total=notification["data"]["total"],
-        )
-
-
 @access.user
 @autoDescribeRoute(
     Description("Get output from celery job.")
@@ -948,7 +881,6 @@ class WholeTalePlugin(GirderPlugin):
         events.bind("dm.sessionDeleted", "wholetale", sessionDeleted)
 
         events.bind("jobs.job.update.after", "wholetale", job_update_after_handler)
-        events.bind("jobs.job.update", "wholetale", updateNotification)
         events.bind("model.file.validate", "wholetale", validateFileLink)
         events.bind("oauth.auth_callback.after", "wholetale", store_other_globus_tokens)
         events.bind("heartbeat", "wholetale", cullIdleInstances)

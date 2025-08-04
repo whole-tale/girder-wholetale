@@ -21,7 +21,7 @@ from ..constants import CATALOG_NAME
 from ..lib import IMPORT_PROVIDERS
 from ..lib.data_map import DataMap
 from ..schema.misc import dataMapListSchema
-from ..utils import getOrCreateRootFolder, init_progress
+from ..utils import getOrCreateRootFolder
 
 
 datasetModel = {
@@ -230,15 +230,7 @@ class Dataset(Resource):
                 f"To register data from {provider.name} you need to provide credentials."
             )
 
-        resource = {
-            'type': 'wt_register_data',
-            'dataMap': dataMap,
-        }
-        notification = init_progress(
-            resource, user, 'Registering Data',
-            'Initialization', 2)
-
-        job = self._createImportJob(dataMap, parent, parentType, user, notification)
+        job = self._createImportJob(dataMap, parent, parentType, user)
         Job().scheduleJob(job)
         return job
 
@@ -280,15 +272,7 @@ class Dataset(Resource):
 
         try:
             dataMap = {'dataId': path, 'repository': 'BDBag'}
-            resource = {
-                'type': 'wt_register_data',
-                'dataMap': dataMap,
-            }
-            notification = init_progress(
-                resource, user, 'Importing BDBag',
-                'Initialization', 2)
-
-            job = self._createImportJob([dataMap], parent, parentType, user, notification)
+            job = self._createImportJob([dataMap], parent, parentType, user)
             Job().scheduleJob(job)
             return job
         finally:
@@ -297,12 +281,11 @@ class Dataset(Resource):
             # It happens to work if the job is a synchronous job, which it seems to be for now.
             os.unlink(path)
 
-    def _createImportJob(self, data_maps, parent, parentType, user, notification):
+    def _createImportJob(self, data_maps, parent, parentType, user):
         job = Job().createLocalJob(
             title='Registering Data', user=user,
             type='wholetale.register_data', public=False, asynchronous=False,
             module='girder_wholetale.tasks.register_dataset',
             args=(data_maps, parent, parentType, user),
-            otherFields={'wt_notification_id': str(notification['_id'])},
         )
         return job
