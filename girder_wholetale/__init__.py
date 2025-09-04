@@ -510,7 +510,7 @@ def signIn(self, redirect):
         raise cherrypy.HTTPRedirect(redirect)
 
 
-@access.user
+@access.public
 @autoDescribeRoute(
     Description("Get a set of items and folders.")
     .jsonParam(
