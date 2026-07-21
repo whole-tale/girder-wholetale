@@ -56,6 +56,8 @@ class PluginSettings:
     INFLUXDB_ORG = "wholetale.influxdb_org"
     INFLUXDB_BUCKET = "wholetale.influxdb_bucket"
     MAINTENANCE_BANNER = "wholetale.maintenance_banner"  # text content for a banner
+    ORCID_MODE = "wholetale.orcid_mode"
+    ORCID_API = "wholetale.orcid_api"
 
 
 SettingDefault.defaults.update(
@@ -175,6 +177,8 @@ SettingDefault.defaults.update(
         PluginSettings.INFLUXDB_ORG: "my_org",
         PluginSettings.INFLUXDB_BUCKET: "",
         PluginSettings.MAINTENANCE_BANNER: "",
+        PluginSettings.ORCID_MODE: "production",
+        PluginSettings.ORCID_API: "public",
     }
 )
 

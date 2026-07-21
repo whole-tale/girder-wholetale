@@ -7,6 +7,7 @@ import datetime
 import logging
 import os
 import pathlib
+import urllib.parse as urlparse
 
 import cherrypy
 import jsonschema
@@ -46,7 +47,7 @@ from .lib.events import (
     set_tale_dirs_mapping,
 )
 from .lib.metrics import _MetricsHandler, metricsLogger
-from .lib.orcid import ORCID
+from .lib.orcid import ORCID, SandboxORCID
 from .lib.path_mapper import PathMapper
 from .models.instance import Instance as InstanceModel
 from .models.lock import Lock as LockModel
@@ -235,6 +236,8 @@ def _validateLogo(doc):
         PluginSettings.INFLUXDB_ORG,
         PluginSettings.INFLUXDB_BUCKET,
         PluginSettings.MAINTENANCE_BANNER,
+        PluginSettings.ORCID_MODE,
+        PluginSettings.ORCID_API,
     }
 )
 def validateHref(doc):
@@ -671,16 +674,26 @@ def authorize(self, instance):
 
 
 def store_other_globus_tokens(event):
-    globus_token = event.info["token"]
+    token = event.info["token"]
     user = event.info["user"]
     user_tokens = user.get("otherTokens", [])
-    for token in globus_token.get("other_tokens", []):
+    provider = event.info["provider"]
+
+    def _update_tokens(user_tokens, new_token):
         for i, user_token in enumerate(user_tokens):
-            if user_token["resource_server"] == token["resource_server"]:
-                user_tokens[i].update(token)
+            if user_token["resource_server"] == new_token["resource_server"]:
+                user_tokens[i].update(new_token)
                 break
         else:
-            user_tokens.append(token)
+            user_tokens.append(new_token)
+
+    if provider.getProviderName() == "globus":
+        for new_token in token.get("other_tokens", []):
+            _update_tokens(user_tokens, new_token)
+    elif provider.getProviderName() == "orcid":
+        token["resource_server"] = urlparse.urlparse(provider._AUTH_URL).netloc
+        _update_tokens(user_tokens, token)
+
     user["otherTokens"] = user_tokens
     user["lastLogin"] = datetime.datetime.now(datetime.timezone.utc)
     User().save(user)
@@ -735,7 +748,10 @@ class WholeTalePlugin(GirderPlugin):
         getPlugin("oauth").load(info)
         OAuthSettings.ORCID_CLIENT_ID = "oauth.orcid_client_id"
         OAuthSettings.ORCID_CLIENT_SECRET = "oauth.orcid_client_secret"
-        addProvider(ORCID)
+        if Setting().get(PluginSettings.ORCID_MODE) == "production":
+            addProvider(ORCID)
+        else:
+            addProvider(SandboxORCID)
         getPlugin("jobs").load(info)
         getPlugin("worker").load(info)
         getPlugin("virtual_resources").load(info)

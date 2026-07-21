@@ -4,6 +4,8 @@ import requests
 from girder.api.rest import getApiUrl
 from girder.exceptions import RestException
 from girder.models.setting import Setting
+from girder.models.user import User
+from girder.settings import SettingKey
 from girder_oauth.providers.base import ProviderBase
 from girder_oauth.settings import PluginSettings
 
@@ -13,7 +15,7 @@ class ORCID(ProviderBase):
     _AUTH_SCOPES = ["/authenticate"]
     _TOKEN_URL = "https://orcid.org/oauth/token"
     _REVOKE_URL = "https://orcid.org/oauth/revoke"
-    _API_USER_URL = "https://pub.orcid.org/v2.0/{orcid}/person"
+    _API_USER_URL = "https://pub.orcid.org/v3.0/{orcid}{path}"
 
     # header for user: application/vnd.orcid+json
 
@@ -38,7 +40,7 @@ class ORCID(ProviderBase):
                 "response_type": "code",
                 "redirect_uri": callbackUrl,
                 "state": state,
-                "scope": ",".join(cls._AUTH_SCOPES),
+                "scope": " ".join(cls._AUTH_SCOPES),
             }
         )
         return "%s?%s" % (cls._AUTH_URL, query)
@@ -109,23 +111,83 @@ class ORCID(ProviderBase):
             "Authorization": "Bearer %s" % token["access_token"],
             "Accept": "application/vnd.orcid+json",
         }
-
         # Get user's email address
         resp = self._getJson(
-            method="GET", url=self._API_USER_URL.format(**token), headers=headers
+            method="GET", url=self._API_USER_URL.format(path="/person", **token), headers=headers
         )
 
         try:
-            email = resp["emails"]["email"][0]
+            email = resp["emails"]["email"][0]["email"]
         except (KeyError, TypeError, IndexError):
             email = "{orcid}@orcid.org".format(**token)
 
         oauthId = token["orcid"]
         if not oauthId:
             raise RestException("ORCID did not return a user ID.", code=502)
+        try:
+            lastName = resp["name"]["family-name"]["value"]
+        except (KeyError, TypeError):
+            lastName = "N/A"
+        try:
+            firstName = resp["name"]["given-names"]["value"]
+        except (KeyError, TypeError):
+            firstName = "N/A"
 
-        login = ""
-        lastName = resp["name"]["family-name"]["value"]
-        firstName = resp["name"]["given-names"]["value"]
+        if lastName == "" and firstName == "":
+            raise RestException("ORCID did not return a user name.", code=502)
 
-        return self._createOrReuseUser(oauthId, email, firstName, lastName, login)
+        userName = firstName.replace(" ", "") + "-" + lastName.replace(" ", "")
+        user = User().findOne({"oauth.provider": "orcid", "oauth.id": oauthId})
+        setId = not user
+        if not user:
+            user = User().findOne({"email": email})
+
+        dirty = False
+        if not user:
+            if Setting().get(SettingKey.REGISTRATION_POLICY) == "closed":
+                if not Setting().get(PluginSettings.IGNORE_REGISTRATION_POLICY):
+                    raise RestException(
+                        "Registration is closed. Contact an administrator to create an account "
+                        "for you."
+                    )
+            login = self._deriveLogin(email, firstName, lastName, userName)
+            user = User().createUser(
+                login=login,
+                password=None,
+                firstName=firstName,
+                lastName=lastName,
+                email=email,
+            )
+        else:
+            if firstName != user["firstName"] and firstName:
+                user["firstName"] = firstName
+                dirty = True
+            if lastName != user["lastName"] and lastName:
+                user["lastName"] = lastName
+                dirty = True
+            if email != user["email"] and not email == f"{oauthId}@orcid.org":
+                user["email"] = email
+                dirty = True
+        if setId:
+            user.setdefault("oauth", []).append({"provider": "orcid", "id": oauthId})
+            dirty = True
+        if dirty:
+            user = User().save(user)
+
+        return user
+
+
+class SandboxORCID(ORCID):
+    _AUTH_URL = "https://sandbox.orcid.org/oauth/authorize"
+    _AUTH_SCOPES = ["/authenticate", "/activities/update", "/read-limited"]
+    _TOKEN_URL = "https://sandbox.orcid.org/oauth/token"
+    _REVOKE_URL = "https://sandbox.orcid.org/oauth/revoke"
+    _API_USER_URL = "https://api.sandbox.orcid.org/v3.0/{orcid}{path}"
+
+    @classmethod
+    def getProviderName(cls, external=False):
+        providerName = "ORCID"
+        if external:
+            return providerName
+        else:
+            return providerName.lower()
