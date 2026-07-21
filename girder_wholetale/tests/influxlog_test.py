@@ -10,7 +10,7 @@ from girder.models.upload import Upload
 from pytest_girder.assertions import assertStatusOk
 
 from girder_wholetale.constants import PluginSettings
-from girder_wholetale.utils import add_influx_handler
+from girder_wholetale.utils import InfluxHandler, add_influx_handler
 
 
 @pytest.fixture
@@ -35,7 +35,11 @@ def test_influxdb_logger(server, admin, enable_influxlog_setting, fsAssetstore):
         "girder_wholetale.utils.influxdb.InfluxDBClient"
     ) as influxdb_client:
         add_influx_handler(auditLogger, Setting().get(PluginSettings.INFLUXDB_BUCKET))
-        influx_logger = auditLogger.handlers[0]
+        influx_logger = next(
+            handler
+            for handler in auditLogger.handlers
+            if isinstance(handler, InfluxHandler)
+        )
         assert influx_logger.bucket == "mock_bucket"
         influxdb_client.assert_called_once_with(
             url=Setting().get(PluginSettings.INFLUXDB_URL),
@@ -95,4 +99,6 @@ def test_influxdb_logger(server, admin, enable_influxlog_setting, fsAssetstore):
         cherrypy.engine.restart()
         assert influx_logger.write_api.close.call_count == 1
         assert influxdb_client.return_value.close.call_count == 1
-        assert auditLogger.handlers == []
+        assert not any(
+            isinstance(handler, InfluxHandler) for handler in auditLogger.handlers
+        )
