@@ -415,6 +415,7 @@ def test_extra_hosts(server, admin):
 
 
 # @vcr.use_cassette(os.path.join(DATA_PATH, "dataverse_hierarchy.txt"))
+@pytest.mark.skip(reason="Dataset no longer there")
 @pytest.mark.plugin("wholetale")
 def test_dataverse_dataset_with_hierarchy(server, user):
     from girder_jobs.constants import JobStatus

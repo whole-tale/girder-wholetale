@@ -197,11 +197,15 @@ def validateCatalogLinkTitle(doc):
 
 
 @setting_utilities.validator(
-    {PluginSettings.ENABLE_DATA_CATALOG, PluginSettings.DAV_SERVER}
+    {
+        PluginSettings.ENABLE_DATA_CATALOG,
+        PluginSettings.DAV_SERVER,
+        PluginSettings.GIRDER_UI_ENABLED,
+    }
 )
-def validateEnableDataCatalog(doc):
-    if not doc["value"]:
-        doc["value"] = defaultEnableDataCatalog()
+def validateBooleanSetting(doc):
+    if doc["value"] is None or doc["value"] == "":
+        doc["value"] = Setting().getDefault(doc["key"])
     if not isinstance(doc["value"], bool):
         raise ValidationException("The setting is not a boolean", "value")
 
@@ -721,6 +725,12 @@ def defaultOrcidSettings():
     return ""
 
 
+def add_public_settings(event):
+    settings = event.info["returnVal"]
+    public_settings = [PluginSettings.GIRDER_UI_ENABLED]
+    settings.update({key: Setting().get(key) for key in public_settings})
+
+
 @access.public()
 @describeRoute(Description("Return the content of a maintenance banner, if set."))
 @boundHandler()
@@ -908,6 +918,9 @@ class WholeTalePlugin(GirderPlugin):
         events.bind("model.tale.save.created", "wholetale", set_tale_dirs_mapping)
         events.bind("model.tale.remove", "wholetale", delete_tale_dirs)
         events.bind("wholetale.tale.copied", "wholetale", copy_versions_and_runs)
+        events.bind(
+            "rest.get.system/public_settings.after", "wholetale", add_public_settings
+        )
 
         info["apiRoot"].account = Account()
         info["apiRoot"].repository = Repository()
