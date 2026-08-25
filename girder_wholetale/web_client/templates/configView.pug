@@ -128,6 +128,16 @@ form#g-wholetale-config-form(role="form")
             settings['wholetale.dav_server'] === null ? defaults['wholetale.dav_server'] : settings['wholetale.dav_server']))
         | Enabled
   .form-group
+    label Enable Whole Tale UI in Girder
+    br
+    span Adds a "Create Tale" button to the folder view
+    .checkbox
+      label(for="wholetale-girder-ui-enabled")
+        input#wholetale-girder-ui-enabled(
+          type="checkbox", checked=(
+            settings['wholetale.girder_ui_enabled'] === null ? defaults['wholetale.girder_ui_enabled'] : settings['wholetale.girder_ui_enabled']))
+        | Enabled
+  .form-group
     label Header logo
     .g-wholetale-logo-container
       .g-wholetale-logo-preview-container

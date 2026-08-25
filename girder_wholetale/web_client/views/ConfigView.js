@@ -78,6 +78,9 @@ var ConfigView = View.extend({
             }, {
                 key: 'wholetale.dav_server',
                 value: this.$('#wholetale-enable-dav-server').is(':checked')
+            }, {
+                key: 'wholetale.girder_ui_enabled',
+                value: this.$('#wholetale-girder-ui-enabled').is(':checked')
             }]);
         },
 
@@ -112,6 +115,7 @@ var ConfigView = View.extend({
             'wholetale.versions_root',
             'wholetale.runs_root',
             'wholetale.dav_server',
+            'wholetale.girder_ui_enabled',
             'wholetale.maintenance_banner'
         ];
 
