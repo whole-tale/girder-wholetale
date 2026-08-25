@@ -1,5 +1,4 @@
 #!/usr/bin/env girder-shell
-# -*- coding: utf-8 -*-
 
 """Migrate HTTP(S) registered data to new format.
 
@@ -16,20 +15,19 @@ Example:
 from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.user import User
-from girder.utility.progress import ProgressContext
-from girder.plugins.wholetale.models.tale import Tale
-from girder.plugins.wholetale.utils import getOrCreateRootFolder
 from girder.plugins.wholetale.constants import CATALOG_NAME
 from girder.plugins.wholetale.lib.entity import Entity
 from girder.plugins.wholetale.lib.http_provider import HTTPImportProvider
-
+from girder.plugins.wholetale.models.tale import Tale
+from girder.plugins.wholetale.utils import getOrCreateRootFolder
+from girder.utility.progress import ProgressContext
 
 CAT_ROOT = getOrCreateRootFolder(CATALOG_NAME)
 base_url = 'https://dev.nceas.ucsb.edu/knb/d1/mn/v2'
 
 
 def migrate_item(item):
-    _file = list(Item().childFiles(item))[0]
+    _file = next(iter(Item().childFiles(item)))
     url = _file['linkUrl']
     if url.startswith('https://dashboard.wholetale.org'):
         return 0
@@ -40,8 +38,8 @@ def migrate_item(item):
     provider = HTTPImportProvider()
     try:
         dataMap = provider.lookup(entity)
-    except Exception:
-        print("  -> Failed to resolve {} as HTTP".format(url))
+    except Exception:  # noqa: BLE001 -- skip anything we can't resolve
+        print(f"  -> Failed to resolve {url} as HTTP")
         print("  -> item_id = {}".format(str(item["_id"])))
         return 0
     ds = dataMap.toDict()
@@ -52,7 +50,7 @@ def migrate_item(item):
         return 0
 
     with ProgressContext(True, user=creator, title='Registering resources') as ctx:
-        objType, new_item = provider.register(
+        _objType, new_item = provider.register(
             CAT_ROOT, 'folder', ctx, creator, dataMap, base_url=base_url
         )
 
@@ -88,4 +86,4 @@ for item in Item().find(
     migrated_items += migrate_item(item)
     Item().remove(item)
 
-print("TOTAL MIGRATED ITEMS = {}".format(migrated_items))
+print(f"TOTAL MIGRATED ITEMS = {migrated_items}")

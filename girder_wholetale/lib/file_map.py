@@ -1,4 +1,4 @@
-from typing import Optional, List, Dict
+from typing import Optional
 
 fileMapDoc = {
     'type': 'object',
@@ -122,40 +122,40 @@ class FileMap:
             return d
 
     @staticmethod
-    def fromDict(d: Dict):
+    def fromDict(d: dict):
         (name, value) = FileMap._checkSingleEntryDict(d)
         fm = FileMap(name)
         FileMap._fromDict1(fm, value)
         return fm
 
     @staticmethod
-    def _checkSingleEntryDict(d: Dict, expectedKey: str = None):
+    def _checkSingleEntryDict(d: dict, expectedKey: str | None = None):
         if len(d) > 1:
-            raise Exception('Invalid data. Dictionary %s should have only one element' % d)
+            raise ValueError(f'Invalid data. Dictionary {d} should have only one element')
         key = next(iter(d.keys()))
         if (expectedKey is not None) and (key != expectedKey):
-            raise Exception('Invalid data. Unexpected key %s in dictionary %s' % (key, d))
+            raise ValueError(f'Invalid data. Unexpected key {key} in dictionary {d}')
         return (key, d[key])
 
     @staticmethod
-    def _fromDict1(fm: 'FileMap', d: Dict):
-        for key in d.keys():
+    def _fromDict1(fm: 'FileMap', d: dict):
+        for key, value in d.items():
             if key == 'fileList':
-                FileMap._addFiles(fm, d[key])
+                FileMap._addFiles(fm, value)
             else:
-                FileMap._addChild(fm, key, d[key])
+                FileMap._addChild(fm, key, value)
 
     @staticmethod
-    def _addFiles(fm: 'FileMap', _list: List[Dict[str, Dict[str, object]]]):
+    def _addFiles(fm: 'FileMap', _list: list[dict[str, dict[str, object]]]):
         # can this list ever have more than 1 element?
         if len(_list) == 0:
             return
         _dict = _list[0]
-        for name in _dict.keys():
+        for name in _dict:
             (_, size) = FileMap._checkSingleEntryDict(_dict[name], 'size')
             fm.addFile(name, size)
 
     @staticmethod
-    def _addChild(fm: 'FileMap', key: str, d: Dict):
+    def _addChild(fm: 'FileMap', key: str, d: dict):
         fm = fm.addChild(key)
         FileMap._fromDict1(fm, d)

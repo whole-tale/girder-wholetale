@@ -1,6 +1,4 @@
 from dataclasses import dataclass
-from typing import Dict, List
-
 
 dataMapDoc = {
     "type": "object",
@@ -56,7 +54,7 @@ class DataMap:
     repository: str = None
     tale: bool = False
 
-    def toDict(self) -> Dict:
+    def toDict(self) -> dict:
         ret = {
             "dataId": self.dataId,
             "size": self.size,
@@ -68,7 +66,7 @@ class DataMap:
         return ret
 
     @staticmethod
-    def fromDict(d: Dict):
+    def fromDict(d: dict):
         return DataMap(
             d["dataId"],
             d.get("size", 0),
@@ -79,5 +77,5 @@ class DataMap:
         )
 
     @staticmethod
-    def fromList(d: List[Dict]):
+    def fromList(d: list[dict]):
         return [DataMap.fromDict(x) for x in d]

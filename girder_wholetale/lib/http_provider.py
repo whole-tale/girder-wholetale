@@ -1,16 +1,16 @@
 import os
 import pathlib
 import re
+from urllib.parse import unquote, urlparse
+
 import requests
-
-from urllib.parse import urlparse, unquote
-from girder.utility.model_importer import ModelImporter
 from girder.models.folder import Folder
+from girder.utility.model_importer import ModelImporter
 
-from .import_providers import ImportProvider
-from .entity import Entity
 from .data_map import DataMap
+from .entity import Entity
 from .file_map import FileMap
+from .import_providers import ImportProvider
 
 
 class HTTPImportProvider(ImportProvider):
@@ -27,13 +27,13 @@ class HTTPImportProvider(ImportProvider):
             # This should be redundant. This should only be called if matches()
             # returns True, which, various errors aside, signifies a commitment
             # to the entity being legitimate from the perspective of this provider
-            raise Exception('Unknown scheme %s' % url.scheme)
+            raise ValueError(f'Unknown scheme {url.scheme}')
         headers = requests.head(
             pid, headers={'Accept-Encoding': 'identity'}).headers
 
         valid_target = 'Content-Length' in headers or 'Content-Range' in headers
         if not valid_target:
-            raise Exception('Failed to get size for %s' % pid)
+            raise ValueError(f'Failed to get size for {pid}')
 
         if 'Content-Disposition' in headers:
             fname = re.search(r'^.*filename=([\w.]+).*$',
@@ -58,10 +58,10 @@ class HTTPImportProvider(ImportProvider):
             return fm
 
     def register(self, parent: object, parentType: str, progress, user, dataMap: DataMap,
-                 base_url: str = None):
+                 base_url: str | None = None):
         uri = dataMap.dataId
         url = urlparse(uri)
-        progress.update(increment=1, message='Processing file {}.'.format(uri))
+        progress.update(increment=1, message=f'Processing file {uri}.')
         # Request basic info via HEAD, use 'identity' to avoid grabbing info about
         # zipped content
         headers = requests.head(
@@ -82,7 +82,7 @@ class HTTPImportProvider(ImportProvider):
         parent = Folder().setMetadata(
             parent,
             {
-                'identifier': '{}://{}'.format(url.scheme, url.netloc),
+                'identifier': f'{url.scheme}://{url.netloc}',
                 'provider': url.scheme.upper(),
             }
         )

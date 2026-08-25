@@ -1,21 +1,21 @@
 import os
 import pathlib
 import re
-import requests
 from urllib.parse import urlparse, urlunparse
 from urllib.request import urlopen
 
+import requests
 from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.setting import Setting
 
-from ..import_providers import ImportProvider
-from ..data_map import DataMap
-from ..file_map import FileMap
-from ..import_item import ImportItem
-from ..entity import Entity
 from ... import constants
 from ...models.tale import Tale
+from ..data_map import DataMap
+from ..entity import Entity
+from ..file_map import FileMap
+from ..import_item import ImportItem
+from ..import_providers import ImportProvider
 from . import ZenodoNotATaleError
 
 
@@ -138,11 +138,11 @@ class ZenodoImportProvider(ImportProvider):
                 version = record["metadata"]["relations"]["version"][0]["index"] + 1
             except (KeyError, IndexError):
                 version = record["id"]
-        return record["metadata"]["title"] + "_ver_{}".format(version)
+        return record["metadata"]["title"] + f"_ver_{version}"
 
     def lookup(self, entity: Entity) -> DataMap:
         record = self._get_record(entity.getValue())
-        size = sum((file_obj["size"] for file_obj in record["files"]))
+        size = sum(file_obj["size"] for file_obj in record["files"])
         return DataMap(
             entity.getValue(),
             size,
@@ -207,7 +207,7 @@ class ZenodoImportProvider(ImportProvider):
                     identifier=doi,
                     meta={"checksum": {alg: checksum}, "dsRelPath": rel_path},
                 )
-            for folder in hierarchy.keys():
+            for folder in hierarchy:
                 rel_path = os.path.join(prefix, folder)
                 meta = {"dsRelPath": rel_path}
                 yield ImportItem(ImportItem.FOLDER, name=folder, identifier=doi, meta=meta)

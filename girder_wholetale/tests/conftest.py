@@ -193,7 +193,7 @@ def fancy_tale(server, user, tale_info, image):
 
 @httmock.all_requests
 def mockOtherRequests(url, request):
-    raise Exception("Unexpected url %s" % str(request.url))
+    raise AssertionError(f"Unexpected url {request.url!s}")
 
 
 def event_types(events, affected_resources):
@@ -206,7 +206,7 @@ def event_types(events, affected_resources):
 
 def _compare_tales(restored_tale, original_tale):
     # TODO: icon is a bug
-    for key in restored_tale.keys():
+    for key in restored_tale:
         if key in (
             "created",
             "updated",
@@ -252,14 +252,14 @@ def image(user):
         name="test my name",
         creator=user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="SomeBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-            targetMount="/mnt/whole-tale",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "SomeBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+            "targetMount": "/mnt/whole-tale",
+        },
     )
     yield img
     Image().remove(img)
@@ -273,13 +273,13 @@ def image_two(user):
         name="test other name",
         creator=user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="OtherBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "OtherBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
     yield img
     Image().remove(img)

@@ -11,7 +11,7 @@ DATA_PATH = os.path.join(os.path.dirname(__file__), "data")
 
 @httmock.all_requests
 def mock_other_request(url, request):
-    raise Exception("Unexpected url %s" % str(request.url))
+    raise AssertionError(f"Unexpected url {request.url!s}")
 
 
 @httmock.urlmatch(

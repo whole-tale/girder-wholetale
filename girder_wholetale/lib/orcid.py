@@ -1,8 +1,9 @@
 import urllib.parse
+from typing import ClassVar
 
 import requests
 from girder.api.rest import getApiUrl
-from girder.exceptions import RestException
+from girder.exceptions import GirderException, RestException
 from girder.models.setting import Setting
 from girder.models.user import User
 from girder.settings import SettingKey
@@ -12,7 +13,7 @@ from girder_oauth.settings import PluginSettings
 
 class ORCID(ProviderBase):
     _AUTH_URL = "https://orcid.org/oauth/authorize"
-    _AUTH_SCOPES = ["/authenticate"]
+    _AUTH_SCOPES: ClassVar[list[str]] = ["/authenticate"]
     _TOKEN_URL = "https://orcid.org/oauth/token"
     _REVOKE_URL = "https://orcid.org/oauth/revoke"
     _API_USER_URL = "https://pub.orcid.org/v3.0/{orcid}{path}"
@@ -30,9 +31,9 @@ class ORCID(ProviderBase):
         clientId = Setting().get(PluginSettings.ORCID_CLIENT_ID)
 
         if clientId is None:
-            raise Exception("No ORCID client ID setting is present.")
+            raise GirderException("No ORCID client ID setting is present.")
 
-        callbackUrl = "/".join((getApiUrl(), "oauth", "orcid", "callback"))
+        callbackUrl = f"{getApiUrl()}/oauth/orcid/callback"
 
         query = urllib.parse.urlencode(
             {
@@ -43,7 +44,7 @@ class ORCID(ProviderBase):
                 "scope": " ".join(cls._AUTH_SCOPES),
             }
         )
-        return "%s?%s" % (cls._AUTH_URL, query)
+        return f"{cls._AUTH_URL}?{query}"
 
     def getToken(self, code):
         params = {
@@ -61,7 +62,7 @@ class ORCID(ProviderBase):
         )
         if "error" in resp:
             raise RestException(
-                'Got an error exchanging token from provider: "%s".' % resp, code=502
+                f'Got an error exchanging token from provider: "{resp}".', code=502
             )
         return resp
 
@@ -82,8 +83,7 @@ class ORCID(ProviderBase):
             resp.raise_for_status()
         except requests.HTTPError:
             raise RestException(
-                'Got %s code from provider, response="%s".'
-                % (resp.status_code, resp.content.decode("utf8")),
+                'Got {} code from provider, response="{}".'.format(resp.status_code, resp.content.decode("utf8")),
                 code=502,
             )
 
@@ -102,13 +102,13 @@ class ORCID(ProviderBase):
         )
         if "error" in resp:
             raise RestException(
-                'Got an error refreshing token from provider: "%s".' % resp, code=502
+                f'Got an error refreshing token from provider: "{resp}".', code=502
             )
         return resp
 
     def getUser(self, token):
         headers = {
-            "Authorization": "Bearer %s" % token["access_token"],
+            "Authorization": "Bearer {}".format(token["access_token"]),
             "Accept": "application/vnd.orcid+json",
         }
         # Get user's email address
@@ -144,12 +144,15 @@ class ORCID(ProviderBase):
 
         dirty = False
         if not user:
-            if Setting().get(SettingKey.REGISTRATION_POLICY) == "closed":
-                if not Setting().get(PluginSettings.IGNORE_REGISTRATION_POLICY):
-                    raise RestException(
-                        "Registration is closed. Contact an administrator to create an account "
-                        "for you."
-                    )
+            if Setting().get(
+                SettingKey.REGISTRATION_POLICY
+            ) == "closed" and not Setting().get(
+                PluginSettings.IGNORE_REGISTRATION_POLICY
+            ):
+                raise RestException(
+                    "Registration is closed. Contact an administrator to create an account "
+                    "for you."
+                )
             login = self._deriveLogin(email, firstName, lastName, userName)
             user = User().createUser(
                 login=login,
@@ -165,7 +168,7 @@ class ORCID(ProviderBase):
             if lastName != user["lastName"] and lastName:
                 user["lastName"] = lastName
                 dirty = True
-            if email != user["email"] and not email == f"{oauthId}@orcid.org":
+            if email != user["email"] and email != f"{oauthId}@orcid.org":
                 user["email"] = email
                 dirty = True
         if setId:
@@ -179,7 +182,11 @@ class ORCID(ProviderBase):
 
 class SandboxORCID(ORCID):
     _AUTH_URL = "https://sandbox.orcid.org/oauth/authorize"
-    _AUTH_SCOPES = ["/authenticate", "/activities/update", "/read-limited"]
+    _AUTH_SCOPES: ClassVar[list[str]] = [
+        "/authenticate",
+        "/activities/update",
+        "/read-limited",
+    ]
     _TOKEN_URL = "https://sandbox.orcid.org/oauth/token"
     _REVOKE_URL = "https://sandbox.orcid.org/oauth/revoke"
     _API_USER_URL = "https://api.sandbox.orcid.org/v3.0/{orcid}{path}"

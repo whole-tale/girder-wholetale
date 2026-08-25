@@ -1,11 +1,11 @@
 import json
-import pytest
 
+import pytest
 from girder.constants import AccessType
 from pytest_girder.assertions import assertStatus, assertStatusOk
 
 
-class FakeAsyncResult(object):
+class FakeAsyncResult:
     def __init__(self):
         self.task_id = "fake_id"
 
@@ -37,7 +37,7 @@ def test_image_access(server, admin, user):
 
     # Retrieve access control list for the newly created image
     resp = server.request(
-        path="/image/%s/access" % image_user["_id"], method="GET", user=user
+        path="/image/{}/access".format(image_user["_id"]), method="GET", user=user
     )
     assertStatusOk(resp)
     access = resp.json
@@ -48,7 +48,7 @@ def test_image_access(server, admin, user):
                 "level": AccessType.ADMIN,
                 "id": str(user["_id"]),
                 "flags": [],
-                "name": "%s %s" % (user["firstName"], user["lastName"]),
+                "name": "{} {}".format(user["firstName"], user["lastName"]),
             }
         ],
         "groups": [],
@@ -64,21 +64,21 @@ def test_image_access(server, admin, user):
                 "level": AccessType.ADMIN,
                 "id": str(user["_id"]),
                 "flags": [],
-                "name": "%s %s" % (user["firstName"], user["lastName"]),
+                "name": "{} {}".format(user["firstName"], user["lastName"]),
             },
             {
                 "login": admin["login"],
                 "level": AccessType.ADMIN,
                 "id": str(admin["_id"]),
                 "flags": [],
-                "name": "%s %s" % (admin["firstName"], admin["lastName"]),
+                "name": "{} {}".format(admin["firstName"], admin["lastName"]),
             },
         ],
         "groups": [],
     }
 
     resp = server.request(
-        path="/image/%s/access" % image_user["_id"],
+        path="/image/{}/access".format(image_user["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_access)},
@@ -97,7 +97,7 @@ def test_image_access(server, admin, user):
 
     # Update the access control list of the admin image
     resp = server.request(
-        path="/image/%s/access" % image_admin["_id"],
+        path="/image/{}/access".format(image_admin["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_access)},
@@ -106,7 +106,7 @@ def test_image_access(server, admin, user):
 
     # Check that the access control list was correctly set for the image
     resp = server.request(
-        path="/image/%s/access" % image_admin["_id"], method="GET", user=admin
+        path="/image/{}/access".format(image_admin["_id"]), method="GET", user=admin
     )
     assertStatusOk(resp)
     access = resp.json
@@ -117,7 +117,7 @@ def test_image_access(server, admin, user):
                 "level": AccessType.ADMIN,
                 "id": str(admin["_id"]),
                 "flags": [],
-                "name": "%s %s" % (admin["firstName"], admin["lastName"]),
+                "name": "{} {}".format(admin["firstName"], admin["lastName"]),
             }
         ],
         "groups": [],
@@ -125,7 +125,7 @@ def test_image_access(server, admin, user):
 
     # Setting the access list with bad json should throw an error
     resp = server.request(
-        path="/image/%s/access" % image_user["_id"],
+        path="/image/{}/access".format(image_user["_id"]),
         method="PUT",
         user=user,
         params={"access": "badJSON"},
@@ -134,13 +134,13 @@ def test_image_access(server, admin, user):
 
     # Change the access to private
     resp = server.request(
-        path="/image/%s/access" % image_user["_id"],
+        path="/image/{}/access".format(image_user["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_access), "public": False},
     )
     assertStatusOk(resp)
-    resp = server.request(path="/image/%s" % image_user["_id"], method="GET", user=user)
+    resp = server.request(path="/image/{}".format(image_user["_id"]), method="GET", user=user)
     assertStatusOk(resp)
     assert not resp.json["public"]
 
@@ -231,8 +231,8 @@ def test_create_update_image(server, user):
     assertStatusOk(resp)
     image = resp.json
 
-    for param in params:
-        assert params[param] == image[param]
+    for param, value in params.items():
+        assert value == image[param]
 
     # Update the image
     new_params = {
@@ -253,7 +253,7 @@ def test_create_update_image(server, user):
     assertStatusOk(resp)
     new_image = resp.json
 
-    for param in new_params:
-        assert new_params[param] == new_image[param]
+    for param, value in new_params.items():
+        assert value == new_image[param]
 
     Image().remove(image)

@@ -1,16 +1,16 @@
-import cherrypy
 import datetime
 from urllib.parse import urlparse
 
-from girder.exceptions import RestException, ValidationException
+import cherrypy
 from girder.api import access
 from girder.api.describe import Description, autoDescribeRoute
 from girder.api.rest import Resource, getApiUrl
+from girder.exceptions import RestException, ValidationException
 from girder.models.setting import Setting
 from girder.models.token import Token
 from girder.models.user import User
-from girder_oauth.settings import PluginSettings as OAuthPluginSettings
 from girder_oauth import providers
+from girder_oauth.settings import PluginSettings as OAuthPluginSettings
 
 from ..constants import PluginSettings
 from ..lib import Verificators
@@ -18,7 +18,7 @@ from ..lib import Verificators
 
 class Account(Resource):
     def __init__(self):
-        super(Account, self).__init__()
+        super().__init__()
         self.resourceName = "account"
 
         self.route("GET", (), self.listAccounts)
@@ -52,7 +52,7 @@ class Account(Resource):
         csrfToken = Token().createToken(user=user, days=0.25)
 
         # The delimiter is arbitrary, but a dot doesn't need to be URL-encoded
-        state = "%s.%s" % (csrfToken["_id"], redirect)
+        state = "{}.{}".format(csrfToken["_id"], redirect)
         return state
 
     @staticmethod
@@ -66,20 +66,20 @@ class Account(Resource):
 
         token = Token().load(csrfTokenId, objectId=False, force=True)
         if token is None:
-            raise RestException('Invalid CSRF token (state="%s").' % state, code=403)
+            raise RestException(f'Invalid CSRF token (state="{state}").', code=403)
 
         try:
             user = User().load(token["userId"], force=True, exc=True)
         except (KeyError, ValidationException):
-            raise RestException('No valid user (state="%s").' % state)
+            raise RestException(f'No valid user (state="{state}").')
 
         Token().remove(token)
 
         if token["expires"] < datetime.datetime.now(datetime.timezone.utc):
-            raise RestException('Expired CSRF token (state="%s").' % state, code=403)
+            raise RestException(f'Expired CSRF token (state="{state}").', code=403)
 
         if not redirect:
-            raise RestException('No redirect location (state="%s").' % state)
+            raise RestException(f'No redirect location (state="{state}").')
 
         return user, redirect
 
@@ -115,8 +115,8 @@ class Account(Resource):
         for provider_name, provider in self.supported_providers().items():
             if provider["type"] == "apikey" or (
                 provider["type"] == "bearer"
-                and provider_name  # noqa
-                in enabled_providers_ids & supported_providers_ids  # noqa
+                and provider_name
+                in enabled_providers_ids & supported_providers_ids
             ):
                 enabled_providers[provider_name] = provider
 
@@ -185,14 +185,12 @@ class Account(Resource):
             provider_obj = self.supported_providers()[provider]
         except KeyError:
             raise RestException(
-                "Invalid account provider (provider={})".format(provider)
+                f"Invalid account provider (provider={provider})"
             )
 
         if provider_obj["type"] == "apikey" and not resource_server:
             raise RestException(
-                "Missing resource_server for apikey provider (provider={})".format(
-                    provider
-                )
+                f"Missing resource_server for apikey provider (provider={provider})"
             )
 
         user = self.getCurrentUser()
@@ -235,12 +233,12 @@ class Account(Resource):
         Note: We conveniently hid the userId in the OAuth state.
         """
         if error is not None:
-            raise RestException("Provider returned error: '%s'." % error, code=502)
+            raise RestException(f"Provider returned error: '{error}'.", code=502)
 
         providerName = provider
         provider = providers.idMap.get(providerName)
         if not provider:
-            raise RestException('Unknown provider "%s".' % providerName)
+            raise RestException(f'Unknown provider "{providerName}".')
 
         self.requireParams({"state": state, "code": code})
 
@@ -275,7 +273,7 @@ class Account(Resource):
         try:
             targets = self.supported_apikey_flavors()[provider]
         except KeyError:
-            raise RestException('Unknown provider "%s".' % provider)
+            raise RestException(f'Unknown provider "{provider}".')
 
         user = self.getCurrentUser()
         user_tokens = user.get("otherTokens", [])
@@ -310,14 +308,14 @@ class Account(Resource):
                 key_provider = self.supported_apikey_flavors()[provider]
                 if resource_server not in key_provider:
                     raise RestException(
-                        'Unsupported resource server "%s".' % resource_server
+                        f'Unsupported resource server "{resource_server}".'
                     )
             else:
                 key_provider = providers.idMap[provider]
                 resource_server = urlparse(key_provider.get_cn()).netloc
 
         except KeyError:
-            raise RestException('Unknown provider "%s".' % provider)
+            raise RestException(f'Unknown provider "{provider}".')
 
         verificator = Verificators[provider](resource_server=resource_server, key=key)
         try:
@@ -329,7 +327,7 @@ class Account(Resource):
         user_tokens = user.get("otherTokens", [])
         for i, user_token in enumerate(user_tokens):
             if user_token["resource_server"] == resource_server:
-                user_tokens[i].update(  # update token if found.
+                user_token.update(  # update token if found.
                     {"access_token": verificator.key, "token_type": key_type}
                 )
                 break

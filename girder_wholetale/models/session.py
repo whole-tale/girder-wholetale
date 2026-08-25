@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import os
 
 from bson import objectid
@@ -40,10 +37,9 @@ class Session(AccessControlledModel):
         userId = user["_id"] if user else None
         cursor = self.find({"ownerId": userId}, sort=sort)
 
-        for r in self.filterResultsByPermission(
+        yield from self.filterResultsByPermission(
             cursor=cursor, user=user, level=AccessType.READ, limit=limit, offset=offset
-        ):
-            yield r
+        )
 
     def createSession(self, user, dataSet=None, tale=None):
         """

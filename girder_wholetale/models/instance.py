@@ -1,10 +1,7 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import datetime
 import json
-import requests
 
+import requests
 from girder.constants import AccessType, SortDir, TokenScope
 from girder.exceptions import ValidationException
 from girder.models.model_base import AccessControlledModel
@@ -12,14 +9,18 @@ from girder.models.setting import Setting
 from girder.models.token import Token
 from girder.utility import JsonEncoder
 from girder_jobs.constants import REST_CREATE_JOB_TOKEN_SCOPE
-from gwvolman.tasks import \
-    create_volume, launch_container, update_container, shutdown_container, \
-    remove_volume, build_tale_image
+from gwvolman.tasks import (
+    build_tale_image,
+    create_volume,
+    launch_container,
+    remove_volume,
+    shutdown_container,
+    update_container,
+)
 
 from ..constants import InstanceStatus, PluginSettings
 from ..lib.metrics import metricsLogger
 from ..utils import notify_event
-
 
 TASK_TIMEOUT = 15.0
 BUILD_TIMEOUT = 360.0
@@ -47,7 +48,7 @@ class Instance(AccessControlledModel):
     def validate(self, instance):
         if not InstanceStatus.isValid(instance["status"]):
             raise ValidationException(
-                "Invalid instance status %s." % instance["status"], field="status"
+                "Invalid instance status {}.".format(instance["status"]), field="status"
             )
         return instance
 
@@ -70,14 +71,13 @@ class Instance(AccessControlledModel):
         if tale is not None:
             cursor_def["taleId"] = tale["_id"]
         cursor = self.find(cursor_def, sort=sort)
-        for r in self.filterResultsByPermission(
+        yield from self.filterResultsByPermission(
             cursor=cursor,
             user=currentUser,
             level=AccessType.READ,
             limit=limit,
             offset=offset,
-        ):
-            yield r
+        )
 
     def updateAndRestartInstance(self, instance, user, tale):
         """

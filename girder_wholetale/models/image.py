@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
 
 import datetime
 
-from girder.models.model_base import \
-    AccessControlledModel, ValidationException
 from girder.constants import AccessType
-
+from girder.models.model_base import AccessControlledModel, ValidationException
 
 _DEFAULT_ICON = ('https://raw.githubusercontent.com/whole-tale/dashboard/'
                  'd1914c9896c3e87a29601760ad7d0dfaa0d98ae2'
@@ -26,7 +23,7 @@ class Image(AccessControlledModel):
         self.exposeFields(
             level=AccessType.READ,
             fields={'_id', 'config', 'created', 'creatorId', 'description',
-                    'icon', 'iframe', 'name', 'updated', 'name', 'parentId',
+                    'icon', 'iframe', 'name', 'updated', 'parentId',
                     'public', 'tags', 'idleTimeout'}
         )
 

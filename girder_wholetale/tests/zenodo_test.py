@@ -2,10 +2,10 @@ import io
 import json
 import os
 import zipfile
+from unittest import mock
 from urllib.parse import parse_qs, urlparse
 
 import httmock
-import mock
 import pytest
 from girder.models.folder import Folder
 from girder.models.setting import Setting
@@ -15,13 +15,13 @@ from pytest_girder.assertions import assertStatus, assertStatusOk
 
 from girder_wholetale.constants import PluginSettings, SettingDefault
 from girder_wholetale.lib.zenodo.provider import ZenodoImportProvider
-from girder_wholetale.models.tale import Tale
 from girder_wholetale.models.image import Image
+from girder_wholetale.models.tale import Tale
 
 
 @httmock.all_requests
 def mock_other_request(url, request):
-    raise Exception("Unexpected url %s" % str(request.url))
+    raise AssertionError(f"Unexpected url {request.url!s}")
 
 
 @httmock.urlmatch(
@@ -77,13 +77,13 @@ def jupyter_image(user):
         name="Jupyter Classic",
         creator=user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="SomeBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "SomeBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
     yield img
     Image().remove(img)
@@ -255,7 +255,7 @@ def test_manifest_helpers(server, user):
             parentType="folder", parent=dataset_root_folder, user=user
         )
     )
-    child_item = next((item for item in Folder().childItems(folder=child_folder)))
+    child_item = next(item for item in Folder().childItems(folder=child_folder))
 
     for obj in (dataset_root_folder, child_folder, child_item):
         assert (
@@ -328,18 +328,20 @@ def test_import_tale(server, user, jupyter_image, fsAssetstore):
         "force": ["False"],
     }
 
-    with httmock.HTTMock(mock_get_record, mock_other_request):
-        with mock.patch("girder_wholetale.lib.zenodo.provider.urlopen", fake_urlopen):
-            resp = server.request(
-                path="/integration/zenodo",
-                method="GET",
-                user=user,
-                params={
-                    "record_id": "430905",
-                    "resource_server": "sandbox.zenodo.org",
-                },
-                isJson=False,
-            )
+    with (
+        httmock.HTTMock(mock_get_record, mock_other_request),
+        mock.patch("girder_wholetale.lib.zenodo.provider.urlopen", fake_urlopen),
+    ):
+        resp = server.request(
+            path="/integration/zenodo",
+            method="GET",
+            user=user,
+            params={
+                "record_id": "430905",
+                "resource_server": "sandbox.zenodo.org",
+            },
+            isJson=False,
+        )
 
     assert "Location" in resp.headers
     location = urlparse(resp.headers["Location"])
@@ -349,18 +351,20 @@ def test_import_tale(server, user, jupyter_image, fsAssetstore):
     tale = Tale().load(tale_id, user=user)
     assert tale["title"] == "Water Tale"
 
-    with httmock.HTTMock(mock_get_record, mock_other_request):
-        with mock.patch("girder_wholetale.lib.zenodo.provider.urlopen", fake_urlopen):
-            resp = server.request(
-                path="/integration/zenodo",
-                method="GET",
-                user=user,
-                params={
-                    "record_id": "430905",
-                    "resource_server": "sandbox.zenodo.org",
-                },
-                isJson=False,
-            )
+    with (
+        httmock.HTTMock(mock_get_record, mock_other_request),
+        mock.patch("girder_wholetale.lib.zenodo.provider.urlopen", fake_urlopen),
+    ):
+        resp = server.request(
+            path="/integration/zenodo",
+            method="GET",
+            user=user,
+            params={
+                "record_id": "430905",
+                "resource_server": "sandbox.zenodo.org",
+            },
+            isJson=False,
+        )
     assert "Location" in resp.headers
     location = urlparse(resp.headers["Location"])
     assert location.netloc == "dashboard.wholetale.org"

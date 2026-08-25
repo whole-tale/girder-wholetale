@@ -3,25 +3,23 @@ import logging
 import os
 from urllib.parse import quote
 
+import cherrypy
 from girder import events
+from girder.constants import AccessType
+from girder.exceptions import ValidationException
 from girder.models.folder import Folder
 from girder.models.item import Item
-from girder.models.user import User
 from girder.models.token import Token
+from girder.models.user import User
 from girder.utility import JsonEncoder
 from girder.utility.model_importer import ModelImporter
-from girder.exceptions import ValidationException
-from girder.constants import AccessType
-from girder_virtual_resources.rest import VirtualObject
-
-import cherrypy
 from girder_client import GirderClient
+from girder_virtual_resources.rest import VirtualObject
 from gwvolman.r2d import ImageBuilder
 
-from .license import WholeTaleLicense
-from . import IMPORT_PROVIDERS
 from ..models.image import Image
-
+from . import IMPORT_PROVIDERS
+from .license import WholeTaleLicense
 
 logger = logging.getLogger(__name__)
 
@@ -64,7 +62,7 @@ class Manifest:
         self.expand_folders = expand_folders
 
         self.validate()
-        self.manifest = dict()
+        self.manifest = {}
         # Create a set that represents any external data packages
         self.datasets = set()
 
@@ -114,9 +112,9 @@ class Manifest:
             "schema:image": self.tale["illustration"],
             "schema:name": self.tale["title"],
             "schema:schemaVersion": self.tale["format"],
-            "aggregates": list(),
-            "wt:usesDataset": list(),
-            "wt:hasRecordedRuns": list(),
+            "aggregates": [],
+            "wt:usesDataset": [],
+            "wt:hasRecordedRuns": [],
         }
 
     def add_tale_creator(self):
@@ -160,10 +158,8 @@ class Manifest:
         )  # getApiUrl doesn't work for local deployment, this should work in any scenario
         girder_client.token = str(token["_id"])
         image_builder = ImageBuilder(girder_client, tale=self.tale, auth=False)
-        try:
-            image_digest = image_builder.get_tag()
-        except ValueError:
-            raise  # What should I do in this situation...??
+        # TODO: What should we do when the Tale was never built (ValueError)...??
+        image_digest = image_builder.get_tag()
 
         return {
             "schema:hasPart": [
@@ -254,7 +250,7 @@ class Manifest:
         :param parent_dataset_identifier: The ID of an optional parent dataset
         :return: Dictionary representing an aggregated file
         """
-        aggregation = dict()
+        aggregation = {}
         aggregation['uri'] = uri
         if bundle:
             aggregation['bundledAs'] = bundle
@@ -322,7 +318,7 @@ class Manifest:
                 bundle = self.create_bundle(obj["name"], None)
             record = self.create_aggregation_record(obj['uri'], bundle, obj['dataset_identifier'])
             record["wt:size"] = obj["size"]
-            record.update({key: obj[key] for key in obj.keys() if key.startswith("wt:")})
+            record.update({key: obj[key] for key in obj if key.startswith("wt:")})
             self.manifest['aggregates'].append(record)
 
         # Add records for files in each recorded_run
@@ -470,7 +466,7 @@ class Manifest:
         # Add a trailing slash to the path if there isn't one (RO spec)
         if not folder.endswith('/'):
             folder += '/'
-        bundle = dict(folder=folder)
+        bundle = {"folder": folder}
         if filename:
             bundle['filename'] = quote(filename)
         return bundle

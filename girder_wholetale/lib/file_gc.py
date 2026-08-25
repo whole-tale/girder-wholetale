@@ -1,4 +1,3 @@
-from __future__ import with_statement
 
 import datetime
 import logging
@@ -14,7 +13,10 @@ from ..models.lock import Lock
 from ..models.psinfo import PSInfo
 from .tm_utils import Models
 
-BEGINNING_OF_TIME = datetime.datetime.fromtimestamp(0)
+# Naive on purpose: it is compared against naive UTC datetimes coming from Mongo.
+BEGINNING_OF_TIME = datetime.datetime.fromtimestamp(
+    0, tz=datetime.timezone.utc
+).replace(tzinfo=None)
 logger = logging.getLogger(__name__)
 
 
@@ -32,7 +34,7 @@ class FileGC:
                 return True
             except FileNotFoundError:
                 # well, well, wasn't there to begin with
-                logger.warn("File for %s did not exist" % itemId)
+                logger.warning(f"File for {itemId} did not exist")
                 self.lockModel.fileDeleted(itemId)
                 return True
             finally:
@@ -84,7 +86,7 @@ class CollectorThread(Thread):
             try:
                 logger.info("Running DM file GC")
                 self.collect()
-            except Exception:  # noqa
+            except Exception:
                 logger.error("File collection failure", exc_info=1)
             time.sleep(Setting().get(constants.PluginSettings.GC_RUN_INTERVAL))
 
@@ -131,7 +133,7 @@ class PeriodicFileGC(FileGC):
                         self.updateUsedSpace(used - collected)
                         break
                 else:
-                    logger.info("Did not delete file %s" % c["_id"])
+                    logger.info("Did not delete file {}".format(c["_id"]))
 
     def shouldCollect(self):
         return self.collectionStrategy.shouldCollect(
@@ -216,6 +218,6 @@ class LRUSortingScheme(CollectionSortingScheme):
             return item[Lock.FIELD_LAST_UNLOCKED]
         else:
             logger.warning(
-                "Item %s does not have a dm.lastUnlocked field." % item["_id"]
+                "Item {} does not have a dm.lastUnlocked field.".format(item["_id"])
             )
             return BEGINNING_OF_TIME

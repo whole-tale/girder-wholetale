@@ -1,6 +1,6 @@
 import json
+from unittest import mock
 
-import mock
 import pytest
 from girder.constants import AccessType
 from pytest_girder.assertions import assertStatus, assertStatusOk

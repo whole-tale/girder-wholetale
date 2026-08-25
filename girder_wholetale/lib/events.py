@@ -32,9 +32,9 @@ from ..models.tale import Tale
 from ..models.version_hierarchy import VersionHierarchyModel
 from ..schema.misc import containerInfoSchema
 from ..utils import get_tale_dir_root, notify_event
+from .manifest import Manifest
 from .metrics import metricsLogger
 from .path_mappers import HomePathMapper
-from .manifest import Manifest
 
 DEFAULT_IDLE_TIMEOUT = 1440.0
 logger = logging.getLogger(__name__)
@@ -93,10 +93,13 @@ def update_build_status(event):
             JobStatus.CANCELED,
             CustomJobStatus.CANCELING,
         )
-        if delete_instance and "instance_id" in job:
-            if instance := Instance().load(job["instance_id"], force=True):
-                instance_creator = User().load(instance["creatorId"], force=True)
-                Instance().deleteInstance(instance, instance_creator)
+        if (
+            delete_instance
+            and "instance_id" in job
+            and (instance := Instance().load(job["instance_id"], force=True))
+        ):
+            instance_creator = User().load(instance["creatorId"], force=True)
+            Instance().deleteInstance(instance, instance_creator)
 
         # If the status changed, save the object
         if (
@@ -153,7 +156,7 @@ def finalize_instance(event):
 
         if (
             instance["status"] == InstanceStatus.LAUNCHING
-            and job["status"] == JobStatus.ERROR  # noqa
+            and job["status"] == JobStatus.ERROR
         ):
             instance["status"] = InstanceStatus.ERROR
             Instance().updateInstance(instance)
@@ -168,7 +171,7 @@ def finalize_instance(event):
 
         if (
             status == JobStatus.SUCCESS
-            and instance["status"] == InstanceStatus.LAUNCHING  # noqa
+            and instance["status"] == InstanceStatus.LAUNCHING
         ):
             # Get a url to the container
             service = app.AsyncResult(job["celeryTaskId"]).get()
@@ -201,16 +204,16 @@ def finalize_instance(event):
             instance["status"] = InstanceStatus.RUNNING
             event_name = "wt_instance_running"
         elif (
-            status == JobStatus.ERROR and instance["status"] != InstanceStatus.ERROR  # noqa
+            status == JobStatus.ERROR and instance["status"] != InstanceStatus.ERROR
         ):
             instance["status"] = InstanceStatus.ERROR
         elif (
-            status == JobStatus.ERROR and instance["status"] == InstanceStatus.ERROR  # noqa
+            status == JobStatus.ERROR and instance["status"] == InstanceStatus.ERROR
         ):
             event_name = "wt_instance_error"
         elif (
             status in (JobStatus.QUEUED, JobStatus.RUNNING)
-            and instance["status"] != InstanceStatus.LAUNCHING  # noqa
+            and instance["status"] != InstanceStatus.LAUNCHING
         ):
             instance["status"] = InstanceStatus.LAUNCHING
         else:
@@ -279,7 +282,7 @@ def _wait_for_server(url, token, timeout=30, wait_time=0.5):
         except requests.exceptions.ConnectionError:
             logger.info("Booting server at [%s], getting ConnectionError", url)
             time.sleep(wait_time)
-        except Exception as ex:
+        except Exception as ex:  # noqa: BLE001 -- keep polling whatever went wrong
             logger.info('Booting server at [%s], getting "%s"', url, str(ex))
         else:
             break

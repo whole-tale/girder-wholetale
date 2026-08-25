@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+from typing import ClassVar
 
 from girder import events
 from girder.settings import SettingDefault
@@ -186,7 +185,7 @@ SettingDefault.defaults.update(
 
 
 # Constants representing the setting keys for this plugin
-class InstanceStatus(object):
+class InstanceStatus:
     LAUNCHING = 0
     RUNNING = 1
     ERROR = 2
@@ -207,7 +206,7 @@ class InstanceStatus(object):
         )
 
 
-class ImageStatus(object):
+class ImageStatus:
     INVALID = 0
     UNAVAILABLE = 1
     BUILDING = 2
@@ -228,14 +227,14 @@ class ImageStatus(object):
         )
 
 
-class TaleStatus(object):
+class TaleStatus:
     PREPARING = 0
     READY = 1
     ERROR = 2
 
 
 class RunState:
-    ALL = {}  # type: dict
+    ALL: ClassVar[dict] = {}
 
     def __init__(self, code: int, name: str):
         self.code = code

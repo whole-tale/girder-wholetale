@@ -2,8 +2,8 @@ import json
 import os
 import pathlib
 import time
+from unittest import mock
 
-import mock
 import pytest
 from girder import events
 from girder.models.folder import Folder
@@ -159,7 +159,7 @@ def test_basic_version_ops(
     )
     assertStatusOk(resp)
     assert len(resp.json) == 2
-    assert list(_["_id"] for _ in resp.json) == [version["_id"], new_version["_id"]]
+    assert [_["_id"] for _ in resp.json] == [version["_id"], new_version["_id"]]
 
     # Rename 2nd version to something silly (should fail)
     resp = server.request(
@@ -239,7 +239,7 @@ def test_basic_version_ops(
     restored_tale = resp.json
     _compare_tales(restored_tale, first_version_tale)
 
-    for key in restored_tale.keys():
+    for key in restored_tale:
         if key in {
             "created",
             "updated",

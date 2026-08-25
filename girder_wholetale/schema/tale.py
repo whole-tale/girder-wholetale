@@ -1,10 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from .misc import containerConfigSchema, \
-    dataSetSchema, \
-    imageInfoSchema, \
-    publishInfoListSchema
+from .misc import (
+    containerConfigSchema,
+    dataSetSchema,
+    imageInfoSchema,
+    publishInfoListSchema,
+)
 
 taleModel = {
     "definitions": {

@@ -26,7 +26,7 @@ class TransferHandler:
     def _getFileFromItem(self):
         files = list(Models.itemModel.childFiles(item=self.item))
         if len(files) != 1:
-            raise Exception(
+            raise ValueError(
                 "Wrong number of files for item "
                 + str(self.item["_id"])
                 + ": "

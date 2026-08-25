@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import hashlib
 import json
 import os
@@ -13,9 +10,10 @@ from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.setting import Setting
 from girder.models.upload import Upload
-from girder_wholetale.constants import PluginSettings
 from girder_oauth.settings import PluginSettings as OAuthPluginSettings
 from pytest_girder.assertions import assertStatus, assertStatusOk
+
+from girder_wholetale.constants import PluginSettings
 
 
 @pytest.mark.plugin("wholetale")
@@ -368,7 +366,7 @@ def testPluginSettings(server, admin, fsAssetstore):
         }
 
     # test set default settings
-    for key in test_settings.keys():
+    for key in test_settings:
         resp = server.request(
             "/system/setting",
             user=admin,

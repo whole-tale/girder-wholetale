@@ -7,6 +7,7 @@ from girder.api.rest import filtermodel
 from girder.constants import AccessType, TokenScope
 from girder.exceptions import RestException
 from girder.models.folder import Folder
+
 # from girder.plugins.wt_data_manager.models.session import Session
 from girder_virtual_resources.rest import VirtualObject
 
@@ -177,7 +178,7 @@ class Version(AbstractVRResource):
     def create(
         self,
         tale: dict,
-        name: str = None,
+        name: str | None = None,
         force: bool = False,
         allowRename: bool = False,
     ) -> dict:

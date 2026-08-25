@@ -11,11 +11,11 @@ class ImportItem:
     def __init__(
         self,
         type,
-        name: str = None,
-        identifier: str = None,
-        url: str = None,
+        name: str | None = None,
+        identifier: str | None = None,
+        url: str | None = None,
         size: int = -1,
-        mimeType: str = None,
+        mimeType: str | None = None,
         meta=None,
     ):
         self.type = type
@@ -36,7 +36,7 @@ class ImportItem:
 
         # Sort out unicode characters
         valid_filename = (
-            unicodedata.normalize(u"NFKD", filename)
+            unicodedata.normalize("NFKD", filename)
             .encode("ascii", "ignore")
             .decode("ascii")
         )
@@ -47,11 +47,11 @@ class ImportItem:
                 valid_filename = valid_filename.replace(sep, "_")
 
         # Ensure only valid characters
-        valid_chars = "-_.() {0}{1}".format(string.ascii_letters, string.digits)
+        valid_chars = f"-_.() {string.ascii_letters}{string.digits}"
         valid_filename = "".join(ch for ch in valid_filename if ch in valid_chars)
 
         # Ensure at least one letter or number to ignore names such as '..'
-        valid_chars = "{0}{1}".format(string.ascii_letters, string.digits)
+        valid_chars = f"{string.ascii_letters}{string.digits}"
         test_filename = "".join(ch for ch in filename if ch in valid_chars)
 
         if len(test_filename) == 0:

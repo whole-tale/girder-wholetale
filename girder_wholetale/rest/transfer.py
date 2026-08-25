@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 
 from girder.api import access
 from girder.api.describe import Description, describeRoute

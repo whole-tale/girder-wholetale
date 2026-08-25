@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 
 from girder.api import access
 from girder.api.describe import Description, describeRoute
@@ -8,8 +5,8 @@ from girder.api.rest import Resource, filtermodel, loadmodel
 from girder.constants import AccessType
 from girder.exceptions import RestException
 
-from ..models.session import Session
 from ..models.lock import Lock as LockModel
+from ..models.session import Session
 
 
 class Lock(Resource):

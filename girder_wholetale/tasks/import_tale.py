@@ -1,14 +1,12 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import cherrypy
 import datetime
 import os
 import pathlib
 import sys
 import traceback
-from fs.osfs import OSFS
+
+import cherrypy
 from fs.copy import copy_fs
+from fs.osfs import OSFS
 from girder import events
 from girder.api.rest import setCurrentUser
 from girder.models.folder import Folder
@@ -164,7 +162,7 @@ def run(job):
             {"_id": tale["_id"]}, update={"$set": {"status": TaleStatus.ERROR}}
         )
         t, val, tb = sys.exc_info()
-        log = "%s: %s\n%s" % (t.__name__, repr(val), traceback.extract_tb(tb))
+        log = f"{t.__name__}: {val!r}\n{traceback.extract_tb(tb)}"
         jobModel.updateJob(job, status=JobStatus.ERROR, log=log)
         notify_event([user["_id"]], "wt_import_failed", {"taleId": tale["_id"]})
         raise

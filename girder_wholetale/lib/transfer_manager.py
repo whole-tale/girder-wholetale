@@ -12,7 +12,6 @@ from ..constants import TransferStatus
 from .handler_factory import HandlerFactory
 from .tm_utils import Models, TransferException, TransferHandler
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -108,8 +107,7 @@ class TransferManager:
                 self.startTransfer(user, item["itemId"], item["sessionId"])
             except Exception as ex:  # noqa
                 logger.warning(
-                    "Failed to strart transfer for itemId %s. Reason: %s"
-                    % (item["itemId"], str(ex))
+                    "Failed to strart transfer for itemId {}. Reason: {}".format(item["itemId"], str(ex))
                 )
 
     def getUser(self, userId):
@@ -186,7 +184,7 @@ class SimpleTransferManager(TransferManager):
         psPath = self.pathMapper.getPSPath(itemId)
         files = list(Models.itemModel.childFiles(item=item))
         if len(files) != 1:
-            raise Exception(
+            raise ValueError(
                 "Wrong number of files for item "
                 + str(item["_id"])
                 + ": "

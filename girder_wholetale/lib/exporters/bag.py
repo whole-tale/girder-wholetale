@@ -1,11 +1,12 @@
-from datetime import datetime, timezone
-from hashlib import sha1, sha256, md5
 import os
+from datetime import datetime, timezone
+from hashlib import md5, sha1, sha256
 from urllib.parse import unquote
+
 import requests
-from . import TaleExporter
 from gwvolman.constants import REPO2DOCKER_VERSION
 
+from . import TaleExporter
 
 bag_profile = (
     "https://raw.githubusercontent.com/fair-research/bdbag/"
@@ -90,7 +91,7 @@ class BagTaleExporter(TaleExporter):
         extra_files = {
             'data/LICENSE': self.tale_license['text'],
         }
-        oxum = dict(size=0, num=0)
+        oxum = {"size": 0, "num": 0}
 
         # Add files from the workspace computing their checksum
         for fullpath, relpath in self.list_files():
@@ -158,7 +159,7 @@ class BagTaleExporter(TaleExporter):
                     pass
             return dump
 
-        tagmanifest = dict(md5="", sha1="", sha256="")
+        tagmanifest = {"md5": "", "sha1": "", "sha256": ""}
         for payload, fname in (
             (lambda: top_readme, 'README.md'),
             (lambda: run_file, 'run-local.sh'),
@@ -171,15 +172,9 @@ class BagTaleExporter(TaleExporter):
             (lambda: self.formated_dump(self.environment, indent=4), 'metadata/environment.json'),
             (lambda: self.formated_dump(self.manifest, indent=4), 'metadata/manifest.json'),
         ):
-            tagmanifest['md5'] += "{} {}\n".format(
-                md5(payload().encode()).hexdigest(), fname
-            )
-            tagmanifest['sha1'] += "{} {}\n".format(
-                sha1(payload().encode()).hexdigest(), fname
-            )
-            tagmanifest['sha256'] += "{} {}\n".format(
-                sha256(payload().encode()).hexdigest(), fname
-            )
+            tagmanifest['md5'] += f"{md5(payload().encode()).hexdigest()} {fname}\n"
+            tagmanifest['sha1'] += f"{sha1(payload().encode()).hexdigest()} {fname}\n"
+            tagmanifest['sha256'] += f"{sha256(payload().encode()).hexdigest()} {fname}\n"
             yield from self.zip_generator.addFile(payload, fname)
 
         for payload, fname in (

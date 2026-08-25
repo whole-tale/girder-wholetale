@@ -12,19 +12,19 @@ class Handler(BaseHTTPRequestHandler):
         try:
             szMatch = re.search("[0-9]+", self.path)
             if not szMatch:
-                raise IOError("size pattern not found")
+                raise OSError("size pattern not found")
 
             szStr = szMatch.group()
             unit = self.path[len(szStr) + 1 :]
             sz = int(szStr)
 
             if unit not in MULTIPLIERS:
-                raise IOError("no such unit %s" % unit)
+                raise OSError(f"no such unit {unit}")
             multiplier = MULTIPLIERS[unit]
 
             szm = sz * multiplier
 
-            print("Got request for %s x %s (%s)" % (sz, unit, szm))
+            print(f"Got request for {sz} x {unit} ({szm})")
             mimetype = "application/octet-stream"
 
             self.send_response(200)
@@ -44,8 +44,8 @@ class Handler(BaseHTTPRequestHandler):
 
             return
 
-        except IOError as ex:
-            self.send_error(404, "File Not Found: %s (%s)" % (self.path, ex.message))
+        except OSError as ex:
+            self.send_error(404, f"File Not Found: {self.path} ({ex.message})")
 
 
 class Server(threading.Thread):
@@ -55,7 +55,7 @@ class Server(threading.Thread):
 
     def start(self):
         self.server = HTTPServer(("", 0), Handler)
-        print("Started httpserver on port %s" % self.server.server_port)
+        print(f"Started httpserver on port {self.server.server_port}")
         threading.Thread.start(self)
 
     def run(self):
@@ -65,7 +65,7 @@ class Server(threading.Thread):
             self.server.socket.close()
 
     def getUrl(self):
-        return "http://localhost:%s" % self.server.server_port
+        return f"http://localhost:{self.server.server_port}"
 
     def stop(self):
         self.server.shutdown()

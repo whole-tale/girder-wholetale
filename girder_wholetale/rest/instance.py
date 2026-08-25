@@ -1,14 +1,12 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from girder.api import access
 from girder.api.describe import Description, autoDescribeRoute
 from girder.api.docs import addModel
 from girder.api.rest import (
     Resource,
-    filtermodel,
     RestException,
+    filtermodel,
+    setRawResponse,
     setResponseHeader,
-    setRawResponse
 )
 from girder.constants import AccessType, SortDir
 from girder.models.setting import Setting
@@ -17,7 +15,6 @@ from girder.models.user import User
 from ..constants import PluginSettings
 from ..models.instance import Instance as InstanceModel
 from ..models.tale import Tale
-
 
 instanceSchema = {
     'id': 'instance',
@@ -83,7 +80,7 @@ instanceCapErrMsg = (
 class Instance(Resource):
 
     def __init__(self):
-        super(Instance, self).__init__()
+        super().__init__()
         self.resourceName = 'instance'
         self._model = InstanceModel()
 

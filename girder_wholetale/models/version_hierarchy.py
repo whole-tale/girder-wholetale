@@ -1,17 +1,16 @@
-from bson import ObjectId
 import json
 import logging
 import shutil
 from pathlib import Path
-import pymongo
-from typing import Optional
 
+import pymongo
+from bson import ObjectId
 from girder.constants import AccessType
 from girder.exceptions import RestException
 from girder.models.folder import Folder
-from .tale import Tale
-from .hierarchy import AbstractHierarchyModel
 
+from .hierarchy import AbstractHierarchyModel
+from .tale import Tale
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +23,7 @@ class VersionHierarchyModel(AbstractHierarchyModel):
     def create(
         self,
         tale: dict,
-        name: Optional[str],
+        name: str | None,
         versionsDir: Path,
         versionsRoot: dict,
         user=None,
@@ -53,17 +52,17 @@ class VersionHierarchyModel(AbstractHierarchyModel):
         try:
             self.snapshot(last, tale, new_version, user=user, force=force)
             return new_version
-        except Exception:  # NOQA
+        except Exception:
             try:
                 shutil.rmtree(new_version["fsPath"])
                 Folder().remove(new_version)
             except Exception as ex:  # NOQA
                 logger.warning(
-                    "Exception caught while rolling back version ckeckpoint.", ex
+                    "Exception caught while rolling back version checkpoint: %s", ex
                 )
             raise
 
-    def getLastVersion(self, versionsFolder: dict) -> Optional[dict]:
+    def getLastVersion(self, versionsFolder: dict) -> dict | None:
         # The versions root folder is kept as a pure Girder folder.
         # This is because there is no efficient way to
         # say "give me the latest subdir" on a POSIX filesystem.

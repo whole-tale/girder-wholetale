@@ -1,5 +1,4 @@
 #!/usr/bin/env girder-shell
-# -*- coding: utf-8 -*-
 
 """Ensure that Tales' ACLs match Tale's folders ACLs.
 
@@ -14,7 +13,6 @@ Example:
 from girder.models.folder import Folder
 from girder.models.user import User
 from girder.plugins.wholetale.models.tale import Tale
-
 
 for tale in list(Tale().find()):
     creator = User().load(tale['creatorId'], force=True)

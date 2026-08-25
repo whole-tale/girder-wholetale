@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from girder.api.docs import addModel
-
 
 dataSetItemSchema = {
     'title': 'dataSetItem',

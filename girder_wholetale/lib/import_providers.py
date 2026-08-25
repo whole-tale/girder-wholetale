@@ -3,11 +3,10 @@ import textwrap
 
 from girder.utility.model_importer import ModelImporter
 
-from .entity import Entity
 from .data_map import DataMap
+from .entity import Entity
 from .file_map import FileMap
 from .import_item import ImportItem
-
 
 logger = logging.getLogger(__name__)
 
@@ -95,7 +94,7 @@ class ImportProvider:
             elif item.type == ImportItem.FILE:
                 (obj, objType) = self._registerFile(stack, item, user)
             else:
-                raise Exception('Unknown import item type: %s' % item.type)
+                raise ValueError(f'Unknown import item type: {item.type}')
             if rootObj is None:
                 rootObj = obj
                 rootType = objType
@@ -118,7 +117,7 @@ class ImportProvider:
         return (folder, 'folder')
 
     def _registerFile(self, stack, item: ImportItem, user):
-        (parent, parentType) = stack[-1]
+        (parent, _parentType) = stack[-1]
         gitem = self.itemModel.createItem(item.name, user, parent, reuseExisting=True)
         if self.fileModel.findOne({"itemId": gitem["_id"]}):
             logger.info(f"Item ({gitem['_id']=}, {gitem['name']=}) already has a file.")
@@ -163,7 +162,7 @@ class ImportProviders:
         for provider in self.providers:
             if provider.matches(entity):
                 return provider
-        raise Exception('Could not find suitable provider for entity %s' % entity)
+        raise ValueError(f'Could not find suitable provider for entity {entity}')
 
     def getFromDataMap(self, dataMap: DataMap) -> ImportProvider:
         return self.providerMap[dataMap.repository]

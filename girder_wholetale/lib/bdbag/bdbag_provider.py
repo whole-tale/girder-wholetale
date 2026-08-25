@@ -1,17 +1,17 @@
+import contextlib
 import json
 import os
 import pathlib
 import tempfile
 import urllib
 import zipfile
-from typing import Dict, Optional, Generator
+from collections.abc import Generator
 
 import httpio
 
-from ..import_item import ImportItem
 from ..entity import Entity
+from ..import_item import ImportItem
 from ..import_providers import ImportProvider
-
 
 _COPY_BUFSZ = 64 * 1024
 
@@ -21,11 +21,11 @@ def _text(o: object) -> str:
         return o
     if isinstance(o, bytes):
         return o.decode('UTF-8')
-    raise ValueError('Don\'t know how to convert object of type "%s" to string' % type(o))
+    raise ValueError(f'Don\'t know how to convert object of type "{type(o)}" to string')
 
 
 class _FileTree:
-    def __init__(self, name: str, is_dir: bool = False, url: Optional[str] = None,
+    def __init__(self, name: str, is_dir: bool = False, url: str | None = None,
                  size: int = -1):
         self.name = name
         self._is_dir = is_dir
@@ -37,8 +37,8 @@ class _FileTree:
             self.list = None
             self.url = url
 
-    def add(self, path: pathlib.Path, url: Optional[str] = None,
-            size: Optional[int] = None) -> None:
+    def add(self, path: pathlib.Path, url: str | None = None,
+            size: int | None = None) -> None:
         self._add(path, url, path, size)
 
     def is_dir(self) -> bool:
@@ -46,14 +46,14 @@ class _FileTree:
         # it can get really confusing to mix x.is_dir with y.is_dir()
         return self._is_dir
 
-    def _add(self, path: pathlib.Path, url: Optional[str], orig_path: pathlib.Path,
+    def _add(self, path: pathlib.Path, url: str | None, orig_path: pathlib.Path,
              size: int = -1) -> None:
         assert self.list is not None
         name = path.parts[0]
         if len(path.parts) == 1:
             # leaf
             if name in self.list:
-                raise ValueError('Duplicate entry: {}'.format(orig_path))
+                raise ValueError(f'Duplicate entry: {orig_path}')
             self.list[name] = _FileTree(name, url=url, size=size)
         else:
             if name not in self.list:
@@ -61,7 +61,7 @@ class _FileTree:
             dir = self.list[name]
             if not dir.is_dir():
                 raise ValueError('Attempted to add a file where a directory '
-                                 'exists: {}'.format(orig_path))
+                                 f'exists: {orig_path}')
             dir._add(path.relative_to(name), url, orig_path, size=size)
 
 
@@ -73,50 +73,48 @@ class BDBagProvider(ImportProvider):
     def matches(self, entity: Entity) -> bool:
         return str(entity.getValue()).endswith('.zip')
 
-    def _listRecursive(self, user: Dict[str, object], pid: str, name: str,
-                       progress: Optional[object] = None) -> Generator[ImportItem, None, None]:
+    def _listRecursive(self, user: dict[str, object], pid: str, name: str,
+                       progress: object | None = None) -> Generator[ImportItem, None, None]:
         if not pid:
             raise ValueError('pid must contain a path to a bag.')
-        if pid.startswith('https://'):
-            # may need tokens
+        with contextlib.ExitStack() as stack:
+            if pid.startswith('https://'):
+                # may need tokens
 
-            # https://pbcconsortium.isrd.isi.edu/chaise/record/#1/Beta_Cell:Dataset/RID=1-882P
-            # ->
-            # https://pbcconsortium.s3.amazonaws.com/shared/5ad7cdf55b0d5007601015b7ff1ea8d6/2021-11-08_16.50.02/Dataset_1-882P.zip
-            fp = httpio.open(pid)
-            zip_url = pid
-        else:
-            # treat as path
-            fp = open(pid, 'rb')
-            zip_url = 'file://' + pid
+                # https://pbcconsortium.isrd.isi.edu/chaise/record/#1/Beta_Cell:Dataset/RID=1-882P
+                # ->
+                # https://pbcconsortium.s3.amazonaws.com/shared/5ad7cdf55b0d5007601015b7ff1ea8d6/2021-11-08_16.50.02/Dataset_1-882P.zip
+                fp = stack.enter_context(httpio.open(pid))
+                zip_url = pid
+            else:
+                # treat as path
+                fp = stack.enter_context(open(pid, 'rb'))
+                zip_url = 'file://' + pid
 
-        try:
             zf = zipfile.ZipFile(fp)
-            with tempfile.TemporaryDirectory() as tmp_dir:
-                bag_root = zipfile.Path(zf)
-                subdirs = list(bag_root.iterdir())
-                if len(subdirs) != 1:
-                    raise ValueError('Invalid bag: must have a single entry in root directory')
+            tmp_dir = stack.enter_context(tempfile.TemporaryDirectory())
+            bag_root = zipfile.Path(zf)
+            subdirs = list(bag_root.iterdir())
+            if len(subdirs) != 1:
+                raise ValueError('Invalid bag: must have a single entry in root directory')
 
-                dataset_name = subdirs[0].name
-                main = subdirs[0]
-                self._read_manifests(main)
-                root = _FileTree(dataset_name, is_dir=True)
+            dataset_name = subdirs[0].name
+            main = subdirs[0]
+            self._read_manifests(main)
+            root = _FileTree(dataset_name, is_dir=True)
 
-                # we traverse both fetch.txt and the bag to build a tree of all files, whether
-                # external or internal to the bag since it's not quite clear that one can traverse
-                # a given directory twice and have the rest of the infrastructure be ok with that
+            # we traverse both fetch.txt and the bag to build a tree of all files, whether
+            # external or internal to the bag since it's not quite clear that one can traverse
+            # a given directory twice and have the rest of the infrastructure be ok with that
 
-                self._read_fetch_txt(root, main)
-                self._read_bag_dir(root, main)
+            self._read_fetch_txt(root, main)
+            self._read_bag_dir(root, main)
 
-                yield ImportItem(ImportItem.FOLDER, name=dataset_name, identifier=zip_url)
-                # make a new ZipFile for the same reason that mk_zip_path is necessary since
-                # iterdir() triggers the issue
-                yield from self._listFolder(root, main, zip_url, tmp_dir)
-                yield ImportItem(ImportItem.END_FOLDER)
-        finally:
-            fp.close()
+            yield ImportItem(ImportItem.FOLDER, name=dataset_name, identifier=zip_url)
+            # make a new ZipFile for the same reason that mk_zip_path is necessary since
+            # iterdir() triggers the issue
+            yield from self._listFolder(root, main, zip_url, tmp_dir)
+            yield ImportItem(ImportItem.END_FOLDER)
 
     def _read_manifests(self, main: zipfile.Path) -> None:
         for alg in ("md5", "sha1", "sha256", "sha512"):
@@ -211,7 +209,7 @@ class BDBagProvider(ImportProvider):
     def _parse_fetch_line(self, root: _FileTree, line: str) -> None:
         els = line.split(maxsplit=3)
         if len(els) != 3:
-            raise ValueError('Invalid line in fetch.txt: {}'.format(line))
+            raise ValueError(f'Invalid line in fetch.txt: {line}')
         url = els[0]  # no need to urldecode this one
         path = urllib.parse.unquote(els[2])
         ppath = pathlib.PurePosixPath(path)

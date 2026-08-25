@@ -5,9 +5,9 @@ import tempfile
 import time
 import zipfile
 from pathlib import Path
+from unittest import mock
 
 import bdbag.bdbag_api as bdbag
-import mock
 import responses
 from girder import config
 from girder.models.folder import Folder
@@ -53,14 +53,14 @@ def setUp(self):
         name="test my name",
         creator=self.user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="SomeBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-            targetMount="/mount",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "SomeBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+            "targetMount": "/mount",
+        },
     )
 
     responses.get(
@@ -184,7 +184,7 @@ def _testBDBagValidation(self):
             fp.seek(0)
             zip_archive = zipfile.ZipFile(fp, "r")
             manifest_path = next(
-                (_ for _ in zip_archive.namelist() if _.endswith("manifest.json"))
+                _ for _ in zip_archive.namelist() if _.endswith("manifest.json")
             )
             version_id = Path(manifest_path).parts[0]
 

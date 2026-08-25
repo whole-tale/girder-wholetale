@@ -1,12 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-import git
 import json
 import os
 import re
 import shutil
 import time
+
+import git
 from girder.models.folder import Folder
 from girder.models.user import User
 from girder.utility import JsonEncoder
@@ -79,7 +77,7 @@ def run(job):
             )  # set the local branch to track the remote default branch
             repo.heads[branch].checkout()  # checkout the default branch to working tree
         except git.exc.GitCommandError as exc:
-            raise RuntimeError("Failed to import from git:\n {}".format(str(exc)))
+            raise RuntimeError(f"Failed to import from git:\n {exc!s}")
 
         # Tale is ready to be built
         Tale().update({"_id": tale["_id"]}, update={"$set": {"status": TaleStatus.READY}})

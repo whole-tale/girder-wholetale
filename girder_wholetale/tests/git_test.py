@@ -3,9 +3,9 @@ import shutil
 import tempfile
 import time
 from datetime import datetime, timezone
+from unittest import mock
 
 import git
-import mock
 import pymongo
 import pytest
 from girder.models.folder import Folder
@@ -103,7 +103,7 @@ def _import_from_git_repo(url, server, image, user):
 @pytest.mark.xfail(reason="Local task needs to be ported to celery.")
 @pytest.mark.plugin("wholetale")
 def test_import_git_as_tale(server, user, image, git_repo_dir):
-    class fakeInstance(object):
+    class fakeInstance:
         _id = "123456789"
 
         def createInstance(self, tale, user, /, *, spawn=False):

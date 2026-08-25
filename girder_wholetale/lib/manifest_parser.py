@@ -8,9 +8,8 @@ from girder.models.file import File
 from girder.models.folder import Folder
 from girder.models.item import Item
 
-from .license import WholeTaleLicense
 from ..models.image import Image
-
+from .license import WholeTaleLicense
 
 _NEW_DATACITE_KEY = "datacite"
 
@@ -66,7 +65,7 @@ def fold_hierarchy(objs):
     covered_ids = set()
     reiterate = False
 
-    current_ids = set([obj["itemId"] for obj in objs])
+    current_ids = {obj["itemId"] for obj in objs}
 
     for obj in objs:
         mount_path = Path(obj["mountPath"])
@@ -84,10 +83,10 @@ def fold_hierarchy(objs):
                 continue
 
             parent = Folder().load(parentId, force=True)
-            covered_ids |= set([str(_["_id"]) for _ in Folder().childItems(parent)])
-            covered_ids |= set(
-                [str(_["_id"]) for _ in Folder().childFolders(parent, "folder")]
-            )
+            covered_ids |= {str(_["_id"]) for _ in Folder().childItems(parent)}
+            covered_ids |= {
+                str(_["_id"]) for _ in Folder().childFolders(parent, "folder")
+            }
 
             reduced.append(
                 {
@@ -201,8 +200,7 @@ class ManifestParser:
                 continue
 
             folder_path = unquote(bundle["folder"]).replace(data_prefix, "", 1)
-            if folder_path.endswith("/"):
-                folder_path = folder_path[:-1]
+            folder_path = folder_path.removesuffix("/")
             if "filename" in bundle:
                 try:
                     item = Item().load(obj["wt:identifier"], force=True, exc=True)
@@ -234,7 +232,7 @@ class ManifestParser:
                 path = folder_path
                 model_type = "folder"
             dataSet.append(
-                dict(mountPath=path, _modelType=model_type, itemId=str(itemId))
+                {"mountPath": path, "_modelType": model_type, "itemId": str(itemId)}
             )
         return fold_hierarchy(dataSet)
 

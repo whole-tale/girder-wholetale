@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from operator import itemgetter
 
 from girder.api import access
@@ -9,10 +7,9 @@ from girder.api.rest import Resource, RestException
 from girder.models.setting import Setting
 
 from ..constants import PluginSettings
+from ..lib import pids_to_entities
 from ..lib.data_map import dataMapDoc
 from ..lib.file_map import fileMapDoc
-from ..lib import pids_to_entities
-
 
 addModel('dataMap', dataMapDoc)
 addModel('fileMap', fileMapDoc)
@@ -20,7 +17,7 @@ addModel('fileMap', fileMapDoc)
 
 class Repository(Resource):
     def __init__(self):
-        super(Repository, self).__init__()
+        super().__init__()
         self.resourceName = 'repository'
 
         self.route('GET', (), self.getPublishRepositories)

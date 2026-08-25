@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import json
 import os
 import pathlib
@@ -8,11 +5,13 @@ import stat
 import sys
 import time
 import traceback
+from typing import ClassVar
+
 from fs.base import FS
 from fs.copy import copy_fs
 from fs.enums import ResourceType
-from fs.errors import FileExpected
 from fs.error_tools import convert_os_errors
+from fs.errors import FileExpected
 from fs.info import Info
 from fs.mode import Mode
 from fs.osfs import OSFS
@@ -21,17 +20,17 @@ from fs.permissions import Permissions
 from fs.tarfs import ReadTarFS
 from fs.zipfs import ReadZipFS
 from girder import events
-from girderfs.dms import WtDmsGirderFS
-from girder_client import GirderClient
 from girder.constants import AccessType
 from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.notification import Notification
 from girder.models.token import Token
 from girder.models.user import User
-from girder.utility import config, JsonEncoder
+from girder.utility import JsonEncoder, config
+from girder_client import GirderClient
 from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job
+from girderfs.dms import WtDmsGirderFS
 
 from ..constants import CATALOG_NAME, InstanceStatus, TaleStatus
 from ..lib import pids_to_entities, register_dataMap
@@ -249,7 +248,7 @@ def run(job):
     except Exception:
         Tale().update({"_id": tale["_id"]}, update={"$set": {"status": TaleStatus.ERROR}})
         t, val, tb = sys.exc_info()
-        log = "%s: %s\n%s" % (t.__name__, repr(val), traceback.extract_tb(tb))
+        log = f"{t.__name__}: {val!r}\n{traceback.extract_tb(tb)}"
         jobModel.updateJob(
             job,
             progressTotal=progressTotal,
@@ -301,7 +300,7 @@ class DMSFS(FS):
     This allows to access WtDMS in a pythonic way, without actually mounting it anywhere.
     """
 
-    STAT_TO_RESOURCE_TYPE = {
+    STAT_TO_RESOURCE_TYPE: ClassVar[dict] = {
         stat.S_IFDIR: ResourceType.directory,
         stat.S_IFCHR: ResourceType.character,
         stat.S_IFBLK: ResourceType.block_special_file,
@@ -319,7 +318,7 @@ class DMSFS(FS):
         self._fs = WtDmsGirderFS(session_id, gc)
 
     def __repr__(self):
-        return "{}({})".format(self.__class__.__name__, self.session_id)
+        return f"{self.__class__.__name__}({self.session_id})"
 
     # Required methods
     def getinfo(self, path, namespaces=None):

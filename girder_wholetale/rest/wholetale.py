@@ -1,21 +1,20 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import os
+
 from girder import events
 from girder.api import access
 from girder.api.describe import Description, autoDescribeRoute
 from girder.api.rest import Resource
-from girder.models.setting import Setting
 from girder.models.collection import Collection
 from girder.models.folder import Folder
+from girder.models.setting import Setting
 
 from ..constants import API_VERSION, PluginSettings
 from ..models.tale import Tale
-import os
 
 
 class wholeTale(Resource):
     def __init__(self):
-        super(wholeTale, self).__init__()
+        super().__init__()
         self.resourceName = 'wholetale'
 
         self.route('GET', (), self.get_wholetale_info)

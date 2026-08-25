@@ -1,5 +1,4 @@
 #!/usr/bin/env girder-shell
-# -*- coding: utf-8 -*-
 
 """
 
@@ -11,9 +10,8 @@ Example:
 
 from girder.models.folder import Folder
 from girder.models.item import Item
-from girder.plugins.wholetale.utils import getOrCreateRootFolder
 from girder.plugins.wholetale.constants import CATALOG_NAME
-
+from girder.plugins.wholetale.utils import getOrCreateRootFolder
 
 CAT_ROOT = getOrCreateRootFolder(CATALOG_NAME)
 

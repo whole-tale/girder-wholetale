@@ -1,8 +1,8 @@
 import json
 import os
 import time
+from unittest import mock
 
-import mock
 import pytest
 from girder.models.folder import Folder
 from pytest_girder.assertions import assertStatusOk

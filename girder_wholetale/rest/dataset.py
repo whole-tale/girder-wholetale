@@ -1,18 +1,16 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import os
 import tempfile
 
 import cherrypy
 from bson import ObjectId
 from girder.api import access
-from girder.api.docs import addModel
 from girder.api.describe import Description, autoDescribeRoute
+from girder.api.docs import addModel
 from girder.api.rest import Resource, filtermodel, iterBody
 from girder.constants import AccessType, SortDir, TokenScope
-from girder.exceptions import ValidationException, RestException
-from girder.models.item import Item
+from girder.exceptions import RestException, ValidationException
 from girder.models.folder import Folder
+from girder.models.item import Item
 from girder.models.user import User
 from girder.utility.model_importer import ModelImporter
 from girder_jobs.models.job import Job
@@ -22,7 +20,6 @@ from ..lib import IMPORT_PROVIDERS
 from ..lib.data_map import DataMap
 from ..schema.misc import dataMapListSchema
 from ..utils import getOrCreateRootFolder
-
 
 datasetModel = {
     "description": "Object representing registered data.",
@@ -96,7 +93,7 @@ def _itemOrFolderToDataset(obj):
 class Dataset(Resource):
 
     def __init__(self):
-        super(Dataset, self).__init__()
+        super().__init__()
         self.resourceName = 'dataset'
 
         self.route('GET', (), self.listDatasets)
@@ -107,8 +104,8 @@ class Dataset(Resource):
 
     @access.public
     @autoDescribeRoute(
-        Description(('Returns all registered datasets from the system '
-                     'that user has access to'))
+        Description('Returns all registered datasets from the system '
+                     'that user has access to')
         .param('myData', 'If True, filters results to datasets registered by the user.'
                'Defaults to False.',
                required=False, dataType='boolean', default=False)
@@ -178,7 +175,7 @@ class Dataset(Resource):
             doc = Item().load(id=id, user=user, level=AccessType.READ, exc=True)
             doc['_modelType'] = 'item'
         if 'meta' not in doc or 'provider' not in doc['meta']:
-            raise ValidationException('No such item: %s' % str(doc['_id']), 'id')
+            raise ValidationException('No such item: {}'.format(str(doc['_id'])), 'id')
         return _itemOrFolderToDataset(doc)
 
     @access.user

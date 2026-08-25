@@ -1,23 +1,23 @@
-from bs4 import BeautifulSoup
 import functools
 import os
 import pathlib
 import re
-import requests
 import tempfile
-from typing import Generator
-from urllib.parse import urlparse, urlunparse, parse_qs
 import zipfile
+from collections.abc import Generator
+from urllib.parse import parse_qs, urlparse, urlunparse
 
+import requests
+from bs4 import BeautifulSoup
 from girder.models.assetstore import Assetstore
 from girder.utility import assetstore_utilities
 
-from ..import_providers import ImportProvider
 from ..bdbag.bdbag_provider import _FileTree
 from ..data_map import DataMap
+from ..entity import Entity
 from ..file_map import FileMap
 from ..import_item import ImportItem
-from ..entity import Entity
+from ..import_providers import ImportProvider
 
 
 class OpenICPSRImportProvider(ImportProvider):
@@ -106,7 +106,7 @@ class OpenICPSRImportProvider(ImportProvider):
                         meta={"dsRelPath": (relpath / k).as_posix()},
                         size=file_path.stat().st_size,
                         mimeType="application/octet-stream",
-                        url="file://{}".format(file_path.absolute()),
+                        url=f"file://{file_path.absolute()}",
                     )
 
     def _scan_dirs(
@@ -142,8 +142,7 @@ class OpenICPSRImportProvider(ImportProvider):
         fname = re.findall("filename=(.+)", disp)[0].strip('"')
         zfname = os.path.join(tempDir, fname)
         with open(zfname, "wb") as fp:
-            for chunk in resp.raw:
-                fp.write(chunk)
+            fp.writelines(resp.raw)
 
         return zfname
 
@@ -153,28 +152,30 @@ class OpenICPSRImportProvider(ImportProvider):
         record = self._get_landing_page(pid)
         zfname = self._get_payload(record["download_url"], user)
 
-        with zipfile.ZipFile(zfname) as zf:
-            with tempfile.TemporaryDirectory() as tmp_dir:
-                zf.extractall(tmp_dir)
-                zip_root = pathlib.Path(tmp_dir)
-                subdirs = [_.is_dir() for _ in zip_root.iterdir()]
-                if len(subdirs) != 1 or not subdirs[0]:
-                    dataset_name = os.path.basename(zf.fp.name)
-                    main = zip_root
-                else:
-                    main = next(zip_root.iterdir())
-                    dataset_name = main.name
-                root = _FileTree(dataset_name, is_dir=True)
-                self._scan_dirs(root, main, main)
+        with (
+            zipfile.ZipFile(zfname) as zf,
+            tempfile.TemporaryDirectory() as tmp_dir,
+        ):
+            zf.extractall(tmp_dir)
+            zip_root = pathlib.Path(tmp_dir)
+            subdirs = [_.is_dir() for _ in zip_root.iterdir()]
+            if len(subdirs) != 1 or not subdirs[0]:
+                dataset_name = os.path.basename(zf.fp.name)
+                main = zip_root
+            else:
+                main = next(zip_root.iterdir())
+                dataset_name = main.name
+            root = _FileTree(dataset_name, is_dir=True)
+            self._scan_dirs(root, main, main)
 
-                yield ImportItem(
-                    ImportItem.FOLDER,
-                    name=dataset_name,
-                    identifier=record["doi"],
-                    meta={"dsRelPath": "/"},
-                )
-                yield from self._listFolder(root, main, pathlib.Path("/"), record["doi"])
-                yield ImportItem(ImportItem.END_FOLDER)
+            yield ImportItem(
+                ImportItem.FOLDER,
+                name=dataset_name,
+                identifier=record["doi"],
+                meta={"dsRelPath": "/"},
+            )
+            yield from self._listFolder(root, main, pathlib.Path("/"), record["doi"])
+            yield ImportItem(ImportItem.END_FOLDER)
 
     def check_auth(self, user):
         if not self._get_user_pass(user):

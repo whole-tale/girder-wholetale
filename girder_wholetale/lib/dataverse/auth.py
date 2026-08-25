@@ -1,5 +1,6 @@
 import requests
 from girder.exceptions import RestException
+
 from ..verificator import Verificator
 
 
@@ -7,7 +8,7 @@ class DataverseVerificator(Verificator):
     @property
     def headers(self):
         if self.key:
-            return {"X-Dataverse-key": "{}".format(self.key)}
+            return {"X-Dataverse-key": f"{self.key}"}
         return {}
 
     def verify(self):
@@ -18,5 +19,5 @@ class DataverseVerificator(Verificator):
             r.raise_for_status()
         except requests.exceptions.HTTPError:
             raise RestException(
-                "Key '{}' is not valid for '{}'".format(self.key, self.resource_server)
+                f"Key '{self.key}' is not valid for '{self.resource_server}'"
             )

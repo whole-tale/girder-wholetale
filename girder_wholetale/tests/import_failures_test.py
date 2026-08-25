@@ -1,8 +1,8 @@
 import json
 import os
 import time
+from unittest import mock
 
-import mock
 import pytest
 from girder.models.folder import Folder
 from girder_jobs.constants import JobStatus
@@ -56,13 +56,13 @@ def testTaleImportZipFail(server, user, image, fsAssetstore):
         name="Jupyter Classic",
         creator=user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="PythonBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "PythonBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
     with mock.patch("girder_wholetale.lib.pids_to_entities") as mock_pids:
         mock_pids.side_effect = ValueError
