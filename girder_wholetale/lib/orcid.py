@@ -12,6 +12,11 @@ from girder_oauth.settings import PluginSettings
 
 
 class ORCID(ProviderBase):
+    _PROVIDER_ID = "orcid"
+    _EXTERNAL_NAME = "ORCID"
+    _CLIENT_ID_SETTING = "oauth.orcid_client_id"
+    _CLIENT_SECRET_SETTING = "oauth.orcid_client_secret"
+    _ID_DOMAIN = "orcid.org"  # used for the placeholder email
     _AUTH_URL = "https://orcid.org/oauth/authorize"
     _AUTH_SCOPES: ClassVar[list[str]] = ["/authenticate"]
     _TOKEN_URL = "https://orcid.org/oauth/token"
@@ -20,20 +25,29 @@ class ORCID(ProviderBase):
 
     # header for user: application/vnd.orcid+json
 
+    @classmethod
+    def getProviderName(cls, external=False):
+        if external:
+            return cls._EXTERNAL_NAME
+        else:
+            return cls._PROVIDER_ID
+
     def getClientIdSetting(self):
-        return Setting().get(PluginSettings.ORCID_CLIENT_ID)
+        return Setting().get(self._CLIENT_ID_SETTING)
 
     def getClientSecretSetting(self):
-        return Setting().get(PluginSettings.ORCID_CLIENT_SECRET)
+        return Setting().get(self._CLIENT_SECRET_SETTING)
 
     @classmethod
     def getUrl(cls, state):
-        clientId = Setting().get(PluginSettings.ORCID_CLIENT_ID)
+        clientId = Setting().get(cls._CLIENT_ID_SETTING)
 
-        if clientId is None:
-            raise GirderException("No ORCID client ID setting is present.")
+        if not clientId:
+            raise GirderException(
+                f"No {cls.getProviderName(external=True)} client ID setting is present."
+            )
 
-        callbackUrl = f"{getApiUrl()}/oauth/orcid/callback"
+        callbackUrl = f"{getApiUrl()}/oauth/{cls.getProviderName()}/callback"
 
         query = urllib.parse.urlencode(
             {
@@ -107,6 +121,8 @@ class ORCID(ProviderBase):
         return resp
 
     def getUser(self, token):
+        providerName = self.getProviderName()
+        externalName = self.getProviderName(external=True)
         headers = {
             "Authorization": "Bearer {}".format(token["access_token"]),
             "Accept": "application/vnd.orcid+json",
@@ -119,11 +135,11 @@ class ORCID(ProviderBase):
         try:
             email = resp["emails"]["email"][0]["email"]
         except (KeyError, TypeError, IndexError):
-            email = "{orcid}@orcid.org".format(**token)
+            email = "{}@{}".format(token["orcid"], self._ID_DOMAIN)
 
         oauthId = token["orcid"]
         if not oauthId:
-            raise RestException("ORCID did not return a user ID.", code=502)
+            raise RestException(f"{externalName} did not return a user ID.", code=502)
         try:
             lastName = resp["name"]["family-name"]["value"]
         except (KeyError, TypeError):
@@ -134,10 +150,10 @@ class ORCID(ProviderBase):
             firstName = "N/A"
 
         if lastName == "" and firstName == "":
-            raise RestException("ORCID did not return a user name.", code=502)
+            raise RestException(f"{externalName} did not return a user name.", code=502)
 
         userName = firstName.replace(" ", "") + "-" + lastName.replace(" ", "")
-        user = User().findOne({"oauth.provider": "orcid", "oauth.id": oauthId})
+        user = User().findOne({"oauth.provider": providerName, "oauth.id": oauthId})
         setId = not user
         if not user:
             user = User().findOne({"email": email})
@@ -168,11 +184,13 @@ class ORCID(ProviderBase):
             if lastName != user["lastName"] and lastName:
                 user["lastName"] = lastName
                 dirty = True
-            if email != user["email"] and email != f"{oauthId}@orcid.org":
+            if email != user["email"] and email != f"{oauthId}@{self._ID_DOMAIN}":
                 user["email"] = email
                 dirty = True
         if setId:
-            user.setdefault("oauth", []).append({"provider": "orcid", "id": oauthId})
+            user.setdefault("oauth", []).append(
+                {"provider": providerName, "id": oauthId}
+            )
             dirty = True
         if dirty:
             user = User().save(user)
@@ -181,6 +199,11 @@ class ORCID(ProviderBase):
 
 
 class SandboxORCID(ORCID):
+    _PROVIDER_ID = "orcid_sandbox"
+    _EXTERNAL_NAME = "ORCID Sandbox"
+    _CLIENT_ID_SETTING = "oauth.orcid_sandbox_client_id"
+    _CLIENT_SECRET_SETTING = "oauth.orcid_sandbox_client_secret"
+    _ID_DOMAIN = "sandbox.orcid.org"
     _AUTH_URL = "https://sandbox.orcid.org/oauth/authorize"
     _AUTH_SCOPES: ClassVar[list[str]] = [
         "/authenticate",
@@ -190,11 +213,3 @@ class SandboxORCID(ORCID):
     _TOKEN_URL = "https://sandbox.orcid.org/oauth/token"
     _REVOKE_URL = "https://sandbox.orcid.org/oauth/revoke"
     _API_USER_URL = "https://api.sandbox.orcid.org/v3.0/{orcid}{path}"
-
-    @classmethod
-    def getProviderName(cls, external=False):
-        providerName = "ORCID"
-        if external:
-            return providerName
-        else:
-            return providerName.lower()
