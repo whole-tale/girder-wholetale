@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 import datetime
 import json
@@ -14,10 +13,10 @@ from girder.models.assetstore import Assetstore
 from girder.models.folder import Folder
 from girder.models.item import Item
 from girder.models.model_base import AccessControlledModel
-from girder.models.user import User
 from girder.models.token import Token
-from girder_jobs.models.job import Job
+from girder.models.user import User
 from girder.utility import assetstore_utilities
+from girder_jobs.models.job import Job
 from gwvolman.tasks import build_tale_image
 
 from ..constants import TaleStatus
@@ -178,10 +177,9 @@ class Tale(AccessControlledModel):
             cursor_def['imageId'] = image['_id']
 
         cursor = self.find(cursor_def, sort=sort)
-        for r in self.filterResultsByPermission(
+        yield from self.filterResultsByPermission(
                 cursor=cursor, user=currentUser, level=level,
-                limit=limit, offset=offset):
-            yield r
+                limit=limit, offset=offset)
 
     def createTale(self, image, data, creator=None, save=True, title=None,
                    description=None, public=None, config=None, authors=None,
@@ -406,10 +404,10 @@ class Tale(AccessControlledModel):
                 try:
                     mp = ManifestParser(json.loads(z.read(manifest_file).decode()))
                     assert mp.is_valid()
-                except Exception as e:
+                except Exception as e:  # untrusted archive contents
                     raise GirderException(
-                        "Couldn't read manifest.json or not a Tale: {}".format(str(e))
-                    )
+                        f"Couldn't read manifest.json or not a Tale: {e!s}"
+                    ) from e
 
                 env_file = next(
                     (_ for _ in z.namelist() if _.endswith("environment.json")),
@@ -417,10 +415,10 @@ class Tale(AccessControlledModel):
                 )
                 try:
                     environment = json.loads(z.read(env_file).decode())
-                except Exception as e:
+                except Exception as e:  # untrusted archive contents
                     raise GirderException(
-                        "Couldn't read environment.json or not a Tale: {}".format(str(e))
-                    )
+                        f"Couldn't read environment.json or not a Tale: {e!s}"
+                    ) from e
 
                 # Extract files to tmp on workspace assetstore
                 temp_dir = tempfile.mkdtemp(dir=tempDir)
@@ -453,13 +451,13 @@ class Tale(AccessControlledModel):
         new_tale["relatedIdentifiers"] = all_related_ids
 
         new_tale.update(
-            dict(
-                creator=user,
-                save=True,
-                public=False,
-                status=TaleStatus.PREPARING,
-                publishInfo=publishInfo,
-            )
+            {
+                'creator': user,
+                'save': True,
+                'public': False,
+                'status': TaleStatus.PREPARING,
+                'publishInfo': publishInfo,
+            }
         )
 
         # We don't call mp.get_dataset now, cause it might require

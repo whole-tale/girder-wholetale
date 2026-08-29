@@ -1,6 +1,5 @@
 import shutil
 from pathlib import Path
-from typing import Optional, Union
 
 from girder.constants import AccessType
 from girder.models.folder import Folder
@@ -27,7 +26,7 @@ class RunHierarchyModel(AbstractHierarchyModel):
             rs = RunStatus.UNKNOWN
         return {"status": rs.code, "statusString": rs.name}
 
-    def setStatus(self, rfolder: dict, status: Union[int, RunState]) -> None:
+    def setStatus(self, rfolder: dict, status: int | RunState) -> None:
         # TODO: add heartbeats (runs must regularly update status, otherwise they are considered
         # failed)
         if isinstance(status, int):
@@ -40,7 +39,7 @@ class RunHierarchyModel(AbstractHierarchyModel):
         self.write_status(runDir, _status)
 
     def create(
-        self, version: dict, name: Optional[str], user: dict, allowRename: bool = False
+        self, version: dict, name: str | None, user: dict, allowRename: bool = False
     ) -> dict:
         if not name:
             name = self.generateName()
@@ -83,7 +82,7 @@ class RunHierarchyModel(AbstractHierarchyModel):
     @staticmethod
     def write_status(runDir: Path, status: RunState):
         with open(runDir / ".status", "w") as f:
-            f.write("%s %s" % (status.code, status.name))
+            f.write(f"{status.code} {status.name}")
 
     def remove(self, rfolder: dict, user: dict) -> None:
         path = Path(rfolder["fsPath"])

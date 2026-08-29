@@ -1,7 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from functools import lru_cache
 import logging
+from functools import lru_cache
 from urllib.request import urlopen
 
 import html2markdown
@@ -20,9 +18,9 @@ from .entity import Entity
 from .http_provider import HTTPImportProvider
 from .import_providers import ImportProviders
 from .null_provider import NullImportProvider
-from .openicpsr.provider import OpenICPSRImportProvider
 from .openicpsr.auth import OpenICPSRVerificator
-from .resolvers import DOIResolver, ResolutionException, Resolvers, MinidResolver
+from .openicpsr.provider import OpenICPSRImportProvider
+from .resolvers import DOIResolver, MinidResolver, ResolutionException, Resolvers
 from .zenodo.auth import ZenodoVerificator
 from .zenodo.provider import ZenodoImportProvider
 
@@ -69,9 +67,9 @@ def pids_to_entities(pids, user=None, lookup=True):
             else:
                 results.append(provider.listFiles(entity))  # list of FileMaps
     except ResolutionException:
-        msg = 'Id "{}" was categorized as DOI, but its resolution failed.'.format(pid)
+        msg = f'Id "{pid}" was categorized as DOI, but its resolution failed.'
         raise RuntimeError(msg)
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 -- any provider failure becomes a lookup error
         if lookup:
             msg = 'Lookup for "{}" failed with: {}'
         else:
@@ -97,7 +95,7 @@ def register_dataMap(dataMaps, parent, parentType, user=None, progress=False):
             # probably would be nicer if Entity kept all details and the dataMap
             # would be merged into it
             provider = IMPORT_PROVIDERS.getFromDataMap(dataMap)
-            objType, obj = provider.register(
+            _objType, obj = provider.register(
                 parent, parentType, ctx, user, dataMap,
             )
             importedData.append(obj["_id"])
@@ -138,9 +136,8 @@ def update_citation(event):
         if related_id["relation"] != "Cites"
     ]
     for doi in dataset_top_identifiers:
-        related_ids.append(dict(identifier=doi, relation="Cites"))
-        if doi.startswith("doi:"):
-            doi = doi[4:]
+        related_ids.append({"identifier": doi, "relation": "Cites"})
+        doi = doi.removeprefix("doi:")
         try:
             url = (
                 "https://api.datacite.org/dois/"
@@ -148,7 +145,7 @@ def update_citation(event):
             )
             citation = _get_citation(url)
             citations.append(html2markdown.convert(citation))
-        except Exception as ex:
+        except Exception as ex:  # noqa: BLE001 -- citations are best-effort
             logger.info('Unable to get a citation for %s, getting "%s"', doi, str(ex))
 
     Tale().update({"_id": tale["_id"]}, update={"$set": {

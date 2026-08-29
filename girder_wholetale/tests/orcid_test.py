@@ -36,7 +36,7 @@ def _mockPerson(response):
 
 @httmock.all_requests
 def mockOtherRequests(url, request):
-    raise Exception("Unexpected url %s" % str(request.url))
+    raise AssertionError(f"Unexpected url {request.url!s}")
 
 
 @pytest.fixture
@@ -85,19 +85,23 @@ def test_get_user_missing_name_key_falls_back_to_na(server, orcidToken):
 @pytest.mark.plugin("wholetale")
 def test_get_user_missing_orcid_id_raises(server):
     response = _personResponse(email="jane.doe@example.com")
-    with httmock.HTTMock(_mockPerson(response), mockOtherRequests):
-        with pytest.raises(RestException, match="did not return a user ID"):
-            ORCID(redirectUri="http://localhost").getUser(
-                {"access_token": "blah", "orcid": ""}
-            )
+    with (
+        httmock.HTTMock(_mockPerson(response), mockOtherRequests),
+        pytest.raises(RestException, match="did not return a user ID"),
+    ):
+        ORCID(redirectUri="http://localhost").getUser(
+            {"access_token": "blah", "orcid": ""}
+        )
 
 
 @pytest.mark.plugin("wholetale")
 def test_get_user_empty_name_raises(server, orcidToken):
     response = _personResponse(email="jane.doe@example.com", firstName="", lastName="")
-    with httmock.HTTMock(_mockPerson(response), mockOtherRequests):
-        with pytest.raises(RestException, match="did not return a user name"):
-            ORCID(redirectUri="http://localhost").getUser(orcidToken)
+    with (
+        httmock.HTTMock(_mockPerson(response), mockOtherRequests),
+        pytest.raises(RestException, match="did not return a user name"),
+    ):
+        ORCID(redirectUri="http://localhost").getUser(orcidToken)
 
 
 @pytest.mark.plugin("wholetale")
@@ -131,9 +135,11 @@ def test_get_user_links_existing_user_matched_by_email(server, user, orcidToken)
 @pytest.mark.plugin("wholetale")
 def test_get_user_registration_closed_raises(server, orcidToken, closedRegistration):
     response = _personResponse(email="closed@example.com")
-    with httmock.HTTMock(_mockPerson(response), mockOtherRequests):
-        with pytest.raises(RestException, match="Registration is closed"):
-            ORCID(redirectUri="http://localhost").getUser(orcidToken)
+    with (
+        httmock.HTTMock(_mockPerson(response), mockOtherRequests),
+        pytest.raises(RestException, match="Registration is closed"),
+    ):
+        ORCID(redirectUri="http://localhost").getUser(orcidToken)
 
 
 @pytest.mark.plugin("wholetale")

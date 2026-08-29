@@ -1,42 +1,46 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import cherrypy
 import json
 import os
 import pathlib
 from urllib.parse import urlparse
+
+import cherrypy
 from girder import events
 from girder.api import access
-from girder.api.rest import iterBody
-from girder.api.docs import addModel
 from girder.api.describe import Description, autoDescribeRoute
-from girder.api.rest import Resource, filtermodel, RestException,\
-    setResponseHeader, setContentDisposition
-
+from girder.api.docs import addModel
+from girder.api.rest import (
+    Resource,
+    RestException,
+    filtermodel,
+    iterBody,
+    setContentDisposition,
+    setResponseHeader,
+)
 from girder.constants import AccessType, SortDir, TokenScope
 from girder.models.assetstore import Assetstore
 from girder.models.folder import Folder
 from girder.models.item import Item
-from girder.models.user import User
-from girder.models.token import Token
 from girder.models.setting import Setting
+from girder.models.token import Token
+from girder.models.user import User
 from girder_jobs.models.job import Job
 from gwvolman.tasks import publish
 
-from ..schema.tale import taleModel as taleSchema
-from ..models.tale import Tale as TaleModel
-from ..models.image import Image as ImageModel
-from ..models.instance import Instance
-from ..lib import pids_to_entities, IMPORT_PROVIDERS
-from ..lib.manifest import Manifest
+from ..constants import (
+    DEFAULT_ILLUSTRATION,
+    DEFAULT_IMAGE_ICON,
+    PluginSettings,
+    TaleStatus,
+)
+from ..lib import IMPORT_PROVIDERS, pids_to_entities
 from ..lib.exporters.bag import BagTaleExporter
 from ..lib.exporters.native import NativeTaleExporter
+from ..lib.manifest import Manifest
+from ..models.image import Image as ImageModel
+from ..models.instance import Instance
+from ..models.tale import Tale as TaleModel
+from ..schema.tale import taleModel as taleSchema
 from ..utils import notify_event
-
-
-from ..constants import TaleStatus, PluginSettings, \
-    DEFAULT_IMAGE_ICON, DEFAULT_ILLUSTRATION
-
 
 addModel('tale', taleSchema, resources='tale')
 
@@ -44,7 +48,7 @@ addModel('tale', taleSchema, resources='tale')
 class Tale(Resource):
 
     def __init__(self):
-        super(Tale, self).__init__()
+        super().__init__()
         self.resourceName = 'tale'
         self._model = TaleModel()
 
@@ -252,7 +256,7 @@ class Tale(Resource):
             try:
                 lookupKwargs['dataId'] = [url]
             except TypeError:
-                lookupKwargs = dict(dataId=[url])
+                lookupKwargs = {'dataId': [url]}
 
             if not git:
                 dataMap = pids_to_entities(
@@ -366,11 +370,11 @@ class Tale(Resource):
             tale["imageId"], user=user, level=AccessType.READ, exc=True
         )
         default_authors = [
-            dict(
-                firstName=user["firstName"],
-                lastName=user["lastName"],
-                orcid="https://orcid.org/0000-0000-0000-0000"
-            )
+            {
+                'firstName': user["firstName"],
+                'lastName': user["lastName"],
+                'orcid': "https://orcid.org/0000-0000-0000-0000"
+            }
         ]
 
         kwargs = {
@@ -590,7 +594,7 @@ class Tale(Resource):
         image = ImageModel().load(
             tale['imageId'], user=user, level=AccessType.READ, exc=True)
         default_authors = [
-            dict(firstName=user['firstName'], lastName=user['lastName'], orcid="")
+            {'firstName': user['firstName'], 'lastName': user['lastName'], 'orcid': ""}
         ]
 
         # Duplicate imageInfo but not jobId
@@ -656,7 +660,7 @@ class Tale(Resource):
         try:
             publisher = publishers[repository]
         except KeyError:
-            raise RestException("Unknown publisher repository ({})".format(repository))
+            raise RestException(f"Unknown publisher repository ({repository})")
 
         key = "resource_server"
         value = repository
@@ -665,7 +669,7 @@ class Tale(Resource):
             (_ for _ in user.get("otherTokens", []) if _.get(key) == value), None
         )
         if not token:
-            raise RestException("Missing a token for publisher ({}).".format(publisher))
+            raise RestException(f"Missing a token for publisher ({publisher}).")
 
         girder_token = Token().createToken(user=user, days=0.5)
 

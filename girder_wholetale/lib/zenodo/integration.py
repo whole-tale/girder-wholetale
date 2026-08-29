@@ -1,17 +1,15 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-import cherrypy
 import os
-from urllib.parse import urlparse, urlunparse, urlencode
+from urllib.parse import urlencode, urlparse, urlunparse
 
+import cherrypy
 from girder.api import access
 from girder.api.describe import Description, autoDescribeRoute
-from girder.api.rest import boundHandler, RestException
+from girder.api.rest import RestException, boundHandler
 
-from . import ZenodoNotATaleError
 from .. import IMPORT_PROVIDERS
 from ..data_map import DataMap
 from ..integration_utils import autologin
+from . import ZenodoNotATaleError
 
 
 @access.public
@@ -57,7 +55,7 @@ def zenodoDataImport(self, doi, record_id, resource_server, environment, force):
 
     # TODO: Make base url a plugin setting, defaulting to dashboard.<domain>
     dashboard_url = os.environ.get("DASHBOARD_URL", "https://dashboard.wholetale.org")
-    url = "https://{}/record/{}".format(resource_server, record_id)
+    url = f"https://{resource_server}/record/{record_id}"
     provider = IMPORT_PROVIDERS.providerMap["Zenodo"]
     try:
         data_map = DataMap(url, -1)  # mock DatMmap to pass url
@@ -73,9 +71,9 @@ def zenodoDataImport(self, doi, record_id, resource_server, environment, force):
         location = urlunparse(
             urlparse(dashboard_url)._replace(path="/mine", query=urlencode(query))
         )
-    except Exception as exc:
+    except Exception as exc:  # report any import failure to the client
         raise RestException(
-            f"Failed to import Tale. Server returned: '{str(exc)}'"
-        )
+            f"Failed to import Tale. Server returned: '{exc!s}'"
+        ) from exc
 
     raise cherrypy.HTTPRedirect(location)

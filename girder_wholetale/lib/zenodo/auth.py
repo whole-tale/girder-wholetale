@@ -1,5 +1,6 @@
 import requests
 from girder.exceptions import RestException
+
 from ..verificator import Verificator
 
 
@@ -23,5 +24,5 @@ class ZenodoVerificator(Verificator):
             r.raise_for_status()
         except requests.exceptions.HTTPError:
             raise RestException(
-                "Key '{}' is not valid for '{}'".format(self.key, self.resource_server)
+                f"Key '{self.key}' is not valid for '{self.resource_server}'"
             )

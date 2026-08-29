@@ -6,21 +6,22 @@ import tempfile
 import time
 import zipfile
 from datetime import datetime, timezone
+from unittest import mock
 
-import mock
 import pytest
 import vcr
 from bson import ObjectId
 from fs.copy import copy_fs
 from fs.osfs import OSFS
-from girder_jobs.constants import JobStatus
 
 # from girder import config
 from girder.models.folder import Folder
 from girder.utility.path import lookUpPath
+from girder_jobs.constants import JobStatus
+
+from girder_wholetale.models.tale import Tale
 
 from .conftest import event_types, get_events
-from girder_wholetale.models.tale import Tale
 
 ### NEEDS DATA_MANAGER
 
@@ -37,7 +38,7 @@ DATA_PATH = os.path.join(os.path.dirname(__file__), "data")
 # config.loadConfig()  # Must reload config to pickup correct port
 
 
-class FakeAsyncResult(object):
+class FakeAsyncResult:
     def __init__(self, tale_id=None):
         self.task_id = "fake_id"
         self.tale_id = tale_id
@@ -90,13 +91,13 @@ def setUp(self):
         name="test my name",
         creator=self.user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="SomeBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "SomeBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
 
     from girder.plugins.wt_home_dir import HOME_DIRS_APPS
@@ -119,18 +120,18 @@ def _testTaleImport(self):
         name="Jupyter Classic",
         creator=self.user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="PythonBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "PythonBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
 
     from girder.plugins.wholetale.constants import InstanceStatus
 
-    class fakeInstance(object):
+    class fakeInstance:
         _id = "123456789"
 
         def createInstance(self, tale, user, /, *, spawn=False):
@@ -220,18 +221,18 @@ def _testTaleImportBinder(self):
             name="Jupyter Classic",
             creator=self.user,
             public=True,
-            config=dict(
-                template="base.tpl",
-                buildpack="PythonBuildPack",
-                user="someUser",
-                port=8888,
-                urlPath="",
-            ),
+            config={
+                "template": "base.tpl",
+                "buildpack": "PythonBuildPack",
+                "user": "someUser",
+                "port": 8888,
+                "urlPath": "",
+            },
         )
 
         from girder.plugins.wholetale.constants import InstanceStatus
 
-        class fakeInstance(object):
+        class fakeInstance:
             _id = "123456789"
 
             def createInstance(self, tale, user, /, *, spawn=False):
@@ -310,13 +311,13 @@ def _testTaleImportZip(self, mock_builder):
         name="Jupyter Notebook",
         creator=self.user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="PythonBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "PythonBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
 
     since = datetime.now(timezone.utc).isoformat()
@@ -379,13 +380,13 @@ def _testTaleImportZipWithRuns(self, mock_builder):
         name="Jupyter Notebook",
         creator=self.user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="PythonBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "PythonBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
 
     since = datetime.now(timezone.utc).isoformat()
@@ -508,13 +509,13 @@ def _test_dsRootPath(self):
         name="Jupyter Classic",
         creator=self.user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="PythonBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "PythonBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
 
     def before_record_cb(request):

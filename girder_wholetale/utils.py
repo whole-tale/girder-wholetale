@@ -10,15 +10,15 @@ except ImportError:
     influxdb = None
 
 import cherrypy
-from girder.notification import Notification
 from girder.models.setting import Setting
 from girder.models.user import User
+from girder.notification import Notification
 from girder.utility.model_importer import ModelImporter
 
 from .constants import PluginSettings
 
 NOTIFICATION_EXP_HOURS = 1
-WT_EVENT_EXP_SECONDS = int(os.environ.get("GIRDER_WT_EVENT_EXP_SECONDS", 5))
+WT_EVENT_EXP_SECONDS = int(os.environ.get("GIRDER_WT_EVENT_EXP_SECONDS", "5"))
 
 
 class InfluxHandler(logging.Handler):

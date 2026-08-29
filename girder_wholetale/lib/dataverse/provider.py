@@ -1,25 +1,24 @@
 import hashlib
 import json
 import logging
-import re
 import os
 import pathlib
-import requests
-from urllib.parse import urlparse, urlunparse, parse_qs, unquote
+import re
+from urllib.parse import parse_qs, unquote, urlparse, urlunparse
 
+import requests
 from girder import events
 from girder.constants import AccessType
 from girder.models.folder import Folder
 from girder.models.setting import Setting
 
-from .auth import DataverseVerificator
-from ..import_providers import ImportProvider
+from ... import constants
 from ..data_map import DataMap
+from ..entity import Entity
 from ..file_map import FileMap
 from ..import_item import ImportItem
-from ..entity import Entity
-from ... import constants
-
+from ..import_providers import ImportProvider
+from .auth import DataverseVerificator
 
 logger = logging.getLogger(__name__)
 _DOI_REGEX = re.compile(r'(10.\d{4,9}/[-._;()/:A-Z0-9]+)', re.IGNORECASE)
@@ -127,7 +126,7 @@ class DataverseImportProvider(ImportProvider):
         try:
             req = requests.get(url)
             data = req.json()
-        except Exception:
+        except Exception:  # noqa: BLE001 -- any failure falls back to the bundled copy
             logger.warning(
                 "[dataverse] failed to fetch installations, using a local copy."
             )
@@ -227,11 +226,8 @@ class DataverseImportProvider(ImportProvider):
             {siteURL}/api/access/datafile/:persistentId/?persistentId={persistentId}
         """
         qs = parse_qs(url.query)
-        try:
-            full_doi = qs['persistentId'][0]
-        except (KeyError, ValueError):
-            # fail here in a meaningful way...
-            raise
+        # TODO: fail here in a meaningful way rather than letting KeyError escape.
+        full_doi = qs['persistentId'][0]
 
         file_persistent_id = os.path.basename(full_doi)
         doi = os.path.dirname(full_doi)
@@ -327,7 +323,7 @@ class DataverseImportProvider(ImportProvider):
                 stack[-1].addFile(item.name, item.size)
         return top
 
-    def _listRecursive(self, user, pid: str, name: str, base_url: str = None,
+    def _listRecursive(self, user, pid: str, name: str, base_url: str | None = None,
                        progress=None):
 
         def _recurse_hierarchy(hierarchy, prefix="/"):
@@ -346,7 +342,7 @@ class DataverseImportProvider(ImportProvider):
                     identifier=doi,
                     meta=meta,
                 )
-            for folder in hierarchy.keys():
+            for folder in hierarchy:
                 rel_path = os.path.join(prefix, folder)
                 yield ImportItem(
                     ImportItem.FOLDER,
@@ -394,11 +390,11 @@ class DataverseImportProvider(ImportProvider):
                     except (KeyError, ValueError):
                         orcid = "0000-0000-0000-0000"
                     authors.append(
-                        dict(
-                            firstName=firstName.strip(),
-                            lastName=lastName.strip(),
-                            orcid=f"https://www.orcid.org/{orcid}",
-                        )
+                        {
+                            'firstName': firstName.strip(),
+                            'lastName': lastName.strip(),
+                            'orcid': f"https://www.orcid.org/{orcid}",
+                        }
                     )
                 proto_tale["authors"] = authors
         return proto_tale

@@ -1,7 +1,7 @@
 import io
+from unittest import mock
 
 import cherrypy
-import mock
 import pytest
 from girder import auditLogger
 from girder.models.folder import Folder
@@ -80,7 +80,7 @@ def test_influxdb_logger(server, admin, enable_influxlog_setting, fsAssetstore):
         )
 
         resp = server.request(
-            path="/file/%s/download" % file["_id"],
+            path="/file/{}/download".format(file["_id"]),
             method="GET",
             user=admin,
             isJson=False,

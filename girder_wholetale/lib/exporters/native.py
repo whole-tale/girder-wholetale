@@ -29,9 +29,8 @@ class NativeTaleExporter(TaleExporter):
         # Update manifest with filesizes and mimeTypes for extra items
         self.append_extras_filesize_mimetypes(extra_files)
 
-        for data in self.zip_generator.addFile(
+        yield from self.zip_generator.addFile(
             lambda: self.formated_dump(self.manifest, indent=4), 'metadata/manifest.json'
-        ):
-            yield data
+        )
 
         yield self.zip_generator.footer()

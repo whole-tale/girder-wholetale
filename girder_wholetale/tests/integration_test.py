@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from urllib.parse import parse_qs, urlparse
 
 import pytest

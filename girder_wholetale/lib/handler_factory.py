@@ -1,7 +1,7 @@
 import urllib
 
-from .handlers.local import Local
 from .handlers.http import Http
+from .handlers.local import Local
 
 
 class HandlerFactory:

@@ -1,7 +1,8 @@
 import re
-from .entity import Entity
-from typing import Optional
+
 import requests
+
+from .entity import Entity
 
 """Regex that matches:
 
@@ -40,7 +41,7 @@ class Resolvers:
     def add(self, resolver: Resolver):
         self.resolvers.append(resolver)
 
-    def resolve(self, entity: Entity) -> Optional[Entity]:
+    def resolve(self, entity: Entity) -> Entity | None:
         while True:
             # try all resolvers; if any matches, repeat; if none matches, return last
             no_match = True
@@ -55,7 +56,7 @@ class Resolvers:
 
 
 class ResolutionException(Exception):
-    def __init__(self, message: str, prev: Exception = None):
+    def __init__(self, message: str, prev: Exception | None = None):
         self.message = message
         self.prev = prev
 
@@ -71,7 +72,7 @@ class DOIResolver(Resolver):
         if doi_match:
             return doi_match.groups()[-1]
 
-    def resolve(self, entity: Entity) -> Optional[Entity]:
+    def resolve(self, entity: Entity) -> Entity | None:
         value = entity.getValue()
         doi = DOIResolver.extractDOI(value)
         if doi is None:
@@ -83,17 +84,17 @@ class DOIResolver(Resolver):
     def resolveDOI(self, entity: Entity, doi: str):
         # Expect a redirect. Basically, don't do anything fancy because I don't know
         # if I can correctly resolve a DOI using the structured record
-        url = 'https://doi.org/%s' % doi
+        url = f'https://doi.org/{doi}'
         resolved_url = requests.head(url, allow_redirects=True).url
         if url == resolved_url:
-            raise ResolutionException('Could not resolve DOI %s' % (doi,))
+            raise ResolutionException(f'Could not resolve DOI {doi}')
 
         entity.setValue(resolved_url)
         entity['DOI'] = doi
 
 
 class MinidResolver(Resolver):
-    def resolve(self, entity: Entity) -> Optional[Entity]:
+    def resolve(self, entity: Entity) -> Entity | None:
         value = entity.getValue()
         if value.startswith("https://identifiers.fair-research.org/"):
             response = requests.get(value, headers={"Accept": "application/json"})
@@ -104,7 +105,7 @@ class MinidResolver(Resolver):
                 entity["size"] = data["metadata"]["length"]
                 entity["name"] = data["metadata"]["title"]
                 entity["identifier"] = data["identifier"]
-            except Exception:
+            except KeyError:
                 pass
             return entity
         else:

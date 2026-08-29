@@ -1,12 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from girder.api import access
-from girder.api.docs import addModel
 from girder.api.describe import Description, autoDescribeRoute
+from girder.api.docs import addModel
 from girder.api.rest import Resource, filtermodel
 from girder.constants import AccessType, SortDir, TokenScope
-from ..schema.misc import containerConfigSchema, tagsSchema
+
 from ..models.image import Image as ImageModel
+from ..schema.misc import containerConfigSchema, tagsSchema
 
 imageSchema = {
     "description": "Object representing a WT Image.",
@@ -90,7 +89,7 @@ addModel('image', imageSchema, resources='image')
 class Image(Resource):
 
     def __init__(self):
-        super(Image, self).__init__()
+        super().__init__()
         self.resourceName = 'image'
 
         self.route('GET', (), self.listImages)
@@ -104,8 +103,8 @@ class Image(Resource):
     @access.public
     @filtermodel(model='image', plugin='wholetale')
     @autoDescribeRoute(
-        Description(('Returns all images from the system '
-                     'that user has access to'))
+        Description('Returns all images from the system '
+                     'that user has access to')
         .responseClass('image', array=True)
         .param('parentId', "The ID of the image's parent.", required=False)
         .param('text', 'Perform a full text search for image with a matching '

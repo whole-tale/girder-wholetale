@@ -1,11 +1,13 @@
-from hashlib import sha256, md5
 import json
-import magic
 import os
+from hashlib import md5, sha256
+
+import magic
 import requests
-from girder.utility import _hash_state, ziputil, JsonEncoder
-from girder.models.folder import Folder
 from girder.constants import AccessType
+from girder.models.folder import Folder
+from girder.utility import JsonEncoder, _hash_state, ziputil
+
 from ..license import WholeTaleLicense
 
 
@@ -31,7 +33,7 @@ class HashFileStream:
 
     def __next__(self):
         nxt = next(self.gen)
-        for alg in self.state.keys():
+        for alg in self.state:
             checksum = _hash_state.restoreHex(self.state[alg], alg)
             checksum.update(nxt)
             self.state[alg] = _hash_state.serializeHex(checksum)
@@ -125,8 +127,7 @@ class TaleExporter:
 
     def dump_and_checksum(self, func, zip_path):
         hash_file_stream = HashFileStream(func)
-        for data in self.zip_generator.addFile(hash_file_stream, zip_path):
-            yield data
+        yield from self.zip_generator.addFile(hash_file_stream, zip_path)
         # MD5 is the only required alg in profile. See Manifests-Required in
         # https://raw.githubusercontent.com/fair-research/bdbag/master/profiles/bdbag-ro-profile.json
         self.state['md5'].append((zip_path, hash_file_stream.md5))

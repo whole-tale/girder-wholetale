@@ -1,10 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from pathlib import Path
 import shutil
 import sys
 import traceback
+from pathlib import Path
+
 from girder import events
 from girder.constants import AccessType
 from girder.models.folder import Folder
@@ -13,8 +11,8 @@ from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job
 
 from ..constants import TaleStatus
-from ..models.tale import Tale
 from ..lib.metrics import metricsLogger
+from ..models.tale import Tale
 
 
 def run(job):
@@ -46,7 +44,7 @@ def run(job):
             {"_id": new_tale["_id"]}, update={"$set": {"status": TaleStatus.ERROR}}
         )
         t, val, tb = sys.exc_info()
-        log = "%s: %s\n%s" % (t.__name__, repr(val), traceback.extract_tb(tb))
+        log = f"{t.__name__}: {val!r}\n{traceback.extract_tb(tb)}"
         jobModel.updateJob(job, status=JobStatus.ERROR, log=log)
         raise
 

@@ -63,7 +63,7 @@ def mockRevokeOrcidToken(url, request):
 
 @httmock.all_requests
 def mockOtherRequests(url, request):
-    raise Exception("Unexpected url %s" % str(request.url))
+    raise AssertionError(f"Unexpected url {request.url!s}")
 
 
 @httmock.urlmatch(
@@ -185,7 +185,7 @@ def test_list_accounts(server, user, externalAuthProviders):
     assert sorted([_["name"] for _ in accounts]) == sorted(
         [_["name"] for _ in AUTH_PROVIDERS]
     )
-    orcid_account = next((_ for _ in accounts if _["name"] == "orcid"))
+    orcid_account = next(_ for _ in accounts if _["name"] == "orcid")
     assert "%2Fapi%2Fv1%2Faccount%2Forcid%2Fcallback" in orcid_account["url"]
 
     resp = server.request(path="/account/zenodo/targets", method="GET", user=user)
@@ -235,11 +235,11 @@ def test_list_accounts(server, user, externalAuthProviders):
     assertStatusOk(resp)
     accounts = resp.json
 
-    orcid_account = next((_ for _ in accounts if _["name"] == "orcid"))
+    orcid_account = next(_ for _ in accounts if _["name"] == "orcid")
     assert orcid_account["state"] == "authorized"
     assert orcid_account["url"].endswith("/account/orcid/revoke")
 
-    zenodo_account = next((_ for _ in accounts if _["name"] == "zenodo"))
+    zenodo_account = next(_ for _ in accounts if _["name"] == "zenodo")
     assert zenodo_account["targets"][0]["resource_server"] == "sandbox.zenodo.org"
 
 
@@ -252,13 +252,13 @@ def test_callback(server, user, enabledOrcidAuth):
     assertStatus(resp, 400)
 
     # Try callback, without providing any params
-    resp = server.request(path="/account/%s/callback" % provider_info["name"])
+    resp = server.request(path="/account/{}/callback".format(provider_info["name"]))
     assertStatus(resp, 400)
 
     # Try callback, providing params as though the provider failed
     resp = server.request(
         method="GET",
-        path="/account/%s/callback" % provider_info["name"],
+        path="/account/{}/callback".format(provider_info["name"]),
         params={"code": None, "error": "some_custom_error"},
         exception=True,
     )
@@ -267,7 +267,7 @@ def test_callback(server, user, enabledOrcidAuth):
 
     resp = server.request(
         method="GET",
-        path="/account/%s/callback" % provider_info["name"],
+        path="/account/{}/callback".format(provider_info["name"]),
         params={"code": "orcid_code", "state": "some_state"},
     )
     assertStatus(resp, 403)
@@ -277,7 +277,7 @@ def test_callback(server, user, enabledOrcidAuth):
     state = "{_id}.blah".format(**invalid_token_no_user)
     resp = server.request(
         method="GET",
-        path="/account/%s/callback" % provider_info["name"],
+        path="/account/{}/callback".format(provider_info["name"]),
         params={"code": "orcid_code", "state": state},
     )
     assertStatus(resp, 400)
@@ -287,7 +287,7 @@ def test_callback(server, user, enabledOrcidAuth):
     state = "{_id}.blah".format(**invalid_token_expired)
     resp = server.request(
         method="GET",
-        path="/account/%s/callback" % provider_info["name"],
+        path="/account/{}/callback".format(provider_info["name"]),
         params={"code": "orcid_code", "state": state},
     )
     assertStatus(resp, 403)
@@ -297,7 +297,7 @@ def test_callback(server, user, enabledOrcidAuth):
     invalid_state = "{_id}".format(**valid_token)
     resp = server.request(
         method="GET",
-        path="/account/%s/callback" % provider_info["name"],
+        path="/account/{}/callback".format(provider_info["name"]),
         params={"code": "orcid_code", "state": invalid_state},
     )
     assertStatus(resp, 400)
@@ -308,7 +308,7 @@ def test_callback(server, user, enabledOrcidAuth):
     with httmock.HTTMock(mockGetOrcidToken, mockOtherRequests):
         resp = server.request(
             method="GET",
-            path="/account/%s/callback" % provider_info["name"],
+            path="/account/{}/callback".format(provider_info["name"]),
             params={"code": "orcid_code", "state": valid_state},
             isJson=False,
         )
@@ -328,7 +328,7 @@ def test_callback(server, user, enabledOrcidAuth):
     with httmock.HTTMock(mockGetOrcidToken, mockOtherRequests):
         resp = server.request(
             method="GET",
-            path="/account/%s/callback" % provider_info["name"],
+            path="/account/{}/callback".format(provider_info["name"]),
             params={"code": "orcid_code", "state": valid_state},
             isJson=False,
         )

@@ -1,15 +1,14 @@
 import json
-import mock
-import pytest
-
-from pytest_girder.assertions import assertStatusOk
+from unittest import mock
 
 import httmock
+import pytest
+from pytest_girder.assertions import assertStatusOk
 
 
 @httmock.all_requests
 def mockOtherRequests(url, request):
-    raise Exception("Unexpected url %s" % str(request.url))
+    raise AssertionError(f"Unexpected url {request.url!s}")
 
 
 @pytest.fixture

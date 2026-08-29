@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 
 import time
 
@@ -140,7 +137,7 @@ class Lock(AccessControlledModel):
             },
             multi=False,
         )
-        print("Evicting %s. Matched: %s." % (itemId, result.matched_count))
+        print(f"Evicting {itemId}. Matched: {result.matched_count}.")
 
     def tryLock(self, user, sessionId, itemId, ownerId):
         # Luckily, Mongo updates are atomic
@@ -190,7 +187,7 @@ class Lock(AccessControlledModel):
         return result["dm"]["lockCount"] == 0
 
     def unlockAll(self, user, session):
-        raise Exception("Not yet here")
+        raise NotImplementedError("Not yet here")
 
     def fileDeleted(self, itemId):
         self.itemModel.update(

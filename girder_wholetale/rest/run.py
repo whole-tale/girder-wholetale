@@ -1,5 +1,4 @@
 import datetime
-from typing import Union
 
 from girder import events
 from girder.api import access
@@ -137,7 +136,7 @@ class Run(AbstractVRResource):
         .errorResponse("Illegal file name", 400)
     )
     def create(
-        self, version: dict, name: str = None, allowRename: bool = False
+        self, version: dict, name: str | None = None, allowRename: bool = False
     ) -> dict:
         user = self.getCurrentUser()
         return self.model.create(version, name, user, allowRename=allowRename)
@@ -255,7 +254,7 @@ class Run(AbstractVRResource):
             403,
         )
     )
-    def setStatus(self, rfolder: dict, status: Union[int, RunState]) -> None:
+    def setStatus(self, rfolder: dict, status: int | RunState) -> None:
         self.model.setStatus(rfolder, status)
 
     @access.user

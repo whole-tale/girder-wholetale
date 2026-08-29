@@ -1,9 +1,9 @@
-import cherrypy
 import datetime
 import logging
-from girder.models.model_base import Model
-from girder.api.rest import getCurrentUser
 
+import cherrypy
+from girder.api.rest import getCurrentUser
+from girder.models.model_base import Model
 
 metricsLogger = logging.getLogger("metrics")
 

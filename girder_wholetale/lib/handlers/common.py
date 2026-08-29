@@ -39,7 +39,7 @@ class UrlTransferHandler(TransferHandler):
     def verify_checksum(self):
         item = Item().load(self.itemId, user=self.user, level=AccessType.READ)
         if checksums := item.get("meta", {}).get("checksum"):
-            alg, value = list(checksums.items())[0]  # Get just one
+            alg, value = next(iter(checksums.items()))  # Get just one
             h = hashlib.new(alg.lower())
 
             with open(self.psPath, "rb") as fp:

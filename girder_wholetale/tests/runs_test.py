@@ -2,21 +2,21 @@ import json
 import os
 import time
 from datetime import datetime, timedelta, timezone
+from unittest import mock
 
-import mock
 import pytest
 from girder.models.folder import Folder
 from girder.models.token import Token
-from girder_jobs.models.job import Job
 from girder_jobs.constants import JobStatus
-
+from girder_jobs.models.job import Job
 from pytest_girder.assertions import assertStatus, assertStatusOk
+
 from girder_wholetale.constants import FIELD_STATUS_CODE, RunStatus
 from girder_wholetale.models.run_hierarchy import RunHierarchyModel
 from girder_wholetale.models.tale import Tale
 
 
-class FakeAsyncResult(object):
+class FakeAsyncResult:
     def __init__(self, tale_id=None):
         self.task_id = "fake_id"
         self.tale_id = tale_id
@@ -121,7 +121,7 @@ def test_basic_runs_ops(server, register_datasets, dataset, tale, image, user, m
     # Get current status, should be UNKNOWN
     resp = server.request(path=f"/run/{run['_id']}/status", method="GET", user=user)
     assertStatusOk(resp)
-    assert resp.json == dict(status=0, statusString="UNKNOWN")
+    assert resp.json == {"status": 0, "statusString": "UNKNOWN"}
 
     # Set status to RUNNING
     resp = server.request(
@@ -135,7 +135,7 @@ def test_basic_runs_ops(server, register_datasets, dataset, tale, image, user, m
     # Get current status, should be RUNNING
     resp = server.request(path=f"/run/{run['_id']}/status", method="GET", user=user)
     assertStatusOk(resp)
-    assert resp.json == dict(status=2, statusString="RUNNING")
+    assert resp.json == {"status": 2, "statusString": "RUNNING"}
 
     # Create a 2nd tale to verify GET /run is doing the right thing...
     tale2 = Tale().createTale(
@@ -225,7 +225,7 @@ def test_recorded_run(server, register_datasets, tale, user, mock_builder):
 
         # Test default entrypoint
         resp = server.request(
-            path="/run/%s/start" % run["_id"], method="POST", user=user
+            path="/run/{}/start".format(run["_id"]), method="POST", user=user
         )
         job_call = mock_apply_async.call_args_list[-1][-1]
         assert job_call["args"] == (str(run["_id"]), (str(tale["_id"])), "run.sh")
@@ -239,7 +239,7 @@ def test_recorded_run(server, register_datasets, tale, user, mock_builder):
         mock_apply_async().job.return_value = json.dumps({"job": 1, "blah": 2})
 
         resp = server.request(
-            path="/run/%s/start" % run["_id"],
+            path="/run/{}/start".format(run["_id"]),
             method="POST",
             user=user,
             params={"entrypoint": "entrypoint.sh"},

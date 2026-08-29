@@ -1,9 +1,9 @@
 import json
 import time
 import urllib.parse
+from unittest import mock
 
 import httmock
-import mock
 import pytest
 from bson import ObjectId
 from girder.exceptions import ValidationException
@@ -62,32 +62,32 @@ def public_folder(user):
     Folder().remove(folder)
 
 
-class FakeAsyncResult(object):
+class FakeAsyncResult:
     def __init__(self, instanceId=None):
         self.task_id = "fake_id"
         self.instanceId = instanceId
 
     def get(self, timeout=None):
-        return dict(
-            digest="sha256:7a789bc20359dce987653",
-            imageId="5678901234567890",
-            nodeId="123456",
-            name="tmp-xxx",
-            mountPoint="/foo/bar",
-            volumeName="blah_volume",
-            sessionId="5ecece693fec11b4854a874d",
-            instanceId=self.instanceId,
-        )
+        return {
+            "digest": "sha256:7a789bc20359dce987653",
+            "imageId": "5678901234567890",
+            "nodeId": "123456",
+            "name": "tmp-xxx",
+            "mountPoint": "/foo/bar",
+            "volumeName": "blah_volume",
+            "sessionId": "5ecece693fec11b4854a874d",
+            "instanceId": self.instanceId,
+        }
 
 
-class FakeAsyncResultForUpdate(object):
+class FakeAsyncResultForUpdate:
     def __init__(self, instanceId=None):
         self.task_id = "fake_update_id"
         self.instanceId = instanceId
         self.digest = "sha256:7a789bc20359dce987653"
 
     def get(self, timeout=None):
-        return dict(digest=self.digest)
+        return {"digest": self.digest}
 
 
 @pytest.fixture

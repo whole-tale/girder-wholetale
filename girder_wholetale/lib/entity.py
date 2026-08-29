@@ -39,4 +39,4 @@ class Entity:
         return key in self.dict
 
     def __str__(self):
-        return 'Entity[%s, %s; %s]' % (self.rawValue, self.value, self.dict)
+        return f'Entity[{self.rawValue}, {self.value}; {self.dict}]'

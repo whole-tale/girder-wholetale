@@ -47,11 +47,11 @@ class Transfer(AccessControlledModel):
 
         try:
             pathFromRoot = self.getPathFromRoot(user, itemId)
-        except KeyError as ex:
+        except KeyError:
             # item does not exist any more, so delete existing transfer
             if existing is not None:
                 self.remove(existing)
-            raise ex
+            raise
         transfer = {
             "_id": transferId,
             "ownerId": user["_id"],

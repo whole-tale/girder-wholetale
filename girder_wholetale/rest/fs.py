@@ -20,7 +20,7 @@ class FS(Resource):
     ONE_ITEM_ONE_FILE = True
 
     def __init__(self):
-        super(FS, self).__init__()
+        super().__init__()
         self.resourceName = "fs"
 
     @access.user
@@ -44,7 +44,7 @@ class FS(Resource):
     )
     def getRawObject(self, id, params):
         user = self.getCurrentUser()
-        obj, type = self._discoverObject(id, user)
+        obj, _type = self._discoverObject(id, user)
         return obj
 
     @access.public(scope=TokenScope.DATA_READ)
@@ -142,15 +142,14 @@ class FS(Resource):
     )
     def setProperties(self, id, params):
         id = bson.ObjectId(id)
-        print("set props %s" % id)
+        print(f"set props {id}")
         user = self.getCurrentUser()
-        obj = None
         type = None
         if "type" in params:
             type = params["type"]
 
         if type is None:
-            obj, type = self._discoverObject(id, user, AccessType.ADMIN)
+            _obj, type = self._discoverObject(id, user, AccessType.ADMIN)
         props = self.getBodyJson()
 
         ModelImporter.model(type).update(query={"_id": id}, update={"$set": props})

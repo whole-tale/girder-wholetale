@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import json
 import os
 import time
@@ -34,7 +31,7 @@ def createStructure(user, tmp_path_factory, prefix):
     folder = Folder().createFolder(
         collection, f"{prefix}_wt_dm_test_fldr", parentType="collection"
     )
-    files = [createFile("%s_%s" % (prefix, n), 1 * MB, tmpdir) for n in range(1, 5)]
+    files = [createFile(f"{prefix}_{n}", 1 * MB, tmpdir) for n in range(1, 5)]
     Assetstore().importData(
         Assetstore().getCurrent(),
         folder,
@@ -75,8 +72,7 @@ def createHttpFile(server, testServer, user, folder):
 def createFile(suffix, size, dirpath):
     name = "file" + str(suffix)
     with open(dirpath / name, "wb") as f:
-        for i in range(size):
-            f.write(b"\0")
+        f.writelines(b"\0" for i in range(size))
     return name
 
 
@@ -176,14 +172,14 @@ def tfiles():
 
 @pytest.mark.plugin("wholetale")
 def test01LocalFile(server, user, structure, tfiles):
-    collection, folder, files, gfiles = structure
+    _collection, _folder, _files, gfiles = structure
     dataSet = makeDataSet(gfiles)
     _testItem(server, dataSet, gfiles[0], user, tfiles, download=True)
 
 
 @pytest.mark.plugin("wholetale")
 def test02HttpFile(server, user, httpServer, structure, tfiles):
-    collection, folder, files, gfiles = structure
+    _collection, folder, _files, _gfiles = structure
     httpItem = createHttpFile(server, httpServer, user, folder)
     dataSet = makeDataSet([httpItem])
     _testItem(server, dataSet, httpItem, user, tfiles)
@@ -192,7 +188,7 @@ def test02HttpFile(server, user, httpServer, structure, tfiles):
 
 @pytest.mark.plugin("wholetale")
 def test03Caching(server, user, structure, tfiles):
-    collection, folder, files, gfiles = structure
+    _collection, _folder, _files, gfiles = structure
     dataSet = makeDataSet(gfiles)
     _testItem(server, dataSet, gfiles[0], user, tfiles)
     _testItem(server, dataSet, gfiles[0], user, tfiles)
@@ -203,8 +199,8 @@ def test03Caching(server, user, structure, tfiles):
 
 @pytest.mark.plugin("wholetale")
 def test04SessionApi(server, admin, user, extra_user, structure, structure2, tfiles):
-    collection, folder, files, gfiles = structure
-    collection2, folder2, files2, gfiles2 = structure2
+    _collection, _folder, _files, gfiles = structure
+    _collection2, folder2, _files2, gfiles2 = structure2
     dataSet = makeDataSet(gfiles)
     item = gfiles[0]
     resp = server.request(
@@ -326,7 +322,7 @@ def test04SessionApi(server, admin, user, extra_user, structure, structure2, tfi
 
 @pytest.mark.plugin("wholetale")
 def test05SessionDeleteById(server, user, structure):
-    collection, folder, files, gfiles = structure
+    _collection, _folder, _files, gfiles = structure
     dataSet = makeDataSet(gfiles)
     resp = server.request(
         path="/dm/session",
@@ -344,7 +340,7 @@ def test05SessionDeleteById(server, user, structure):
 
 @pytest.mark.plugin("wholetale")
 def test06resources(server, user, structure, tfiles):
-    collection, folder, files, gfiles = structure
+    _collection, _folder, _files, gfiles = structure
     dataSet = makeDataSet(gfiles, objectids=False)
 
     resp = server.request(
@@ -409,11 +405,11 @@ def test06resources(server, user, structure, tfiles):
     assertStatusOk(resp)
 
     # test list locks for session
-    resp = server.request("/dm/session/%s/lock" % sessionId, method="GET", user=user)
+    resp = server.request(f"/dm/session/{sessionId}/lock", method="GET", user=user)
     assertStatusOk(resp)
 
     # test get lock
-    resp = server.request("/dm/lock/%s" % lockId, method="GET", user=user)
+    resp = server.request(f"/dm/lock/{lockId}", method="GET", user=user)
     assertStatusOk(resp)
     assert lockId == str(resp.json["_id"])
 
@@ -436,7 +432,7 @@ def test06resources(server, user, structure, tfiles):
 
     # test list transfers for session
     resp = server.request(
-        "/dm/session/%s/transfer" % sessionId, method="GET", user=user
+        f"/dm/session/{sessionId}/transfer", method="GET", user=user
     )
     assertStatusOk(resp)
     transfers = resp.json
@@ -449,19 +445,19 @@ def test06resources(server, user, structure, tfiles):
     assert os.path.getsize(psPath) == item["size"]
 
     resp = server.request(
-        "/dm/lock/%s/download" % lockId, method="GET", user=user, isJson=False
+        f"/dm/lock/{lockId}/download", method="GET", user=user, isJson=False
     )
     assertStatusOk(resp)
     body = getResponseBody(resp)
     assert len(body) == item["size"]
 
-    resp = server.request("/dm/lock/%s" % lockId, method="DELETE", user=user)
+    resp = server.request(f"/dm/lock/{lockId}", method="DELETE", user=user)
     assertStatusOk(resp)
 
     item = reloadItemRest(server, user, item)
     assert item["dm"]["lockCount"] == 0
 
-    resp = server.request("/dm/session/%s" % sessionId, method="DELETE", user=user)
+    resp = server.request(f"/dm/session/{sessionId}", method="DELETE", user=user)
     assertStatusOk(resp)
 
 
@@ -480,7 +476,7 @@ def test07FileGC(server, user, structure, tfiles):
     gc = apiroot.dm.getFileGC()
     gc.pause()
 
-    collection, folder, files, gfiles = structure
+    _collection, _folder, files, gfiles = structure
     dataSet = makeDataSet(gfiles)
     _testItem(server, dataSet, gfiles[0], user, tfiles)
     _testItem(server, dataSet, gfiles[1], user, tfiles)
@@ -536,7 +532,7 @@ def test08StructureAccess(server, user, structure, structure2):
     assertStatusOk(resp)
     lockId = resp.json["_id"]
 
-    resp = server.request("/dm/lock/%s" % lockId, method="DELETE", user=user)
+    resp = server.request(f"/dm/lock/{lockId}", method="DELETE", user=user)
     assertStatusOk(resp)
 
     item = reloadItemRest(server, user, item)
@@ -560,7 +556,7 @@ def test08StructureAccess(server, user, structure, structure2):
 
 @pytest.mark.plugin("wholetale")
 def test09TaleUpdateEventHandler(server, user, structure):
-    collection, folder, files, gfiles = structure
+    _collection, folder, _files, _gfiles = structure
     dataSet = makeDataSet([{"_id": folder["_id"], "name": "fldr"}], objectids=False)
     dataSet[0]["_modelType"] = "folder"
 

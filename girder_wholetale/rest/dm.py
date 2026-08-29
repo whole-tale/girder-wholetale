@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from girder.api import access
 from girder.api.describe import Description, autoDescribeRoute
 from girder.api.rest import Resource
@@ -10,7 +7,7 @@ from ..models.session import Session as SessionModel
 
 class DM(Resource):
     def __init__(self, cacheManager):
-        super(DM, self).__init__()
+        super().__init__()
         self.resourceName = "dm"
         self.cacheManager = cacheManager
 

@@ -1,6 +1,7 @@
 import json
+from typing import ClassVar
+from unittest import mock
 
-import mock
 import pytest
 from girder.models.user import User
 from pytest_girder.assertions import assertStatus, assertStatusOk
@@ -47,7 +48,7 @@ def simple_tale(image, user):
 
 
 class FakeJob:
-    job = {}
+    job: ClassVar[dict] = {}
 
     def delay(self, *args, **kwargs):
         return self.job

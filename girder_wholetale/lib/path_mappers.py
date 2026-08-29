@@ -1,5 +1,6 @@
 import pathlib
-from typing import Union
+from typing import ClassVar
+
 from ..constants import WORKSPACE_NAME
 
 
@@ -8,17 +9,17 @@ class PathMapper:
         pass
 
     def girderToDav(
-        self, path: Union[pathlib.PurePosixPath, str]
+        self, path: pathlib.PurePosixPath | str
     ) -> pathlib.PurePosixPath:
         raise NotImplementedError()
 
-    def girderToDavStr(self, path: Union[pathlib.PurePosixPath, str]) -> str:
+    def girderToDavStr(self, path: pathlib.PurePosixPath | str) -> str:
         return self.girderToDav(path).as_posix()
 
     def davToGirder(self, path: str):
         raise NotImplementedError()
 
-    def davToPhysical(self, path: Union[pathlib.PurePosixPath, str]) -> str:
+    def davToPhysical(self, path: pathlib.PurePosixPath | str) -> str:
         raise NotImplementedError()
 
     def girderToPhysical(self, path: pathlib.Path):
@@ -27,7 +28,7 @@ class PathMapper:
     def addPrefix(self, s: pathlib.PurePosixPath, n) -> pathlib.PurePosixPath:
         if s.is_absolute():
             if len(s.parts) == 1:
-                raise Exception("Invalid path: %s" % s)
+                raise ValueError(f"Invalid path: {s}")
             prefix = s.parts[1]
         else:
             prefix = s.parts[0]
@@ -50,13 +51,13 @@ class PathMapper:
     def getRealm(self):
         raise NotImplementedError()
 
-    def _toPosixPurePath(self, path: Union[pathlib.Path, str]):
+    def _toPosixPurePath(self, path: pathlib.Path | str):
         if isinstance(path, str):
             return pathlib.PurePosixPath(path)
         elif isinstance(path, pathlib.PurePosixPath):
             return path
         else:
-            raise Exception("Can" "t convert %s to path" % path)
+            raise TypeError(f"Can't convert {path} to path")
 
     def isGirderRoot(self, path: pathlib.Path):
         raise NotImplementedError()
@@ -67,7 +68,7 @@ class HomePathMapper(PathMapper):
         PathMapper.__init__(self)
 
     def girderToDav(
-        self, path: Union[pathlib.PurePosixPath, str]
+        self, path: pathlib.PurePosixPath | str
     ) -> pathlib.PurePosixPath:
         path = self._toPosixPurePath(path)
         # /user/<username>/Home/<path> -> /<username>/<path>
@@ -75,12 +76,12 @@ class HomePathMapper(PathMapper):
 
     def davToGirder(self, spath: str):
         path = pathlib.Path(spath)
-        return "/user/%s/Home/%s" % (
+        return "/user/{}/Home/{}".format(
             path.parts[1],
             "/".join(path.parts[2:]).rstrip("/"),
         )
 
-    def davToPhysical(self, path: Union[pathlib.PurePosixPath, str]) -> str:
+    def davToPhysical(self, path: pathlib.PurePosixPath | str) -> str:
         path = self._toPosixPurePath(path)
         return self.addPrefix(path, 1).as_posix()
 
@@ -107,7 +108,7 @@ class TalePathMapper(PathMapper):
         PathMapper.__init__(self)
 
     def girderToDav(
-        self, path: Union[pathlib.PurePosixPath, str]
+        self, path: pathlib.PurePosixPath | str
     ) -> pathlib.PurePosixPath:
         path = self._toPosixPurePath(path)
         # /collection/<WORKSPACE_NAME>/<WORKSPACE_NAME>/<taleId>/... -> /<taleId>/...
@@ -115,13 +116,13 @@ class TalePathMapper(PathMapper):
 
     def davToGirder(self, spath: str):
         path = pathlib.Path(spath)
-        return "/collection/%s/%s/%s" % (
+        return "/collection/{}/{}/{}".format(
             WORKSPACE_NAME,
             WORKSPACE_NAME,
             "/".join(path.parts[1:]).rstrip("/"),
         )
 
-    def davToPhysical(self, path: Union[pathlib.PurePosixPath, str]) -> str:
+    def davToPhysical(self, path: pathlib.PurePosixPath | str) -> str:
         path = self._toPosixPurePath(path)
         return self.addPrefix(path, 1).as_posix()
 
@@ -145,9 +146,9 @@ class TalePathMapper(PathMapper):
 
 
 class RunsPathMapper(PathMapper):
-    run_to_tale = dict()  # mutable for a reason...
+    run_to_tale: ClassVar[dict] = {}  # mutable for a reason...
 
-    def davToPhysical(self, path: Union[pathlib.PurePosixPath, str]) -> str:
+    def davToPhysical(self, path: pathlib.PurePosixPath | str) -> str:
         path = self._toPosixPurePath(path)
         if path.is_absolute():
             run_id = path.parts[1]

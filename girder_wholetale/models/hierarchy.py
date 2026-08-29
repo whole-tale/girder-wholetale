@@ -2,9 +2,8 @@ import json
 import logging
 import os
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
 
 import pathvalidate
 from girder.constants import AccessType
@@ -14,11 +13,10 @@ from girder.models.folder import Folder
 from ..lib.manifest import Manifest
 from .tale import Tale
 
-
 logger = logging.getLogger(__name__)
 
 
-class AbstractHierarchyModel(object):
+class AbstractHierarchyModel:
     root_tale_field = None
     field_sequence_number = "seq"
     name_format = "%c"
@@ -27,19 +25,19 @@ class AbstractHierarchyModel(object):
 
     def __new__(cls):
         if not hasattr(cls, "instance"):
-            cls.instance = super(AbstractHierarchyModel, cls).__new__(cls)
+            cls.instance = super().__new__(cls)
         return cls.instance
 
     def getRootFromTale(self, tale: dict, user=None, level=AccessType.READ) -> dict:
         if user:
-            kwargs = dict(user=user, level=level)
+            kwargs = {"user": user, "level": level}
         else:
-            kwargs = dict(force=True)
+            kwargs = {"force": True}
         return Folder().load(tale[self.root_tale_field], exc=True, **kwargs)
 
     @staticmethod
     def checkNameSanity(
-        name: Optional[str],
+        name: str | None,
         parentFolder: dict,
         allow_rename: bool = False,
     ) -> str:
@@ -83,7 +81,7 @@ class AbstractHierarchyModel(object):
 
     def snapshot(
         self,
-        version: Optional[dict],
+        version: dict | None,
         tale: dict,
         new_version: dict,
         user=None,
@@ -149,7 +147,7 @@ class AbstractHierarchyModel(object):
         ) and self.sameTree(version_workspace_path, tale_workspace_path):
             raise RestException("Not modified", code=303, extra=str(version["_id"]))
 
-    def snapshotRecursive(self, old: Optional[Path], crt: Path, new: Path) -> None:
+    def snapshotRecursive(self, old: Path | None, crt: Path, new: Path) -> None:
         for c in crt.iterdir():
             newc = new / c.name
             oldc = None if old is None else old / c.name
@@ -171,8 +169,8 @@ class AbstractHierarchyModel(object):
                 newcstr = newc.absolute()
                 try:
                     os.link(crtcstr.as_posix(), newcstr.as_posix())
-                except:  # noqa: E722
-                    logger.warn("link %s -> %s" % (crtcstr, newcstr))
+                except:
+                    logger.warning(f"link {crtcstr} -> {newcstr}")
                     raise
                 shutil.copystat(crtcstr, newcstr)
 
@@ -216,16 +214,16 @@ class AbstractHierarchyModel(object):
         return result.matched_count > 0
 
     def generateName(self):
-        now = datetime.now()
+        now = datetime.now(timezone.utc).astimezone()
         return now.strftime(self.name_format)
 
     @staticmethod
-    def sameTaleMetadata(old: Optional[dict], crt: dict):
+    def sameTaleMetadata(old: dict | None, crt: dict):
         if old is None:
             return False
         return old == crt
 
-    def sameTree(self, old: Optional[Path], crt: Path) -> bool:
+    def sameTree(self, old: Path | None, crt: Path) -> bool:
         if old is None:
             return False
         for c in crt.iterdir():

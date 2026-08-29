@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import base64
 import copy
 import datetime
@@ -476,8 +473,8 @@ def setUserMetadata(self, params):
             raise RestException("Key names must be at least one character long.")
         if "." in k or k[0] == "$":
             raise RestException(
-                "The key name %s must not contain a period "
-                "or begin with a dollar sign." % k
+                f"The key name {k} must not contain a period "
+                "or begin with a dollar sign."
             )
 
     if "meta" not in user:
@@ -555,8 +552,8 @@ def listResources(self, resources, filters):
             kind = resource
         try:
             model = ModelImporter.model(kind, plugin=plugin)
-        except Exception:
-            logger.error("Error loading model for resource type %s.%s" % (plugin, kind))
+        except Exception:  # noqa: BLE001 -- ModelImporter raises bare Exception
+            logger.error(f"Error loading model for resource type {plugin}.{kind}")
             continue
         result[resource] = [
             model.filter(
@@ -616,14 +613,14 @@ def getJobResult(self, job):
 
     celeryTaskId = job.get("celeryTaskId")
     if celeryTaskId is None:
-        logger.warn("Job '{}' doesn't have a Celery task id.".format(job["_id"]))
+        logger.warning("Job '{}' doesn't have a Celery task id.".format(job["_id"]))
         return
     if job["status"] != JobStatus.SUCCESS:
-        logger.warn("Job '{}' hasn't completed sucessfully.".format(job["_id"]))
+        logger.warning("Job '{}' hasn't completed sucessfully.".format(job["_id"]))
     asyncResult = app.AsyncResult(celeryTaskId)
     try:
         result = asyncResult.get()
-    except Exception as ex:
+    except Exception as ex:  # noqa: BLE001 -- surfaces whatever the task raised
         result = str(ex)
     return result
 
@@ -686,7 +683,7 @@ def store_other_globus_tokens(event):
     def _update_tokens(user_tokens, new_token):
         for i, user_token in enumerate(user_tokens):
             if user_token["resource_server"] == new_token["resource_server"]:
-                user_tokens[i].update(new_token)
+                user_token.update(new_token)
                 break
         else:
             user_tokens.append(new_token)

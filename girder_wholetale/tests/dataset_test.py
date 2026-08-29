@@ -1,4 +1,5 @@
 import json
+
 import pytest
 from pytest_girder.assertions import assertStatusOk
 
@@ -70,7 +71,7 @@ def test_dataset_rest(server, admin, user):
     ds = resp.json
     assert len(ds) == 2
 
-    ds = next((_ for _ in ds if _["provider"] == "HTTP"))
+    ds = next(_ for _ in ds if _["provider"] == "HTTP")
     resp = server.request(
         path="/dataset/{_id}".format(**ds), method="DELETE", user=user
     )

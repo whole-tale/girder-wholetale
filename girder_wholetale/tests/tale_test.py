@@ -6,10 +6,10 @@ import tempfile
 import time
 import zipfile
 from pathlib import Path
+from unittest import mock
 
 import bagit
 import httmock
-import mock
 import pytest
 import responses
 from bdbag import bdbag_api as bdb
@@ -32,7 +32,7 @@ from girder_wholetale.models.tale import Tale
 from .conftest import get_events, mockOtherRequests
 
 
-class FakeInstanceResult(object):
+class FakeInstanceResult:
     def __init__(self, tale_id=None):
         self.task_id = "fake_instance_id"
         self.tale_id = tale_id
@@ -51,13 +51,13 @@ def admin_image(admin):
         name="test admin name",
         creator=admin,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="SomeBuildPack",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "SomeBuildPack",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
     yield img
     Image().remove(img)
@@ -103,11 +103,11 @@ def test_tale_flow(server, admin, user, image, authors):
     )
     assertStatus(resp, 400)
     assert resp.json["message"].startswith(
-        (
+        
             "Invalid JSON object for parameter tale: "
             "'dataSet' "
             "is a required property"
-        )
+        
     )
     assert resp.json["type"] == "rest"
 
@@ -185,19 +185,19 @@ def test_tale_flow(server, admin, user, image, authors):
     )
     assertStatusOk(resp)
     assert len(resp.json) == 2
-    assert set([_["_id"] for _ in resp.json]) == {tale["_id"], new_tale["_id"]}
+    assert {_["_id"] for _ in resp.json} == {tale["_id"], new_tale["_id"]}
 
     resp = server.request(
         path="/tale", method="GET", user=user, params={"userId": str(user["_id"])}
     )
     assertStatusOk(resp)
     assert len(resp.json) == 2
-    assert set([_["_id"] for _ in resp.json]) == {tale["_id"], new_tale["_id"]}
+    assert {_["_id"] for _ in resp.json} == {tale["_id"], new_tale["_id"]}
 
     resp = server.request(path="/tale", method="GET", user=user, params={"text": "new"})
     assertStatusOk(resp)
     assert len(resp.json) == 1
-    assert set([_["_id"] for _ in resp.json]) == {tale["_id"]}
+    assert {_["_id"] for _ in resp.json} == {tale["_id"]}
 
     resp = server.request(
         path="/tale/{_id}".format(**new_tale), method="DELETE", user=admin
@@ -211,7 +211,7 @@ def test_tale_flow(server, admin, user, image, authors):
 
     resp = server.request(path="/tale/{_id}".format(**tale), method="GET", user=user)
     assertStatusOk(resp)
-    for key in tale.keys():
+    for key in tale:
         if key in ("access", "updated", "created"):
             continue
         assert resp.json[key] == tale[key]
@@ -250,7 +250,7 @@ def test_tale_access(server, user, admin, image, admin_image):
 
     # Retrieve access control list for the newly created tale
     resp = server.request(
-        path="/tale/%s/access" % tale_user_image["_id"], method="GET", user=user
+        path="/tale/{}/access".format(tale_user_image["_id"]), method="GET", user=user
     )
     assertStatusOk(resp)
     result_tale_access = resp.json
@@ -261,7 +261,7 @@ def test_tale_access(server, user, admin, image, admin_image):
                 "level": AccessType.ADMIN,
                 "id": str(user["_id"]),
                 "flags": [],
-                "name": "%s %s" % (user["firstName"], user["lastName"]),
+                "name": "{} {}".format(user["firstName"], user["lastName"]),
             }
         ],
         "groups": [],
@@ -277,20 +277,20 @@ def test_tale_access(server, user, admin, image, admin_image):
                 "level": AccessType.ADMIN,
                 "id": str(user["_id"]),
                 "flags": [],
-                "name": "%s %s" % (user["firstName"], user["lastName"]),
+                "name": "{} {}".format(user["firstName"], user["lastName"]),
             },
             {
                 "login": admin["login"],
                 "level": AccessType.ADMIN,
                 "id": str(admin["_id"]),
                 "flags": [],
-                "name": "%s %s" % (admin["firstName"], admin["lastName"]),
+                "name": "{} {}".format(admin["firstName"], admin["lastName"]),
             },
         ],
         "groups": [],
     }
     resp = server.request(
-        path="/tale/%s/access" % tale_user_image["_id"],
+        path="/tale/{}/access".format(tale_user_image["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_tale_access)},
@@ -311,7 +311,7 @@ def test_tale_access(server, user, admin, image, admin_image):
     # is associated with
     for key in ("workspaceId",):
         resp = server.request(
-            path="/folder/%s/access" % tale[key], method="GET", user=user
+            path=f"/folder/{tale[key]}/access", method="GET", user=user
         )
         assertStatusOk(resp)
         result_folder_access = resp.json
@@ -327,13 +327,13 @@ def test_tale_access(server, user, admin, image, admin_image):
                 "level": AccessType.ADMIN,
                 "id": str(user["_id"]),
                 "flags": [],
-                "name": "%s %s" % (user["firstName"], user["lastName"]),
+                "name": "{} {}".format(user["firstName"], user["lastName"]),
             }
         ],
         "groups": [],
     }
     resp = server.request(
-        path="/tale/%s/access" % tale_admin_image["_id"],
+        path="/tale/{}/access".format(tale_admin_image["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_tale_access)},
@@ -342,7 +342,7 @@ def test_tale_access(server, user, admin, image, admin_image):
 
     # Check that the access control list was correctly set for the tale
     resp = server.request(
-        path="/tale/%s/access" % tale_admin_image["_id"], method="GET", user=user
+        path="/tale/{}/access".format(tale_admin_image["_id"]), method="GET", user=user
     )
     assertStatusOk(resp)
     result_tale_access = resp.json
@@ -351,13 +351,13 @@ def test_tale_access(server, user, admin, image, admin_image):
 
     # Check that the access control list did not propagate to the image
     resp = server.request(
-        path="/image/%s/access" % tale_admin_image["imageId"], method="GET", user=user
+        path="/image/{}/access".format(tale_admin_image["imageId"]), method="GET", user=user
     )
     assertStatus(resp, 403)
 
     # Setting the access list with bad json should throw an error
     resp = server.request(
-        path="/tale/%s/access" % tale_user_image["_id"],
+        path="/tale/{}/access".format(tale_user_image["_id"]),
         method="PUT",
         user=user,
         params={"access": "badJSON"},
@@ -366,14 +366,14 @@ def test_tale_access(server, user, admin, image, admin_image):
 
     # Change the access to private
     resp = server.request(
-        path="/tale/%s/access" % tale_user_image["_id"],
+        path="/tale/{}/access".format(tale_user_image["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_tale_access), "public": False},
     )
     assertStatusOk(resp)
     resp = server.request(
-        path="/tale/%s" % tale_user_image["_id"], method="GET", user=user
+        path="/tale/{}".format(tale_user_image["_id"]), method="GET", user=user
     )
     assertStatusOk(resp)
     assert not resp.json["public"]
@@ -501,13 +501,13 @@ def test_tale_update(server, user, admin, image):
         name="New Image",
         creator=user,
         public=True,
-        config=dict(
-            template="base.tpl",
-            buildpack="SomeBuildPack2",
-            user="someUser",
-            port=8888,
-            urlPath="",
-        ),
+        config={
+            "template": "base.tpl",
+            "buildpack": "SomeBuildPack2",
+            "user": "someUser",
+            "port": 8888,
+            "urlPath": "",
+        },
     )
 
     # Update the Tale with new values
@@ -625,12 +625,12 @@ def test_export(server, user, image, authors, mock_builder):
             Path(*Path(_).parts[1:]).as_posix() for _ in zip_archive.namelist()
         }
         manifest_path = next(
-            (_ for _ in zip_archive.namelist() if _.endswith("manifest.json"))
+            _ for _ in zip_archive.namelist() if _.endswith("manifest.json")
         )
         version_id = Path(manifest_path).parts[0]
         first_manifest = json.loads(zip_archive.read(manifest_path))
         license_path = next(
-            (_ for _ in zip_archive.namelist() if _.endswith("LICENSE"))
+            _ for _ in zip_archive.namelist() if _.endswith("LICENSE")
         )
         license_text = zip_archive.read(license_path)
 
@@ -797,21 +797,21 @@ def test_tale_notifications(
                 "level": AccessType.ADMIN,
                 "id": str(user["_id"]),
                 "flags": [],
-                "name": "%s %s" % (user["firstName"], user["lastName"]),
+                "name": "{} {}".format(user["firstName"], user["lastName"]),
             },
             {
                 "login": admin["login"],
                 "level": AccessType.ADMIN,
                 "id": str(admin["_id"]),
                 "flags": [],
-                "name": "%s %s" % (admin["firstName"], admin["lastName"]),
+                "name": "{} {}".format(admin["firstName"], admin["lastName"]),
             },
         ],
         "groups": [],
     }
 
     resp = server.request(
-        path="/tale/%s/access" % tale["_id"],
+        path="/tale/{}/access".format(tale["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_tale_access_with_admin)},
@@ -860,14 +860,14 @@ def test_tale_notifications(
                 "level": AccessType.ADMIN,
                 "id": str(user["_id"]),
                 "flags": [],
-                "name": "%s %s" % (user["firstName"], user["lastName"]),
+                "name": "{} {}".format(user["firstName"], user["lastName"]),
             }
         ],
         "groups": [],
     }
 
     resp = server.request(
-        path="/tale/%s/access" % tale["_id"],
+        path="/tale/{}/access".format(tale["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_tale_access)},
@@ -882,7 +882,7 @@ def test_tale_notifications(
 
     # Re-add admin user to test delete notification
     resp = server.request(
-        path="/tale/%s/access" % tale["_id"],
+        path="/tale/{}/access".format(tale["_id"]),
         method="PUT",
         user=user,
         params={"access": json.dumps(input_tale_access_with_admin)},
@@ -983,8 +983,7 @@ def test_export_bag(server, user, fancy_tale, mock_builder):
     dirpath = tempfile.mkdtemp()
     bag_file = os.path.join(dirpath, resp.headers["Content-Disposition"].split('"')[1])
     with open(bag_file, "wb") as fp:
-        for content in resp.body:
-            fp.write(content)
+        fp.writelines(resp.body)
     temp_path = bdb.extract_bag(bag_file, temp=True)
     try:
         bdb.validate_bag_structure(temp_path)
@@ -1074,8 +1073,7 @@ def test_export_bag_with_run(server, user, fancy_tale, mock_builder):
     dirpath = tempfile.mkdtemp()
     bag_file = os.path.join(dirpath, resp.headers["Content-Disposition"].split('"')[1])
     with open(bag_file, "wb") as fp:
-        for content in resp.body:
-            fp.write(content)
+        fp.writelines(resp.body)
     temp_path = bdb.extract_bag(bag_file, temp=True)
     try:
         bdb.validate_bag_structure(temp_path)
@@ -1159,7 +1157,7 @@ def test_tale_manifest_cycle(server, user, fancy_tale, mock_builder):
             allow_nan=True,
         )
     )
-    for key in restored_tale.keys():
+    for key in restored_tale:
         if key in ("imageInfo", "icon"):
             print(f"Original tale doesn't have {key}...")
             continue

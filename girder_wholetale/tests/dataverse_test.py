@@ -1,7 +1,7 @@
 import json
 import time
+from unittest import mock
 
-import mock
 import pytest
 import responses
 from girder.models.folder import Folder
@@ -195,9 +195,7 @@ def test_config_validators(server, admin):
         params={"key": PluginSettings.DATAVERSE_URL},
     )
     assertStatusOk(resp)
-    assert resp.body[0].decode() == '"{}"'.format(
-        SettingDefault.defaults[PluginSettings.DATAVERSE_URL]
-    )
+    assert resp.body[0].decode() == f'"{SettingDefault.defaults[PluginSettings.DATAVERSE_URL]}"'
 
 
 @pytest.mark.plugin("wholetale")
