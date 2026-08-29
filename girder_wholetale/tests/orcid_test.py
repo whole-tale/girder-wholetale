@@ -1,11 +1,13 @@
 import json
+from urllib.parse import quote
 
 import httmock
 import pytest
-from girder.exceptions import RestException
+from girder.exceptions import GirderException, RestException
 from girder.models.setting import Setting
 from girder.models.user import User
 from girder.settings import SettingKey
+from girder_oauth import providers
 from girder_oauth.settings import PluginSettings as OAuthPluginSettings
 
 from girder_wholetale import store_other_globus_tokens
@@ -24,14 +26,18 @@ def _personResponse(email=None, firstName="Jane", lastName="Doe", includeName=Tr
     return body
 
 
-def _mockPerson(response):
+def _mockPerson(response, netloc="pub.orcid.org"):
     @httmock.urlmatch(
-        scheme="https", netloc="pub.orcid.org", path=r"^/v3\.0/.*/person$", method="GET"
+        scheme="https", netloc=netloc, path=r"^/v3\.0/.*/person$", method="GET"
     )
     def mock(url, request):
         return json.dumps(response)
 
     return mock
+
+
+def _mockSandboxPerson(response):
+    return _mockPerson(response, netloc="api.sandbox.orcid.org")
 
 
 @httmock.all_requests
@@ -154,9 +160,93 @@ def test_get_user_registration_closed_ignored(server, orcidToken, closedRegistra
         Setting().set(OAuthPluginSettings.IGNORE_REGISTRATION_POLICY, False)
 
 
-def test_sandbox_orcid_provider_name():
-    assert SandboxORCID.getProviderName() == "orcid"
-    assert SandboxORCID.getProviderName(external=True) == "ORCID"
+def test_provider_names_are_distinct():
+    assert ORCID.getProviderName() == "orcid"
+    assert ORCID.getProviderName(external=True) == "ORCID"
+    assert SandboxORCID.getProviderName() == "orcid_sandbox"
+    assert SandboxORCID.getProviderName(external=True) == "ORCID Sandbox"
+
+
+@pytest.mark.plugin("wholetale")
+def test_both_providers_are_registered(server):
+    assert providers.idMap["orcid"] is ORCID
+    assert providers.idMap["orcid_sandbox"] is SandboxORCID
+
+
+@pytest.mark.plugin("wholetale")
+def test_providers_use_separate_credentials_and_callbacks(server, monkeypatch):
+    monkeypatch.setattr(
+        "girder_wholetale.lib.orcid.getApiUrl", lambda: "https://girder.example.com/api/v1"
+    )
+    Setting().set("oauth.orcid_client_id", "prod-id")
+    Setting().set("oauth.orcid_sandbox_client_id", "sandbox-id")
+    try:
+        prodUrl = ORCID.getUrl("state")
+        sandboxUrl = SandboxORCID.getUrl("state")
+    finally:
+        Setting().unset("oauth.orcid_client_id")
+        Setting().unset("oauth.orcid_sandbox_client_id")
+
+    assert prodUrl.startswith("https://orcid.org/oauth/authorize?")
+    assert "client_id=prod-id" in prodUrl
+    assert quote("/oauth/orcid/callback", safe="") in prodUrl
+
+    assert sandboxUrl.startswith("https://sandbox.orcid.org/oauth/authorize?")
+    assert "client_id=sandbox-id" in sandboxUrl
+    assert quote("/oauth/orcid_sandbox/callback", safe="") in sandboxUrl
+
+
+@pytest.mark.plugin("wholetale")
+def test_missing_client_id_raises_with_provider_name(server):
+    with pytest.raises(GirderException, match="ORCID Sandbox client ID"):
+        SandboxORCID.getUrl("state")
+
+
+@pytest.mark.plugin("wholetale")
+def test_sandbox_get_user_creates_user_with_own_provider_id(server, orcidToken):
+    response = _personResponse(email="jane.doe@example.com")
+    with httmock.HTTMock(_mockSandboxPerson(response), mockOtherRequests):
+        user = SandboxORCID(redirectUri="http://localhost").getUser(orcidToken)
+
+    assert {"provider": "orcid_sandbox", "id": TEST_ORCID_ID} in user["oauth"]
+
+
+@pytest.mark.plugin("wholetale")
+def test_sandbox_placeholder_email_uses_sandbox_domain(server, orcidToken):
+    response = _personResponse(email=None)
+    with httmock.HTTMock(_mockSandboxPerson(response), mockOtherRequests):
+        user = SandboxORCID(redirectUri="http://localhost").getUser(orcidToken)
+
+    assert user["email"] == f"{TEST_ORCID_ID}@sandbox.orcid.org"
+
+
+@pytest.mark.plugin("wholetale")
+def test_same_orcid_id_in_both_namespaces_yields_separate_users(server, orcidToken):
+    prodResponse = _personResponse(email="prod@example.com")
+    with httmock.HTTMock(_mockPerson(prodResponse), mockOtherRequests):
+        prodUser = ORCID(redirectUri="http://localhost").getUser(orcidToken)
+
+    sandboxResponse = _personResponse(email="sandbox@example.com")
+    with httmock.HTTMock(_mockSandboxPerson(sandboxResponse), mockOtherRequests):
+        sandboxUser = SandboxORCID(redirectUri="http://localhost").getUser(orcidToken)
+
+    assert prodUser["_id"] != sandboxUser["_id"]
+    assert prodUser["oauth"] == [{"provider": "orcid", "id": TEST_ORCID_ID}]
+    assert sandboxUser["oauth"] == [{"provider": "orcid_sandbox", "id": TEST_ORCID_ID}]
+
+
+@pytest.mark.plugin("wholetale")
+def test_shared_email_links_both_providers_to_one_user(server, user, orcidToken):
+    response = _personResponse(email=user["email"], firstName="user", lastName="user")
+    with httmock.HTTMock(_mockPerson(response), mockOtherRequests):
+        ORCID(redirectUri="http://localhost").getUser(orcidToken)
+    with httmock.HTTMock(_mockSandboxPerson(response), mockOtherRequests):
+        result = SandboxORCID(redirectUri="http://localhost").getUser(orcidToken)
+
+    assert result["_id"] == user["_id"]
+    reloaded = User().load(user["_id"], force=True)
+    assert {"provider": "orcid", "id": TEST_ORCID_ID} in reloaded["oauth"]
+    assert {"provider": "orcid_sandbox", "id": TEST_ORCID_ID} in reloaded["oauth"]
 
 
 class _FakeEvent:
@@ -189,6 +279,22 @@ def test_store_other_globus_tokens_orcid_branch(server, user):
     stored = reloaded["otherTokens"][0]
     assert stored["access_token"] == "blah"
     assert stored["resource_server"] == "orcid.org"
+
+
+@pytest.mark.plugin("wholetale")
+def test_store_other_globus_tokens_keeps_both_orcid_flavors(server, user):
+    user["otherTokens"] = []
+    user = User().save(user)
+
+    for provider in (ORCID, SandboxORCID):
+        token = {"access_token": provider.getProviderName(), "orcid": TEST_ORCID_ID}
+        store_other_globus_tokens(
+            _FakeEvent({"token": token, "user": user, "provider": provider})
+        )
+        user = User().load(user["_id"], force=True)
+
+    stored = {_["resource_server"]: _["access_token"] for _ in user["otherTokens"]}
+    assert stored == {"orcid.org": "orcid", "sandbox.orcid.org": "orcid_sandbox"}
 
 
 @pytest.mark.plugin("wholetale")

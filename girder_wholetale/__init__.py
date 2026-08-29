@@ -29,7 +29,6 @@ from girder_jobs.constants import JobStatus
 from girder_jobs.models.job import Job as JobModel
 from girder_oauth.providers import addProvider
 from girder_oauth.rest import OAuth as OAuthResource
-from girder_oauth.settings import PluginSettings as OAuthSettings
 from girder_plugin_worker.utils import jobInfoSpec
 from girder_worker.app import app
 
@@ -237,8 +236,6 @@ def _validateLogo(doc):
         PluginSettings.INFLUXDB_ORG,
         PluginSettings.INFLUXDB_BUCKET,
         PluginSettings.MAINTENANCE_BANNER,
-        PluginSettings.ORCID_MODE,
-        PluginSettings.ORCID_API,
     }
 )
 def validateHref(doc):
@@ -691,7 +688,7 @@ def store_other_globus_tokens(event):
     if provider.getProviderName() == "globus":
         for new_token in token.get("other_tokens", []):
             _update_tokens(user_tokens, new_token)
-    elif provider.getProviderName() == "orcid":
+    elif issubclass(provider, ORCID):
         token["resource_server"] = urlparse.urlparse(provider._AUTH_URL).netloc
         _update_tokens(user_tokens, token)
 
@@ -712,12 +709,17 @@ def attachJobInfoSpec(event):
         )
 
 
-@setting_utilities.validator({"oauth.orcid_client_id", "oauth.orcid_client_secret"})
+ORCID_OAUTH_SETTINGS = {
+    provider._CLIENT_ID_SETTING for provider in (ORCID, SandboxORCID)
+} | {provider._CLIENT_SECRET_SETTING for provider in (ORCID, SandboxORCID)}
+
+
+@setting_utilities.validator(ORCID_OAUTH_SETTINGS)
 def validateOrcidSettings(doc):
     pass
 
 
-@setting_utilities.default({"oauth.orcid_client_id", "oauth.orcid_client_secret"})
+@setting_utilities.default(ORCID_OAUTH_SETTINGS)
 def defaultOrcidSettings():
     return ""
 
@@ -753,12 +755,10 @@ class WholeTalePlugin(GirderPlugin):
         SettingDefault.defaults[PluginSettings.GC_COLLECT_END_FRACTION] = 0.5
 
         getPlugin("oauth").load(info)
-        OAuthSettings.ORCID_CLIENT_ID = "oauth.orcid_client_id"
-        OAuthSettings.ORCID_CLIENT_SECRET = "oauth.orcid_client_secret"
-        if Setting().get(PluginSettings.ORCID_MODE) == "production":
-            addProvider(ORCID)
-        else:
-            addProvider(SandboxORCID)
+        # Both flavors are always registered; which login buttons are actually
+        # offered is controlled by the "oauth.providers_enabled" setting.
+        addProvider(ORCID)
+        addProvider(SandboxORCID)
         getPlugin("jobs").load(info)
         getPlugin("worker").load(info)
         getPlugin("virtual_resources").load(info)

@@ -9,6 +9,8 @@ from girder.models.user import User
 from girder_oauth.settings import PluginSettings as OAuthPluginSettings
 from pytest_girder.assertions import assertStatus, assertStatusOk
 
+from girder_wholetale.lib.orcid import ORCID
+
 AUTH_PROVIDERS = [
     {
         "name": "orcid",
@@ -129,13 +131,13 @@ def enabledOrcidAuth():
     """
     Side effect: enables ORCID OAuth
     """
-    Setting().set(OAuthPluginSettings.ORCID_CLIENT_ID, "orcid_client_id")
-    Setting().set(OAuthPluginSettings.ORCID_CLIENT_SECRET, "orcid_client_secret")
-    Setting().set(OAuthPluginSettings.PROVIDERS_ENABLED, ["orcid"])
+    Setting().set(ORCID._CLIENT_ID_SETTING, "orcid_client_id")
+    Setting().set(ORCID._CLIENT_SECRET_SETTING, "orcid_client_secret")
+    Setting().set(OAuthPluginSettings.PROVIDERS_ENABLED, [ORCID.getProviderName()])
     yield
     Setting().set(OAuthPluginSettings.PROVIDERS_ENABLED, [])
-    Setting().set(OAuthPluginSettings.ORCID_CLIENT_ID, "")
-    Setting().set(OAuthPluginSettings.ORCID_CLIENT_SECRET, "")
+    Setting().set(ORCID._CLIENT_ID_SETTING, "")
+    Setting().set(ORCID._CLIENT_SECRET_SETTING, "")
 
 
 @pytest.mark.plugin("wholetale")

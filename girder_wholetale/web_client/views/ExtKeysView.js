@@ -85,7 +85,10 @@ var ExtKeysView = View.extend({
             _.each(this.providers, function (provider) {
                 var btn = this._buttons[provider.name];
                 if (btn) {
-                    revokeButtons.push(btn);
+                    revokeButtons.push(_.extend({
+                        providerId: provider.name,
+                        text: provider.fullName
+                    }, btn));
                 } else {
                     keyProviders.push(provider);
                 }
@@ -107,6 +110,10 @@ var ExtKeysView = View.extend({
 
     _buttons: {
         orcid: {
+            icon: 'orcid',
+            class: 'g-oauth-button-orcid'
+        },
+        orcid_sandbox: {
             icon: 'orcid',
             class: 'g-oauth-button-orcid'
         },
