@@ -19,7 +19,7 @@ jobs:
         python-version: ["3.12"]
     services:
       mongodb:
-        image: mongo:4.2
+        image: mongo:4.4
         ports:
           - 27017:27017
       redis:
@@ -28,15 +28,15 @@ jobs:
           - 6379:6379
     steps:
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
     - name: Set up Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
-        node-version: 22
+        node-version: 24
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -47,7 +47,7 @@ jobs:
         npm ci
         npm run build
     - name: Cache tox environments
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: .tox
         key: ${{ matrix.python-version }}-tox-${{ hashFiles('setup.py', 'requirements.txt') }}
@@ -58,6 +58,6 @@ jobs:
         GIRDER_MAX_CURSOR_TIMEOUT_MS: 60000
       run: tox -e pytest
     - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v7
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
