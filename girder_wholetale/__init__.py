@@ -349,6 +349,12 @@ def defaultVersionsDirsRoot():
     return SettingDefault.defaults[PluginSettings.VERSIONS_DIRS_ROOT]
 
 
+@setting_utilities.validator(PluginSettings.GC_ENABLED)
+def validateGCEnabled(doc):
+    if not isinstance(doc["value"], bool):
+        raise ValidationException("GC enabled must be a boolean.", "value")
+
+
 @setting_utilities.validator(
     {
         PluginSettings.PRIVATE_STORAGE_PATH,
@@ -750,6 +756,10 @@ class WholeTalePlugin(GirderPlugin):
 
         SettingDefault.defaults[PluginSettings.PRIVATE_STORAGE_PATH] = "/tmp/ps"
         SettingDefault.defaults[PluginSettings.PRIVATE_STORAGE_CAPACITY] = 100 * GB
+        # On by default: turning the GC off on a deployment that does use
+        # private storage lets the cache grow without bound, so the flag
+        # has to be opted into rather than inherited.
+        SettingDefault.defaults[PluginSettings.GC_ENABLED] = True
         SettingDefault.defaults[PluginSettings.GC_RUN_INTERVAL] = 10 * 60
         SettingDefault.defaults[PluginSettings.GC_COLLECT_START_FRACTION] = 0.5
         SettingDefault.defaults[PluginSettings.GC_COLLECT_END_FRACTION] = 0.5
