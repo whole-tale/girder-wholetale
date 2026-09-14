@@ -84,8 +84,14 @@ class CollectorThread(Thread):
     def run(self):
         while True:
             try:
-                logger.info("Running DM file GC")
-                self.collect()
+                # Read the flag every pass rather than once at construction.
+                # getCollectionCandidates() filters on dm.cached/dm.lockCount,
+                # a pair no index serves, so each pass scans the whole item
+                # collection; a deployment not using private storage wants that
+                # stopped now, not at the next restart.
+                if Setting().get(constants.PluginSettings.GC_ENABLED):
+                    logger.info("Running DM file GC")
+                    self.collect()
             except Exception:
                 logger.error("File collection failure", exc_info=1)
             time.sleep(Setting().get(constants.PluginSettings.GC_RUN_INTERVAL))
