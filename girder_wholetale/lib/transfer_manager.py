@@ -4,13 +4,18 @@ import threading
 import traceback
 
 from girder import events
+from girder.models.assetstore import Assetstore
+from girder.models.file import File
+from girder.models.item import Item
 from girder.models.model_base import ValidationException
+from girder.models.user import User
 from girder.utility import assetstore_utilities
-from girder.utility.model_importer import ModelImporter
 
 from ..constants import TransferStatus
+from ..models.lock import Lock
+from ..models.transfer import Transfer
 from .handler_factory import HandlerFactory
-from .tm_utils import Models, TransferException, TransferHandler
+from .tm_utils import TransferException, TransferHandler
 
 logger = logging.getLogger(__name__)
 
@@ -45,14 +50,14 @@ class GirderDownloadTransferHandler(TransferHandler):
 
     def transfer(self):
         file = self._getFileFromItem()
-        Models.transferModel.setStatus(
+        Transfer().setStatus(
             self.transferId,
             TransferStatus.TRANSFERRING,
             size=self.flen,
             transferred=0,
             setTransferStartTime=True,
         )
-        stream = Models.fileModel.download(file, headers=False)
+        stream = File().download(file, headers=False)
 
         try:
             os.makedirs(os.path.dirname(self.psPath))
@@ -81,8 +86,8 @@ class TransferManager:
     def restartInterruptedTransfers(self):
         # transfers and item.dm.transferInProgress are not atomically
         # set, so use both to figure out what needs to be re-started
-        activeTransfersFromItem = Models.lockModel.listDownloadingItems()
-        activeTransfers = Models.transferModel.listAll()
+        activeTransfersFromItem = Lock().listDownloadingItems()
+        activeTransfers = Transfer().listAll()
 
         ids = set()
         data = []
@@ -111,7 +116,7 @@ class TransferManager:
                 )
 
     def getUser(self, userId):
-        return Models.userModel.load(userId, force=True)
+        return User().load(userId, force=True)
 
     def startTransfer(self, user, itemId, sessionId):
         pass
@@ -122,7 +127,7 @@ class TransferManager:
 
     def transferCompleted(self, transferId, transferHandler):
         flen = transferHandler.getTransferredByteCount()
-        Models.transferModel.setStatus(
+        Transfer().setStatus(
             transferId,
             TransferStatus.DONE,
             size=flen,
@@ -142,24 +147,24 @@ class TransferManager:
             message = str(exception)
 
         if temporaryFailure:
-            Models.transferModel.setStatus(
+            Transfer().setStatus(
                 transferId,
                 TransferStatus.FAILED_TEMPORARILY,
                 error=message,
                 setTransferEndTime=False,
             )
         else:
-            Models.transferModel.setStatus(
+            Transfer().setStatus(
                 transferId,
                 TransferStatus.FAILED,
                 error=message,
                 setTransferEndTime=True,
             )
         itemId = transferHandler.getItemId()
-        Models.lockModel.fileDownloadFailed(itemId, message)
+        Lock().fileDownloadFailed(itemId, message)
 
     def transferProgress(self, transferId, total, current):
-        Models.transferModel.setStatus(
+        Transfer().setStatus(
             transferId, TransferStatus.TRANSFERRING, size=total, transferred=current
         )
 
@@ -171,18 +176,18 @@ class SimpleTransferManager(TransferManager):
 
     def startTransfer(self, user, itemId, sessionId):
         # add transfer to transfer DB and initiate actual transfer
-        transfer = Models.transferModel.createTransfer(user, itemId, sessionId)
+        transfer = Transfer().createTransfer(user, itemId, sessionId)
         self.actualStartTransfer(user, transfer["_id"], itemId)
 
     def actualStartTransfer(self, user, transferId, itemId):
-        Models.transferModel.setStatus(transferId, TransferStatus.INITIALIZING)
+        Transfer().setStatus(transferId, TransferStatus.INITIALIZING)
         transferHandler = self.getTransferHandler(transferId, itemId, user)
         self._startTransferThread(itemId, transferId, transferHandler)
 
     def getTransferHandler(self, transferId, itemId, user):
-        item = Models.itemModel.load(itemId, force=True)
+        item = Item().load(itemId, force=True)
         psPath = self.pathMapper.getPSPath(itemId)
-        files = list(Models.itemModel.childFiles(item=item))
+        files = list(Item().childFiles(item=item))
         if len(files) != 1:
             raise ValueError(
                 "Wrong number of files for item "
@@ -190,7 +195,7 @@ class SimpleTransferManager(TransferManager):
                 + ": "
                 + str(len(files))
             )
-        file = Models.fileModel.load(files[0]["_id"], force=True)
+        file = File().load(files[0]["_id"], force=True)
 
         url = None
         if "linkUrl" in file:
@@ -199,7 +204,7 @@ class SimpleTransferManager(TransferManager):
             url = file["path"]
         elif "assetstoreId" in file:
             try:
-                store = ModelImporter.model("assetstore").load(file["assetstoreId"])
+                store = Assetstore().load(file["assetstoreId"])
                 adapter = assetstore_utilities.getAssetstoreAdapter(store)
                 url = adapter.fullPath(file)
             except (AttributeError, ValidationException):

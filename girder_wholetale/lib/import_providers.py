@@ -1,7 +1,10 @@
 import logging
 import textwrap
 
-from girder.utility.model_importer import ModelImporter
+from girder.models.file import File
+from girder.models.folder import Folder
+from girder.models.item import Item
+from girder.models.upload import Upload
 
 from .data_map import DataMap
 from .entity import Entity
@@ -16,9 +19,6 @@ class ImportProvider:
 
     def __init__(self, name):
         self.name = name
-        self.folderModel = ModelImporter.model('folder')
-        self.itemModel = ModelImporter.model('item')
-        self.fileModel = ModelImporter.model('file')
 
     @property
     def regex(self):
@@ -103,23 +103,23 @@ class ImportProvider:
 
     def _registerFolder(self, stack, item: ImportItem, user):
         (parent, parentType) = stack[-1]
-        folder = self.folderModel.createFolder(parent, item.name, description='',
-                                               parentType=parentType, creator=user,
-                                               reuseExisting=True)
+        folder = Folder().createFolder(parent, item.name, description='',
+                                       parentType=parentType, creator=user,
+                                       reuseExisting=True)
         meta = {
             "identifier": item.identifier,
             "provider": self.name,
         }
         if item.meta:
             meta.update(item.meta)
-        folder = self.folderModel.setMetadata(folder, meta)
+        folder = Folder().setMetadata(folder, meta)
         stack.append((folder, 'folder'))
         return (folder, 'folder')
 
     def _registerFile(self, stack, item: ImportItem, user):
         (parent, _parentType) = stack[-1]
-        gitem = self.itemModel.createItem(item.name, user, parent, reuseExisting=True)
-        if self.fileModel.findOne({"itemId": gitem["_id"]}):
+        gitem = Item().createItem(item.name, user, parent, reuseExisting=True)
+        if File().findOne({"itemId": gitem["_id"]}):
             logger.info(f"Item ({gitem['_id']=}, {gitem['name']=}) already has a file.")
             return (gitem, 'item')
         meta = {'provider': self.name}
@@ -127,19 +127,19 @@ class ImportProvider:
             meta['identifier'] = item.identifier
         if item.meta:
             meta.update(item.meta)
-        gitem = self.itemModel.setMetadata(gitem, meta)
+        gitem = Item().setMetadata(gitem, meta)
 
         if item.url and item.url.startswith('file://'):
             with open(item.url[len('file://'):], 'rb') as f:
-                ModelImporter.model('upload').uploadFromFile(f, item.size, item.name, parent=gitem,
-                                                             parentType='item', user=user,
-                                                             mimeType=item.mimeType)
+                Upload().uploadFromFile(f, item.size, item.name, parent=gitem,
+                                        parentType='item', user=user,
+                                        mimeType=item.mimeType)
         else:
             # girder does not allow anything else than http and https. So we need a better
             # mechanism here to communicate relevant information to WTDM
-            self.fileModel.createLinkFile(item.name, url=item.url, parent=gitem, parentType='item',
-                                          creator=user, size=item.size, mimeType=item.mimeType,
-                                          reuseExisting=True)
+            File().createLinkFile(item.name, url=item.url, parent=gitem, parentType='item',
+                                  creator=user, size=item.size, mimeType=item.mimeType,
+                                  reuseExisting=True)
         return (gitem, 'item')
 
     def _listRecursive(self, user, pid: str, name: str, progress=None):

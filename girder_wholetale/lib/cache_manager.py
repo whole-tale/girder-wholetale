@@ -1,4 +1,4 @@
-from .tm_utils import Models
+from ..models.lock import Lock
 
 
 class CacheManager:
@@ -7,7 +7,6 @@ class CacheManager:
         self.transferManager = transferManager
         self.fileGC = fileGC
         self.pathMapper = pathMapper
-        self.lockModel = Models.lockModel
 
     def itemLocked(self, user, itemId, sessionId):
         pass
@@ -43,7 +42,7 @@ class SimpleCacheManager(CacheManager):
         CacheManager.itemUnlocked(self, itemId)
 
     def fileDownloaded(self, info):
-        self.lockModel.fileDownloaded(info)
+        Lock().fileDownloaded(info)
 
     def sessionCreated(self, session):
         # do nothing; we transfer on open()
