@@ -1,12 +1,5 @@
-from girder.utility.model_importer import ModelImporter
-
-
-class Models:
-    itemModel = ModelImporter.model("item")
-    fileModel = ModelImporter.model("file")
-    userModel = ModelImporter.model("user")
-    transferModel = ModelImporter.model("transfer", "wholetale")
-    lockModel = ModelImporter.model("lock", "wholetale")
+from girder.models.file import File
+from girder.models.item import Item
 
 
 class TransferHandler:
@@ -20,11 +13,11 @@ class TransferHandler:
         self.user = user
         self.transferManager = transferManager
         self.flen = 0
-        self.item = Models.itemModel.load(self.itemId, force=True)
+        self.item = Item().load(self.itemId, force=True)
         self.lastTransferred = 0
 
     def _getFileFromItem(self):
-        files = list(Models.itemModel.childFiles(item=self.item))
+        files = list(Item().childFiles(item=self.item))
         if len(files) != 1:
             raise ValueError(
                 "Wrong number of files for item "
@@ -32,7 +25,7 @@ class TransferHandler:
                 + ": "
                 + str(len(files))
             )
-        return Models.fileModel.load(files[0]["_id"], force=True)
+        return File().load(files[0]["_id"], force=True)
 
     def run(self):
         self.transfer()

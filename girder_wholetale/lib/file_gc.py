@@ -11,7 +11,6 @@ from girder.models.setting import Setting
 from .. import constants
 from ..models.lock import Lock
 from ..models.psinfo import PSInfo
-from .tm_utils import Models
 
 # Naive on purpose: it is compared against naive UTC datetimes coming from Mongo.
 BEGINNING_OF_TIME = datetime.datetime.fromtimestamp(
@@ -22,36 +21,35 @@ logger = logging.getLogger(__name__)
 
 class FileGC:
     def __init__(self, pathMapper):
-        self.lockModel = Models.lockModel
         self.pathMapper = pathMapper
 
     def deleteFile(self, itemId):
-        if self.lockModel.tryLockForDeletion(itemId):
+        if Lock().tryLockForDeletion(itemId):
             try:
                 path = self.pathMapper.getPSPath(itemId)
                 os.remove(path)
-                self.lockModel.fileDeleted(itemId)
+                Lock().fileDeleted(itemId)
                 return True
             except FileNotFoundError:
                 # well, well, wasn't there to begin with
                 logger.warning(f"File for {itemId} did not exist")
-                self.lockModel.fileDeleted(itemId)
+                Lock().fileDeleted(itemId)
                 return True
             finally:
-                self.lockModel.unlockForDeletion(itemId)
+                Lock().unlockForDeletion(itemId)
         else:
             return False
 
     def clearCache(self, force):
         if force:
-            items = self.lockModel._getAllCachedItems()
+            items = Lock()._getAllCachedItems()
         else:
-            items = self.lockModel.getCollectionCandidates()
+            items = Lock().getCollectionCandidates()
         for item in items:
             if force:
-                for lock in self.lockModel._getLocksForItem(item):
-                    self.lockModel.releaseLock(None, lock)
-                self.lockModel._resetLockedCount(item)
+                for lock in Lock()._getLocksForItem(item):
+                    Lock().releaseLock(None, lock)
+                Lock()._resetLockedCount(item)
             self.collectFile(item)
 
     def unreacheable(self, itemId):
@@ -64,7 +62,7 @@ class FileGC:
         pass
 
     def getCollectionCandidates(self):
-        return list(self.lockModel.getCollectionCandidates())
+        return list(Lock().getCollectionCandidates())
 
     def collectFile(self, item):
         return self.deleteFile(item["_id"])
